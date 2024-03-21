@@ -1,14 +1,20 @@
-<head>  
-    <body>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="loginCss.css">
-        <title>Login</title>
-        <script src="../controller/login.controller.js"></script>
-        <a id="loginForm">
-            <input type="text" id="inputCpf" placeholder="Digite o CPF">
-            <input type="text" id="OAB" placeholder="Digite sua OAB">
-            <button type="submit" onclick="submitForm()">Login</button>
-        </a>
-    </body>
+User
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="loginCss.css">
 </head>
+<body>
+    <div id="loginForm">
+        <input type="text" id="inputCpf" placeholder="Digite o CPF">
+        <input type="text" id="OAB" placeholder="Digite sua OAB">
+        <button type="button" id="login" onclick="submitForm()">Login</button>
+        <button type="button" id="Cadastrar">Cadastrar</button>
+    </div>
+
+    <script src="../controller/login.controller.js"></script>
+</body>
+</html>

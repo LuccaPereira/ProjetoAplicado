@@ -8,12 +8,13 @@ body {
     align-items: center;
     height: 100vh;
 }
-a {
+div {
     background-color: #708090;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 input {
     width: 100%;
     padding: 10px;
@@ -23,7 +24,7 @@ input {
     box-sizing: border-box;
 }
 
-button {
+button{
     width: 100%;
     padding: 10px;
     border: none;
