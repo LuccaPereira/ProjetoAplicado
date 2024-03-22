@@ -9,6 +9,7 @@ body {
 
 .container {
     margin: 0 auto;
+<<<<<<< HEAD
     max-width: 1000px; /* Aumentando a largura máxima */
     padding: 40px; /* Aumentando o preenchimento */
 }
@@ -55,8 +56,53 @@ body {
 
 #itens a:hover {
     background-color: #ddd;
+=======
+    max-width: 800px;
+    padding: 20px;
+}
+.title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 36px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: white;
+}
+#itens {
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    padding: 10px;
+    display: none;
+>>>>>>> BranchPrincipalNaoAlterar
 }
 
+#itens h4 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#itens ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#itens li {
+    margin-bottom: 5px;
+}
+
+#itens a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+#itens a:hover {
+    background-color: #ddd;
+}
 menu {
     margin-top: 40px; /* Aumentando a margem superior */
     background-color: black;
