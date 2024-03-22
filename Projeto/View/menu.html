@@ -8,34 +8,34 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons">
 </head>
 <body>
-    <script src="../controller/menu.controller.js"></script>
-    <h1>Petições AI</h1>
-    <i id="burger" class="material-icons" onclick="clickMenu()">menu</i>
-    <menu id="itens">
-        <h4>Menu</h4>
-        <ul>
-            <li><a href="#">Buscar Petições</a></li>
-            <li><a href="#">Visualizar Petições</a></li>
-            <li><a href="#">Criar Petições</a></li>
-        </ul>
-    </menu>
-    <div class="content">
-        <p>
-           <h2> O que é nosso projeto: </h2>
-
-           Nosso projeto visa criar uma plataforma inovadora para o meio jurídico, aproveitando o poder da inteligência artificial (IA) para simplificar e agilizar a redação de petições iniciais. 
-           Essa plataforma combinará a expertise humana com os recursos avançados da IA para oferecer uma solução eficiente e precisa.
-           A aplicação da IA no meio jurídico representa uma oportunidade significativa para otimizar processos e melhorar a eficiência do trabalho dos profissionais do direito. Ao integrar algoritmos de processamento de linguagem natural. 
-           A plataforma será capaz de analisar documentos legais, extrair informações relevantes e sugerir conteúdos para as petições iniciais
-           Os benefícios dessa abordagem são diversos. Em primeiro lugar, a automação de tarefas repetitivas permite que os advogados foquem em atividades mais estratégicas e de maior valor agregado. Além disso, a IA pode ajudar na identificação de padrões e tendências nos documentos legais, proporcionando insights valiosos para o processo de tomada de decisão.
-           Ao fornecer uma ferramenta intuitiva e eficaz para a redação de petições iniciais, seu projeto tem o potencial de melhorar significativamente a produtividade e a qualidade do trabalho dos profissionais do direito, além de oferecer uma experiência mais satisfatória para os usuários da plataforma.</p>
-
-        <p>
-            <h2>O Que É uma Petição Inicial:</h2>
-
-            Uma petição inicial é um documento legal apresentado por uma parte (o autor ou demandante) a um tribunal, com o objetivo de iniciar um processo judicial. Geralmente, uma petição inicial contém uma descrição dos fatos relevantes do caso, as alegações legais que sustentam a reivindicação do autor, e um pedido específico de alívio ou reparação.
-            As petições iniciais são fundamentais no sistema jurídico, pois estabelecem as bases para a resolução de disputas legais perante os tribunais. Elas devem ser redigidas de forma clara, precisa e em conformidade com as leis e regras processuais aplicáveis. Uma petição inicial bem elaborada é essencial para garantir que os direitos e interesses das partes envolvidas sejam adequadamente representados perante o tribunal.
-        </p>
+    <div class="container">
+        <h1 class="title">Petições AI</h1>
+        <i id="burger" onclick="clickMenu()" class="material-icons" >menu</i>
+        <menu id="itens">
+            <h4>Menu</h4>
+            <ul>
+                <li><a href="#">Buscar Petições</a></li>
+                <li><a href="#">Visualizar Petições</a></li>
+                <li><a href="#">Criar Petições</a></li>
+            </ul>
+        </menu>
+        <div class="content">
+            <section>
+                <h2>O que é nosso projeto:</h2>
+                <p>Nosso projeto visa criar uma plataforma inovadora para o meio jurídico, aproveitando o poder da inteligência artificial (IA) para simplificar e agilizar a redação de petições iniciais. 
+                    Essa plataforma combinará a expertise humana com os recursos avançados da IA para oferecer uma solução eficiente e precisa.
+                    A aplicação da IA no meio jurídico representa uma oportunidade significativa para otimizar processos e melhorar a eficiência do trabalho dos profissionais do direito. Ao integrar algoritmos de processamento de linguagem natural. 
+                    A plataforma será capaz de analisar documentos legais, extrair informações relevantes e sugerir conteúdos para as petições iniciais
+                    Os benefícios dessa abordagem são diversos. Em primeiro lugar, a automação de tarefas repetitivas permite que os advogados foquem em atividades mais estratégicas e de maior valor agregado. Além disso, a IA pode ajudar na identificação de padrões e tendências nos documentos legais, proporcionando insights valiosos para o processo de tomada de decisão.
+                    Ao fornecer uma ferramenta intuitiva e eficaz para a redação de petições iniciais, seu projeto tem o potencial de melhorar significativamente a produtividade e a qualidade do trabalho dos profissionais do direito, além de oferecer uma experiência mais satisfatória para os usuários da plataforma</p>
+            </section>
+            <section>
+                <h2>O Que É uma Petição Inicial:</h2>
+                <p>Uma petição inicial é um documento legal apresentado por uma parte (o autor ou demandante) a um tribunal, com o objetivo de iniciar um processo judicial. Geralmente, uma petição inicial contém uma descrição dos fatos relevantes do caso, as alegações legais que sustentam a reivindicação do autor, e um pedido específico de alívio ou reparação.
+                    As petições iniciais são fundamentais no sistema jurídico, pois estabelecem as bases para a resolução de disputas legais perante os tribunais. Elas devem ser redigidas de forma clara, precisa e em conformidade com as leis e regras processuais aplicáveis. Uma petição inicial bem elaborada é essencial para garantir que os direitos e interesses das partes envolvidas sejam adequadamente representados perante o tribunal.</p>
+            </section>
+        </div>
     </div>
+    <script type="text/javascript" src="../controller/menu.controller.js"></script>
 </body>
 </html>
