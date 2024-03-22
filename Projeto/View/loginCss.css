@@ -1,6 +1,6 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #d3d3d3;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f2f2f2; 
     margin: 0;
     padding: 0;
     display: flex;
@@ -8,6 +8,37 @@ body {
     align-items: center;
     height: 100vh;
 }
+<<<<<<< HEAD
+
+.container {
+    width: 100%;
+    max-width: 600px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-box, .introBox {
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #1e2a3a;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"] {
+=======
 div {
     background-color: #708090;
     padding: 20px;
@@ -16,23 +47,54 @@ div {
 }
 
 input {
+>>>>>>> BranchPrincipalNaoAlterar
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    margin-bottom: 15px;
+    border: 1px solid #dddfe2; /* Cinza claro */
+    border-radius: 5px;
     box-sizing: border-box;
 }
 
+<<<<<<< HEAD
+button[type="submit"] {
+=======
 button{
+>>>>>>> BranchPrincipalNaoAlterar
     width: 100%;
     padding: 10px;
     border: none;
-    border-radius: 3px;
-    background-color: #294292;
+    border-radius: 5px;
+    background-color: #473030; /* Azul */
     color: #fff;
     cursor: pointer;
 }
-button:hover {
-    background-color: #007bff;
+
+button[type="submit"]:hover {
+    background-color: #333; /* Azul mais escuro no hover */
+}
+
+a {
+    color: #1877f2; /* Azul */
+    text-decoration: none;
+}
+
+hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #dddfe2; /* Cinza claro */
+}
+
+.create-account {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #473030; /* Verde */
+    color: #fff;
+    cursor: pointer;
+}
+
+.create-account:hover {
+    background-color: #333; /* Verde mais escuro no hover */
 }

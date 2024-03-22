@@ -9,6 +9,54 @@ body {
 
 .container {
     margin: 0 auto;
+<<<<<<< HEAD
+    max-width: 1000px; /* Aumentando a largura máxima */
+    padding: 40px; /* Aumentando o preenchimento */
+}
+
+.title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 48px; /* Aumentando o tamanho da fonte */
+    color: #333;
+    text-align: center;
+    margin-bottom: 40px; /* Aumentando a margem inferior */
+    background-color: white;
+}
+
+#itens {
+    background-color: #f4f4f4;
+    border-radius: 8px; /* Aumentando o raio do border-radius */
+    padding: 20px; /* Aumentando o preenchimento */
+    display: none;
+}
+
+#itens h4 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px; /* Aumentando o tamanho da fonte */
+    color: #333;
+    margin-bottom: 20px; /* Aumentando a margem inferior */
+}
+
+#itens ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#itens li {
+    margin-bottom: 10px; /* Aumentando a margem inferior */
+}
+
+#itens a {
+    display: block;
+    padding: 20px; /* Aumentando o preenchimento */
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+#itens a:hover {
+    background-color: #ddd;
+=======
     max-width: 800px;
     padding: 20px;
 }
@@ -25,6 +73,7 @@ body {
     border-radius: 5px;
     padding: 10px;
     display: none;
+>>>>>>> BranchPrincipalNaoAlterar
 }
 
 #itens h4 {
@@ -55,23 +104,24 @@ body {
     background-color: #ddd;
 }
 menu {
-    margin-top: 20px;
+    margin-top: 40px; /* Aumentando a margem superior */
     background-color: black;
     color: #333;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 20px; /* Aumentando o preenchimento */
+    border-radius: 8px; /* Aumentando o raio do border-radius */
     display: none;
 }
 
 i#burger {
     display: block;
-    font-size: 30px;
-    margin-bottom: 10px;
-    color:white;
+    font-size: 36px; /* Aumentando o tamanho da fonte */
+    margin-bottom: 20px; /* Aumentando a margem inferior */
+    color: white;
     cursor: pointer;
 }
-i#burger:hover{
-    color:black;
+
+i#burger:hover {
+    color: black;
 }
 
 menu > ul {
@@ -80,12 +130,12 @@ menu > ul {
 }
 
 menu > li {
-    margin-bottom: 5px;
+    margin-bottom: 10px; /* Aumentando a margem inferior */
 }
 
 a {
     display: block;
-    padding: 10px;
+    padding: 20px; /* Aumentando o preenchimento */
     color: white;
     text-decoration: none;
     transition: background-color 0.3s;
@@ -96,12 +146,11 @@ a:hover {
 }
 
 .content {
-    margin: 20px auto;
-    width: 80%;
-    max-width: 600px;
+    margin: 40px auto; /* Aumentando a margem */
+    width: 90%; /* Ajustando a largura */
+    max-width: 800px; /* Ajustando a largura máxima */
     background-color: white;
-    padding: 40px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
+    padding: 60px; /* Aumentando o preenchimento */
+    border-radius: 8px; /* Aumentando o raio do border-radius */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Aumentando o tamanho da sombra */
 }
