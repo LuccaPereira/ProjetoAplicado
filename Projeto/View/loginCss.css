@@ -45,11 +45,7 @@ input[type="password"] {
     box-sizing: border-box;
 }
 
-<<<<<<< HEAD
 button[type="submit"] {
-=======
-button{
->>>>>>> BranchPrincipalNaoAlterar
     width: 100%;
     padding: 10px;
     border: none;
