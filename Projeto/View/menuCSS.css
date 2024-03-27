@@ -7,9 +7,14 @@ body {
     background-color: #333;
 }
 
+#logo {
+    max-width: 150px;
+    display: block; 
+    margin: 0px auto 25px;
+}
+
 .container {
     margin: 0 auto;
-<<<<<<< HEAD
     max-width: 1000px; /* Aumentando a largura máxima */
     padding: 40px; /* Aumentando o preenchimento */
 }
@@ -56,24 +61,6 @@ body {
 
 #itens a:hover {
     background-color: #ddd;
-=======
-    max-width: 800px;
-    padding: 20px;
-}
-.title {
-    font-family: 'Roboto', sans-serif;
-    font-size: 36px;
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-    background-color: white;
-}
-#itens {
-    background-color: #f4f4f4;
-    border-radius: 5px;
-    padding: 10px;
-    display: none;
->>>>>>> BranchPrincipalNaoAlterar
 }
 
 #itens h4 {

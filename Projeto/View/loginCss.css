@@ -8,7 +8,13 @@ body {
     align-items: center;
     height: 100vh;
 }
-<<<<<<< HEAD
+
+#logo {
+    max-width: 150px;
+    display: block; 
+    margin: 0px auto 25px;
+}
+
 
 .container {
     width: 100%;
@@ -16,6 +22,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center; /* Centraliza verticalmente */
 }
 
 .login-box, .introBox {
@@ -38,16 +45,6 @@ form {
 
 input[type="text"],
 input[type="password"] {
-=======
-div {
-    background-color: #708090;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-input {
->>>>>>> BranchPrincipalNaoAlterar
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -56,11 +53,7 @@ input {
     box-sizing: border-box;
 }
 
-<<<<<<< HEAD
 button[type="submit"] {
-=======
-button{
->>>>>>> BranchPrincipalNaoAlterar
     width: 100%;
     padding: 10px;
     border: none;

@@ -1,19 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="loginCss.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+<head>  
+    <body>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="loginCss.css">
+        <title>Login</title>
 </head>
 <body>
     <div class="container">
+        <img id="logo" src="logo (2).png" alt="Logo">
         <div class="login-box">
             <h2>Cadastre-se ou faça login</h2>
             <form>
                 <input type="text" id="OAB" placeholder="Digite sua OAB">
-                <input type="password" id="inputCpf" placeholder="Digite seu CPF">
+                <input type="password" id="senha" placeholder="Digite sua senha">
                 <button type="submit" onclick="submitForm()">Log In</button>
             </form>
             <a href="../View/cadastrar.html"><button class="create-account">Cadastre-se</button></a>
@@ -23,6 +22,6 @@
             <p>Este é um projeto voltado para a gestão de membros da Ordem dos Advogados do Brasil (OAB). Faça login com sua OAB e CPF para acessar.</p>
         </div>
     </div>
-    <script src="../controller/login.controller.js"></script>
+    <script type='module' src="../controller/login.controller.js"></script>
 </body>
 </html>
