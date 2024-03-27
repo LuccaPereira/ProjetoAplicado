@@ -9,12 +9,20 @@ body {
     height: 100vh;
 }
 
+#logo {
+    max-width: 150px;
+    display: block; 
+    margin: 0px auto 25px;
+}
+
+
 .container {
     width: 100%;
     max-width: 600px; 
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center; /* Centraliza verticalmente */
 }
 
 .login-box, .introBox {
