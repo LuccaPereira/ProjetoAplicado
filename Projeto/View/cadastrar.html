@@ -12,16 +12,17 @@
         <img id="logo" src="logo (2).png" alt="Logo">
         <div class="cadastro-box">
             <h2>Cadastre-se</h2>
-            <form>
+            <form method="POST" action="" id="cadAdv">
                 <input type="text" id="nome" placeholder="Nome">
                 <input type="text" id="OAB" placeholder="OAB">
-                <input type="email" id="inputCpf" placeholder="digite CPF">
+                <input type="text" id="inputCpf" placeholder="digite CPF">
                 <input type="password" id="senha" placeholder="Crie sua senha">
-                <input type="email" id="email" placeholder="Digite seu Email">
-                <button type="submit">Cadastrar</button>
+                <input type="text" id="email" placeholder="Digite seu Email">
             </form>
+            <button type="submit" name="addAdv" onclick="submitForm()">Cadastrar</button>
             <p>Já possui uma conta? <a href="login.html">Faça login</a></p>
         </div>
     </div>
+    <script src="../Controller/cadastro.js"></script>
 </body>
 </html>
