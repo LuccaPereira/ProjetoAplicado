@@ -2,34 +2,25 @@ function submitForm() {
     var form = document.getElementById('cadAdv');
     
     if (form.checkValidity()) {
-        var nome = document.querySelector("#nome").value;
-        var OAB = document.querySelector("#OAB").value;
-        var cpf = document.querySelector("#inputCpf").value;
-        var senha = document.querySelector("#senha").value;
-        var email = document.querySelector("#email").value;
-
-        var dados = {
-            nome: nome,
-            OAB: OAB,
-            cpf: inputCpf,
-            senha: senha,
-            email: email
+        const newLawyerData = {
+            nome: document.getElementById('nome').value,
+            OAB: document.getElementById('OAB').value,
+            cpf: document.getElementById('inputCpf').value,
+            email: document.getElementById('email').value
         };
 
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'cadastro.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function() {
-            if (xhr.status >= 200 && xhr.status < 400) {
-                console.log(xhr.responseText);
-            } else {
-                console.error(xhr.statusText);
-            }
-        };
-        xhr.onerror = function() {
-            console.error('Erro de conexão');
-        };
-        xhr.send(JSON.stringify(dados));
+        const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+        const collectionPath = "Advogado";
+        const url = `${databaseURL}/${collectionPath}.json`;
+
+        axios.post(url, newLawyerData)
+            .then(response => {
+                console.log("Novo advogado adicionado com ID:", response.data.name);
+            })
+            .catch(error => {
+                console.error("Erro ao adicionar novo advogado:", error);
+                // Exibe uma mensagem de erro para o usuário, etc.
+            });
     } else {
         alert('Por favor, preencha todos os campos corretamente.');
     }
