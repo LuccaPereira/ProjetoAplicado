@@ -13,7 +13,7 @@
             <form method="POST" action="">
                 <input type="text" id="OAB" placeholder="Digite sua OAB">
                 <input type="password" id="senha" placeholder="Digite sua senha">
-                <button type="submit" onclick="submitForm()">Log In</button>
+                <button type="submit" onclick="getLawyers()">Log In</button>
             </form>
             <a href="../View/cadastrar.html"><button class="create-account">Cadastre-se</button></a>
             <p>Esqueceu sua senha? <a href="../View/updateSenha.html">clique Aqui!</a></p>
@@ -23,6 +23,7 @@
             <p>Este é um projeto voltado para a gestão de membros da Ordem dos Advogados do Brasil (OAB). Faça login com sua OAB e CPF para acessar.</p>
         </div>
     </div>
-    <script type='module' src="../controller/login.controller.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../Controller/login.controller.js"></script>
 </body>
 </html>

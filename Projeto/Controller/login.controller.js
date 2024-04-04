@@ -1,16 +1,16 @@
-import { validarCPF } from '../model/cpf';
+function getLawyers() {
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+    const collectionPath = "Advogado";
+    const url = `${databaseURL}/${collectionPath}.json`;
 
-function submitForm() {
-    var cpfValidate = document.getElementById('inputCpf');
-    var oabValidate = document.getElementById('OAB').value;
-   
-
-    if (!cpfValidate.value.trim() || !oabValidate.trim() || !validarCPF(cpfValidate)) {
-        alert("Os campos estão vazios ou esse cpf é invalido" + cpfValidate);
-        return false;
-    } else {
-        setTimeout(function() {
-            window.location.href = 'C:/Users/LuccaBattaglin/OneDrive - Syniti/Desktop/Projeto/ProjetoAplicado/View/menu.view.html';
-        }, 1000); 
-    }
+    axios.get(url)
+        .then(response => {
+            const lawyers = response.data;
+            console.log("Advogados:", lawyers);
+        })
+        .catch(error => {
+            console.error("Erro ao obter advogados:", error);
+        });
 }
+
+getLawyers();
