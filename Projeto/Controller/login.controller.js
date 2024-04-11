@@ -15,19 +15,21 @@ function login() {
             const lawyerData = response.data;
             console.log("Dados do advogado:", lawyerData);
 
+            if (!lawyerData) {
+                alert("Você não está cadastrado ou sua OAB está incorreta");
+                return;
+            }
+
             var lawyerArray = Object.values(lawyerData);
             var posicaoAdvogado = lawyerArray.find(advoGado => {
                 var position = advoGado.OAB;
                 if (oab === position){
                     if(advoGado.senha === senha) {
-                     window.location.href = "../View/menu.html";
-                    }else{
-                        alert("Senha esta incorreta");
+                        window.location.href = "../View/menu.html";
+                    } else {
+                        alert("Senha está incorreta");
                         return;
                     }
-                } else{
-                    alert("OAB está incorreta ou você não esta cadastrado!");
-                    return;  
                 } 
             });
             console.log(posicaoAdvogado);
