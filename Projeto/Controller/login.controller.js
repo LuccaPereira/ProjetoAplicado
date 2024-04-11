@@ -18,15 +18,13 @@ function login() {
             var lawyerArray = Object.values(lawyerData);
             var posicaoAdvogado = lawyerArray.find(advoGado => {
                 var position = advoGado.OAB;
-                if (oab === position) {
-                    for (var key in advoGado) {
-                        if (advoGado.senha === senha) {
-                            window.location.href = "../View/menu.html";
-                        } else {
-                            alert("Senha digitada esta errada")
-                            return;
-                        }
-                    } 
+                if (oab === position){
+                    if(advoGado.senha === senha) {
+                     window.location.href = "../View/menu.html";
+                    }else{
+                        alert("Senha esta incorreta");
+                        return;
+                    }
                 } else{
                     alert("OAB está incorreta ou você não esta cadastrado!");
                     return;  
