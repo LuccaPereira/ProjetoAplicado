@@ -72,3 +72,20 @@ a {
     color: #1877f2;
     text-decoration: none;
 }
+
+#pdfButton {
+    padding: 3px 8px;
+    background-color: #473030;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#pdfFile {
+    display: none;
+}
+
+.material-icons {
+    vertical-align: middle;
+    margin-right: 5px;
+}

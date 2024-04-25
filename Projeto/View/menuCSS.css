@@ -1,143 +1,141 @@
+/* Estilo para o corpo da página */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #F5F5DC ;
+    position: relative; /* Adicionando posição relativa para alinhar o rodapé */
+    min-height: 100vh; /* Definindo altura mínima para ocupar toda a altura da viewport */
+}
+
+/* Estilo para o container principal */
+.container {
     display: flex;
     flex-direction: column;
-    background-color: #333;
+    align-items: center;
+    padding: 20px;
 }
 
 #logo {
-    max-width: 90px;
-    display: block; 
-    margin: 0px auto 25px;
+    max-width: 150px; /* Reduzindo o tamanho máximo */
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
 }
 
-.container {
-    margin: 0 auto;
-    max-width: 1000px; /* Aumentando a largura máxima */
-    padding: 40px; /* Aumentando o preenchimento */
+.material-icons {
+    font-size: 24px; /* Reduzindo o tamanho do ícone */
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000; /* Aumentando o z-index para garantir que fique acima de outros elementos */
+    color: white; /* Definindo a cor do ícone */
 }
 
-.title {
-    font-family: 'Roboto', sans-serif;
-    font-size: 48px; /* Aumentando o tamanho da fonte */
-    color: #333;
-    text-align: center;
-    margin-bottom: 40px; /* Aumentando a margem inferior */
-    background-color: white;
-}
-
+/* Estilo para o menu de navegação */
 #itens {
-    background-color: #f4f4f4;
-    border-radius: 8px; /* Aumentando o raio do border-radius */
-    padding: 20px; /* Aumentando o preenchimento */
     display: none;
+    background-color: #D2B48C ;
+    padding: 20px;
+    width: 100vw; /* Largura total da tela */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease;
+    border-radius: 20px;
 }
 
-#itens h4 {
-    font-family: 'Roboto', sans-serif;
-    font-size: 24px; /* Aumentando o tamanho da fonte */
-    color: #333;
-    margin-bottom: 20px; /* Aumentando a margem inferior */
+#itens.open {
+    transform: translateY(0);
 }
 
 #itens ul {
+    margin-top: 25px;
     list-style-type: none;
     padding: 0;
 }
 
 #itens li {
-    margin-bottom: 10px; /* Aumentando a margem inferior */
-}
-
-#itens a {
-    display: block;
-    padding: 20px; /* Aumentando o preenchimento */
-    color: #333;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
-
-#itens a:hover {
-    background-color: #ddd;
-}
-
-#itens h4 {
-    font-family: 'Roboto', sans-serif;
-    font-size: 20px;
-    color: #333;
     margin-bottom: 10px;
-}
-
-#itens ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-#itens li {
-    margin-bottom: 5px;
 }
 
 #itens a {
     display: block;
     padding: 10px;
-    color: #333;
+    color: #fff;
     text-decoration: none;
     transition: background-color 0.3s;
 }
 
 #itens a:hover {
-    background-color: #ddd;
-}
-menu {
-    margin-top: 40px; /* Aumentando a margem superior */
-    background-color: black;
-    color: #333;
-    padding: 20px; /* Aumentando o preenchimento */
-    border-radius: 8px; /* Aumentando o raio do border-radius */
-    display: none;
-}
-
-i#burger {
-    display: block;
-    font-size: 36px; /* Aumentando o tamanho da fonte */
-    margin-bottom: 20px; /* Aumentando a margem inferior */
-    color: white;
-    cursor: pointer;
-}
-
-i#burger:hover {
-    color: black;
-}
-
-menu > ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-menu > li {
-    margin-bottom: 10px; /* Aumentando a margem inferior */
-}
-
-a {
-    display: block;
-    padding: 20px; /* Aumentando o preenchimento */
-    color: white;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
-
-a:hover {
     background-color: #555;
 }
 
-.content {
-    margin: 40px auto; /* Aumentando a margem */
-    width: 90%; /* Ajustando a largura */
-    max-width: 800px; /* Ajustando a largura máxima */
-    background-color: white;
-    padding: 60px; /* Aumentando o preenchimento */
-    border-radius: 8px; /* Aumentando o raio do border-radius */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Aumentando o tamanho da sombra */
+#burger {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #34495e ;
+    cursor: pointer;
+    transition: color 0.3s;
 }
+
+#burger:hover {
+    color: black; /* Alterando a cor ao passar o mouse */
+}
+
+/* Estilo para a seção de conteúdo */
+.content {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para os títulos das seções */
+.content h2 {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 15px;
+}
+
+/* Estilo para o texto das seções */
+.content p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* Estilo para a tabela de clientes */
+#clientesTable {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#clientesTable thead {
+    background-color: #f2f2f2;
+}
+
+#clientesTable th,
+#clientesTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#clientesTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#clientesTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
