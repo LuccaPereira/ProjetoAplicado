@@ -1,6 +1,6 @@
 //import { initializeApp } from 'firebase/app';
 //import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import { validarCPF, firebaseConfig} from '../models/cadastro.js';
+//import { validarCPF} from '../models/cadastro.js';
 
 //async function registrarUsuario(email, senha) {
 //    try {
@@ -15,6 +15,37 @@ import { validarCPF, firebaseConfig} from '../models/cadastro.js';
 //        console.error("Erro ao registrar usuário:", error.message);
 //    }
 //}
+
+function validarCPF(cpf) {
+    cpf = cpf.replace(/\D/g, '');
+
+    if (cpf.length !== 11) {
+        return false;
+    }
+
+    let soma = 0;
+    for (let i = 0; i < 9; i++) {
+        soma += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    let digitoVerif1 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+
+    if (parseInt(cpf.charAt(9)) !== digitoVerif1) {
+        return false;
+    }
+
+    soma = 0;
+    for (let i = 0; i < 10; i++) {
+        soma += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    let digitoVerif2 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+
+    if (parseInt(cpf.charAt(10)) !== digitoVerif2) {
+        return false;
+    }
+
+    return true;
+}
+
 
 function submitForm() {
     var form = document.getElementById('cadAdv');
