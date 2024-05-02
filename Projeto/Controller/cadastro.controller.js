@@ -1,20 +1,19 @@
-//import { initializeApp } from 'firebase/app';
-//import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-//import { validarCPF} from '../models/cadastro.js';
+import { initializeApp } from 'firebase/app';
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 
-//async function registrarUsuario(email, senha) {
-//    try {
-//        const app = initializeApp(firebaseConfig);
-//        const { getAuth, createUserWithEmailAndPassword, sendEmailVerification } = require('firebase/auth');
-//        const auth = getAuth(app);
-//        const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
-//        const user = userCredential.user;
-//        await sendEmailVerification(user);
-//        console.log("Email de verificação enviado para", user.email);
-//    } catch (error) {
-//        console.error("Erro ao registrar usuário:", error.message);
-//    }
-//}
+async function registrarUsuario(email, senha) {
+   try {
+        const app = initializeApp(firebaseConfig);
+        const { getAuth, createUserWithEmailAndPassword, sendEmailVerification } = require('firebase/auth');
+        const auth = getAuth(app);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+        const user = userCredential.user;
+        await sendEmailVerification(user);
+        console.log("Email de verificação enviado para", user.email);
+    } catch (error) {
+        console.error("Erro ao registrar usuário:", error.message);
+    }
+}
 
 function validarCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
@@ -47,7 +46,7 @@ function validarCPF(cpf) {
 }
 
 
-function submitForm() {
+async function submitForm() {
     var form = document.getElementById('cadAdv');
 
     if (form.checkValidity()) {
@@ -71,7 +70,7 @@ function submitForm() {
             alert('O número da OAB deve conter 8 dígitos.');
             return;
         } 
-        //await registrarUsuario(email, senha);
+        await registrarUsuario(email, senha);
         alert("Novo advogado registrado com sucesso.");
         window.location.href = "../View/login.html";
 
