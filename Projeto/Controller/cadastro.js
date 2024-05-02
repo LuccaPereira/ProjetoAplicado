@@ -46,7 +46,7 @@ function validarCPF(cpf) {
 }
 
 
-function submitForm() {
+async function submitForm() {
     var form = document.getElementById('cadAdv');
 
     if (form.checkValidity()) {
@@ -70,7 +70,7 @@ function submitForm() {
             alert('O número da OAB deve conter 8 dígitos.');
             return;
         } 
-        //await registrarUsuario(email, senha);
+        await registrarUsuario(email, senha);
         alert("Novo advogado registrado com sucesso.");
         window.location.href = "../View/login.html";
 
