@@ -1,20 +1,3 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-
-async function registrarUsuario(email, senha) {
-   try {
-        const app = initializeApp(firebaseConfig);
-        const { getAuth, createUserWithEmailAndPassword, sendEmailVerification } = require('firebase/auth');
-        const auth = getAuth(app);
-        const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
-        const user = userCredential.user;
-        await sendEmailVerification(user);
-        console.log("Email de verificação enviado para", user.email);
-    } catch (error) {
-        console.error("Erro ao registrar usuário:", error.message);
-    }
-}
-
 function validarCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
 
@@ -45,37 +28,53 @@ function validarCPF(cpf) {
     return true;
 }
 
-
 function submitForm() {
-    var form = document.getElementById('cadAdv');
+    const nome = document.getElementById('nome').value;
+    const OAB = document.getElementById('OAB').value;
+    const CPF = document.getElementById('inputCpf').value;
+    const email = document.getElementById('email').value;
+    const senha = document.getElementById('senha').value;
 
-    if (form.checkValidity()) {
-        const nome = document.getElementById('nome').value;
-        const OAB = document.getElementById('OAB').value;
-        const cpf = document.getElementById('inputCpf').value;
-        const email = document.getElementById('email').value;
-        const senha = document.getElementById('senha').value;
-
-        if (!validarCPF(cpf)) {
-            alert('Favor inserir um CPF válido.');
-            return;
-        }
-
-        if (senha.length < 6) {
-            alert('A senha deve ter no mínimo 6 caracteres.');
-            return;
-        }
-
-        if (OAB.length !== 8) {
-            alert('O número da OAB deve conter 8 dígitos.');
-            return;
-        } 
-        //await registrarUsuario(email, senha);
-        alert("Novo advogado registrado com sucesso.");
-        window.location.href = "../View/login.html";
-
-    } else {
-        alert('Por favor, preencha todos os campos corretamente.');
+    if (!validarCPF(CPF)) {
+        alert('Favor inserir um CPF válido.');
+        return Promise.reject('CPF inválido');
     }
+
+    if (senha.length < 6) {
+        alert('A senha deve ter no mínimo 6 caracteres.');
+        return Promise.reject('Senha muito curta');
+    }
+
+    if (OAB.length !== 8) {
+        alert('O número da OAB deve conter 8 dígitos.');
+        return Promise.reject('Número da OAB inválido');
+    } 
+
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+    const collectionPath = "Advogado";
+    const url = `${databaseURL}/${collectionPath}/${OAB}.json`;
+
+    const oData = {
+        nome: nome,
+        OAB: OAB,
+        CPF: CPF,
+        email: email,
+        senha: senha
+    };
+
+    return axios.post(url, oData)
+        .then(response => {
+            console.log("Dados enviados para o Firebase:", response.data);
+            window.location.href = "../View/login.html";
+            return response.data;
+        })
+        .catch(error => {
+            console.error("Erro ao enviar dados para o Firebase:", error);
+            throw error;
+        });
 }
 
+document.querySelector('.cadAdv').addEventListener('submit', function(event) {
+    event.preventDefault();
+    submitForm()
+});

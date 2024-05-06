@@ -1,6 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-storage.js";
-
 function submitClientes(event){
     event.preventDefault();
 
@@ -14,6 +11,7 @@ function submitClientes(event){
         appId: "1:546978495496:web:502e5bab60ead7fcd0a5bd",
         measurementId: "G-WB0MPN3701"
     };
+    firebase.initializeApp(firebaseConfig);
 
     var form = document.getElementById("clienteForm");
 
@@ -24,19 +22,18 @@ function submitClientes(event){
             telefone: document.getElementById("telefone").value,
         };
 
-        const app = initializeApp(firebaseConfig);
-        const storage = getStorage(app);
+        const storage = firebase.storage();
         const pdfFile = document.getElementById("pdfFile").files[0];
         const timestamp = new Date().getTime();
         const fileName = `${timestamp}_${pdfFile.name}`;
-        const storageRef = ref(storage, `pdfs/${fileName}`);
+        const storageRef = storage.ref(`pdfs/${fileName}`);
 
-        uploadBytes(storageRef, pdfFile)
-            .then((snapshot) => getDownloadURL(snapshot.ref))
+        storageRef.put(pdfFile)
+            .then((snapshot) => snapshot.ref.getDownloadURL())
             .then((downloadURL) => {
                 cliente.pdfURL = downloadURL;
 
-                const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+                const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com";
                 const collectionPath = "Cliente";
                 const url = `${databaseURL}/${collectionPath}.json`;
 

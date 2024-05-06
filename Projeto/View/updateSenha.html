@@ -8,14 +8,18 @@
 </head>
 <body>
     <div class="container">
-        <form class="redefinirSenhaForm" action="#">
+        <form class="redefinirSenhaForm" method="POST" action="#">
             <h2>Esqueceu a Senha?</h2>
             <p>Informe o seu endereço de e-mail para recuperar a senha.</p>
             <input type="text" id="redefinirOab" placeholder="Digite sua OAB" required="true">
             <input type="email" id="emailDeRedefinir" placeholder="Seu E-mail" required="true">
-            <button type="submit" onclick="redefinirSenha()">Recuperar Senha</button>
+            <button type="submit">Recuperar Senha</button>
         </form>
     </div>
-    <script type="module" src="../model/redefinirSenha.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../Controller/redefinirSenha.controller.js"></script>
 </body>
 </html>
