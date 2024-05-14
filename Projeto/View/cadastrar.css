@@ -81,19 +81,6 @@ nav{
     transform: translate(-50%, -50%);
 }
 
-.petition-upload-area{
-    padding: 20px;
-    border: 2px solid black;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    font-size: 16px;
-    max-height: 300px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-}
-
 .div-geral-style{
     display: flex;
     justify-content: space-between;
