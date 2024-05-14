@@ -9,11 +9,9 @@ function displayPDF(input) {
 
         reader.onload = function(e) {
             const petitionView = document.getElementById('petition-view-procuracao');
-            // Criar um novo elemento embed para cada arquivo selecionado
             let embedElement = document.createElement('embed');
             embedElement.setAttribute('src', e.target.result);
             embedElement.setAttribute('style', 'width: 100%; height: 100%;');
-            // Limpar o conteúdo existente e adicionar o novo elemento
             petitionView.innerHTML = '';
             petitionView.appendChild(embedElement);
         }
@@ -66,7 +64,6 @@ function more_files(){
     `
     adicionais.innerHTML += new_html;
 
-    // Adicionando nova opção ao select
     let new_option = document.createElement("option");
     new_option.value = `adicional-${randomId}`;
     new_option.text = `Adicional ${randomId}`;
