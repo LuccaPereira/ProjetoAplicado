@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
+
+body{
+    background-color: rgb(220, 225, 230);
+    font-family: "Radio Canada Big", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    height: 100vh;
+}
+
+.inicial-conteiner{
+    padding: 0;
+}
+
+nav{
+    background-color: rgb(29, 30, 31);
+}
+
+.navbar-brand{
+    padding-left: 20px;
+    font-size: 28px;
+    font-weight: 400;
+    color: white;
+}
+
+.navbar-toggler{
+    margin-right: 20px;
+    background-color: rgba(255, 255, 255, 0.26);
+}
+
+.nav-item{
+    font-weight: 600;
+    transition: .3s;
+}
+
+.active{
+    color: rgba(26, 201, 207, 0.808) !important;
+}
+
+.nav-item:hover{
+    background-color: rgba(240, 248, 255, 0.438);
+    transition: .3s;
+}
+
+.nav-link{
+    font-size: 18px;
+    padding-left: 20px;
+    color: white;
+}
+
+.container{
+    height: 80vh;
+}
+
+.center{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
