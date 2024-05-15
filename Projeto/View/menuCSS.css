@@ -20,7 +20,7 @@ body{
 }
 
 nav {
-    background-color: rgb(10, 30, 49);
+    background-color: #1f1515;
 }
 
 .navbar-brand {
@@ -33,11 +33,13 @@ nav {
 .navbar-toggler {
     margin-right: 20px;
     background-color: white;
+    color: white;
 }
 
 .nav-item {
     font-weight: 600;
     transition: .3s;
+    color: white;
 }
 
 .active {
@@ -98,11 +100,7 @@ nav {
 }
 
 #logo {
-    max-width: 150px; 
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
+   width: 4%;
 }
 
 .material-icons {
@@ -156,37 +154,22 @@ nav {
     background-color: #555;
 }
 
-#burger {
-    font-size: 36px;
-    margin-bottom: 20px;
-    color: #34495e ;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-#burger:hover {
-    color: black; /* Alterando a cor ao passar o mouse */
-}
-
-/* Estilo para a seção de conteúdo */
 .content {
     margin-top: 20px;
     width: 100%;
     max-width: 800px;
-    background-color: rgb(46, 99, 151);
+    background-color: #1f1515;
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo para os títulos das seções */
 .content h2 {
     font-size: 24px;
     color: white;
     margin-bottom: 15px;
 }
 
-/* Estilo para o texto das seções */
 .content p {
     font-size: 16px;
     color: #666;
@@ -194,7 +177,6 @@ nav {
     margin-bottom: 20px;
 }
 
-/* Estilo para a tabela de clientes */
 #clientesTable {
     width: 100%;
     border-collapse: collapse;
