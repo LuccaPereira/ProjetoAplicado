@@ -80,7 +80,8 @@
                 </div>
             </div>
             <div id="upload-area" class="petition-upload-area">
-                <button onclick="" class="more-files">PDF</button>
+                <input type="file" id="pdfFile" accept=".pdf" style="display: none;">
+                <button onclick="document.getElementById('pdfFile').click()" class="more-files">Selecione um arquivo PDF</button>
                 <button onclick="montarOData()" class="more-files">Enviar</button>
             </div>
         </div>
