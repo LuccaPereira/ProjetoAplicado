@@ -50,14 +50,16 @@ function montarOData() {
 
 
     const oData = {
-        CNPJ: cnpjPassivo,
-        NomePeticionante: nomePeticionante,
-        Foro: foro,
-        Acidente: acidente,
-        Valor: valor,
-        Procedimento: procedimento,
-        Codigo: codigo,
-        CPFAtivo: cpfAtivo
+        [nomePeticionante]: {
+            CNPJ: cnpjPassivo,
+            NomePeticionante: nomePeticionante,
+            Foro: foro,
+            Acidente: acidente,
+            Valor: valor,
+            Procedimento: procedimento,
+            Codigo: codigo,
+            CPFAtivo: cpfAtivo
+        }
     };
 
     return axios.post(url, oData)
