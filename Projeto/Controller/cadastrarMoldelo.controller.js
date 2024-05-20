@@ -9,6 +9,7 @@ function fetchClientes() {
             const clientes = response.data;
             console.log("Dados recebidos:", clientes);
             const clientesTable = document.getElementById("clientesBody");
+            const select = document.getElementById('cadastradoPor');
 
             if (!clientesTable) {
                 console.error("Tabela HTML com ID 'clientesBody' não encontrada.");
@@ -17,10 +18,11 @@ function fetchClientes() {
 
             clientesTable.innerHTML = "";
             let tableContent = "";
+            select.innerHTML = "";
+            let dropdownContent = "";
 
             for (let clienteKey in clientes) {
                 const cliente = clientes[clienteKey];
-
                 console.log("Detalhes do cliente:", cliente);
 
                 const newRow = `<tr>
@@ -30,9 +32,14 @@ function fetchClientes() {
                                     <td><a href="${cliente.ultimaAlteracao}">Ultima Alteração</a></td>
                                 </tr>`;
                 tableContent += newRow;
+
+                const newOption = `<option value="${clienteKey}">${clienteKey}</option>`;
+                dropdownContent += newOption;
+                console.log(newOption);
             }
 
             clientesTable.innerHTML = tableContent;
+            select.innerHTML = dropdownContent;
         })
 
         .catch(error => {
