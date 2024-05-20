@@ -21,12 +21,14 @@ function submitClientes(event){
             email: document.getElementById("email").value,
             telefone: document.getElementById("telefone").value,
         };
-
-        const storage = firebase.storage();
+        
         const pdfFile = document.getElementById("pdfFile").files[0];
-        const timestamp = new Date().getTime();
-        const fileName = `${timestamp}_${pdfFile.name}`;
-        const storageRef = storage.ref(`pdfs/${fileName}`);
+        if(pdfFile){
+            const storage = firebase.storage();
+            const timestamp = new Date().getTime();
+            const fileName = `${timestamp}_${pdfFile.name}`;
+            const storageRef = storage.ref(`pdfs/${fileName}`);
+        }
 
         storageRef.put(pdfFile)
             .then((snapshot) => snapshot.ref.getDownloadURL())

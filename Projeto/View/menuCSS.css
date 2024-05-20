@@ -1,14 +1,13 @@
-/* Estilo para o corpo da página */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #F5F5DC ;
-    position: relative; /* Adicionando posição relativa para alinhar o rodapé */
-    min-height: 100vh; /* Definindo altura mínima para ocupar toda a altura da viewport */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
+
+body{
+    background-color: #E6F0FA;
+    font-family: "Radio Canada Big", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    height: 100vh;
 }
 
-/* Estilo para o container principal */
 .container {
     display: flex;
     flex-direction: column;
@@ -16,30 +15,111 @@ body {
     padding: 20px;
 }
 
+.inicial-conteiner {
+    padding: 0;
+}
+
+nav {
+    background-color: #1f1515;
+}
+
+.navbar-brand {
+    padding-left: 20px;
+    width: 4%;
+    font-weight: 400;
+    color: white;
+}
+
+.navbar-toggler {
+    margin-right: 20px;
+    background-color: white;
+    color: white;
+}
+
+.nav-item {
+    font-weight: 600;
+    transition: .3s;
+    color: white;
+}
+
+.active {
+    color: rgba(26, 201, 207, 0.808) !important;
+}
+
+.nav-item:hover {
+    background-color: rgba(37, 121, 194, 0.438);
+    transition: .3s;
+}
+
+.nav-link-a {
+    font-size: 18px;
+    padding-left: 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.pos-nav {
+    width: 100%;
+    background-color: rgba(117, 114, 114, 0.486);
+    padding: 20px;
+    display: flex;
+    justify-content: end;
+}
+
+.pos-nav-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.pos-nav-buttons button {
+    background-color: rgba(255, 255, 0, 0.527) !important;
+    max-width: max-content;
+    border: 1px solid rgba(0, 0, 0, 0.418);
+    border-radius: 2px;
+}
+
+.pos-nav-buttons button:hover {
+    background-color: rgba(255, 255, 0, 0.753);
+    border: 1px solid rgba(0, 0, 0, 0.795);
+}
+
+.dropdown-toggle {
+    background-color: rgba(255, 255, 0, 0.527) !important;
+    max-width: max-content;
+    border: 1px solid rgba(0, 0, 0, 0.418);
+    border-radius: 2px;
+}
+
+.dropdown-toggle:hover {
+    background-color: rgba(255, 255, 0, 0.753);
+    border: 1px solid rgba(0, 0, 0, 0.795);
+}
+
+.center {
+    width: 100%;
+    height: 100%;
+}
+
 #logo {
-    max-width: 150px; /* Reduzindo o tamanho máximo */
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
+   width: 4%;
 }
 
 .material-icons {
-    font-size: 24px; /* Reduzindo o tamanho do ícone */
+    font-size: 24px; 
     cursor: pointer;
     position: fixed;
     top: 20px;
     left: 20px;
-    z-index: 1000; /* Aumentando o z-index para garantir que fique acima de outros elementos */
-    color: white; /* Definindo a cor do ícone */
+    z-index: 1000; 
+    color: white; 
 }
 
-/* Estilo para o menu de navegação */
+
 #itens {
     display: none;
     background-color: #D2B48C ;
     padding: 20px;
-    width: 100vw; /* Largura total da tela */
+    width: 100vw; 
     position: fixed;
     top: 0;
     left: 0;
@@ -75,37 +155,22 @@ body {
     background-color: #555;
 }
 
-#burger {
-    font-size: 36px;
-    margin-bottom: 20px;
-    color: #34495e ;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-#burger:hover {
-    color: black; /* Alterando a cor ao passar o mouse */
-}
-
-/* Estilo para a seção de conteúdo */
 .content {
     margin-top: 20px;
     width: 100%;
     max-width: 800px;
-    background-color: #333;
+    background-color: #1f1515;
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo para os títulos das seções */
 .content h2 {
     font-size: 24px;
     color: white;
     margin-bottom: 15px;
 }
 
-/* Estilo para o texto das seções */
 .content p {
     font-size: 16px;
     color: #666;
@@ -113,7 +178,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Estilo para a tabela de clientes */
 #clientesTable {
     width: 100%;
     border-collapse: collapse;
@@ -138,4 +202,8 @@ body {
 #clientesTable tbody tr:nth-child(odd) {
     background-color: #ffffff;
 }
+
+
+
+
 
