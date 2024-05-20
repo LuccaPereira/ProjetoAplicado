@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esqueceu a Senha</title>
+    <link rel="stylesheet" href="../View/updateSenhaCss.css">
+</head>
+<body>
+    <div class="container">
+        <form class="redefinirSenhaForm" method="POST" action="#">
+            <h2>Esqueceu a Senha?</h2>
+            <p>Informe o seu endereço de e-mail para recuperar a senha.</p>
+            <input type="text" id="redefinirOab" placeholder="Digite sua OAB" required="true">
+            <input type="email" id="emailDeRedefinir" placeholder="Seu E-mail" required="true">
+            <button type="submit">Recuperar Senha</button>
+        </form>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../Controller/redefinirSenha.controller.js"></script>
+</body>
+</html>
