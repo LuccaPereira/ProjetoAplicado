@@ -30,7 +30,7 @@ function fetchClientes() {
                     const selectSituation = document.createElement('select');
                     selectSituation.id = `selectSituation-${clienteKey}`;
 
-                    const options = ['Em cadastramento', 'Aguardando envio', 'Protocolada', 'Inicial', 'Intermediária']; 
+                    const options = ['Em cadastramento', 'Aguardando envio', 'Protocolada']; 
                     options.forEach(optionText => {
                         const option = document.createElement('option');
                         option.value = optionText.toLowerCase().replace(/\s/g, ''); 
