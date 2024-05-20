@@ -1,4 +1,4 @@
-const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com";
 const collectionPath = "Cliente";
 
 function fetchClientes() {
@@ -8,6 +8,8 @@ function fetchClientes() {
             const clientesTable = document.getElementById("clientesBody");
             clientesTable.innerHTML = "";
 
+            let tableContent = "";
+
             for (let clienteKey in clientes) {
                 const cliente = clientes[clienteKey];
                 const newRow = `<tr>
@@ -16,8 +18,10 @@ function fetchClientes() {
                                     <td>${cliente.telefone}</td>
                                     <td><a href="${cliente.linkPDF}">PDF</a></td>
                                 </tr>`;
-                clientesTable.innerHTML += newRow;
+                tableContent += newRow;
             }
+
+            clientesTable.innerHTML = tableContent;
         })
         .catch(error => {
             console.error("Erro ao buscar clientes:", error);
