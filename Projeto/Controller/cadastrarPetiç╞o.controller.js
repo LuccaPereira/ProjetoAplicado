@@ -28,44 +28,41 @@ function validarCPF(cpf) {
     return true;
 }
 
-function submitForm() {
-    const nome = document.getElementById('nome').value;
-    const OAB = document.getElementById('OAB').value;
-    const CPF = document.getElementById('inputCpf').value;
-    const email = document.getElementById('email').value;
-    const senha = document.getElementById('senha').value;
+function montarOData() {
+    
+    const nomePeticionante = document.getElementById('nomePeticionante').value;
+    const foro = document.getElementById('foro').value;
+    const acidente = document.getElementById('acidente').value;
+    const valor = document.getElementById('valor').value;
+    const procedimento = document.getElementById('procedimento').value;
+    const codigo = document.getElementById('codigo').value;
+    const cpfAtivo = document.getElementById('cpfAtivo').value;
+    const cnpjPassivo = document.getElementById('cnpjPassivo').value;
 
-    if (!validarCPF(CPF)) {
+    if (!validarCPF(cpfAtivo)) {
         alert('Favor inserir um CPF válido.');
         return Promise.reject('CPF inválido');
     }
 
-    if (senha.length < 6) {
-        alert('A senha deve ter no mínimo 6 caracteres.');
-        return Promise.reject('Senha muito curta');
-    }
-
-    if (OAB.length !== 8) {
-        alert('O número da OAB deve conter 8 dígitos.');
-        return Promise.reject('Número da OAB inválido');
-    } 
-
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-    const collectionPath = "Advogado";
-    const url = `${databaseURL}/${collectionPath}/${OAB}.json`;
+    const collectionPath = "Cliente";
+    const url = `${databaseURL}/${collectionPath}.json`;
+
 
     const oData = {
-        nome: nome,
-        OAB: OAB,
-        CPF: CPF,
-        email: email,
-        senha: senha
+        CNPJ: cnpjPassivo,
+        NomePeticionante: nomePeticionante,
+        Foro: foro,
+        Acidente: acidente,
+        Valor: valor,
+        Procedimento: procedimento,
+        Codigo: codigo,
+        CPFAtivo: cpfAtivo
     };
 
     return axios.post(url, oData)
         .then(response => {
             console.log("Dados enviados para o Firebase:", response.data);
-            window.location.href = "../View/login.html";
             return response.data;
         })
         .catch(error => {
@@ -74,7 +71,4 @@ function submitForm() {
         });
 }
 
-document.querySelector('.cadAdv').addEventListener('submit', function(event) {
-    event.preventDefault();
-    submitForm()
-});
+

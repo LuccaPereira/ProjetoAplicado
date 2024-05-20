@@ -1,4 +1,4 @@
-.body{
+body{
     background-color: #dee2e6;
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
@@ -10,7 +10,7 @@
     padding: 0;
 }
 
-nav {
+.nav {
     background-color: #1f1515;
 }
 
@@ -40,7 +40,7 @@ nav {
     transition: .3s;
 }
 
-.nav-link {
+.nav-link{
     font-size: 18px;
     padding-left: 20px;
     color: white;
