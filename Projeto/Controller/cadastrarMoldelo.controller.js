@@ -6,11 +6,11 @@ function fetchClientes() {
     axios.get(url)
         .then(response => {
             const clientes = response.data;
-            console.log("Dados recebidos:", clientes);
+            alert("Dados recebidos:", clientes);
             const clientesTable = document.getElementById("clientesBody");
 
             if (!clientesTable) {
-                console.error("Tabela HTML com ID 'clientesBody' não encontrada.");
+                console.error("Tabela não encontrada.");
                 return;
             }
 
@@ -82,7 +82,7 @@ function fetchClientes() {
                     }
                 }
             } else {
-                console.error("Elemento select com ID 'cadastradoPor' não encontrado.");
+                console.error("DropDown não encontrado.");
             }
         })
         .catch(error => {

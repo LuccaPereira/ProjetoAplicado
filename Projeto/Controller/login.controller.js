@@ -6,6 +6,14 @@ function getLawyerByOAB(OAB) {
     return axios.get(url);
 }
 
+function getCpfByCliente(cpfAtivo) {
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+    const collectionPath = "Cliente";
+    const url = `${databaseURL}/${collectionPath}/${cpfAtivo}.json`;
+
+    return axios.get(url);
+}
+
 function login() {
     var oab = document.getElementById("OAB").value;
     var senha = document.getElementById("senha").value;
