@@ -67,6 +67,23 @@ function fetchClientes() {
             } else {
                 console.error("Elemento select com ID 'cadastradoPor' não encontrado.");
             }
+
+            const selectEmNome = document.getElementById('emNomeDe');
+            if (selectEmNome) {
+                selectEmNome.innerHTML = "";
+                for (let clienteKey in clientes) {
+                    if (clientes.hasOwnProperty(clienteKey)) {
+                        const cliente = clientes[clienteKey];
+                        const adv = cliente.NomeAdvogado.toString();
+                        const option = document.createElement('option');
+                        option.value = clienteKey;
+                        option.textContent = cliente[adv].NomePeticionante || "Nome não disponível";
+                        selectEmNome.appendChild(option);
+                    }
+                }
+            } else {
+                console.error("Elemento select com ID 'cadastradoPor' não encontrado.");
+            }
         })
         .catch(error => {
             console.error("Erro ao buscar clientes:", error);
