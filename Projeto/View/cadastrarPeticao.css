@@ -60,7 +60,7 @@ nav{
 }
 
 .petition-info {
-    width: 700px;
+    width: 80%;
     padding-top: 20px;
     margin: auto;
 }
@@ -118,7 +118,7 @@ nav{
 }
 
 .left-card-section,
-.right-card-section {
+.right-card-section{
     width: 50%;
 }
 
