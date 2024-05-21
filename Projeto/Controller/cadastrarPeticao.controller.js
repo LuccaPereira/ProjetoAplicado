@@ -38,6 +38,7 @@ function montarOData() {
     const codigo = document.getElementById('codigo').value;
     const cpfAtivo = document.getElementById('cpfAtivo').value;
     const cnpjPassivo = document.getElementById('cnpjPassivo').value;
+    const senhaCliente = document.getElementById('senhaCliente').value;
 
     if (!validarCPF(cpfAtivo)) {
         alert('Favor inserir um CPF válido.');
@@ -58,7 +59,8 @@ function montarOData() {
             Valor: valor,
             Procedimento: procedimento,
             Codigo: codigo,
-            CPFAtivo: cpfAtivo
+            CPFAtivo: cpfAtivo,
+            senhaCliente: senhaCliente
         }
     };
 

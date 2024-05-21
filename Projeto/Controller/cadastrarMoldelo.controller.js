@@ -6,11 +6,11 @@ function fetchClientes() {
     axios.get(url)
         .then(response => {
             const clientes = response.data;
-            console.log("Dados recebidos:", clientes);
+            alert("Dados recebidos:", clientes);
             const clientesTable = document.getElementById("clientesBody");
 
             if (!clientesTable) {
-                console.error("Tabela HTML com ID 'clientesBody' não encontrada.");
+                console.error("Tabela não encontrada.");
                 return;
             }
 
@@ -30,7 +30,7 @@ function fetchClientes() {
                     const selectSituation = document.createElement('select');
                     selectSituation.id = `selectSituation-${clienteKey}`;
 
-                    const options = ['Em cadastramento', 'Aguardando envio', 'Protocolada', 'Inicial', 'Intermediária']; 
+                    const options = ['Em cadastramento', 'Aguardando envio', 'Protocolada']; 
                     options.forEach(optionText => {
                         const option = document.createElement('option');
                         option.value = optionText.toLowerCase().replace(/\s/g, ''); 
@@ -66,6 +66,23 @@ function fetchClientes() {
                 }
             } else {
                 console.error("Elemento select com ID 'cadastradoPor' não encontrado.");
+            }
+
+            const selectEmNome = document.getElementById('emNomeDe');
+            if (selectEmNome) {
+                selectEmNome.innerHTML = "";
+                for (let clienteKey in clientes) {
+                    if (clientes.hasOwnProperty(clienteKey)) {
+                        const cliente = clientes[clienteKey];
+                        const adv = cliente.NomeAdvogado.toString();
+                        const option = document.createElement('option');
+                        option.value = clienteKey;
+                        option.textContent = cliente[adv].NomePeticionante || "Nome não disponível";
+                        selectEmNome.appendChild(option);
+                    }
+                }
+            } else {
+                console.error("DropDown não encontrado.");
             }
         })
         .catch(error => {

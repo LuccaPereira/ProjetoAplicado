@@ -111,12 +111,12 @@ function montarOData() {
 
         return axios.post(url, oData)
             .then(response => {
-                console.log("Dados enviados para o Firebase:", response.data);
+               alert("Dados enviados para o Firebase:", response.data);
                 //form.reset();
                 return response.data;
             })
             .catch(error => {
-                console.error("Erro ao enviar dados para o Firebase:", error);
+                alert("Erro ao enviar dados para o Firebase:", error);
                 throw error;
             });
     }
