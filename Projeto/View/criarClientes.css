@@ -1,4 +1,4 @@
-body{
+body {
     background-color: #dee2e6;
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
@@ -6,7 +6,7 @@ body{
     height: 100vh;
 }
 
-.inicial-conteiner{
+.inicial-conteiner {
     padding: 0;
 }
 
@@ -14,44 +14,43 @@ body{
     background-color: #1f1515;
 }
 
-.navbar-brand{
+.navbar-brand {
     padding-left: 20px;
     font-size: 28px;
     font-weight: 400;
     color: white;
 }
- 
-.navbar-toggler{
+
+.navbar-toggler {
     margin-right: 20px;
     background-color: rgba(255, 255, 255, 0.26);
 }
 
-.nav-item{
+.nav-item {
     font-weight: 600;
     transition: .3s;
 }
 
-.active{
+.active {
     color: rgba(26, 201, 207, 0.808) !important;
 }
 
-.nav-item:hover{
+.nav-item:hover {
     background-color: rgba(240, 248, 255, 0.438);
     transition: .3s;
 }
 
-.nav-link{
+.nav-link {
     font-size: 18px;
     padding-left: 20px;
     color: white;
-
 }
 
 #logo {
     width: 4%;
 }
 
-.pos-nav{
+.pos-nav {
     width: 100%;
     background-color: rgba(117, 114, 114, 0.486);
     padding: 20px;
@@ -59,36 +58,36 @@ body{
     justify-content: end;
 }
 
-.pos-nav-buttons{
+.pos-nav-buttons {
     display: flex;
     gap: 6px;
 }
 
-.pos-nav-buttons button{
+.pos-nav-buttons button {
     background-color: rgba(255, 255, 0, 0.527) !important;
     max-width: max-content;
     border: 1px solid rgba(0, 0, 0, 0.418);
     border-radius: 2px;
 }
 
-.pos-nav-buttons button:hover{
+.pos-nav-buttons button:hover {
     background-color: rgba(255, 255, 0, 0.753);
     border: 1px solid rgba(0, 0, 0, 0.795);
 }
 
-.dropdown-toggle{
+.dropdown-toggle {
     background-color: rgba(255, 255, 0, 0.527) !important;
     max-width: max-content;
     border: 1px solid rgba(0, 0, 0, 0.418);
     border-radius: 2px;
 }
 
-.dropdown-toggle:hover{
+.dropdown-toggle:hover {
     background-color: rgba(255, 255, 0, 0.753);
     border: 1px solid rgba(0, 0, 0, 0.795);
 }
 
-.center{
+.center {
     width: 100%;
     height: 100%;
 }
@@ -122,9 +121,7 @@ label {
 }
 
 input[type="text"],
-input[type="email"],
 input[type="password"],
-input[type="tel"],
 button[type="submit"] {
     width: 100%;
     padding: 10px;
@@ -135,9 +132,7 @@ button[type="submit"] {
 }
 
 input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="tel"]:focus {
+input[type="password"]:focus {
     outline: none;
     border-color: #007bff;
 }
@@ -155,21 +150,4 @@ button[type="submit"]:hover {
 a {
     color: #1877f2;
     text-decoration: none;
-}
-
-#pdfButton {
-    padding: 3px 8px;
-    background-color: #473030;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#pdfFile {
-    display: none;
-}
-
-.material-icons {
-    vertical-align: middle;
-    margin-right: 5px;
 }
