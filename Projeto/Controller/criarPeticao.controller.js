@@ -54,6 +54,15 @@ function montarOData() {
     const telefone = document.getElementById('telefone').value;
     const descricao = document.getElementById('descricao').value;
     const NomeAdvogado = document.getElementById('NomeAdvogado').value;
+    const getFormattedDate = () => {
+        const date = new Date();
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Meses são baseados em zero
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+    const ultimaAlteracao = getFormattedDate();
+
 
     if (!validarCPF(cpfAtivo)) {
         alert('Favor inserir um CPF válido.');
@@ -78,7 +87,8 @@ function montarOData() {
             Procedimento: procedimento,
             Email: email,
             Telefone: telefone,
-            Descrição: descricao
+            Descrição: descricao,
+            ultimaAlteracao: ultimaAlteracao
         }
     };
 

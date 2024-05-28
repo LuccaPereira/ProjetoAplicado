@@ -1,13 +1,10 @@
-// Define a URL do banco de dados Firebase Realtime Database
-const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com";
-
-// Define o caminho da coleção dentro do banco de dados
-const collectionPath = "Cliente";
-
 // Define a função para buscar clientes no banco de dados
 function fetchClientes() {
     // Faz uma requisição GET à URL do banco de dados seguida do caminho da coleção
-    axios.get(`${databaseURL}/${collectionPath}.json`)
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com";
+    const collectionPath = "Cliente";
+    const url = `${databaseURL}/${collectionPath}.json`;
+    axios.get(url)
         // Manipula a resposta da requisição quando ela for bem-sucedida
         .then(response => {
             // Armazena os dados da resposta em uma variável chamada 'clientes'
@@ -29,10 +26,8 @@ function fetchClientes() {
 
                 // Cria uma nova linha para a tabela, preenchendo-a com os detalhes do cliente
                 const newRow = `<tr>
-                                    <td>${cliente.nome}</td>
-                                    <td>${cliente.email}</td>
-                                    <td>${cliente.telefone}</td>
-                                    <td><a href="${cliente.linkPDF}">PDF</a></td>
+                                    <td>${cliente.cpf}</td>
+                                    <td>${cliente.senha}</td>
                                 </tr>`;
                 // Adiciona a nova linha ao conteúdo da tabela
                 tableContent += newRow;
