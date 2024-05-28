@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
+
+body {
+    background-color: rgb(220, 225, 230);
+    font-family: "Radio Canada Big", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    height: 100vh;
+    text-align: center;
+    margin: 0;
+}
+
+.inicial-conteiner {
+    padding: 0;
+}
+
+nav {
+    background-color: #1f1515;
+}
+
+.navbar-brand {
+    padding-left: 20px;
+    font-size: 28px;
+    font-weight: 400;
+    color: white;
+}
+
+.navbar-toggler {
+    margin-right: 20px;
+    background-color: rgba(255, 255, 255, 0.26);
+}
+
+.nav-item {
+    font-weight: 600;
+    transition: .3s;
+}
+
+.active {
+    color: rgba(26, 201, 207, 0.808) !important;
+}
+
+.nav-item:hover {
+    background-color: rgba(240, 248, 255, 0.438);
+    transition: .3s;
+}
+
+.nav-link {
+    font-size: 18px;
+    padding-left: 20px;
+    color: white;
+}
+
+.center {
+    width: 100%;
+    height: 100%;
+}
+
+#logo {
+    width: 4%;
+}
+
+.petition-info {
+    width: 80%;
+    padding-top: 20px;
+    margin: auto;
+}
+
+.info-login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.card-info {
+    background-color: white;
+    border-radius: 8px;
+    padding-bottom: 20px;
+}
+
+.card-info h1 {
+    padding-top: 20px;
+    padding-left: 20px;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.658);
+}
+
+.card-info hr {
+    width: 100%;
+}
+
+.card-info-name {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.card-info input {
+    padding-left: 20px;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.521);
+    background-color: transparent;
+}
+
+.card-info-name h4 {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.582);
+}
+
+.dados-para-processo {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.dados-para-processo input {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.103);
+}
+
+.left-card-section,
+.right-card-section{
+    width: 50%;
+}
+
+.more-files {
+    display:inline-block;
+    width: 30%;
+    border: 2px solid rgba(0, 0, 0, 0.507);
+    background-color: #473030;
+    border-radius: 2px;
+    margin: 5% auto; 
+    color: white;
+    transition: .3s;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+.more-files:hover {
+    border: 2px solid black;
+    color: black;
+    background-color: rgb(106, 139, 201);
+}
+
+.vertical-line {
+    border-left: 1px solid black;
+    height: 100%;
+    margin: 0 20px;
+}
+
+#adicionais {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.chatbot-card {
+    width: 50%;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-window {
+    height: 300px;
+    overflow-y: scroll;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    background-color: #f5f5f5;
+}
+
+.messages {
+    height: 100%;
+}
+
+.input-group {
+    margin-top: 20px;
+}
+
+.user-message, .bot-message {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.user-message {
+    background-color: #d1ecf1;
+    text-align: left;
+}
+
+.bot-message {
+    background-color: #f8d7da;
+    text-align: left;
+}
