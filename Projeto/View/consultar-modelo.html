@@ -32,54 +32,25 @@
             </div>
         </div>
     </nav>
-
-    <div class="pos-nav">
-        <div class="pos-nav-buttons">
-            <button class="criar-peticao-i">Criar Petição Intermediária</button>
-            <div class="dropdown show">
-                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Criar Petição Inicial
-                </a>
-              
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </div>
-        </div>
-    </div>
-
     <div class="consultar-modelo">
         <div class="center1">
             <div class="center-selects">
                 <div class="first-selects div-select">
-                    <h3>Em nome de*</h3>
-
-                    <select name="emNomeDe" id="emNomeDe">
-                        <option value="DEFENSORIA....">DEFENSORIA....</option>
-                        <option value="DEFENSORIA2....">DEFENSORIA2....</option>
-                        <option value="DEFENSORIA3....">DEFENSORIA3....</option>
-                    </select>
+                    <h3>Cadastrada por*</h3>
+                    <select name="cadastradoPor" id="cadastradoPor"></select>
                 </div>
                 <div class="second-select div-select">
-                    <h3>Cadastrada por*</h3>
-
-                    <select name="emNomeDe" id="emNomeDe">
-                        <option value="DEFENSORIA....">DEFENSORIA....</option>
-                        <option value="DEFENSORIA2....">DEFENSORIA2....</option>
-                        <option value="DEFENSORIA3....">DEFENSORIA3....</option>
-                    </select>
+                    <h3>Em nome de*</h3>
+                    <select name="emNomeDe" id="emNomeDe"></select>
                 </div>
             </div>
 
             <div class="instancia">
-                <h3>Intância</h3>
+                <h3>Instância</h3>
 
                 <select name="instancia" id="instanciaSelect">
                     <option value="1grau">1º Grau</option>
                     <option value="2grau">2º Grau</option>
-                    <option value="3grau">3º Grau</option>
                 </select>
             </div>
             <div class="situacao">
@@ -101,203 +72,36 @@
                             <p>Protocolada</p>
                         </div>
                     </div>
-                    <div class="ckeck2-div">
-                        Tipo
-                        <div class="checks2">
-                            <div class="check-name">
-                                <input type="checkbox">
-                                <p>Inicial</p>
-                            </div>
-    
-                            <div class="check-name">
-                                <input type="checkbox">
-                                <p>Intermediária</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="consultar-busca">
                     <button>Consultar</button>
                 </div>
             </div>
-
-            <div class="exportat-div">
-                <button class="continuarBtn">Exportar para arquivo</button>
-            </div>
         </div>
     </div>
-
 
     <div class="container-fluid">
-        <div class="center">
-            <div class="modelos">
-                <div class="modelo">
-                    <div class="div-left-modelo">
-                        <div class="nome-situcao">
-                            <h3>Inicial de 1º Grau</h3>
-                            <select name="cad-opt" id="cad-opt">
-                                <option value="Em cadastramento">Em cadastramento</option>
-                                <option value="Aguardando envio">Aguardando envio</option>
-                                <option value="Protocolada">Concluída</option>
-                            </select>
-                       </div> 
-                       <div class="despejo">
-                            <h3>Despejo</h3>
-                            <span>Despejo para Use de ...</span>
-                       </div>
-                       <div class="dado-sensiel">
-                            <h3>Dados</h3>
-                            <span>000.000.000-00</span>
-                       </div>
-                       <div class="ultima-aleracao">
-                            <h3>Última alteração</h3>
-                            <span>00/00/0000 00:00</span>
-                       </div>
-                    </div>
-
-                    <div class="div-right-modelo">
-                        <div class="continuar-excluir">
-                            <button class="continuarBtn">continuar</button>
-                            <button class="excluirBtn"><img src="./src/lixeira-icon.png" alt="exclir petição"></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modelo">
-                    <div class="div-left-modelo">
-                        <div class="nome-situcao">
-                            <h3>Inicial de 1º Grau</h3>
-                            <select name="cad-opt" id="cad-opt">
-                                <option value="Em cadastramento">Em cadastramento</option>
-                                <option value="Aguardando envio">Aguardando envio</option>
-                                <option value="Protocolada">Concluída</option>
-                            </select>
-                       </div> 
-                       <div class="despejo">
-                            <h3>Despejo</h3>
-                            <span>Despejo para Use de ...</span>
-                       </div>
-                       <div class="dado-sensiel">
-                            <h3>Dados</h3>
-                            <span>000.000.000-00</span>
-                       </div>
-                       <div class="ultima-aleracao">
-                            <h3>Última alteração</h3>
-                            <span>00/00/0000 00:00</span>
-                       </div>
-                    </div>
-
-                    <div class="div-right-modelo">
-                        <div class="continuar-excluir">
-                            <button class="continuarBtn">continuar</button>
-                            <button class="excluirBtn"><img src="./src/lixeira-icon.png" alt="exclir petição"></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modelo">
-                    <div class="div-left-modelo">
-                        <div class="nome-situcao">
-                            <h3>Inicial de 1º Grau</h3>
-                            <select name="cad-opt" id="cad-opt">
-                                <option value="Em cadastramento">Em cadastramento</option>
-                                <option value="Aguardando envio">Aguardando envio</option>
-                                <option value="Protocolada">Concluída</option>
-                            </select>
-                       </div> 
-                       <div class="despejo">
-                            <h3>Despejo</h3>
-                            <span>Despejo para Use de ...</span>
-                       </div>
-                       <div class="dado-sensiel">
-                            <h3>Dados</h3>
-                            <span>000.000.000-00</span>
-                       </div>
-                       <div class="ultima-aleracao">
-                            <h3>Última alteração</h3>
-                            <span>00/00/0000 00:00</span>
-                       </div>
-                    </div>
-
-                    <div class="div-right-modelo">
-                        <div class="continuar-excluir">
-                            <button class="continuarBtn">continuar</button>
-                            <button class="excluirBtn"><img src="./src/lixeira-icon.png" alt="exclir petição"></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modelo">
-                    <div class="div-left-modelo">
-                        <div class="nome-situcao">
-                            <h3>Inicial de 1º Grau</h3>
-                            <select name="cad-opt" id="cad-opt">
-                                <option value="Em cadastramento">Em cadastramento</option>
-                                <option value="Aguardando envio">Aguardando envio</option>
-                                <option value="Protocolada">Concluída</option>
-                            </select>
-                       </div> 
-                       <div class="despejo">
-                            <h3>Despejo</h3>
-                            <span>Despejo para Use de ...</span>
-                       </div>
-                       <div class="dado-sensiel">
-                            <h3>Dados</h3>
-                            <span>000.000.000-00</span>
-                       </div>
-                       <div class="ultima-aleracao">
-                            <h3>Última alteração</h3>
-                            <span>00/00/0000 00:00</span>
-                       </div>
-                    </div>
-
-                    <div class="div-right-modelo">
-                        <div class="continuar-excluir">
-                            <button class="continuarBtn">continuar</button>
-                            <button class="excluirBtn"><img src="./src/lixeira-icon.png" alt="exclir petição"></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modelo">
-                    <div class="div-left-modelo">
-                        <div class="nome-situcao">
-                            <h3>Inicial de 1º Grau</h3>
-                            <select name="cad-opt" id="cad-opt">
-                                <option value="Em cadastramento">Em cadastramento</option>
-                                <option value="Aguardando envio">Aguardando envio</option>
-                                <option value="Protocolada">Concluída</option>
-                            </select>
-                       </div> 
-                       <div class="despejo">
-                            <h3>Despejo</h3>
-                            <span>Despejo para Use de ...</span>
-                       </div>
-                       <div class="dado-sensiel">
-                            <h3>Dados</h3>
-                            <span>000.000.000-00</span>
-                       </div>
-                       <div class="ultima-aleracao">
-                            <h3>Última alteração</h3>
-                            <span>00/00/0000 00:00</span>
-                       </div>
-                    </div>
-
-                    <div class="div-right-modelo">
-                        <div class="continuar-excluir">
-                            <button class="continuarBtn">continuar</button>
-                            <button class="excluirBtn"><img src="./src/lixeira-icon.png" alt="exclir petição"></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+            <table id="clientesTable" class="table table-dark table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Cpf</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Ultima alteração</th>
+                    <th scope="col">Situação</th>
+                    <th scope="col">Petição em PDF</th>
     
-
+                  </tr>
+                </thead>
+                <tbody id="clientesBody">
+                
+                </tbody>
+            </table>   
+    </div>
+    
+   <br><br><br><br>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-    <script src="./src/consultar-modelo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="./../Controller/cadastrarMoldelo.controller.js"></script>
 </body>
 </html>

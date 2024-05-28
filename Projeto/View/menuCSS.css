@@ -51,10 +51,11 @@ nav {
     transition: .3s;
 }
 
-.nav-link {
+.nav-link-a {
     font-size: 18px;
     padding-left: 20px;
     color: white;
+    text-decoration: none;
 }
 
 .pos-nav {
