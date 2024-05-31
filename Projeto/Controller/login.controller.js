@@ -61,21 +61,45 @@ function login() {
     
                 var clienteArray = Object.values(cliente);
                 var posicaoCliente = clienteArray.find(clienteGado => {
-                    const adv = clienteGado.NomeAdvogado.toString();
-                    var positionCpf = clienteGado[adv].CPFAtivo;
-                    var senhaClientela = clienteGado[adv].senhaCliente;
-                    if (oab === positionCpf){
-                        if(clienteGado.senha === senhaClientela) {
-                            window.location.href = "../View/consultar.hmtl";
+                    var positionCpf;
+                    var senhaClientela;
+    
+                    if (clienteGado.NomeAdvogado) {
+                        const adv = clienteGado.NomeAdvogado.toString();
+                        positionCpf = clienteGado[adv].CPFAtivo;
+                        senhaClientela = clienteGado[adv].senhaCliente;
+                    } else {
+                        positionCpf = clienteGado.cpf;
+                        senhaClientela = clienteGado.senha;
+                    }
+    
+                    if (oab === positionCpf) {
+                        if (senha === senhaClientela) {
+                            window.location.href = "../View/consultar.html";
+                            return true; 
                         } else {
                             alert("Senha está incorreta");
-                            return;
+                            return false; 
                         }
                     }
+    
+                    return false; 
                 });
+    
+                if (!posicaoCliente) {
+                    alert("CPF não encontrado ou senha incorreta");
+                }
+    
                 console.log(posicaoCliente);
             })
+        .catch(error => {
+            console.error("Erro ao obter dados do cliente:", error);
+            alert("Ocorreu um erro ao processar sua solicitação. Tente novamente mais tarde.");
+        });
+    } else {
+        alert("CPF inválido");
     }
+    
     
     getLawyerByOAB(oab)
         .then(response => {
