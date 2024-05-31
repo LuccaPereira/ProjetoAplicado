@@ -6,7 +6,7 @@ function fetchClientes() {
     axios.get(url)
         .then(response => {
             const clientes = response.data;
-            alert("Dados recebidos:", JSON.stringify(clientes));
+            console.log("Dados recebidos:", JSON.stringify(clientes));
             const clientesTable = document.getElementById("clientesBody");
 
             if (!clientesTable) {
@@ -29,7 +29,7 @@ function fetchClientes() {
                             const cpfAtivo = cliente[adv].CPFAtivo || "CPF não disponível";
                             const descricao = cliente[adv].Descrição || "Descrição não disponível";
                             const ultimaAlteracao = cliente[adv].ultimaAlteracao || "#";
-                            const pdf = firebase.storage || "#";
+                            //const pdf = firebase.storage || "#";
 
                             if (nomePeticionante !== "Nome não disponível" || cpfAtivo !== "CPF não disponível" || descricao !== "Descrição não disponível" || ultimaAlteracao !== "#") {
                                 const newRow = document.createElement('tr');
@@ -38,7 +38,7 @@ function fetchClientes() {
                                     <td>${cpfAtivo}</td>
                                     <td>${descricao}</td>
                                     <td>${ultimaAlteracao}</td>
-                                    <td>${pdf}</td>`
+                                    <td></td>`
 
                                 const tdSituation = newRow.querySelector('td:last-of-type');
                                 const selectSituation = document.createElement('select');
