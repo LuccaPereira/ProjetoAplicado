@@ -54,6 +54,15 @@ function montarOData() {
     const telefone = document.getElementById('telefone').value;
     const descricao = document.getElementById('descricao').value;
     const NomeAdvogado = document.getElementById('NomeAdvogado').value;
+    const getFormattedDate = () => {
+        const date = new Date();
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Meses são baseados em zero
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+    const ultimaAlteracao = getFormattedDate();
+
 
     if (!validarCPF(cpfAtivo)) {
         alert('Favor inserir um CPF válido.');
@@ -62,30 +71,34 @@ function montarOData() {
 
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = "Cliente";
-    const url = `${databaseURL}/${collectionPath}/${NomeAdvogado}/${nomePeticionante}.json`;
+    const url = `${databaseURL}/${collectionPath}.json`;
 
 
     const oData = {
-        NomePeticionante: nomePeticionante,
-        CPFAtivo: cpfAtivo,
-        CNPJ: cnpjPassivo,
-        Acidente: acidente,
-        Auxilio: auxilio,
-        Valor: valor,
-        Foro: foro,
-        Procedimento: procedimento,
-        Email : email,
-        Telefone : telefone,
-        Descrição: descricao
+        NomeAdvogado: NomeAdvogado,
+        [NomeAdvogado]: {
+            NomePeticionante: nomePeticionante,
+            CPFAtivo: cpfAtivo,
+            CNPJ: cnpjPassivo,
+            Acidente: acidente,
+            Auxilio: auxilio,
+            Valor: valor,
+            Foro: foro,
+            Procedimento: procedimento,
+            Email: email,
+            Telefone: telefone,
+            Descrição: descricao,
+            ultimaAlteracao: ultimaAlteracao
+        }
     };
 
-    const pdfFile = document.getElementById("pdfFile")
-    if(pdfFile){
+    const pdfFileInput = document.getElementById("pdfFile")
+    if(pdfFileInput.value != ""){
         const storage = firebase.storage();
         const timestamp = new Date().getTime();
-        const fileName = `${timestamp}_${pdfFile.name}`;
+        const fileName = `${timestamp}_${pdfFileInput.name}`;
         const storageRef = storage.ref(`pdfs/${fileName}`);
-        const pdfFile = document.getElementById("pdfFile").files[0];
+        const pdfFile = pdfFileInput.files[0];
     
     storageRef.put(pdfFile)
         .then((snapshot) => snapshot.ref.getDownloadURL())
@@ -94,7 +107,7 @@ function montarOData() {
 
             const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
             const collectionPath = "Cliente";
-            const url = `${databaseURL}/${collectionPath}/${NomeAdvogado}/${nomePeticionante}.json`;
+            const url = `${databaseURL}/${collectionPath}.json`;
             return axios.post(url, oData);
         })
         .then((response) => {
@@ -108,12 +121,12 @@ function montarOData() {
 
         return axios.post(url, oData)
             .then(response => {
-                console.log("Dados enviados para o Firebase:", response.data);
+               alert("Dados enviados para o Firebase:", response.data);
                 //form.reset();
                 return response.data;
             })
             .catch(error => {
-                console.error("Erro ao enviar dados para o Firebase:", error);
+                alert("Erro ao enviar dados para o Firebase:", error);
                 throw error;
             });
     }
