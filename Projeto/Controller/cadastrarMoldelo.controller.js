@@ -6,7 +6,6 @@ function fetchClientes() {
     axios.get(url)
         .then(response => {
             const clientes = response.data;
-            console.log("Dados recebidos:", JSON.stringify(clientes));
             const clientesTable = document.getElementById("clientesBody");
 
             if (!clientesTable) {
@@ -19,7 +18,6 @@ function fetchClientes() {
             for (let clienteKey in clientes) {
                 if (clientes.hasOwnProperty(clienteKey)) {
                     const cliente = clientes[clienteKey];
-                    console.log("Detalhes do cliente:", cliente);
                     
                     if (cliente.NomeAdvogado) {
                         const adv = cliente.NomeAdvogado.toString();
@@ -38,21 +36,19 @@ function fetchClientes() {
                                     <td>${cpfAtivo}</td>
                                     <td>${descricao}</td>
                                     <td>${ultimaAlteracao}</td>
-                                    <td></td>`
+                                    <td>
+                                        <select id="selectSituation-${clienteKey}">
+                                            <option value="emcadastramento">Em cadastramento</option>
+                                            <option value="aguardandoenvio">Aguardando envio</option>
+                                            <option value="protocolada">Protocolada</option>
+                                        </select>
+                                    </td>
+                                    <td><a href="#">Baixar</a></td>`;
 
-                                const tdSituation = newRow.querySelector('td:last-of-type');
-                                const selectSituation = document.createElement('select');
-                                selectSituation.id = `selectSituation-${clienteKey}`;
-
-                                const options = ['Em cadastramento', 'Aguardando envio', 'Protocolada'];
-                                options.forEach(optionText => {
-                                    const option = document.createElement('option');
-                                    option.value = optionText.toLowerCase().replace(/\s/g, '');
-                                    option.textContent = optionText;
-                                    selectSituation.appendChild(option);
+                                newRow.addEventListener('click', function() {
+                                    showClientDetails(clienteKey);
                                 });
 
-                                tdSituation.appendChild(selectSituation);
                                 clientesTable.appendChild(newRow);
                             }
                         } else {
@@ -104,6 +100,37 @@ function fetchClientes() {
         })
         .catch(error => {
             console.error("Erro ao buscar clientes:", error);
+        });
+}
+
+function showClientDetails(clienteKey) {
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+    const collectionPath = `Cliente/${clienteKey}.json`;
+    const url = `${databaseURL}/${collectionPath}`;
+
+    axios.get(url)
+        .then(response => {
+            const cliente = response.data;
+
+            if (cliente) {
+                const adv = cliente.NomeAdvogado.toString();
+                const clientDetails = cliente[adv];
+
+                document.getElementById('modalNome').textContent = `Nome: ${clientDetails.NomePeticionante || "Nome não disponível"}`;
+                document.getElementById('modalCpf').textContent = `CPF: ${clientDetails.CPFAtivo || "CPF não disponível"}`;
+                document.getElementById('modalDescricao').textContent = `Descrição: ${clientDetails.Descrição || "Descrição não disponível"}`;
+                document.getElementById('modalUltimaAlteracao').textContent = `Última alteração: ${clientDetails.ultimaAlteracao || "Data não disponível"}`;
+                document.getElementById('modalSituacao').textContent = `Situação: ${clientDetails.situacao || "Situação não disponível"}`;
+                document.getElementById('modalPeticao').innerHTML = `<a href="#">Baixar</a>`;
+
+                const modal = new bootstrap.Modal(document.getElementById('clienteModal'));
+                modal.show();
+            } else {
+                console.error("Detalhes do cliente não encontrados.");
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao buscar detalhes do cliente:", error);
         });
 }
 
