@@ -1,52 +1,58 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
 
-body{
+body {
     background-color: rgb(220, 225, 230);
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     height: 100vh;
+    text-align: center;
+    margin: 0;
 }
 
-.inicial-conteiner{
+.inicial-conteiner {
     padding: 0;
 }
 
-nav{
+nav {
     background-color: #1f1515;
 }
 
-.navbar-brand{
+.navbar-brand {
     padding-left: 20px;
     font-size: 28px;
     font-weight: 400;
     color: white;
 }
 
-.navbar-toggler{
+.navbar-toggler {
     margin-right: 20px;
     background-color: rgba(255, 255, 255, 0.26);
 }
 
-.nav-item{
+.nav-item {
     font-weight: 600;
     transition: .3s;
 }
 
-.active{
+.active {
     color: rgba(26, 201, 207, 0.808) !important;
 }
 
-.nav-item:hover{
+.nav-item:hover {
     background-color: rgba(240, 248, 255, 0.438);
     transition: .3s;
 }
 
-.nav-link{
+.nav-link {
     font-size: 18px;
     padding-left: 20px;
     color: white;
+}
 
+.center {
+    width: 100%;
+    height: 100%;
 }
 
 #logo {
@@ -285,4 +291,28 @@ nav{
     width: 100%;
     display: flex;
     justify-content: end;
+}
+
+footer {
+	background-color: #1f1515;
+	color: #fff;
+	padding: 20px;
+	text-align: center;
+	margin-top: 50px;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+li {
+	display: inline-block;
+	margin: 0 10px;
+}
+
+a {
+	color: #fff;
+	text-decoration: none;
 }
