@@ -4,13 +4,22 @@ body {
     font-optical-sizing: auto;
     font-style: normal;
     height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .inicial-conteiner {
     padding: 0;
 }
 
-.nav {
+nav {
     background-color: #1f1515;
 }
 
@@ -46,11 +55,16 @@ body {
     color: white;
 }
 
+.center {
+    width: 100%;
+    height: 100%;
+}
+
 #logo {
     width: 4%;
 }
 
-.pos-nav {
+.pos-nav{
     width: 100%;
     background-color: rgba(117, 114, 114, 0.486);
     padding: 20px;
@@ -58,36 +72,36 @@ body {
     justify-content: end;
 }
 
-.pos-nav-buttons {
+.pos-nav-buttons{
     display: flex;
     gap: 6px;
 }
 
-.pos-nav-buttons button {
+.pos-nav-buttons button{
     background-color: rgba(255, 255, 0, 0.527) !important;
     max-width: max-content;
     border: 1px solid rgba(0, 0, 0, 0.418);
     border-radius: 2px;
 }
 
-.pos-nav-buttons button:hover {
+.pos-nav-buttons button:hover{
     background-color: rgba(255, 255, 0, 0.753);
     border: 1px solid rgba(0, 0, 0, 0.795);
 }
 
-.dropdown-toggle {
+.dropdown-toggle{
     background-color: rgba(255, 255, 0, 0.527) !important;
     max-width: max-content;
     border: 1px solid rgba(0, 0, 0, 0.418);
     border-radius: 2px;
 }
 
-.dropdown-toggle:hover {
+.dropdown-toggle:hover{
     background-color: rgba(255, 255, 0, 0.753);
     border: 1px solid rgba(0, 0, 0, 0.795);
 }
 
-.center {
+.center{
     width: 100%;
     height: 100%;
 }
@@ -96,6 +110,7 @@ body {
     width: 100%;
     max-width: 400px;
     padding-top: 50px; /* Adiciona espaço acima do formulário */
+    flex: 1; /* Flex-grow to take remaining space */
 }
 
 .cadastro-box {
@@ -149,5 +164,29 @@ button[type="submit"]:hover {
 
 a {
     color: #1877f2;
+    text-decoration: none;
+}
+
+footer {
+    background-color: #1f1515;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: auto; /* Push the footer to the bottom */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+footer a {
+    color: #fff;
     text-decoration: none;
 }
