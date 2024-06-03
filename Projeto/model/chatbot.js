@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function generatePetition() {
         const petition = `
-            EXCELENTÍSSIMO(A) SENHOR(A) DOUTOR(A) JUIZ(A) DE DIREITO DA ___ VARA CÍVEL DA COMARCA DE [CIDADE] – [ESTADO]
+            EXCELENTÍSSIMO(A) SENHOR(A) DOUTOR(A) JUIZ(A) DE DIREITO DA _ VARA CÍVEL DA COMARCA DE [CIDADE] – [ESTADO]
 
             ${nomeCliente}, brasileiro(a), estado civil, profissão, portador(a) da Cédula de Identidade RG nº [número], inscrito(a) no CPF/MF sob o nº [número], residente e domiciliado(a) na [endereço completo], por seu advogado que esta subscreve (mandato incluso – doc. 01), com escritório profissional na [endereço do advogado], onde recebe intimações, vem respeitosamente à presença de Vossa Excelência propor a presente
 
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             [Cidade], [data].
 
-            _____________________________________
+            _____________
             [Nome do Advogado]
             OAB [número da OAB]
             [Endereço do Advogado]

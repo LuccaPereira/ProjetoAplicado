@@ -61,7 +61,6 @@ nav{
 
 .petition-info {
     width: 80%;
-    padding-top: 20px;
     margin: auto;
 }
 
@@ -128,7 +127,7 @@ nav{
     border: 2px solid rgba(0, 0, 0, 0.507);
     background-color: #473030;
     border-radius: 2px;
-    margin: 5% auto; 
+    margin: 4.2% auto; 
     color: white;
     transition: .3s;
     text-align: center;
@@ -160,7 +159,6 @@ footer {
 	color: #fff;
 	padding: 20px;
 	text-align: center;
-	margin-top: 50px;
 }
 
 ul {
