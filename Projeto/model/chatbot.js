@@ -47,63 +47,54 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function isExampleCase() {
-        return (
-            nomeCliente.toLowerCase() === "joão da Silva" &&
-            nomeReu.toLowerCase() === "Empresa XYZ" &&
-            causaPedir.toLowerCase() === "rescisão indireta do contrato de trabalho" &&
-            pedidosAutor.toLowerCase() === "reintegração no emprego e pagamento de todas as verbas rescisórias devidas" &&
-            outrasInformacoes.toLowerCase() === "nenhuma"
-        );
-    }
-
     function generatePetition() {
         const petition = `
-            --- 
-            **Petição Inicial**
+            EXCELENTÍSSIMO(A) SENHOR(A) DOUTOR(A) JUIZ(A) DE DIREITO DA ___ VARA CÍVEL DA COMARCA DE [CIDADE] – [ESTADO]
 
-            Eu, advogado de ${nomeCliente}, brasileiro, ..., vêm, respeitosamente, perante Vossa Excelência, propor a presente
+            ${nomeCliente}, brasileiro(a), estado civil, profissão, portador(a) da Cédula de Identidade RG nº [número], inscrito(a) no CPF/MF sob o nº [número], residente e domiciliado(a) na [endereço completo], por seu advogado que esta subscreve (mandato incluso – doc. 01), com escritório profissional na [endereço do advogado], onde recebe intimações, vem respeitosamente à presença de Vossa Excelência propor a presente
 
-            **AÇÃO DE REINTEGRAÇÃO DE EMPREGO**
+            AÇÃO DE COBRANÇA
 
-            em face de ${nomeReu}, pessoa jurídica de direito privado, ..., pelas razões de fato e de direito que passa a expor:
+            em face de ${nomeReu}, brasileiro(a), estado civil, profissão, portador(a) da Cédula de Identidade RG nº [número], inscrito(a) no CPF/MF sob o nº [número], residente e domiciliado(a) na [endereço completo], pelos fatos e fundamentos a seguir expostos:
 
-            **I – Dos Fatos**
+            I - DOS FATOS
 
-            ...
+            1. O Autor celebrou com o Réu um contrato de ${causaPedir}, em [data], cujo objeto era [descrever o objeto do contrato].
+            2. O valor pactuado para tal contrato foi de R$ [valor], conforme o documento em anexo (doc. 02).
+            3. O Réu, entretanto, deixou de cumprir com sua obrigação de pagamento, estando inadimplente desde [data].
+            4. Foram realizadas diversas tentativas amigáveis de cobrança, conforme se comprova pelos documentos em anexo (docs. 03 a 05), mas sem êxito.
 
-            **II – Do Direito**
+            II - DO DIREITO
 
-            ...
+            5. O artigo 389 do Código Civil Brasileiro dispõe que o devedor que não cumpre a obrigação fica obrigado a pagar perdas e danos, mais juros e correção monetária, além de honorários advocatícios.
+            6. A mora do Réu é evidente e o Autor faz jus ao recebimento da quantia inadimplida, acrescida dos encargos legais, conforme preceitua o artigo 394 do Código Civil.
 
-            **III – Dos Pedidos**
+            III - DOS PEDIDOS
 
-            ...
+            ${pedidosAutor}
 
-            **IV – Das Outras Informações**
+            IV - DAS OUTRAS INFORMAÇÕES
 
             ${outrasInformacoes}
 
-            **V – Dos Requerimentos**
+            V - DOS REQUERIMENTOS
 
-            ...
+            a) A citação do Réu para, querendo, apresentar defesa no prazo legal, sob pena de revelia e confissão quanto à matéria de fato;
+            b) A total procedência da ação, condenando o Réu ao pagamento de R$ [valor devido], acrescidos de juros, correção monetária e honorários advocatícios, conforme legislação vigente;
+            c) A produção de todos os meios de prova admitidos em direito, em especial a documental, testemunhal e pericial, se necessário;
+            d) A condenação do Réu ao pagamento das custas processuais e honorários advocatícios na base de [porcentagem]%.
 
             Nestes termos, pede deferimento.
 
-            Local, data.
+            [Cidade], [data].
 
-            Advogado
-
-            **OAB nº XXXXX**
-
-            --- 
+            _____________________________________
+            [Nome do Advogado]
+            OAB [número da OAB]
+            [Endereço do Advogado]
+            [Telefone/Email]
         `;
         appendMessage('bot', petition);
-    }
-
-    function generateCustomPetition() {
-        // Implemente a lógica para gerar a petição personalizada aqui
-        appendMessage('bot', 'A petição personalizada está sendo gerada...');
     }
 
     function appendMessage(sender, message) {
