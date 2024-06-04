@@ -97,7 +97,7 @@ function login() {
             alert("Ocorreu um erro ao processar sua solicitação. Tente novamente mais tarde.");
         });
     } else {
-        alert("CPF inválido");
+        console.log("CPF inválido");
     }
     
     
