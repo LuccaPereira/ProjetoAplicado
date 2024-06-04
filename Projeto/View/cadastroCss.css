@@ -1,19 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: #f2f2f2;
     margin: 0;
     padding: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    text-align: center;
+}
+
+#logo {
+    width: 100px; /* Ajuste o tamanho conforme necessário */
+    margin-bottom: 20px;
 }
 
 .container {
-    width: 100%;
+    width: 50%;
     max-width: 400px;
-    justify-content: center;
-    align-items: center;
 }
 
 .cadastro-box {
@@ -24,6 +31,7 @@ body {
 }
 
 h2 {
+    margin-top: 0;
     margin-bottom: 20px;
     color: #1e2a3a;
 }
