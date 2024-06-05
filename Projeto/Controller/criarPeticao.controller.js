@@ -64,6 +64,15 @@ function montarOData() {
     const telefone = document.getElementById('telefone').value;
     const descricao = document.getElementById('descricao').value;
     const NomeAdvogado = document.getElementById('NomeAdvogado').value;
+    const getFormattedDate = () => {
+        const date = new Date();
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Meses são baseados em zero
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+    const ultimaAlteracao = getFormattedDate();
+
 
     // Valida o CPF
     if (!validarCPF(cpfAtivo)) {
@@ -90,7 +99,8 @@ function montarOData() {
             Procedimento: procedimento,
             Email: email,
             Telefone: telefone,
-            Descrição: descricao
+            Descrição: descricao,
+            ultimaAlteracao: ultimaAlteracao
         }
     };
 
@@ -123,11 +133,12 @@ function montarOData() {
         // Se nenhum arquivo PDF foi selecionado, envia os dados diretamente
         return axios.post(url, oData)
             .then(response => {
-                console.log("Dados enviados para o Firebase:", response.data);
+               alert("Dados enviados para o Firebase:", response.data);
+                //form.reset();
                 return response.data;
             })
             .catch(error => {
-                console.error("Erro ao enviar dados para o Firebase:", error);
+                alert("Erro ao enviar dados para o Firebase:", error);
                 throw error;
             });
     }

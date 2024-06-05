@@ -4,6 +4,15 @@ body {
     font-optical-sizing: auto;
     font-style: normal;
     height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .inicial-conteiner {
@@ -44,6 +53,11 @@ nav {
     font-size: 18px;
     padding-left: 20px;
     color: white;
+}
+
+.center {
+    width: 100%;
+    height: 100%;
 }
 
 #logo {
@@ -96,6 +110,7 @@ nav {
     width: 100%;
     max-width: 400px;
     padding-top: 50px; /* Adiciona espaço acima do formulário */
+    flex: 1; /* Flex-grow to take remaining space */
 }
 
 .cadastro-box {
@@ -149,5 +164,29 @@ button[type="submit"]:hover {
 
 a {
     color: #1877f2;
+    text-decoration: none;
+}
+
+footer {
+    background-color: #1f1515;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: auto; /* Push the footer to the bottom */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+footer a {
+    color: #fff;
     text-decoration: none;
 }

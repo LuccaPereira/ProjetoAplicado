@@ -49,6 +49,15 @@ function montarOData() {
     const codigo = document.getElementById('codigo').value;
     const cpfAtivo = document.getElementById('cpfAtivo').value;
     const cnpjPassivo = document.getElementById('cnpjPassivo').value;
+    const senhaCliente = document.getElementById('senhaCliente').value;
+    const getFormattedDate = () => {
+        const date = new Date();
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Meses são baseados em zero
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+    const ultimaAlteracao = getFormattedDate();
 
     // Valida o CPF ativo
     if (!validarCPF(cpfAtivo)) {
@@ -71,7 +80,9 @@ function montarOData() {
             Valor: valor,
             Procedimento: procedimento,
             Codigo: codigo,
-            CPFAtivo: cpfAtivo
+            CPFAtivo: cpfAtivo,
+            senhaCliente: senhaCliente,
+            UltimaAlt: ultimaAlteracao
         }
     };
 

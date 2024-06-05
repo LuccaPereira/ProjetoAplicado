@@ -1,7 +1,35 @@
-// Função para validar o CPF usando regras específicas do CPF brasileiro
 function validarCPF(cpf) {
-    // Remove todos os caracteres que não são números
     cpf = cpf.replace(/\D/g, '');
+
+    if (cpf.length !== 11) {
+        return false;
+    }
+
+    let soma = 0;
+    for (let i = 0; i < 9; i++) {
+        soma += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    let digitoVerif1 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+
+    if (parseInt(cpf.charAt(9)) !== digitoVerif1) {
+        return false;
+    }
+
+    soma = 0;
+    for (let i = 0; i < 10; i++) {
+        soma += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    let digitoVerif2 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+
+    if (parseInt(cpf.charAt(10)) !== digitoVerif2) {
+        return false;
+    }
+
+    return true;
+}
+
+function submitClientes(event) {
+    event.preventDefault();
 
     // Verifica se o CPF tem 11 dígitos
     if (cpf.length !== 11) {
@@ -51,37 +79,34 @@ function submitClientes(event) {
         databaseURL: "https://projetoaplicado-1-default-rtdb.firebaseio.com"
     };
 
-    // Inicializa o Firebase se ainda não estiver inicializado
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
+
+    const form = document.getElementById("clienteForm");
 
     const form = document.getElementById("clienteForm"); // Obtém o formulário de clientes
 
     // Verifica se o formulário é válido
     if (form.checkValidity()) {
-        const cpf = document.getElementById("cpf").value; // Obtém o valor do CPF
-        const senha = document.getElementById("senha").value; // Obtém o valor da senha
+        const cpf = document.getElementById("cpf").value;
+        const senha = document.getElementById("senha").value;
 
-        // Verifica se o CPF é válido
         if (validarCPF(cpf)) {
-            const databaseURL = firebaseConfig.databaseURL; // URL do banco de dados Firebase
-            const collectionPath = "Cliente"; // Caminho da coleção no Firebase
-            const url = `${databaseURL}/${collectionPath}.json`; // URL completa para a coleção de clientes
+            const databaseURL = firebaseConfig.databaseURL;
+            const collectionPath = "Cliente";
+            const url = `${databaseURL}/${collectionPath}.json`;
 
-            // Obtém os clientes existentes no Firebase
             axios.get(url)
                 .then(response => {
-                    const clientes = response.data; // Dados dos clientes obtidos
-                    let clienteKeyExistente = null; // Chave do cliente existente, se houver
+                    const clientes = response.data;
+                    let clienteKeyExistente = null;
 
-                    // Verifica se o cliente já existe
                     if (clientes) {
                         for (let clienteKey in clientes) {
                             if (clientes.hasOwnProperty(clienteKey)) {
                                 const cliente = clientes[clienteKey];
 
-                                // Se o CPF do cliente já existir, guarda a chave do cliente existente
                                 if (cliente.cpf === cpf) {
                                     clienteKeyExistente = clienteKey;
                                     break;
@@ -90,40 +115,36 @@ function submitClientes(event) {
                         }
                     }
 
-                    // Se o cliente já existir, atualiza a senha
                     if (clienteKeyExistente) {
                         if (senha.length < 6 || !senha) {
                             alert('A senha deve ter no mínimo 6 caracteres e o campo não pode estar vazio!.');
                             return;
                         }
 
-                        const oData = { senha: senha }; // Dados a serem atualizados
-                        const clientRef = firebase.database().ref(`${collectionPath}/${clienteKeyExistente}`); // Referência ao cliente no Firebase
+                        const oData = { senha: senha };
+                        const clientRef = firebase.database().ref(`${collectionPath}/${clienteKeyExistente}`);
 
-                        // Atualiza a senha do cliente
                         clientRef.update(oData)
                             .then(() => {
                                 alert("Senha do cliente foi atualizada com sucesso!");
-                                window.location.href = "../View/menu.html"; // Redireciona para a página de menu
-                                form.reset(); // Reseta o formulário
+                                window.location.href = "../View/menu.html";
+                                form.reset();
                             })
                             .catch(error => {
                                 alert("Erro ao atualizar senha do cliente: " + error.message);
                             });
                     } else {
-                        // Se o cliente não existir, cria um novo cliente
                         if (senha.length < 6 || !senha) {
                             alert('A senha deve ter no mínimo 6 caracteres e o campo não pode estar vazio!.');
                             return;
                         }
 
-                        const oData = { cpf: cpf, senha: senha }; // Dados do novo cliente
+                        const oData = { cpf: cpf, senha: senha };
 
-                        // Adiciona o novo cliente no Firebase
                         axios.post(url, oData)
                             .then(() => {
                                 alert("Novo cliente foi adicionado com sucesso!");
-                                form.reset(); // Reseta o formulário
+                                form.reset();
                             })
                             .catch(error => {
                                 alert("Erro ao adicionar novo cliente: " + error.message);

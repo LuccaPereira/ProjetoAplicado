@@ -36,19 +36,37 @@ function validarCPF(cpf) {
     return true;
 }
 
-// Função para enviar o formulário de cadastro de advogado
-function submitForm() {
-    // Obtém os valores dos campos do formulário
-    const nome = document.getElementById('nome').value;
-    const OAB = document.getElementById('OAB').value;
-    const CPF = document.getElementById('inputCpf').value;
-    const email = document.getElementById('email').value;
-    const senha = document.getElementById('senha').value;
 
-    // Valida o CPF
-    if (!validarCPF(CPF)) {
-        alert('Favor inserir um CPF válido.');
-        return Promise.reject('CPF inválido');
+async function submitForm() {
+    var form = document.getElementById('cadAdv');
+
+    if (form.checkValidity()) {
+        const nome = document.getElementById('nome').value;
+        const OAB = document.getElementById('OAB').value;
+        const cpf = document.getElementById('inputCpf').value;
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('senha').value;
+
+        if (!validarCPF(cpf)) {
+            alert('Favor inserir um CPF válido.');
+            return;
+        }
+
+        if (senha.length < 6) {
+            alert('A senha deve ter no mínimo 6 caracteres.');
+            return;
+        }
+
+        if (OAB.length !== 8) {
+            alert('O número da OAB deve conter 8 dígitos.');
+            return;
+        } 
+        await registrarUsuario(email, senha);
+        alert("Novo advogado registrado com sucesso.");
+        window.location.href = "../View/login.html";
+
+    } else {
+        alert('Por favor, preencha todos os campos corretamente.');
     }
 
     // Verifica se a senha tem no mínimo 6 caracteres
