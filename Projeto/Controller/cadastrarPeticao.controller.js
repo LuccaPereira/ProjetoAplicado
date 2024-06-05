@@ -1,44 +1,76 @@
+// Função para validar um CPF
 function validarCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
-
-    if (cpf.length !== 11) {
+    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
         return false;
     }
-
     let soma = 0;
     for (let i = 0; i < 9; i++) {
         soma += parseInt(cpf.charAt(i)) * (10 - i);
     }
     let digitoVerif1 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-
     if (parseInt(cpf.charAt(9)) !== digitoVerif1) {
         return false;
     }
-
     soma = 0;
     for (let i = 0; i < 10; i++) {
         soma += parseInt(cpf.charAt(i)) * (11 - i);
     }
     let digitoVerif2 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-
-    if (parseInt(cpf.charAt(10)) !== digitoVerif2) {
-        return false;
-    }
-
-    return true;
+    return parseInt(cpf.charAt(10)) === digitoVerif2;
 }
 
+// Função para validar CNPJ
+function validarCNPJ(cnpj) {
+    cnpj = cnpj.replace(/\D/g, '');
+    if (cnpj.length !== 14 || /^(\d)\1+$/.test(cnpj)) {
+        return false;
+    }
+    let soma = 0, pos = 5;
+    for (let i = 0; i < 12; i++) {
+        soma += parseInt(cnpj.charAt(i)) * pos--;
+        if (pos < 2) pos = 9;
+    }
+    let digitoVerif1 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    if (parseInt(cnpj.charAt(12)) !== digitoVerif1) {
+        return false;
+    }
+    soma = 0; pos = 6;
+    for (let i = 0; i < 13; i++) {
+        soma += parseInt(cnpj.charAt(i)) * pos--;
+        if (pos < 2) pos = 9;
+    }
+    let digitoVerif2 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    return parseInt(cnpj.charAt(13)) === digitoVerif2;
+}
+
+// Função para validar e-mail usando regex
+function validarEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// Função para validar o valor no formato R$ 00,00 usando regex
+function validarValor(valor) {
+    return /^R\$ \d{1,3}(\.\d{3})*,\d{2}$/.test(valor);
+}
+
+// Função para montar os dados e enviá-los para o Firebase
 function montarOData() {
-    
-    const nomePeticionante = document.getElementById('nomePeticionante').value;
-    const foro = document.getElementById('foro').value;
-    const acidente = document.getElementById('acidente').value;
-    const valor = document.getElementById('valor').value;
-    const procedimento = document.getElementById('procedimento').value;
-    const codigo = document.getElementById('codigo').value;
-    const cpfAtivo = document.getElementById('cpfAtivo').value;
-    const cnpjPassivo = document.getElementById('cnpjPassivo').value;
-    const senhaCliente = document.getElementById('senhaCliente').value;
+    // Obtém os valores dos campos do formulário
+    const nomePeticionante = document.getElementById('nomePeticionante')?.value || '';
+    const nomeAdvogado = document.getElementById('nomeAdvogado')?.value || '';
+    const foro = document.getElementById('foro')?.value || '';
+    const acidente = document.getElementById('acidente')?.value || '';
+    const valor = document.getElementById('valor')?.value || '';
+    const telefone = document.getElementById('telefone')?.value || '';
+    const procedimento = document.getElementById('procedimento')?.value || '';
+    const auxilio = document.getElementById('auxilio')?.value || '';
+    const email = document.getElementById('email')?.value || '';
+    const descricao = document.getElementById('descricao')?.value || '';
+    const cpfAtivo = document.getElementById('cpfAtivo')?.value || '';
+    const cnpjPassivo = document.getElementById('cnpjPassivo')?.value || '';
+    const senhaCliente = ''; // Adicione o campo correspondente se necessário
+
     const getFormattedDate = () => {
         const date = new Date();
         const day = String(date.getDate()).padStart(2, '0');
@@ -48,34 +80,79 @@ function montarOData() {
     };
     const ultimaAlteracao = getFormattedDate();
 
+    // Verifica se há campos vazios
+    if (
+        !nomePeticionante ||
+        !nomeAdvogado ||
+        !foro ||
+        !acidente ||
+        !valor ||
+        !telefone ||
+        !procedimento ||
+        !auxilio ||
+        !email ||
+        !descricao ||
+        !cpfAtivo ||
+        !cnpjPassivo
+    ) {
+        alert('Por favor, preencha todos os campos.');
+        return Promise.reject('Campos vazios');
+    }
+
+    // Valida o CPF ativo
     if (!validarCPF(cpfAtivo)) {
         alert('Favor inserir um CPF válido.');
         return Promise.reject('CPF inválido');
     }
 
+    // Valida o CNPJ
+    if (!validarCNPJ(cnpjPassivo)) {
+        alert('Favor inserir um CNPJ válido.');
+        return Promise.reject('CNPJ inválido');
+    }
+
+    // Valida o e-mail
+    if (!validarEmail(email)) {
+        alert('Favor inserir um e-mail válido.');
+        return Promise.reject('E-mail inválido');
+    }
+
+    // Valida o valor no formato correto
+    if (!validarValor(valor)) {
+        alert('Valor inválido. Favor inserir no formato R$ 00,00.');
+        return Promise.reject('Valor inválido');
+    }
+
+    // Configura a URL e o caminho da coleção no banco de dados Firebase
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = "Cliente";
     const url = `${databaseURL}/${collectionPath}.json`;
 
-
+    // Cria um objeto de dados com as informações do formulário
     const oData = {
-        [nomePeticionante]: {
+        [nomePeticionante]: { // Utiliza o nome do peticionante como chave
             CNPJ: cnpjPassivo,
             NomePeticionante: nomePeticionante,
+            NomeAdvogado: nomeAdvogado,
             Foro: foro,
             Acidente: acidente,
             Valor: valor,
             Procedimento: procedimento,
-            Codigo: codigo,
+            Telefone: telefone,
+            Auxilio: auxilio,
+            Email: email,
+            Descricao: descricao,
             CPFAtivo: cpfAtivo,
             senhaCliente: senhaCliente,
             UltimaAlt: ultimaAlteracao
         }
     };
 
+    // Envia os dados para o Firebase Database usando axios.post
     return axios.post(url, oData)
         .then(response => {
-            console.log("Dados enviados para o Firebase:", response.data);
+            alert("Dados enviados para o Firebase:", response.data);
+            window.location.reload()
             return response.data;
         })
         .catch(error => {
@@ -83,5 +160,3 @@ function montarOData() {
             throw error;
         });
 }
-
-
