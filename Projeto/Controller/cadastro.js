@@ -36,6 +36,11 @@ function validarCPF(cpf) {
     return true;
 }
 
+// Função para validar e-mail usando regex
+function validarEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 
 async function submitForm() {
     var form = document.getElementById('cadAdv');
@@ -61,24 +66,18 @@ async function submitForm() {
             alert('O número da OAB deve conter 8 dígitos.');
             return;
         } 
+
+        // Valida o e-mail
+    if (!validarEmail(email)) {
+        alert('Favor inserir um e-mail válido.');
+        return Promise.reject('E-mail inválido');
+    }
         await registrarUsuario(email, senha);
         alert("Novo advogado registrado com sucesso.");
         window.location.href = "../View/login.html";
 
     } else {
         alert('Por favor, preencha todos os campos corretamente.');
-    }
-
-    // Verifica se a senha tem no mínimo 6 caracteres
-    if (senha.length < 6) {
-        alert('A senha deve ter no mínimo 6 caracteres.');
-        return Promise.reject('Senha muito curta');
-    }
-
-    // Verifica se o número da OAB tem exatamente 8 dígitos
-    if (OAB.length !== 8) {
-        alert('O número da OAB deve conter 8 dígitos.');
-        return Promise.reject('Número da OAB inválido');
     }
 
     // Configura a URL e o caminho da coleção no banco de dados Firebase
