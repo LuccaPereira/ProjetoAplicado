@@ -170,7 +170,7 @@ function montarOData() {
     // Configura a URL e o caminho da coleção no banco de dados Firebase
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = "Cliente";
-    const url = `${databaseURL}/${collectionPath}.json`;
+    const url = `${databaseURL}/${collectionPath}/${nomeAdvogado}/${nomePeticionante}.json`;
 
     // Cria um objeto de dados com as informações do formulário
     const oData = {
@@ -192,30 +192,29 @@ function montarOData() {
     };
 
     const pdfFileElement = document.getElementById("pdfFile");
-    if(pdfFileElement){
+    if (pdfFileElement && pdfFileElement.files.length > 0) {
         const storage = firebase.storage();
         const timestamp = new Date().getTime();
         const fileName = `${timestamp}_${pdfFileElement.name}`;
         const storageRef = storage.ref(`pdfs/${fileName}`);
         const pdfFile = pdfFileElement.files[0];
-    
+
         return storageRef.put(pdfFile)
             .then((snapshot) => snapshot.ref.getDownloadURL())
             .then((downloadURL) => {
                 oData[nomePeticionante].pdfURL = downloadURL;
 
-                const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-                const collectionPath = "Cliente";
-                const url = `${databaseURL}/${collectionPath}/${nomeAdvogado}/${nomePeticionante}.json`;
                 return axios.post(url, oData);
             })
             .then(response => {
+                alert("Arquivo PDF enviado com sucesso.");
                 alert("Novo cliente cadastrado com sucesso", response.data);
                 window.location.reload();
                 return response.data;
             })
             .catch(error => {
                 console.error("Erro ao enviar dados para o Firebase:", error);
+                alert("Erro ao enviar o arquivo PDF.");
                 throw error;
             });
     } else {
