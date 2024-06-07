@@ -48,6 +48,11 @@ function login() {
     var oab = document.getElementById("OAB").value;
     var senha = document.getElementById("senha").value;
 
+    if (!oab || !senha) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+    }
+
     if(validarCPF(oab)) {
         getCpfByCliente(oab)
             .then(response => {
