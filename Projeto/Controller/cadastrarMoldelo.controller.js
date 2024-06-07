@@ -10,20 +10,25 @@ const firebaseConfig = {
 };
 
 function fetchClientes() {
+    // URL do banco de dados Firebase e caminho da coleção 'Cliente'
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = "Cliente";
     const url = `${databaseURL}/${collectionPath}.json`;
 
+    // Faz uma requisição GET para buscar os dados dos clientes
     axios.get(url)
         .then(response => {
+            // Armazena os dados recebidos na variável 'clientes'
             const clientes = response.data;
             const clientesTable = document.getElementById("clientesBody");
 
+            // Verifica se a tabela foi encontrada
             if (!clientesTable) {
                 console.error("Tabela não encontrada.");
                 return;
             }
 
+            // Limpa o conteúdo atual da tabela
             clientesTable.innerHTML = "";
 
             Object.keys(clientes).forEach(clienteKey => {
@@ -36,6 +41,7 @@ function fetchClientes() {
                     const descricao = cliente[adv].Descrição || "Descrição não disponível";
                     const ultimaAlteracao = cliente[adv].ultimaAlteracao || "#";
 
+                    // Cria uma nova linha na tabela para o cliente
                     const newRow = document.createElement('tr');
                     newRow.setAttribute('data-cliente-key', clienteKey);
                     newRow.innerHTML = `
@@ -60,6 +66,7 @@ function fetchClientes() {
                         updateSituacaoInDatabase(clienteKey, selectedValue, cliente);
                     });
 
+                    // Adiciona a nova linha à tabela
                     clientesTable.appendChild(newRow);
                 } else {
                     console.log("Advogado não encontrado nos detalhes do cliente");
@@ -90,6 +97,7 @@ function fetchClientes() {
             });
         })
         .catch(error => {
+            // Exibe uma mensagem de erro em caso de falha na requisição
             console.error("Erro ao buscar clientes:", error);
         });
 }
