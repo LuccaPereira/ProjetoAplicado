@@ -170,7 +170,7 @@ function montarOData() {
     // Configura a URL e o caminho da coleção no banco de dados Firebase
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = "Cliente";
-    const url = `${databaseURL}/${collectionPath}/${nomeAdvogado}/${nomePeticionante}.json`;
+      const url = `${databaseURL}/${collectionPath}.json`;
 
     // Cria um objeto de dados com as informações do formulário
     const oData = {
