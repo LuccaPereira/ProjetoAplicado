@@ -15,7 +15,7 @@ body {
 }
 
 nav {
-    background-color: #1f1515;
+    background-color: #0d4240;
 }
 
 .navbar-brand {
@@ -333,7 +333,7 @@ a {
 .table {
     /* Defina suas cores personalizadas aqui */
     --table-color: #ffffff; /* Cor do texto na tabela */
-    --table-bg: #473030; /* Cor de fundo da tabela */
+    --table-bg: #0d4240; /* Cor de fundo da tabela */
     --table-border-color: #dee2e6; /* Cor da borda da tabela */
     --table-accent-bg: #007bff; /* Cor de destaque da tabela */
     --table-striped-color: #ffffff; /* Cor do texto nas linhas listradas */
@@ -342,7 +342,7 @@ a {
     --table-active-bg: #6c757d; /* Cor de fundo das células ativas */
     --table-hover-color: #ffffff; /* Cor do texto nas células quando passa o mouse */
     --table-hover-bg: #495057; /* Cor de fundo das células quando passa o mouse */
-    border-radius: 10px; /* Define o raio da borda */
+    border-radius: 1px; /* Define o raio da borda */
     overflow: hidden;
   
     /* Restante do CSS para estilizar a tabela */
