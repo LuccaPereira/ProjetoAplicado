@@ -33,7 +33,7 @@ nav {
 
 .navbar-toggler {
     margin-right: 20px;
-    background-color: rgba(255, 255, 255, 0.26);
+    background-color: white !important;
 }
 
 .navbar-nav {
@@ -43,8 +43,10 @@ nav {
 }
 
 .nav-item {
+    display: flex !important;
     font-weight: 600;
     transition: .3s;
+    align-items: center !important;
 }
 
 .nav-item:hover {
@@ -82,10 +84,10 @@ nav {
 }
 
 .cadastro-box {
-    background-color: #fff;
+    background-color: #f7f5f5;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 h2 {
@@ -121,7 +123,7 @@ input[type="password"]:focus {
 }
 
 button[type="submit"] {
-    background-color: #473030;
+    background-color: #0d4240;
     color: #fff;
     cursor: pointer;
 }
@@ -136,7 +138,7 @@ a {
 }
 
 footer {
-    background-color: #1f1515;
+    background-color: #0d4240;
     color: #fff;
     padding: 20px;
     text-align: center;
