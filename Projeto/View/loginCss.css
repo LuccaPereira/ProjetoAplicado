@@ -65,13 +65,13 @@ button[type="submit"] {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #473030;
+    background-color: #0d4240;
     color: #fff;
     cursor: pointer;
 }
 
 button[type="submit"]:hover {
-    background-color: #333;
+    background-color: #0d4240;
 }
 
 a {
@@ -90,7 +90,7 @@ hr {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #473030;
+    background-color: #0d4240;
     color: #fff;
     cursor: pointer;
 }
@@ -100,7 +100,7 @@ hr {
 }
 
 footer {
-    background-color: #1f1515;
+    background-color: #0d4240;
     color: #fff;
     padding: 20px;
     text-align: center;
