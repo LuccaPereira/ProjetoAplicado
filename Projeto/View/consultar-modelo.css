@@ -375,7 +375,7 @@ a {
     --table-active-bg: #205c5a; /* Cor de fundo das células ativas */
     --table-hover-color: #e0f7f6; /* Cor do texto nas células quando passa o mouse */
     --table-hover-bg: #246461; /* Cor de fundo das células quando passa o mouse */
-    border-radius: 1px; /* Define o raio da borda */
+    border-radius: 5px; /* Define o raio da borda */
     overflow: hidden;
 
     /* Restante do CSS para estilizar a tabela */
