@@ -21,7 +21,7 @@ body {
 }
 
 nav {
-    background-color: #1f1515;
+    background-color: #0d4240;
 }
 
 .navbar-brand {
@@ -57,10 +57,7 @@ nav {
 }
 
 #logo {
-    width: 8%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    width: 4%;
 }
 
 .card {
@@ -75,7 +72,7 @@ h1 {
 }
 
 footer {
-    background-color: #1f1515;
+    background-color: #0d4240;
     color: #fff;
     text-align: center;
     width: 100%;

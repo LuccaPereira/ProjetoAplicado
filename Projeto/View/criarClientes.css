@@ -1,57 +1,71 @@
-.body{
+body {
     background-color: #dee2e6;
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-.inicial-conteiner{
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.inicial-conteiner {
     padding: 0;
 }
 
 nav {
-    background-color: #1f1515;
+    background-color: #0d4240;
+    align-items: center !important;
 }
 
-.navbar-brand{
+.navbar-brand {
     padding-left: 20px;
     font-size: 28px;
     font-weight: 400;
     color: white;
 }
- 
-.navbar-toggler{
+
+.navbar-toggler {
     margin-right: 20px;
-    background-color: rgba(255, 255, 255, 0.26);
+    background-color: white !important;
 }
 
-.nav-item{
+.nav-item {
+    display: flex !important;
     font-weight: 600;
     transition: .3s;
+    align-items: center !important;
 }
 
-.active{
+.active {
     color: rgba(26, 201, 207, 0.808) !important;
 }
 
-.nav-item:hover{
+.nav-item:hover {
     background-color: rgba(240, 248, 255, 0.438);
     transition: .3s;
 }
 
 .nav-link {
-    font-size: 18px;
-    padding-left: 20px;
-    color: white;
+    color: white !important;
+}
 
+.center {
+    width: 100%;
+    height: 100%;
 }
 
 #logo {
     width: 4%;
 }
 
-.pos-nav{
+.pos-nav {
     width: 100%;
     background-color: rgba(117, 114, 114, 0.486);
     padding: 20px;
@@ -59,36 +73,36 @@ nav {
     justify-content: end;
 }
 
-.pos-nav-buttons{
+.pos-nav-buttons {
     display: flex;
     gap: 6px;
 }
 
-.pos-nav-buttons button{
+.pos-nav-buttons button {
     background-color: rgba(255, 255, 0, 0.527) !important;
     max-width: max-content;
     border: 1px solid rgba(0, 0, 0, 0.418);
     border-radius: 2px;
 }
 
-.pos-nav-buttons button:hover{
+.pos-nav-buttons button:hover {
     background-color: rgba(255, 255, 0, 0.753);
     border: 1px solid rgba(0, 0, 0, 0.795);
 }
 
-.dropdown-toggle{
+.dropdown-toggle {
     background-color: rgba(255, 255, 0, 0.527) !important;
     max-width: max-content;
     border: 1px solid rgba(0, 0, 0, 0.418);
     border-radius: 2px;
 }
 
-.dropdown-toggle:hover{
+.dropdown-toggle:hover {
     background-color: rgba(255, 255, 0, 0.753);
     border: 1px solid rgba(0, 0, 0, 0.795);
 }
 
-.center{
+.center {
     width: 100%;
     height: 100%;
 }
@@ -97,13 +111,14 @@ nav {
     width: 100%;
     max-width: 400px;
     padding-top: 50px; /* Adiciona espaço acima do formulário */
+    flex: 1; /* Flex-grow to take remaining space */
 }
 
 .cadastro-box {
-    background-color: #fff;
+    background-color: #f7f5f5;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 h2 {
@@ -122,9 +137,7 @@ label {
 }
 
 input[type="text"],
-input[type="email"],
 input[type="password"],
-input[type="tel"],
 button[type="submit"] {
     width: 100%;
     padding: 10px;
@@ -135,15 +148,13 @@ button[type="submit"] {
 }
 
 input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="tel"]:focus {
+input[type="password"]:focus {
     outline: none;
     border-color: #007bff;
 }
 
 button[type="submit"] {
-    background-color: #473030;
+    background-color: #0d4240;
     color: #fff;
     cursor: pointer;
 }
@@ -157,19 +168,26 @@ a {
     text-decoration: none;
 }
 
-#pdfButton {
-    padding: 3px 8px;
-    background-color: #473030;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
+footer {
+    background-color: #0d4240;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: auto; /* Push the footer to the bottom */
 }
 
-#pdfFile {
-    display: none;
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.material-icons {
-    vertical-align: middle;
-    margin-right: 5px;
+li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
 }
