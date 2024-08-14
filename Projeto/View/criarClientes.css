@@ -1,5 +1,5 @@
 body {
-    background-color: #dee2e6;
+    background-color: #aecade;
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -20,7 +20,7 @@ body {
 }
 
 nav {
-    background-color: #0d4240;
+    background-color: #0e3754;
     align-items: center !important;
 }
 
@@ -154,13 +154,13 @@ input[type="password"]:focus {
 }
 
 button[type="submit"] {
-    background-color: #0d4240;
+    background-color: #0e3754;
     color: #fff;
     cursor: pointer;
 }
 
 button[type="submit"]:hover {
-    background-color: #333;
+    background-color: #274255;
 }
 
 a {
@@ -169,7 +169,7 @@ a {
 }
 
 footer {
-    background-color: #0d4240;
+    background-color: #0e3754;
     color: #fff;
     padding: 20px;
     text-align: center;
