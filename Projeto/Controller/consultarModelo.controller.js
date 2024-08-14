@@ -50,13 +50,16 @@ function fetchClientes() {
                         <td class="descricao">${descricao}</td>
                         <td class="ultima-alteracao">${ultimaAlteracao}</td>
                         <td>
-                            <select id="selectSituation-${clienteKey}">
+                            <select id="selectSituation-${clienteKey}" class="situation">
                                 <option value="emcadastramento">Em cadastramento</option>
                                 <option value="aguardandoenvio">Aguardando envio</option>
                                 <option value="protocolada">Protocolada</option>
                             </select>
                         </td>
-                        <td><a href="#" class="baixar-peticao" data-cliente-key="${clienteKey}">Visualizar</a></td>`;
+                        <td><a href="#" class="baixar-peticao" data-cliente-key="${clienteKey}">Visualizar</a></td>
+                        <td>
+                            <button class="arquivar-btn" data-cliente-key="${clienteKey}">Arquivar</button>
+                        </td>`;
 
                     const select = newRow.querySelector(`#selectSituation-${clienteKey}`);
                     select.value = cliente[adv].situacao || 'em cadastramento';
@@ -73,6 +76,41 @@ function fetchClientes() {
                 }
             });
 
+            document.querySelectorAll('.arquivar-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                   
+                    const row = this.closest('tr');
+                    const nomePeticionante = row.querySelector('.nome-peticionante').textContent;
+        
+                    Swal.fire({
+                        title: 'Você tem certeza?',
+                        text: `Deseja mesmo arquivar o processo de ${nomePeticionante}?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#0a3030',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sim, arquivar!',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const clienteKey = this.getAttribute('data-cliente-key');
+                            archiveClient(clienteKey);
+                            Swal.fire(
+                                'Arquivado!',
+                                'O processo foi arquivado com sucesso.',
+                                'success'
+                            );
+                        } else {
+                            Swal.fire(
+                                'Cancelado',
+                                'O processo não foi arquivado.',
+                                'error'
+                            );
+                        }
+                    });
+                });
+            });
+            
             console.log(clientes);
             populateSelectOptions(clientes, 'emNomeDe', 'NomePeticionante');
 
@@ -156,7 +194,10 @@ function renderClientes(clientesFiltrados) {
                         <option value="protocolada">Protocolada</option>
                     </select>
                 </td>
-                <td><a href="#" class="baixar-peticao" data-cliente-key="${clienteKey}">Visualizar</a></td>`;
+                <td><a href="#" class="baixar-peticao" data-cliente-key="${clienteKey}">Visualizar</a></td>
+                <td>
+                    <button class="arquivar-btn" data-cliente-key="${clienteKey}">Arquivar</button>
+                </td>`;
 
             const select = newRow.querySelector(`#selectSituation-${clienteKey}`);
             select.value = cliente[adv].situacao || 'em cadastramento';
@@ -169,7 +210,57 @@ function renderClientes(clientesFiltrados) {
             clientesTable.appendChild(newRow);
         }
     }
+    document.querySelectorAll('.arquivar-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const clienteKey = this.getAttribute('data-cliente-key');
+            archiveClient(clienteKey);
+        });
+    });
+
+    document.querySelectorAll('.baixar-peticao').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const clienteKey = this.getAttribute('data-cliente-key');
+            showClientDetails(clienteKey);
+        });
+    });
 }
+
+function archiveClient(clienteKey) {
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+    const collectionPath = `Cliente/${clienteKey}.json`;
+    const archivePath = `Arquivados/${clienteKey}.json`;
+
+    axios.get(`${databaseURL}/${collectionPath}`)
+        .then(response => {
+            const clienteData = response.data;
+
+            // Enviar os dados para a coleção "Arquivados"
+            axios.put(`${databaseURL}/${archivePath}`, clienteData)
+                .then(() => {
+                    // Remover o cliente da coleção original "Cliente"
+                    axios.delete(`${databaseURL}/${collectionPath}`)
+                        .then(() => {
+                            // Atualizar a tabela na interface removendo a linha arquivada
+                            const row = document.querySelector(`tr[data-cliente-key="${clienteKey}"]`);
+                            if (row) {
+                                row.remove();
+                            }
+                            alert("Cliente arquivado com sucesso!");
+                        })
+                        .catch(error => {
+                            console.error("Erro ao remover cliente original:", error);
+                        });
+                })
+                .catch(error => {
+                    console.error("Erro ao arquivar cliente:", error);
+                });
+        })
+        .catch(error => {
+            console.error("Erro ao buscar dados do cliente:", error);
+        });
+}
+
 
 function updateSituacaoInDatabase(clienteKey, selectedValue, cliente) {
     const clienteKeyAtt = cliente.NomeAdvogado;
