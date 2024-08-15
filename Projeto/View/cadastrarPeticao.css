@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
 
 body{
-    background-color: rgb(220, 225, 230);
+    background-color: #aecade;
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -15,7 +15,7 @@ body{
 
 nav {
     height: auto;
-    background-color: #0d4240;
+    background-color: #0e3754;
     margin-bottom: 15px; /* Diminuindo a margem inferior */
 }
 
@@ -127,7 +127,7 @@ nav {
     display:inline-block;
     width: 30%;
     border: 2px solid rgba(0, 0, 0, 0.507);
-    background-color: #0d4240;
+    background-color: #0e3754;
     border-radius: 2px;
     margin: 4.2% auto; 
     color: white;
@@ -157,7 +157,7 @@ nav {
 }
 
 footer {
-	background-color: #0d4240;
+	background-color: #0e3754;
 	color: #fff;
 	padding: 5px; 
 	text-align: center;
