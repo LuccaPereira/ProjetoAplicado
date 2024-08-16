@@ -94,6 +94,7 @@ function montarOData() {
     const descricao = document.getElementById('descricao')?.value || '';
     const cpfAtivo = document.getElementById('cpfAtivo')?.value || '';
     const cnpjPassivo = document.getElementById('cnpjPassivo')?.value || '';
+    const OAB = document.getElementById('OAB')?.value || '';
 
     const getFormattedDate = () => {
         const date = new Date();
@@ -168,67 +169,75 @@ function montarOData() {
         return Promise.reject('Telefone inválido');
     }
 
-    // Configura a URL e o caminho da coleção no banco de dados Firebase
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-    const collectionPath = "Cliente";
-      const url = `${databaseURL}/${collectionPath}.json`;
+    const collectionPath = "Advogado";
+    const url = `${databaseURL}/${collectionPath}/${OAB}.json`;
 
-    // Cria um objeto de dados com as informações do formulário
-    const oData = {
-        [nomePeticionante]: { // Utiliza o nome do peticionante como chave
-            CNPJ: cnpjPassivo,
-            NomePeticionante: nomePeticionante,
-            NomeAdvogado: nomeAdvogado,
-            Foro: foro,
-            Acidente: acidente,
-            Valor: valor,
-            Procedimento: procedimento,
-            Telefone: telefone,
-            Auxilio: auxilio,
-            Email: email,
-            Descricao: descricao,
-            CPFAtivo: cpfAtivo,
-            UltimaAlt: ultimaAlteracao
-        }
-    };
+    axios.get(url)
+        .then(response => {
+            const OABCliente = response.data ? OAB : null;
+
+            const oData = {
+                [nomePeticionante]: {
+                    CNPJ: cnpjPassivo,
+                    NomePeticionante: nomePeticionante,
+                    NomeAdvogado: nomeAdvogado,
+                    Foro: foro,
+                    Acidente: acidente,
+                    Valor: valor,
+                    Procedimento: procedimento,
+                    Telefone: telefone,
+                    Auxilio: auxilio,
+                    Email: email,
+                    Descricao: descricao,
+                    CPFAtivo: cpfAtivo,
+                    UltimaAlt: ultimaAlteracao
+                }
+            };
 
     const pdfFileElement = document.getElementById("pdfFile");
-    if (pdfFileElement && pdfFileElement.files.length > 0) {
+    if(pdfFileElement){
         const storage = firebase.storage();
         const timestamp = new Date().getTime();
         const fileName = `${timestamp}_${pdfFileElement.name}`;
         const storageRef = storage.ref(`pdfs/${fileName}`);
         const pdfFile = pdfFileElement.files[0];
-
+    
         return storageRef.put(pdfFile)
             .then((snapshot) => snapshot.ref.getDownloadURL())
             .then((downloadURL) => {
                 oData[nomePeticionante].pdfURL = downloadURL;
 
-                return axios.post(url, oData);
-            })
-            .then(response => {
-                alert("Arquivo PDF enviado com sucesso.");
-                alert("Novo cliente cadastrado com sucesso", response.data);
-                window.location.reload();
-                return response.data;
-            })
-            .catch(error => {
-                console.error("Erro ao enviar dados para o Firebase:", error);
-                alert("Erro ao enviar o arquivo PDF.");
-                throw error;
-            });
-    } else {
-        // Envia os dados para o Firebase Database usando axios.post
-        return axios.post(url, oData)
-            .then(response => {
-                alert("Novo cliente cadastrado com sucesso", response.data);
-                window.location.reload();
-                return response.data;
-            })
-            .catch(error => {
-                console.error("Erro ao enviar dados para o Firebase:", error);
-                throw error;
-            });
-    }
-}
+                                    const newUrl = `${databaseURL}/${collectionPath}/${nomeAdvogado}/${nomePeticionante}.json`;
+                                    return axios.post(newUrl, oData);
+                                })
+                                .then(response => {
+                                    alert("Novo cliente cadastrado com sucesso", response.data);
+                                    window.location.reload();
+                                    return response.data;
+                                })
+                                .catch(error => {
+                                    console.error("Erro ao enviar dados para o Firebase:", error);
+                                    throw error;
+                                });
+                        } else {
+                            console.log("Nenhum arquivo PDF foi selecionado.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro ao atualizar os dados:", error);
+                    });
+            } else {
+                axios.patch(url, oData)
+                    .then(response => {
+                        console.log("Nova entrada criada com sucesso.", response.data);
+                    })
+                    .catch(error => {
+                        console.error("Erro ao criar nova entrada:", error);
+                    });
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao buscar dados:", error);
+        });
+};
