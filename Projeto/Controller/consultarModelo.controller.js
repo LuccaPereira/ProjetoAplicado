@@ -8,12 +8,11 @@ const firebaseConfig = {
     appId: "1:546978495496:web:502e5bab60ead7fcd0a5bd",
     measurementId: "G-WB0MPN3701"
 };
-
 function fetchClientes() {
     // URL do banco de dados Firebase e caminho da coleção 'Cliente'
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-    const collectionPath = "Cliente";
-    const url = `${databaseURL}/${collectionPath}.json`;
+    const collectionPath = "Advogado";
+    var url = `${databaseURL}/${collectionPath}.json`;
 
     // Faz uma requisição GET para buscar os dados dos clientes
     axios.get(url)
