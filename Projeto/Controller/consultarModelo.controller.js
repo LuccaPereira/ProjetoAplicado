@@ -8,76 +8,95 @@ const firebaseConfig = {
     appId: "1:546978495496:web:502e5bab60ead7fcd0a5bd",
     measurementId: "G-WB0MPN3701"
 };
-function fetchClientes() {
-    // URL do banco de dados Firebase e caminho da coleção 'Cliente'
+
+function oabAdvogadoLogado() {
+    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
+
+    if (loggedInLawyerString) {
+        const loggedInLawyer = JSON.parse(loggedInLawyerString);
+        return loggedInLawyer;
+    } else {
+        console.log("Nenhum advogado está logado.");
+        return null;
+    }
+}
+
+function fetchClientes(loggedInLawyer) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = "Advogado";
-    var url = `${databaseURL}/${collectionPath}.json`;
+    const url = `${databaseURL}/${collectionPath}.json`;
 
-    // Faz uma requisição GET para buscar os dados dos clientes
     axios.get(url)
         .then(response => {
-            // Armazena os dados recebidos na variável 'clientes'
             const clientes = response.data;
             const clientesTable = document.getElementById("clientesBody");
 
-            // Verifica se a tabela foi encontrada
             if (!clientesTable) {
                 console.error("Tabela não encontrada.");
                 return;
             }
 
-            // Limpa o conteúdo atual da tabela
             clientesTable.innerHTML = "";
 
-            Object.keys(clientes).forEach(clienteKey => {
-                const cliente = clientes[clienteKey];
-                const adv = cliente.NomeAdvogado;
+            const advogadoData = clientes[loggedInLawyer.OAB];
+            if (!advogadoData) {
+                console.error("Advogado não encontrado.");
+                return;
+            }
 
-                if (adv && cliente[adv]) {
-                    const nomePeticionante = cliente[adv].NomePeticionante || "Nome não disponível";
-                    const cpfAtivo = cliente[adv].CPFAtivo || "CPF não disponível";
-                    const descricao = cliente[adv].Descrição || "Descrição não disponível";
-                    const ultimaAlteracao = cliente[adv].ultimaAlteracao || "#";
+            Object.keys(advogadoData).forEach(clienteKey => {
+                const cliente = advogadoData[clienteKey];
+                const nomePeticionante = cliente.NomePeticionante
+                if (nomePeticionante){
+                        const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
+                        const descricao = cliente.Descrição || "Descrição não disponível";
+                        const ultimaAlteracao = cliente.ultimaAlteracao || "#";
+        
+                        const newRow = document.createElement('tr');
+                        newRow.setAttribute('data-cliente-key', clienteKey);
+                        newRow.innerHTML = `
+                            <td class="nome-peticionante">${nomePeticionante}</td>
+                            <td class="cpf-ativo">${cpfAtivo}</td>
+                            <td class="descricao">${descricao}</td>
+                            <td class="ultima-alteracao">${ultimaAlteracao}</td>
+                            <td>
+                                <select id="selectSituation-${clienteKey}" class="situation">
+                                    <option value="emcadastramento">Em cadastramento</option>
+                                    <option value="aguardandoenvio">Aguardando envio</option>
+                                    <option value="protocolada">Protocolada</option>
+                                </select>
+                            </td>
+                            <td><a href="#" class="baixar-peticao" data-cliente-key="${clienteKey}">Visualizar</a></td>
+                            <td>
+                                <button class="arquivar-btn" data-cliente-key="${clienteKey}">Arquivar</button>
+                            </td>`;
+        
+                        const select = newRow.querySelector(`#selectSituation-${clienteKey}`);
+                        select.value = cliente.situacao || 'em cadastramento';
+        
+                        select.addEventListener('change', function() {
+                            const selectedValue = this.value;
+                            updateSituacaoInDatabase(clienteKey, selectedValue, cliente);
+                        });
+        
+                        clientesTable.appendChild(newRow);
+                        
+                        console.log(clientes);
+                    };
+                    const adv = cliente.NomeAdvogado;
+                    if (adv){
+                        populateSelectOptions(advogadoData, 'emNomeDe', 'NomePeticionante');
+                        document.getElementById('emNomeDe').addEventListener('change', function() {
+                                const nomePeticionanteSelecionado = cliente.NomePeticionante;
+                                const clientesFiltrados = filtrarClientesPorNomePeticionante(cliente, nomePeticionanteSelecionado);
+                                renderClientes(clientesFiltrados);
+                        });
+                    }
 
-                    // Cria uma nova linha na tabela para o cliente
-                    const newRow = document.createElement('tr');
-                    newRow.setAttribute('data-cliente-key', clienteKey);
-                    newRow.innerHTML = `
-                        <td class="nome-peticionante">${nomePeticionante}</td>
-                        <td class="cpf-ativo">${cpfAtivo}</td>
-                        <td class="descricao">${descricao}</td>
-                        <td class="ultima-alteracao">${ultimaAlteracao}</td>
-                        <td>
-                            <select id="selectSituation-${clienteKey}" class="situation">
-                                <option value="emcadastramento">Em cadastramento</option>
-                                <option value="aguardandoenvio">Aguardando envio</option>
-                                <option value="protocolada">Protocolada</option>
-                            </select>
-                        </td>
-                        <td><a href="#" class="baixar-peticao" data-cliente-key="${clienteKey}">Visualizar</a></td>
-                        <td>
-                            <button class="arquivar-btn" data-cliente-key="${clienteKey}">Arquivar</button>
-                        </td>`;
-
-                    const select = newRow.querySelector(`#selectSituation-${clienteKey}`);
-                    select.value = cliente[adv].situacao || 'em cadastramento';
-
-                    select.addEventListener('change', function() {
-                        const selectedValue = this.value;
-                        updateSituacaoInDatabase(clienteKey, selectedValue, cliente);
-                    });
-
-                    // Adiciona a nova linha à tabela
-                    clientesTable.appendChild(newRow);
-                } else {
-                    console.log("Advogado não encontrado nos detalhes do cliente");
-                }
-            });
+        });
 
             document.querySelectorAll('.arquivar-btn').forEach(button => {
                 button.addEventListener('click', function() {
-                   
                     const row = this.closest('tr');
                     const nomePeticionante = row.querySelector('.nome-peticionante').textContent;
         
@@ -109,32 +128,10 @@ function fetchClientes() {
                     });
                 });
             });
-            
+
             console.log(clientes);
-            populateSelectOptions(clientes, 'emNomeDe', 'NomePeticionante');
-
-            document.getElementById('emNomeDe').addEventListener('change', function() {
-                Object.keys(clientes).forEach(clienteKey => {
-                    const cliente = clientes[clienteKey];
-                    const adv = cliente.NomeAdvogado;
-                    if (adv && cliente[adv]) {
-                        const nomePeticionanteSelecionado = cliente[adv].NomePeticionante;
-                        const clientesFiltrados = filtrarClientesPorNomePeticionante(clientes, nomePeticionanteSelecionado);
-                        renderClientes(clientesFiltrados);
-                    }
-                });
-            });
-
-            document.querySelectorAll('.baixar-peticao').forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const clienteKey = this.getAttribute('data-cliente-key');
-                    showClientDetails(clienteKey);
-                });
-            });
         })
         .catch(error => {
-            // Exibe uma mensagem de erro em caso de falha na requisição
             console.error("Erro ao buscar clientes:", error);
         });
 }
@@ -142,23 +139,23 @@ function fetchClientes() {
 function filtrarClientesPorNomePeticionante(clientes, nomePeticionante) {
     const clientesFiltrados = {};
     console.log("Filtrando clientes por nome peticionante:", nomePeticionante);
+    
     var selectElement = document.getElementById('emNomeDe');
     var selectedIndex = selectElement.selectedIndex;
     var selectedOptionText = selectElement.options[selectedIndex].textContent;
 
     for (const clienteKey in clientes) {
-        const cliente = clientes[clienteKey];
-        const adv = cliente.NomeAdvogado;
-        if (adv && cliente[adv]) {
-            const nomePeticionanteCliente = cliente[adv].NomePeticionante || "";
-            if (nomePeticionanteCliente === selectedOptionText) {
-                clientesFiltrados[clienteKey] = cliente;
-            }
+        const subobjeto = clientes[clienteKey];
+        const nomePeticionanteCliente = subobjeto.NomePeticionante || "";
+        
+        if (nomePeticionanteCliente === selectedOptionText) {
+            clientesFiltrados[clienteKey] = subobjeto;
         }
     }
 
     return clientesFiltrados;
 }
+
 
 function renderClientes(clientesFiltrados) {
     const clientesTable = document.getElementById("clientesBody");
@@ -173,11 +170,11 @@ function renderClientes(clientesFiltrados) {
     for (const clienteKey in clientesFiltrados) {
         const cliente = clientesFiltrados[clienteKey];
         const adv = cliente.NomeAdvogado;
-        if (adv && cliente[adv]) {
-            const nomePeticionante = cliente[adv].NomePeticionante || "Nome não disponível";
-            const cpfAtivo = cliente[adv].CPFAtivo || "CPF não disponível";
-            const descricao = cliente[adv].Descrição || "Descrição não disponível";
-            const ultimaAlteracao = cliente[adv].ultimaAlteracao || "#";
+        if (adv) {
+            const nomePeticionante = cliente.NomePeticionante || "Nome não disponível";
+            const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
+            const descricao = cliente.Descrição || "Descrição não disponível";
+            const ultimaAlteracao = cliente.ultimaAlteracao || "#";
 
             const newRow = document.createElement('tr');
             newRow.setAttribute('data-cliente-key', clienteKey);
@@ -199,7 +196,7 @@ function renderClientes(clientesFiltrados) {
                 </td>`;
 
             const select = newRow.querySelector(`#selectSituation-${clienteKey}`);
-            select.value = cliente[adv].situacao || 'em cadastramento';
+            select.value = cliente.situacao || 'em cadastramento';
 
             select.addEventListener('change', function() {
                 const selectedValue = this.value;
@@ -285,24 +282,21 @@ function updateSituacaoInDatabase(clienteKey, selectedValue, cliente) {
         });
 }
 
-function populateSelectOptions(clientes, selectId, property) {
+function populateSelectOptions(advogadoData, selectId, property) {
     const select = document.getElementById(selectId);
+    
     if (select) {
-        select.innerHTML = "";
-        for (let clienteKey in clientes) {
-            if (clientes.hasOwnProperty(clienteKey)) {
-                const cliente = clientes[clienteKey];
-                const adv = cliente.NomeAdvogado;
-                if (adv && cliente[adv]) {
-                    const option = document.createElement('option');
-                    option.value = clienteKey;
-                    if (selectId === "emNomeDe") {
-                        option.textContent = cliente[adv][property];
-                    }
-                    select.appendChild(option);
-                }
+        select.innerHTML = ""; 
+        const clientesArray = Object.values(advogadoData);
+
+        clientesArray.forEach(cliente => {
+            if (cliente[property]) { 
+                const option = document.createElement('option');
+                option.value = cliente[property];
+                option.textContent = cliente[property];
+                select.appendChild(option);
             }
-        }
+        });
     } else {
         console.error(`Elemento select com ID '${selectId}' não encontrado.`);
     }
@@ -455,4 +449,12 @@ function getCurrentDateTime() {
     return `${formattedDate} ${formattedTime}`;
 }
 
-fetchClientes();
+document.addEventListener("DOMContentLoaded", function() {
+    const loggedInLawyer = oabAdvogadoLogado();
+    if (loggedInLawyer) {
+        fetchClientes(loggedInLawyer);
+    } else {
+        console.log("Nenhum advogado logado. Redirecionando para a página de login.");
+        // Redirecionar para a página de login ou mostrar uma mensagem de erro
+    }
+});
