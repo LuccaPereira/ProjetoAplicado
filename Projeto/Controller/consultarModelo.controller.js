@@ -21,7 +21,7 @@ function oabAdvogadoLogado() {
     }
 }
 
-function fetchClientes(loggedInLawyer) {
+function fetchClientes(loggedInLawyer, loggedInLawyerString) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = "Advogado";
     const url = `${databaseURL}/${collectionPath}.json`;
@@ -37,8 +37,8 @@ function fetchClientes(loggedInLawyer) {
             }
 
             clientesTable.innerHTML = "";
-
-            const advogadoData = clientes[loggedInLawyer.OAB];
+            const advLogado = loggedInLawyer.OAB;
+            const advogadoData = clientes[advLogado];
             if (!advogadoData) {
                 console.error("Advogado não encontrado.");
                 return;
@@ -46,60 +46,68 @@ function fetchClientes(loggedInLawyer) {
 
             Object.keys(advogadoData).forEach(clienteKey => {
                 const cliente = advogadoData[clienteKey];
-                const nomePeticionante = cliente.NomePeticionante
-                if (nomePeticionante){
-                        const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
-                        const descricao = cliente.Descrição || "Descrição não disponível";
-                        const ultimaAlteracao = cliente.ultimaAlteracao || "#";
-        
-                        const newRow = document.createElement('tr');
-                        newRow.setAttribute('data-cliente-key', clienteKey);
-                        newRow.innerHTML = `
-                            <td class="nome-peticionante">${nomePeticionante}</td>
-                            <td class="cpf-ativo">${cpfAtivo}</td>
-                            <td class="descricao">${descricao}</td>
-                            <td class="ultima-alteracao">${ultimaAlteracao}</td>
-                            <td>
-                                <select id="selectSituation-${clienteKey}" class="situation">
-                                    <option value="emcadastramento">Em cadastramento</option>
-                                    <option value="aguardandoenvio">Aguardando envio</option>
-                                    <option value="protocolada">Protocolada</option>
-                                </select>
-                            </td>
-                            <td><a href="#" class="baixar-peticao" data-cliente-key="${clienteKey}">Visualizar</a></td>
-                            <td>
-                                <button class="arquivar-btn" data-cliente-key="${clienteKey}">Arquivar</button>
-                            </td>`;
-        
-                        const select = newRow.querySelector(`#selectSituation-${clienteKey}`);
+                const nomePeticionante = cliente.NomePeticionante;
+                const Keyfiltrada = clienteKey.replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                if (nomePeticionante) {
+                    const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
+                    const descricao = cliente.Descrição || "Descrição não disponível";
+                    const ultimaAlteracao = cliente.ultimaAlteracao || "#";
+
+                    const newRow = document.createElement('tr');
+                    newRow.setAttribute('data-cliente-key', clienteKey);
+                    newRow.innerHTML = `
+                        <td class="nome-peticionante">${nomePeticionante}</td>
+                        <td class="cpf-ativo">${cpfAtivo}</td>
+                        <td class="descricao">${descricao}</td>
+                        <td class="ultima-alteracao">${ultimaAlteracao}</td>
+                        <td>
+                            <select id="selectSituation-${Keyfiltrada}" class="situation">
+                                <option value="emcadastramento">Em cadastramento</option>
+                                <option value="aguardandoenvio">Aguardando envio</option>
+                                <option value="protocolada">Protocolada</option>
+                            </select>
+                        </td>
+                        <td><button href="#" class="baixar-peticao" data-cliente-key="${Keyfiltrada}">Visualizar</button></td>
+                        <td>
+                            <button class="arquivar-btn" data-cliente-key="${Keyfiltrada}">Arquivar</button>
+                        </td>`;
+
+                    clientesTable.appendChild(newRow);
+                    const select = newRow.querySelector(`#selectSituation-${Keyfiltrada}`);
+                    if (select) {
                         select.value = cliente.situacao || 'em cadastramento';
-        
                         select.addEventListener('change', function() {
                             const selectedValue = this.value;
                             updateSituacaoInDatabase(clienteKey, selectedValue, cliente);
                         });
-        
-                        clientesTable.appendChild(newRow);
-                        
-                        console.log(clientes);
-                    };
-                    const adv = cliente.NomeAdvogado;
-                    if (adv){
-                        populateSelectOptions(advogadoData, 'emNomeDe', 'NomePeticionante');
-                        document.getElementById('emNomeDe').addEventListener('change', function() {
-                                const nomePeticionanteSelecionado = cliente.NomePeticionante;
-                                const clientesFiltrados = filtrarClientesPorNomePeticionante(cliente, nomePeticionanteSelecionado);
-                                renderClientes(clientesFiltrados);
-                        });
+                    } else {
+                        console.error(`Select com id 'selectSituation-${Keyfiltrada}' não encontrado.`);
                     }
+                }
+            });
 
-        });
+            document.querySelectorAll('.baixar-peticao').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const clienteKey = this.getAttribute('data-cliente-key');
+                    showClientDetails(clienteKey, advogadoData);
+                });
+            });
+
+            // Popula o dropdown com as opções corretas
+            populateSelectOptions(advogadoData, 'emNomeDe', 'NomePeticionante');
+
+            document.getElementById('emNomeDe').addEventListener('change', function() {
+                const selectedOptionText = this.options[this.selectedIndex].textContent.trim();
+                const clientesFiltrados = filtrarClientesPorNomePeticionante(advogadoData, selectedOptionText);
+                renderClientes(clientesFiltrados);
+            });
 
             document.querySelectorAll('.arquivar-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const row = this.closest('tr');
                     const nomePeticionante = row.querySelector('.nome-peticionante').textContent;
-        
+
                     Swal.fire({
                         title: 'Você tem certeza?',
                         text: `Deseja mesmo arquivar o processo de ${nomePeticionante}?`,
@@ -118,6 +126,7 @@ function fetchClientes(loggedInLawyer) {
                                 'O processo foi arquivado com sucesso.',
                                 'success'
                             );
+                            window.reload();
                         } else {
                             Swal.fire(
                                 'Cancelado',
@@ -137,23 +146,30 @@ function fetchClientes(loggedInLawyer) {
 }
 
 function filtrarClientesPorNomePeticionante(clientes, nomePeticionante) {
-    const clientesFiltrados = {};
+    const clientesFiltrados = [];
     console.log("Filtrando clientes por nome peticionante:", nomePeticionante);
     
     var selectElement = document.getElementById('emNomeDe');
     var selectedIndex = selectElement.selectedIndex;
     var selectedOptionText = selectElement.options[selectedIndex].textContent;
-
-    for (const clienteKey in clientes) {
-        const subobjeto = clientes[clienteKey];
-        const nomePeticionanteCliente = subobjeto.NomePeticionante || "";
-        
-        if (nomePeticionanteCliente === selectedOptionText) {
-            clientesFiltrados[clienteKey] = subobjeto;
-        }
+    const subobjeto = clientes[selectedOptionText];
+    if (subobjeto === undefined) {
+        return;
     }
-
+    const nomePeticionanteCliente = subobjeto.NomePeticionante || "";
+     
+    if (nomePeticionanteCliente === selectedOptionText) {
+        clientesFiltrados.push(subobjeto);
+    }
+    console.log("Clientes Filtrados:", clientesFiltrados);
     return clientesFiltrados;
+}
+
+function normalizeKey(key) {
+    return key
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove acentos
+        .replace(/\s+/g, '-') // Substitui espaços por hífens
+        .replace(/[^\w-]/g, ''); // Remove caracteres especiais
 }
 
 
@@ -165,7 +181,13 @@ function renderClientes(clientesFiltrados) {
         return;
     }
 
+    if (clientesFiltrados.length === 0) {
+        console.log("Nenhum cliente encontrado para exibir.");
+        return; 
+    }
+
     clientesTable.innerHTML = "";
+    //const Keyfiltrada = clienteKey.replace(/\s+/g, '-').replace(/[^\w-]/g, '');
 
     for (const clienteKey in clientesFiltrados) {
         const cliente = clientesFiltrados[clienteKey];
@@ -175,36 +197,76 @@ function renderClientes(clientesFiltrados) {
             const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
             const descricao = cliente.Descrição || "Descrição não disponível";
             const ultimaAlteracao = cliente.ultimaAlteracao || "#";
+            const Keyfiltrada = normalizeKey(cliente.NomePeticionante);
 
             const newRow = document.createElement('tr');
-            newRow.setAttribute('data-cliente-key', clienteKey);
+            newRow.setAttribute('data-cliente-key', Keyfiltrada);
             newRow.innerHTML = `
                 <td class="nome-peticionante">${nomePeticionante}</td>
                 <td class="cpf-ativo">${cpfAtivo}</td>
                 <td class="descricao">${descricao}</td>
                 <td class="ultima-alteracao">${ultimaAlteracao}</td>
                 <td>
-                    <select id="selectSituation-${clienteKey}">
+                    <select id="selectSituation-${Keyfiltrada}">
                         <option value="emcadastramento">Em cadastramento</option>
                         <option value="aguardandoenvio">Aguardando envio</option>
                         <option value="protocolada">Protocolada</option>
                     </select>
                 </td>
-                <td><a href="#" class="baixar-peticao" data-cliente-key="${clienteKey}">Visualizar</a></td>
+                <td><a href="#" class="baixar-peticao" data-cliente-key="${Keyfiltrada}">Visualizar</a></td>
                 <td>
-                    <button class="arquivar-btn" data-cliente-key="${clienteKey}">Arquivar</button>
+                    <button class="arquivar-btn" data-cliente-key="${Keyfiltrada}">Arquivar</button>
                 </td>`;
 
-            const select = newRow.querySelector(`#selectSituation-${clienteKey}`);
-            select.value = cliente.situacao || 'em cadastramento';
+                const select = newRow.querySelector(`#selectSituation-${Keyfiltrada}`);
+                if (select) {
+                    select.value = cliente.situacao || 'emcadastramento';
+        
+                    select.addEventListener('change', function() {
+                        const selectedValue = this.value;
+                        updateSituacaoInDatabase(Keyfiltrada, selectedValue, cliente);
+                    });
+                } else {
+                    console.error(`Select com id 'selectSituation-${Keyfiltrada}' não encontrado.`);
+                }
+        
+                clientesTable.appendChild(newRow);
+            }
 
-            select.addEventListener('change', function() {
-                const selectedValue = this.value;
-                updateSituacaoInDatabase(clienteKey, selectedValue, cliente);
+        document.querySelectorAll('.arquivar-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const row = this.closest('tr');
+                const nomePeticionante = row.querySelector('.nome-peticionante').textContent;
+    
+                Swal.fire({
+                    title: 'Você tem certeza?',
+                    text: `Deseja mesmo arquivar o processo de ${nomePeticionante}?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0a3030',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sim, arquivar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const clienteKey = this.getAttribute('data-cliente-key');
+                        archiveClient(clienteKey);
+                        Swal.fire(
+                            'Arquivado!',
+                            'O processo foi arquivado com sucesso.',
+                            'success'
+                        );
+                    } else {
+                        Swal.fire(
+                            'Cancelado',
+                            'O processo não foi arquivado.',
+                            'error'
+                        );
+                    }
+                });
             });
+        });
 
-            clientesTable.appendChild(newRow);
-        }
     }
     document.querySelectorAll('.arquivar-btn').forEach(button => {
         button.addEventListener('click', function() {
@@ -215,16 +277,25 @@ function renderClientes(clientesFiltrados) {
 
     document.querySelectorAll('.baixar-peticao').forEach(link => {
         link.addEventListener('click', function(event) {
-            event.preventDefault();
-            const clienteKey = this.getAttribute('data-cliente-key');
-            showClientDetails(clienteKey);
+            const clienteFiltrado = clientesFiltrados.find(testingKey => {
+                event.preventDefault();
+                return testingKey;
+            });
+            showClientDetails(clienteFiltrado);
         });
     });
 }
 
-function archiveClient(clienteKey) {
+function archiveClient(clienteKey, clientes) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-    const collectionPath = `Cliente/${clienteKey}.json`;
+
+    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
+    const logAdv = JSON.parse(loggedInLawyerString);
+
+    if(clienteKey === 0){
+        clienteKey = clientes.NomePeticionante;
+    }
+    const collectionPath = `Advogado/${logAdv.OAB}/${clienteKey}.json`;
     const archivePath = `Arquivados/${clienteKey}.json`;
 
     axios.get(`${databaseURL}/${collectionPath}`)
@@ -259,10 +330,16 @@ function archiveClient(clienteKey) {
 
 
 function updateSituacaoInDatabase(clienteKey, selectedValue, cliente) {
-    const clienteKeyAtt = cliente.NomeAdvogado;
+    const clienteKeyAtt = cliente.NomePeticionante;
+
+    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
+    const logAdv = JSON.parse(loggedInLawyerString);
+
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-    const collectionPath = `Cliente`;
-    const urlAtt = `${databaseURL}/${collectionPath}/${clienteKey}/${clienteKeyAtt}.json`;
+    const collectionPath = `Advogado`;
+    const urlAtt = `${databaseURL}/${collectionPath}/${logAdv.OAB}/${clienteKeyAtt}.json`;
+
+    
 
     const updatedDetails = {
         situacao: selectedValue,
@@ -302,30 +379,36 @@ function populateSelectOptions(advogadoData, selectId, property) {
     }
 }
 
-function showClientDetails(clienteKey) {
+function showClientDetails(clienteFiltrado) {
+    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
+    const logAdv = JSON.parse(loggedInLawyerString);
+    //const cleanKey = clienteKey.replace(/-/g, ' ').replace(/[^\w\s]/g, '').replace(/ç/g, 'c');
+    //const cliente = clientes[cleanKey];
+    const clienteKeyAtt = clienteFiltrado.NomePeticionante;
+     
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-    const collectionPath = `Cliente/${clienteKey}.json`;
-    const url = `${databaseURL}/${collectionPath}`;
+    const collectionPath = `Advogado`;
+    const urlAtt = `${databaseURL}/${collectionPath}/${logAdv.OAB}/${clienteKeyAtt}.json`;
 
-    axios.get(url)
+
+    axios.get(urlAtt)
         .then(response => {
             const cliente = response.data;
 
             if (cliente) {
                 const adv = cliente.NomeAdvogado;
-                if (adv && cliente[adv]) {
-                    const clientDetails = cliente[adv];
-
-                    document.getElementById('modalNome').textContent = clientDetails.NomePeticionante || "Nome não disponível";
-                    document.getElementById('modalCpf').textContent = clientDetails.CPFAtivo || "CPF não disponível";
-                    document.getElementById('modalDescricao').textContent = clientDetails.Descrição || "Descrição não disponível";
-                    document.getElementById('modalUltimaAlteracao').textContent = clientDetails.ultimaAlteracao || "Data não disponível";
+                if (adv) {
+                
+                    document.getElementById('modalNome').textContent = cliente.NomePeticionante || "Nome não disponível";
+                    document.getElementById('modalCpf').textContent = cliente.CPFAtivo || "CPF não disponível";
+                    document.getElementById('modalDescricao').textContent = cliente.Descrição || "Descrição não disponível";
+                    document.getElementById('modalUltimaAlteracao').textContent = cliente.ultimaAlteracao || "Data não disponível";
                     document.getElementById('modalPeticao').innerHTML = `<a href="#">Visualizar</a>`;
 
-                    document.getElementById('editNome').value = clientDetails.NomePeticionante || "";
-                    document.getElementById('editCpf').value = clientDetails.CPFAtivo || "";
-                    document.getElementById('editDescricao').value = clientDetails.Descrição || "";
-                    document.getElementById('editUltimaAlteracao').value = clientDetails.ultimaAlteracao || "";
+                    document.getElementById('editNome').value = cliente.NomePeticionante || "";
+                    document.getElementById('editCpf').value = cliente.CPFAtivo || "";
+                    document.getElementById('editDescricao').value = cliente.Descrição || "";
+                    document.getElementById('editUltimaAlteracao').value = cliente.ultimaAlteracao || "";
 
                     const editButton = document.getElementById('editButton');
                     const saveButton = document.getElementById('saveButton');
@@ -335,7 +418,7 @@ function showClientDetails(clienteKey) {
                     };
 
                     saveButton.onclick = () => {
-                        saveClientDetails(response, clienteKey);
+                        saveClientDetails(response, urlAtt);
                     };
 
                     toggleEditMode(false);
@@ -380,12 +463,7 @@ function toggleEditMode(editMode) {
     document.getElementById('saveButton').classList.toggle('d-none', !editMode);
 }
 
-function saveClientDetails(response, clienteKey) {
-    console.log(response.data.NomeAdvogado);
-    const clienteKeyAtt = response.data.NomeAdvogado;
-    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-    const collectionPath = `Cliente`;
-    const urlAtt = `${databaseURL}/${collectionPath}/${clienteKey}/${clienteKeyAtt}.json`;
+function saveClientDetails(response, urlAtt) {
     firebase.initializeApp(firebaseConfig);
 
     const updatedDetails = {
