@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
 
 body {
-    background-color: rgb(220, 225, 230);
+    background-color: #aecade;
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -15,7 +15,7 @@ body {
 }
 
 nav {
-    background-color: #0d4240;
+    background-color: #0e3754;
 }
 
 .navbar-brand {
@@ -182,8 +182,8 @@ select.situation:focus {
     outline: none; /* Remove o contorno padrão do navegador */
 }
 
-.arquivar-btn {
-    background-color:#082424;
+.arquivar-btn, .baixar-peticao {
+    background-color:#0e3754;
     color: white !important;
     border-style: none;
 }
@@ -198,7 +198,7 @@ select.situation:focus {
     flex-direction: column;
     gap: 10px;
     padding: 30px;
-    background-color: rgba(255, 255, 255, 0.459);
+    background-color: #aecade;
 }
 
 .center-selects{
@@ -211,7 +211,6 @@ select.situation:focus {
 }
 
 .div-select select{
-
     border: 1px solid rgba(0,0,0,0.5);
     padding: 5px;
 }
@@ -337,11 +336,6 @@ li {
 	margin: 0 10px;
 }
 
-a {
-	color: #fff;
-	text-decoration: none;
-}
-
 .more-files {
     display:inline-block;
     width: 30%;
@@ -366,15 +360,15 @@ a {
 .table {
     /* Cores personalizadas */
     --table-color: #e0f7f6; /* Cor do texto na tabela */
-    --table-bg: #082424; /* Cor de fundo da tabela */
-    --table-border-color: #0a3030; /* Cor da borda da tabela */
-    --table-accent-bg: #2e7d6e; /* Cor de destaque da tabela */
+    --table-bg: #fdfdfd; /* Cor de fundo da tabela */
+    --table-border-color: #aecade; /* Cor da borda da tabela */
+    --table-accent-bg: #071e2e; /* Cor de destaque da tabela */
     --table-striped-color: #e0f7f6; /* Cor do texto nas linhas listradas */
-    --table-striped-bg: #144d4b; /* Cor de fundo das linhas listradas */
-    --table-active-color: #e0f7f6; /* Cor do texto nas células ativas */
-    --table-active-bg: #205c5a; /* Cor de fundo das células ativas */
+    --table-striped-bg: #071e2e; /* Cor de fundo das linhas listradas */
+    --table-active-color: #fdfdfd; /* Cor do texto nas células ativas */
+    --table-active-bg: #071e2e; /* Cor de fundo das células ativas */
     --table-hover-color: #e0f7f6; /* Cor do texto nas células quando passa o mouse */
-    --table-hover-bg: #246461; /* Cor de fundo das células quando passa o mouse */
+    --table-hover-bg: #071e2e; /* Cor de fundo das células quando passa o mouse */
     border-radius: 5px; /* Define o raio da borda */
     overflow: hidden;
 
@@ -396,7 +390,7 @@ a {
 
 .custom-table th,
 .custom-table td {
-    color: white;
+    color: #071e2e;
 }
 
 footer {

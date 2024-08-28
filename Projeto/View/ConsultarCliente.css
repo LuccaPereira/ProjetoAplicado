@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(220, 225, 230);
+    background-color: #aecade;
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -17,7 +17,7 @@ body {
 }
 
 nav {
-    background-color: #1f1515;
+    background-color: #0e3754;
     width: 100%; /* Garante que a navbar ocupe toda a largura */
 }
 
@@ -151,7 +151,7 @@ nav {
     flex-direction: column;
     gap: 10px;
     padding: 30px;
-    background-color: rgba(255, 255, 255, 0.459);
+    background-color:#aecade;
 }
 
 .footer {
