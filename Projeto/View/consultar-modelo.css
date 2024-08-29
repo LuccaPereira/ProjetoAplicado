@@ -182,7 +182,7 @@ select.situation:focus {
     outline: none; /* Remove o contorno padrão do navegador */
 }
 
-.arquivar-btn {
+.arquivar-btn, .baixar-peticao {
     background-color:#0e3754;
     color: white !important;
     border-style: none;
@@ -336,11 +336,6 @@ li {
 	margin: 0 10px;
 }
 
-a {
-	color: #fff;
-	text-decoration: none;
-}
-
 .more-files {
     display:inline-block;
     width: 30%;
@@ -365,12 +360,12 @@ a {
 .table {
     /* Cores personalizadas */
     --table-color: #e0f7f6; /* Cor do texto na tabela */
-    --table-bg: #0e3754; /* Cor de fundo da tabela */
+    --table-bg: #fdfdfd; /* Cor de fundo da tabela */
     --table-border-color: #aecade; /* Cor da borda da tabela */
     --table-accent-bg: #071e2e; /* Cor de destaque da tabela */
     --table-striped-color: #e0f7f6; /* Cor do texto nas linhas listradas */
     --table-striped-bg: #071e2e; /* Cor de fundo das linhas listradas */
-    --table-active-color: #e0f7f6; /* Cor do texto nas células ativas */
+    --table-active-color: #fdfdfd; /* Cor do texto nas células ativas */
     --table-active-bg: #071e2e; /* Cor de fundo das células ativas */
     --table-hover-color: #e0f7f6; /* Cor do texto nas células quando passa o mouse */
     --table-hover-bg: #071e2e; /* Cor de fundo das células quando passa o mouse */
@@ -395,7 +390,7 @@ a {
 
 .custom-table th,
 .custom-table td {
-    color: white;
+    color: #071e2e;
 }
 
 footer {
