@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
 
 body{
-    background-color: rgb(220, 225, 230);
+    background-color: #aecade;
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -13,42 +13,44 @@ body{
     padding: 0;
 }
 
-nav{
-    background-color: #1f1515;
+nav {
+    height: auto;
+    background-color: #0e3754;
+    margin-bottom: 15px; /* Diminuindo a margem inferior */
 }
 
-.navbar-brand{
-    padding-left: 20px;
-    font-size: 28px;
+.navbar-brand {
+    padding: 2px; /* Reduzindo o padding */
+    font-size: 24px; /* Diminuindo o tamanho da fonte */
     font-weight: 400;
     color: white;
 }
 
-.navbar-toggler{
-    margin-right: 20px;
+.navbar-toggler {
+    margin-right: 10px; /* Diminuindo a margem à direita */
     background-color: rgba(255, 255, 255, 0.26);
 }
 
-.nav-item{
+.nav-item {
     font-weight: 600;
     transition: .3s;
 }
 
-.active{
+.active {
     color: rgba(26, 201, 207, 0.808) !important;
 }
 
-.nav-item:hover{
+.nav-item:hover {
     background-color: rgba(240, 248, 255, 0.438);
     transition: .3s;
 }
 
-.nav-link{
-    font-size: 18px;
-    padding-left: 20px;
+.nav-link {
+    font-size: 16px; /* Diminuindo o tamanho da fonte */
+    padding-left: 10px; /* Reduzindo o padding à esquerda */
     color: white;
-
 }
+
 
 .center{
     width: 100%;
@@ -56,7 +58,7 @@ nav{
 }
 
 #logo {
-    width: 4%;
+    width: 3%;
 }
 
 .petition-info {
@@ -125,7 +127,7 @@ nav{
     display:inline-block;
     width: 30%;
     border: 2px solid rgba(0, 0, 0, 0.507);
-    background-color: #473030;
+    background-color: #0e3754;
     border-radius: 2px;
     margin: 4.2% auto; 
     color: white;
@@ -155,9 +157,9 @@ nav{
 }
 
 footer {
-	background-color: #1f1515;
+	background-color: #0e3754;
 	color: #fff;
-	padding: 20px;
+	padding: 5px; 
 	text-align: center;
 }
 
@@ -169,7 +171,7 @@ ul {
 
 li {
 	display: inline-block;
-	margin: 0 10px;
+	margin: 0;
 }
 
 a {

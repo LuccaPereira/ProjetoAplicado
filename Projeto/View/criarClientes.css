@@ -1,5 +1,5 @@
 body {
-    background-color: #dee2e6;
+    background-color: #aecade;
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -20,7 +20,10 @@ body {
 }
 
 nav {
-    background-color: #1f1515;
+    background-color: #0e3754;
+    align-items: center !important;
+    display: flex; /* Adiciona flexbox ao nav para centrar o conteúdo */
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
 }
 
 .navbar-brand {
@@ -31,17 +34,28 @@ nav {
 }
 
 .navbar-toggler {
-    margin-right: 20px;
-    background-color: rgba(255, 255, 255, 0.26);
+    margin-right: 10px;
+    background-color: white !important;
+}
+
+.navbar-nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .nav-item {
+    display: flex;
+    justify-content: center;
     font-weight: 600;
     transition: .3s;
+    align-items: center !important;
+    padding: 0 15px; /* Ajuste o espaçamento entre os itens */
 }
 
-.active {
-    color: rgba(26, 201, 207, 0.808) !important;
+.nav-link {
+    color: white !important;
+    text-align: center;
 }
 
 .nav-item:hover {
@@ -49,10 +63,8 @@ nav {
     transition: .3s;
 }
 
-.nav-link {
-    font-size: 18px;
-    padding-left: 20px;
-    color: white;
+.active {
+    color: rgba(26, 201, 207, 0.808) !important;
 }
 
 .center {
@@ -64,7 +76,7 @@ nav {
     width: 4%;
 }
 
-.pos-nav{
+.pos-nav {
     width: 100%;
     background-color: rgba(117, 114, 114, 0.486);
     padding: 20px;
@@ -72,38 +84,33 @@ nav {
     justify-content: end;
 }
 
-.pos-nav-buttons{
+.pos-nav-buttons {
     display: flex;
     gap: 6px;
 }
 
-.pos-nav-buttons button{
+.pos-nav-buttons button {
     background-color: rgba(255, 255, 0, 0.527) !important;
     max-width: max-content;
     border: 1px solid rgba(0, 0, 0, 0.418);
     border-radius: 2px;
 }
 
-.pos-nav-buttons button:hover{
+.pos-nav-buttons button:hover {
     background-color: rgba(255, 255, 0, 0.753);
     border: 1px solid rgba(0, 0, 0, 0.795);
 }
 
-.dropdown-toggle{
+.dropdown-toggle {
     background-color: rgba(255, 255, 0, 0.527) !important;
     max-width: max-content;
     border: 1px solid rgba(0, 0, 0, 0.418);
     border-radius: 2px;
 }
 
-.dropdown-toggle:hover{
+.dropdown-toggle:hover {
     background-color: rgba(255, 255, 0, 0.753);
     border: 1px solid rgba(0, 0, 0, 0.795);
-}
-
-.center{
-    width: 100%;
-    height: 100%;
 }
 
 .container {
@@ -114,10 +121,10 @@ nav {
 }
 
 .cadastro-box {
-    background-color: #fff;
+    background-color: #f7f5f5;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 h2 {
@@ -153,13 +160,13 @@ input[type="password"]:focus {
 }
 
 button[type="submit"] {
-    background-color: #473030;
+    background-color: #0e3754;
     color: #fff;
     cursor: pointer;
 }
 
 button[type="submit"]:hover {
-    background-color: #333;
+    background-color: #274255;
 }
 
 a {
@@ -168,7 +175,7 @@ a {
 }
 
 footer {
-    background-color: #1f1515;
+    background-color: #0e3754;
     color: #fff;
     padding: 20px;
     text-align: center;
