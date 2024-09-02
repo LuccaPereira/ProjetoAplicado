@@ -9,32 +9,33 @@
 </head>
 <body>
     <nav class="navbar">
-    <div class="container-fluid inicial-conteiner">
-        <img class="navbar-brand" id="logo" src="../View/logo (2).png" alt="Logo">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="../View/menu.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="../View/consultar-modelo.html">Consultar Petição</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="../View/cadastrarPeticao.html">Cadastrar Petição</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../View/criarClientes.html">Cadastrar Clientes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../View/chatbot.html">Chatbot</a>
-                </li>
-            </ul>
+        <div class="container-fluid inicial-conteiner">
+            <img class="navbar-brand" id="logo" src="../View/logo (2).png" alt="Logo">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="../View/menu.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="../View/consultar-modelo.html">Consultar Petição</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="../View/cadastrarPeticao.html">Cadastrar Petição</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../View/criarClientes.html">Cadastrar Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../View/chatbot.html">Chatbot</a>
+                    </li>
+                </ul>
+                <button class="btn btn-outline-danger" id="logoutButton">Logout</button>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     
         <div class="petition-info">
@@ -103,6 +104,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-storage-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="../controller/cadastrarPeticao.controller.js"></script>
+    <script src="../Controller/menu.controller.js"></script>
+
 
     <footer>
         <p>&copy; 2024 - Todos os direitos reservados</p>

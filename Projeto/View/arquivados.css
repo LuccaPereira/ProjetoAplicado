@@ -165,3 +165,16 @@ footer {
     margin-top: auto; /* Certifica-se de que o footer está na parte inferior */
 }
 
+/* Estilo para o botão de logout */
+#logoutButton {
+    margin-left: auto; /* Empurra o botão para a direita */
+    color: white;
+    border: 1px solid white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#logoutButton:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
