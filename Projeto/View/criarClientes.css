@@ -22,6 +22,8 @@ body {
 nav {
     background-color: #0e3754;
     align-items: center !important;
+    display: flex; /* Adiciona flexbox ao nav para centrar o conteúdo */
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
 }
 
 .navbar-brand {
@@ -32,33 +34,34 @@ nav {
 }
 
 .navbar-toggler {
-    margin-right: 20px;
-    background-color: white !important;
+    margin-right: 10px;
+    background-color:rgba(240, 248, 255, 0.438);
+
 }
 
 .navbar-nav {
     display: flex;
-    flex-direction: column; /* Alinha os itens verticalmente */
-    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .nav-item {
-    display: flex !important;
+    display: flex;
+    justify-content: center;
     font-weight: 600;
     transition: .3s;
     align-items: center !important;
+    padding: 0 15px; /* Ajuste o espaçamento entre os itens */
+}
+
+.nav-link {
+    color: white !important;
+    text-align: center;
 }
 
 .nav-item:hover {
     background-color: rgba(240, 248, 255, 0.438);
     transition: .3s;
-}
-
-.nav-link {
-    font-size: 18px;
-    padding: 10px 0; /* Ajusta o espaçamento entre os itens */
-    color: white;
-    text-align: center;
 }
 
 .active {
@@ -71,8 +74,44 @@ nav {
 }
 
 #logo {
-    width: 50px; /* Ajuste o tamanho do logo conforme necessário */
-    margin-bottom: 10px; /* Espaçamento abaixo do logo */
+    width: 4%;
+}
+
+.pos-nav {
+    width: 100%;
+    background-color: rgba(117, 114, 114, 0.486);
+    padding: 20px;
+    display: flex;
+    justify-content: end;
+}
+
+.pos-nav-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.pos-nav-buttons button {
+    background-color: rgba(255, 255, 0, 0.527) !important;
+    max-width: max-content;
+    border: 1px solid rgba(0, 0, 0, 0.418);
+    border-radius: 2px;
+}
+
+.pos-nav-buttons button:hover {
+    background-color: rgba(255, 255, 0, 0.753);
+    border: 1px solid rgba(0, 0, 0, 0.795);
+}
+
+.dropdown-toggle {
+    background-color: rgba(255, 255, 0, 0.527) !important;
+    max-width: max-content;
+    border: 1px solid rgba(0, 0, 0, 0.418);
+    border-radius: 2px;
+}
+
+.dropdown-toggle:hover {
+    background-color: rgba(255, 255, 0, 0.753);
+    border: 1px solid rgba(0, 0, 0, 0.795);
 }
 
 .container {
@@ -80,7 +119,6 @@ nav {
     max-width: 400px;
     padding-top: 50px; /* Adiciona espaço acima do formulário */
     flex: 1; /* Flex-grow to take remaining space */
-    margin: 0 auto; /* Centraliza horizontalmente */
 }
 
 .cadastro-box {
@@ -143,8 +181,6 @@ footer {
     padding: 20px;
     text-align: center;
     margin-top: auto; /* Push the footer to the bottom */
-    position: relative;
-    width: 100%;
 }
 
 ul {
