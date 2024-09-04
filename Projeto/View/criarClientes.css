@@ -1,8 +1,6 @@
 body {
     background-color: #aecade;
     font-family: "Radio Canada Big", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
     height: 100vh;
     margin: 0;
     display: flex;
@@ -15,110 +13,107 @@ body {
     min-height: 100vh;
 }
 
-.inicial-conteiner {
-    padding: 0;
-}
-
-nav {
+.sidebar {
     background-color: #0e3754;
-    align-items: center !important;
-    display: flex; /* Adiciona flexbox ao nav para centrar o conteúdo */
-    justify-content: center; /* Centraliza o conteúdo horizontalmente */
-}
-
-.navbar-brand {
-    padding-left: 20px;
-    font-size: 28px;
-    font-weight: 400;
-    color: white;
-}
-
-.navbar-toggler {
-    margin-right: 10px;
-    background-color:rgba(240, 248, 255, 0.438);
-
-}
-
-.navbar-nav {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.nav-item {
-    display: flex;
-    justify-content: center;
-    font-weight: 600;
-    transition: .3s;
-    align-items: center !important;
-    padding: 0 15px; /* Ajuste o espaçamento entre os itens */
-}
-
-.nav-link {
-    color: white !important;
-    text-align: center;
-}
-
-.nav-item:hover {
-    background-color: rgba(240, 248, 255, 0.438);
-    transition: .3s;
-}
-
-.active {
-    color: rgba(26, 201, 207, 0.808) !important;
-}
-
-.center {
-    width: 100%;
-    height: 100%;
-}
-
-#logo {
-    width: 4%;
-}
-
-.pos-nav {
-    width: 100%;
-    background-color: rgba(117, 114, 114, 0.486);
     padding: 20px;
+    width: 60px; /* Largura inicial do menu lateral */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    transition: width 0.3s ease;
+    overflow: hidden; /* Garante que a área de destaque não ultrapasse a largura da tela */
     display: flex;
-    justify-content: end;
+    flex-direction: column;
+    align-items: center;
+    border-right: 4px solid #000; /* Borda escura para diferenciar do rodapé */
 }
 
-.pos-nav-buttons {
+.sidebar.expanded {
+    width: 250px; /* Largura quando expandido */
+}
+
+.logo {
+    width: 150%; /* Ajuste o tamanho do logo conforme necessário */
+    margin-bottom: 20px;
+    display: block;
+    transition: width 0.3s ease;
+}
+
+.menu-icon {
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Garante que a lista ocupe toda a largura disponível */
+}
+
+.nav-list li {
+    margin-bottom: 20px;
     display: flex;
-    gap: 6px;
+    align-items: center;
+    justify-content: center; /* Alinha os itens horizontalmente */
 }
 
-.pos-nav-buttons button {
-    background-color: rgba(255, 255, 0, 0.527) !important;
-    max-width: max-content;
-    border: 1px solid rgba(0, 0, 0, 0.418);
-    border-radius: 2px;
+.nav-list a {
+    color: white; /* Cor do texto inicialmente */
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
 }
 
-.pos-nav-buttons button:hover {
-    background-color: rgba(255, 255, 0, 0.753);
-    border: 1px solid rgba(0, 0, 0, 0.795);
+.nav-list a:hover {
+    color: #000; /* Cor do texto ao passar o mouse */
+    background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
+    border-radius: 5px; /* Adiciona borda arredondada ao fundo */
 }
 
-.dropdown-toggle {
-    background-color: rgba(255, 255, 0, 0.527) !important;
-    max-width: max-content;
-    border: 1px solid rgba(0, 0, 0, 0.418);
-    border-radius: 2px;
+.material-icons {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #fff; /* Cor padrão dos ícones */
+    transition: color 0.3s ease; /* Transição suave para a cor dos ícones */
 }
 
-.dropdown-toggle:hover {
-    background-color: rgba(255, 255, 0, 0.753);
-    border: 1px solid rgba(0, 0, 0, 0.795);
+.nav-list a:hover .material-icons {
+    color: #000; /* Cor dos ícones ao passar o mouse */
+}
+
+.nav-text {
+    display: none;
+    color: #fff; /* Cor padrão do texto */
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+}
+
+.sidebar.expanded .nav-text {
+    display: inline;
+    color: #f0e5d8; /* Cor do texto quando expandido */
+}
+
+.sidebar.expanded .logo {
+    width: 40%; /* Ajuste o tamanho do logo quando expandido */
 }
 
 .container {
-    width: 100%;
+    margin-left: 60px; /* Compensa o tamanho da barra lateral */
+    width: calc(100% - 60px);
     max-width: 400px;
-    padding-top: 50px; /* Adiciona espaço acima do formulário */
-    flex: 1; /* Flex-grow to take remaining space */
+    padding-top: 50px;
+    flex: 1;
+    transition: margin-left 0.3s ease;
+}
+
+.sidebar.expanded ~ .container {
+    margin-left: 250px; /* Compensa o tamanho da barra lateral expandida */
+    width: calc(100% - 250px);
 }
 
 .cadastro-box {
@@ -180,7 +175,8 @@ footer {
     color: #fff;
     padding: 20px;
     text-align: center;
-    margin-top: auto; /* Push the footer to the bottom */
+    margin-top: auto;
+    border-top: 4px solid #000;
 }
 
 ul {
@@ -198,3 +194,245 @@ footer a {
     color: #fff;
     text-decoration: none;
 }
+
+/* Estilo para o botão de logout */
+#logoutButton {
+    color: white;
+    border: 1px solid white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    padding: 10px;
+}
+
+body {
+    background-color: #aecade;
+    font-family: "Radio Canada Big", sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.sidebar {
+    background-color: #0e3754;
+    padding: 20px;
+    width: 60px; /* Largura inicial do menu lateral */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    transition: width 0.3s ease;
+    overflow: hidden; /* Garante que a área de destaque não ultrapasse a largura da tela */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 4px solid #000; /* Borda escura para diferenciar do rodapé */
+}
+
+.sidebar.expanded {
+    width: 250px; /* Largura quando expandido */
+}
+
+.logo {
+    width: 150%; /* Ajuste o tamanho do logo conforme necessário */
+    margin-bottom: 20px;
+    display: block;
+    transition: width 0.3s ease;
+}
+
+.menu-icon {
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Garante que a lista ocupe toda a largura disponível */
+}
+
+.nav-list li {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alinha os itens horizontalmente */
+}
+
+.nav-list a {
+    color: white; /* Cor do texto inicialmente */
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+}
+
+.nav-list a:hover {
+    color: #000; /* Cor do texto ao passar o mouse */
+    background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
+    border-radius: 5px; /* Adiciona borda arredondada ao fundo */
+}
+
+.material-icons {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #fff; /* Cor padrão dos ícones */
+    transition: color 0.3s ease; /* Transição suave para a cor dos ícones */
+}
+
+.nav-list a:hover .material-icons {
+    color: #000; /* Cor dos ícones ao passar o mouse */
+}
+
+.nav-text {
+    display: none;
+    color: #fff; /* Cor padrão do texto */
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+}
+
+.sidebar.expanded .nav-text {
+    display: inline;
+    color: #f0e5d8; /* Cor do texto quando expandido */
+}
+
+.sidebar.expanded .logo {
+    width: 40%; /* Ajuste o tamanho do logo quando expandido */
+}
+
+.container {
+    margin-left: 60px; /* Compensa o tamanho da barra lateral */
+    width: calc(100% - 60px);
+    max-width: 400px;
+    padding-top: 50px;
+    flex: 1;
+    transition: margin-left 0.3s ease;
+}
+
+.sidebar.expanded ~ .container {
+    margin-left: 250px; /* Compensa o tamanho da barra lateral expandida */
+    width: calc(100% - 250px);
+}
+
+.cadastro-box {
+    background-color: #f7f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #1e2a3a;
+    text-align: center;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dddfe2;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+button[type="submit"] {
+    background-color: #0e3754;
+    color: #fff;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #274255;
+}
+
+a {
+    color: #1877f2;
+    text-decoration: none;
+}
+
+footer {
+    background-color: #0e3754;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: auto;
+    border-top: 4px solid #000;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Estilo para o botão de logout */
+#logoutButton {
+    color: white;
+    border: 1px solid white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    padding: 10px;
+}
+
+#logoutButton .material-icons {
+    margin-right: 8px;
+}
+
+#logoutButton .logout-text {
+    display: inline;
+}
+
+.sidebar.expanded #logoutButton .logout-text {
+    display: inline;
+}
+
+.sidebar:not(.expanded) #logoutButton .logout-text {
+    display: none;
+}
+
+#logoutButton:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
