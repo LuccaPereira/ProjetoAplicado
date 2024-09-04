@@ -36,7 +36,6 @@ function validarEmail(email) {
 
 // Função para registrar o usuário no Firebase Authentication
 async function registrarUsuario(email, senha) {
-
     const firebaseConfig = {
         apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
         authDomain: "projetoaplicado-1.firebaseapp.com",
@@ -57,6 +56,20 @@ async function registrarUsuario(email, senha) {
         return userCredential.user;
     } catch (error) {
         console.error("Erro ao registrar usuário:", error);
+        throw error;
+    }
+}
+
+async function verificarOABExistente(OAB) {
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+    const collectionPath = "Advogado";
+    const url = `${databaseURL}/${collectionPath}/${OAB}.json`;
+
+    try {
+        const response = await axios.get(url);
+        return response.data !== null;
+    } catch (error) {
+        console.error("Erro ao verificar OAB:", error);
         throw error;
     }
 }
@@ -97,13 +110,20 @@ async function submitForm() {
         return;
     }
 
-    if (senha != confirmarSenha) {
+    if (senha !== confirmarSenha) {
         alert('As senhas não coincidem.');
         return;
     }
 
     if (form.checkValidity()) {
         try {
+            const OABExistente = await verificarOABExistente(OAB);
+
+            if (OABExistente) {
+                alert('OAB já cadastrada. Por favor, insira uma OAB diferente.');
+                return;
+            }
+
             await registrarUsuario(email, senha);
 
             const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
