@@ -154,12 +154,8 @@ nav {
     background-color:#aecade;
 }
 
-.footer {
-    background-color: #1f1515;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    width: 100%; /* Garante que o footer ocupe toda a largura */
+footer {
+    color:white;
 }
 
 ul {

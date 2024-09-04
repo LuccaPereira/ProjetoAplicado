@@ -392,26 +392,3 @@ li {
 .custom-table td {
     color: #071e2e;
 }
-
-footer {
-	background-color: #1f1515;
-	color: #fff;
-	padding: 20px;
-	text-align: center;
-}
-
-footer > ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-footer > li {
-	display: inline-block;
-	margin: 0 10px;
-}
-
-footer > a {
-	color: #fff;
-	text-decoration: none;
-}

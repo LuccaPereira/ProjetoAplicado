@@ -67,7 +67,7 @@ function fetchClientes(loggedInLawyer, loggedInLawyerString) {
                                 <option value="protocolada">Protocolada</option>
                             </select>
                         </td>
-                        <td><button href="#" class="baixar-peticao" data-cliente-key="${Keyfiltrada}">Visualizar</button></td>
+                        <td><button href="#" class="baixar-peticao" data-cliente-key="${nomePeticionante}">Visualizar</button></td>
                         <td>
                             <button class="arquivar-btn" data-cliente-key="${Keyfiltrada}">Arquivar</button>
                         </td>`;
@@ -85,12 +85,13 @@ function fetchClientes(loggedInLawyer, loggedInLawyerString) {
                     }
                 }
             });
-
+            
             document.querySelectorAll('.baixar-peticao').forEach(link => {
                 link.addEventListener('click', function(event) {
-                    event.preventDefault();
                     const clienteKey = this.getAttribute('data-cliente-key');
-                    showClientDetails(clienteKey, advogadoData);
+                    const clienteFiltro = advogadoData[clienteKey];
+                    event.preventDefault();
+                    showClientDetails(clienteFiltro);
                 });
             });
 
@@ -385,7 +386,7 @@ function showClientDetails(clienteFiltrado) {
     //const cleanKey = clienteKey.replace(/-/g, ' ').replace(/[^\w\s]/g, '').replace(/ç/g, 'c');
     //const cliente = clientes[cleanKey];
     const clienteKeyAtt = clienteFiltrado.NomePeticionante;
-     
+
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = `Advogado`;
     const urlAtt = `${databaseURL}/${collectionPath}/${logAdv.OAB}/${clienteKeyAtt}.json`;
@@ -394,7 +395,6 @@ function showClientDetails(clienteFiltrado) {
     axios.get(urlAtt)
         .then(response => {
             const cliente = response.data;
-
             if (cliente) {
                 const adv = cliente.NomeAdvogado;
                 if (adv) {
