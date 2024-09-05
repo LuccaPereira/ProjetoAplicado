@@ -20,54 +20,131 @@ body {
     padding: 0;
 }
 
-nav {
+.sidebar {
     background-color: #0e3754;
+    padding: 20px;
+    width: 60px; /* Largura inicial do menu lateral */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1.5px solid #000;
 }
 
-.navbar-brand {
-    padding-left: 20px;
+.sidebar.expanded {
+    width: 250px; /* Largura quando expandido */
+}
+
+.logo {
+    width: 150%; /* Ajuste o tamanho do logo conforme necessário */
+    margin-bottom: 20px;
+    display: block;
+    transition: width 0.3s ease;
+}
+
+.sidebar.expanded .logo {
+    width: 40%; /* Ajuste o tamanho do logo quando expandido */
+}
+
+/* ================================
+   Menu de Navegação
+   ================================ */
+.menu-icon {
     font-size: 28px;
-    font-weight: 400;
     color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: block;
 }
 
-.navbar-toggler {
-    margin-right: 20px;
-    background-color: rgba(255, 255, 255, 0.26);
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Garante que a lista ocupe toda a largura disponível */
 }
 
-.nav-item {
+.nav-list li {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alinha os itens horizontalmente */
+}
+
+.nav-list a {
+    color: white; /* Cor do texto inicialmente */
+    text-decoration: none;
     font-weight: 600;
-    transition: .3s;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
 }
 
-.active {
-    color: rgba(26, 201, 207, 0.808) !important;
+.nav-list a:hover {
+    color: #000; /* Cor do texto ao passar o mouse */
+    background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
+    border-radius: 5px;
 }
 
-.nav-item:hover {
-    background-color: rgba(240, 248, 255, 0.438);
-    transition: .3s;
+.material-icons {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #fff; /* Cor padrão dos ícones */
+    transition: color 0.3s ease; /* Transição suave para a cor dos ícones */
 }
 
-.nav-link {
-    font-size: 18px;
-    padding-left: 20px;
-    color: white;
+.nav-list a:hover .material-icons {
+    color: #000; /* Cor dos ícones ao passar o mouse */
 }
 
-#logo {
-    width: 4%;
+.nav-text {
+    display: none;
+    color: #fff; /* Cor padrão do texto */
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+}
+
+.sidebar.expanded .nav-text {
+    display: inline;
+    color: #f0e5d8; /* Cor do texto quando expandido */
 }
 
 .card {
     margin: 10px;
+    border-radius: 12px;
+    background-color: #0e3754; /* Aplicando a cor de fundo diretamente no card */
+    color: white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    overflow: hidden; /* Para garantir que o conteúdo respeite o arredondamento */
 }
 
-h1 {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 48px;
-    color: #1f1515;
+.card:hover {
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6); /* Sombra mais forte ao passar o mouse */
+    transform: translateY(-5px); /* Pequeno efeito de elevação ao hover */
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title, 
+.card-text {
+    color: white;
+}
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Espaçamento flexível para o conteúdo */
+.content {
+    flex: 1;
 }
 
 footer {
@@ -94,33 +171,30 @@ footer a {
     color: #fff;
     text-decoration: none;
 }
-.card-body {
-    background-color: #0e3754;
-}
-.card-title, .card-text {
-    color: white;
-}
 
-.card-link {
-    text-decoration: none;
-    color: inherit;
-}
-
-.card-link:hover .card {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.content {
-    flex: 1;
-}
-
-
-/* Estilo para o botão de logout */
-#logoutButton {
-    margin-left: auto; /* Empurra o botão para a direita */
+/* ================================
+   Estilo para o botão de logout
+   ================================ */
+   #logoutButton {
     color: white;
     border: 1px solid white;
     transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    padding: 10px;
+}
+
+#logoutButton .material-icons {
+    margin-right: 8px;
+}
+
+#logoutButton .logout-text {
+    display: inline;
+}
+
+.sidebar:not(.expanded) #logoutButton .logout-text {
+    display: none;
 }
 
 #logoutButton:hover {
@@ -128,3 +202,35 @@ footer a {
     color: white;
     border-color: #dc3545;
 }
+
+/* ================================
+   Foco para Acessibilidade
+   ================================ */
+.sidebar a:focus,
+#logoutButton:focus {
+    outline: 2px solid #007bff;
+}
+
+
+/* Estilo para a barra de rolagem */
+::-webkit-scrollbar {
+    width: 12px; /* Largura da barra de rolagem */
+}
+
+/* Cor de fundo da barra de rolagem */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Cor do fundo da trilha */
+}
+
+/* Cor e estilo da barra de rolagem */
+::-webkit-scrollbar-thumb {
+    background-color: #0e3754; /* Cor da barra de rolagem */
+    border-radius: 10px; /* Bordas arredondadas */
+    border: 3px solid #aecade; /* Cor ao redor da barra (espaço interno) */
+}
+
+/* Alterar a cor no hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #274255; /* Cor ao passar o mouse */
+}
+
