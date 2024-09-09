@@ -182,7 +182,7 @@ select.situation:focus {
     outline: none; /* Remove o contorno padrão do navegador */
 }
 
-.baixar-peticao, .arquivar-btn {
+.baixar-peticao, .arquivar-btn, .more-files {
     background-color: #0e3754; 
     color: #ffffff; 
     border: 1px solid #071e2e; 
@@ -194,7 +194,7 @@ select.situation:focus {
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-.baixar-peticao:hover, .arquivar-btn:hover {
+.baixar-peticao:hover, .arquivar-btn:hover, .more-files {
     background-color: #071e2e;
     border-color: #0e3754;
 }
@@ -352,7 +352,7 @@ li {
     display:inline-block;
     width: 20%;
     border: 2px solid rgba(0, 0, 0, 0.507);
-    background-color: #473030;
+    background-color: #0e3754;
     border-radius: 2px;
     margin: 5% auto; 
     color: white;
