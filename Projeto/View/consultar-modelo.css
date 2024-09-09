@@ -183,20 +183,20 @@ select.situation:focus {
 }
 
 .baixar-peticao, .arquivar-btn {
-    background-color: #0e3754; /* Mesma cor usada no nav */
-    color: #ffffff; /* Texto branco para contraste */
-    border: 1px solid #071e2e; /* Borda combinando com os tons escuros */
-    border-radius: 4px; /* Borda levemente arredondada */
-    padding: 6px 12px; /* Diminuindo o padding para tornar o botão menor */
-    font-size: 14px; /* Tamanho da fonte reduzido */
+    background-color: #0e3754; 
+    color: #ffffff; 
+    border: 1px solid #071e2e; 
+    border-radius: 4px; 
+    padding: 6px 12px; 
+    font-size: 14px; 
     text-align: center; 
     cursor: pointer; 
     transition: background-color 0.3s, border-color 0.3s;
 }
 
 .baixar-peticao:hover, .arquivar-btn:hover {
-    background-color: #071e2e; /* Cor mais escura no hover */
-    border-color: #0e3754; /* Borda invertida para criar contraste no hover */
+    background-color: #071e2e;
+    border-color: #0e3754;
 }
 
 
