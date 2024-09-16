@@ -130,5 +130,7 @@ function login() {
         .catch(error => {
             console.error("Erro ao obter dados:", error);
         });
+
+event.preventDefault();
 }
 
