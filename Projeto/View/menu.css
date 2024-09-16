@@ -16,10 +16,6 @@ body {
     flex-direction: column;
 }
 
-.inicial-conteiner {
-    padding: 0;
-}
-
 .sidebar {
     background-color: #0e3754;
     padding: 20px;
@@ -50,15 +46,11 @@ body {
     width: 40%; /* Ajuste o tamanho do logo quando expandido */
 }
 
-/* ================================
-   Menu de Navegação
-   ================================ */
 .menu-icon {
     font-size: 28px;
     color: white;
     cursor: pointer;
     margin-bottom: 20px;
-    display: block;
 }
 
 .nav-list {
@@ -115,16 +107,39 @@ body {
 .card {
     margin: 10px;
     border-radius: 12px;
-    background-color: #0e3754; /* Aplicando a cor de fundo diretamente no card */
+    background-color: #0e3754;
     color: white;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-    overflow: hidden; /* Para garantir que o conteúdo respeite o arredondamento */
+    transition: box-shadow 0.3s ease, transform 0.3s ease, height 0.3s ease;
+    overflow: hidden; /* Garante que o conteúdo extra não ultrapasse o card */
+    position: relative;
+    height: 200px; /* Altura inicial do card */
+}
+
+.card-info {
+    display: none; /* Esconde a área de informações extras inicialmente */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.8); /* Cor de fundo semitransparente */
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: left;
+    color: #fff;
+    z-index: 1; /* Garante que o conteúdo extra fique acima do conteúdo do card */
+    height: 100%; /* Garante que a informação extra ocupe toda a altura do card */
+    overflow-y: auto; /* Adiciona rolagem se o conteúdo for grande */
 }
 
 .card:hover {
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6); /* Sombra mais forte ao passar o mouse */
-    transform: translateY(-5px); /* Pequeno efeito de elevação ao hover */
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+    transform: translateY(-5px);
+    height: 300px; /* Altura quando o card é hoverado */
+}
+
+.card:hover .card-info {
+    display: block; /* Mostra as informações extras ao passar o mouse */
 }
 
 .card-body {
@@ -142,8 +157,9 @@ body {
     display: block;
 }
 
-/* Espaçamento flexível para o conteúdo */
 .content {
+    margin-left: 60px; /* Compensa a largura da sidebar */
+    padding: 20px;
     flex: 1;
 }
 
@@ -172,10 +188,7 @@ footer a {
     text-decoration: none;
 }
 
-/* ================================
-   Estilo para o botão de logout
-   ================================ */
-   #logoutButton {
+#logoutButton {
     color: white;
     border: 1px solid white;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -203,14 +216,10 @@ footer a {
     border-color: #dc3545;
 }
 
-/* ================================
-   Foco para Acessibilidade
-   ================================ */
 .sidebar a:focus,
 #logoutButton:focus {
     outline: 2px solid #007bff;
 }
-
 
 /* Estilo para a barra de rolagem */
 ::-webkit-scrollbar {
@@ -233,4 +242,3 @@ footer a {
 ::-webkit-scrollbar-thumb:hover {
     background-color: #274255; /* Cor ao passar o mouse */
 }
-

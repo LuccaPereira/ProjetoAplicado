@@ -104,35 +104,31 @@ function login() {
     getLawyerByOAB(oab)
         .then(response => {
             const lawyerData = response.data;
-            console.log("Dados do advogado:", lawyerData);
 
-            if (!lawyerData) {
-                alert("Você não está cadastrado ou sua OAB está incorreta");
+            const profilesArray = Object.values(lawyerData);
+            
+            const PerfilAdvogado = profilesArray.find(profile => profile.OAB);
+
+            if (!PerfilAdvogado) {
+                alert("Perfil de advogado não encontrado.");
                 return;
             }
-
-            var lawyerArray = Object.values(lawyerData);
-            var posicaoAdvogado = lawyerArray.find(advoGado => {
-                var position = advoGado.OAB;
-                if (oab === position) {
-                    if (advoGado.senha === senha) {
-                        localStorage.setItem('loggedInLawyer', JSON.stringify(advoGado));
-                        window.location.href = "../View/menu.html";
-                        return true;
-                    } else {
-                        alert("Senha está incorreta");
-                        return false;
-                    }
+    
+            if (PerfilAdvogado.OAB == oab) {
+                if (PerfilAdvogado.senha == senha) {
+                    localStorage.setItem('loggedInLawyer', JSON.stringify(PerfilAdvogado));
+                    window.location.href = "../View/menu.html";
+                    return true;
+                } else {
+                    alert("Senha está incorreta");
+                    return false;
                 }
-
-                return false;
-            });
-
-            console.log(posicaoAdvogado);
+            } else {
+                alert("OAB não encontrada");
+            }
         })
         .catch(error => {
-            console.error("Erro ao obter dados do advogado:", error);
+            console.error("Erro ao obter dados:", error);
         });
-
-    event.preventDefault();
 }
+

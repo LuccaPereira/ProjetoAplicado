@@ -14,94 +14,159 @@ body {
     padding: 0;
 }
 
-nav {
+/* ================================
+   Barra Lateral
+   ================================ */
+.sidebar {
     background-color: #0e3754;
-}
-
-.navbar-brand {
-    padding-left: 20px;
-    font-size: 28px;
-    font-weight: 400;
-    color: white;
-}
-
-.navbar-toggler {
-    margin-right: 20px;
-    background-color: rgba(255, 255, 255, 0.26);
-}
-
-.nav-item {
-    font-weight: 600;
-    transition: .3s;
-}
-
-.active {
-    color: rgba(26, 201, 207, 0.808) !important;
-}
-
-.nav-item:hover {
-    background-color: rgba(240, 248, 255, 0.438);
-    transition: .3s;
-}
-
-.nav-link {
-    font-size: 18px;
-    padding-left: 20px;
-    color: white;
-}
-
-.center {
-    width: 100%;
-    height: 100%;
-}
-
-#logo {
-    width: 4%;
-}
-
-.pos-nav{
-    width: 100%;
-    background-color: rgba(117, 114, 114, 0.486);
     padding: 20px;
+    width: 60px; /* Largura inicial do menu lateral */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    transition: width 0.3s ease;
+    overflow: hidden;
     display: flex;
-    justify-content: end;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1.5px solid #000;
 }
 
-.pos-nav-buttons{
+.sidebar.expanded {
+    width: 250px; /* Largura quando expandido */
+}
+
+.logo {
+    width: 150%; /* Ajuste o tamanho do logo conforme necessário */
+    margin-bottom: 20px;
+    display: block;
+    transition: width 0.3s ease;
+}
+
+.sidebar.expanded .logo {
+    width: 40%; /* Ajuste o tamanho do logo quando expandido */
+}
+
+.content {
+    margin-left: 60px; /* Largura da barra lateral quando não expandida */
+    transition: margin-left 0.3s ease; /* Transição suave para a margem ao expandir */
+}
+
+.sidebar.expanded + .content {
+    margin-left: 250px; /* Largura da barra lateral quando expandida */
+}
+
+/* Ajuste a tabela para que ela se ajuste corretamente */
+.table {
+    width: 90%; /* Define a largura da tabela */
+    max-width: 10000px; /* Define uma largura máxima para a tabela */
+    margin: 20px auto; /* Adiciona margem automática para centralizar a tabela */
+    border-radius: 5px; /* Define o raio da borda */
+    overflow: hidden;
+}
+
+/* ================================
+   Menu de Navegação
+   ================================ */
+.menu-icon {
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Garante que a lista ocupe toda a largura disponível */
+}
+
+.nav-list li {
+    margin-bottom: 20px;
     display: flex;
-    gap: 6px;
+    align-items: center;
+    justify-content: center; /* Alinha os itens horizontalmente */
 }
 
-.pos-nav-buttons button{
-    background-color: rgba(255, 255, 0, 0.527) !important;
-    max-width: max-content;
-    border: 1px solid rgba(0, 0, 0, 0.418);
-    border-radius: 2px;
+.nav-list a {
+    color: white; /* Cor do texto inicialmente */
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
 }
 
-.pos-nav-buttons button:hover{
-    background-color: rgba(255, 255, 0, 0.753);
-    border: 1px solid rgba(0, 0, 0, 0.795);
+.nav-list a:hover {
+    color: #000; /* Cor do texto ao passar o mouse */
+    background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
+    border-radius: 5px;
 }
 
-.dropdown-toggle{
-    background-color: rgba(255, 255, 0, 0.527) !important;
-    max-width: max-content;
-    border: 1px solid rgba(0, 0, 0, 0.418);
-    border-radius: 2px;
+.material-icons {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #fff; /* Cor padrão dos ícones */
+    transition: color 0.3s ease; /* Transição suave para a cor dos ícones */
 }
 
-.dropdown-toggle:hover{
-    background-color: rgba(255, 255, 0, 0.753);
-    border: 1px solid rgba(0, 0, 0, 0.795);
+.nav-list a:hover .material-icons {
+    color: #000; /* Cor dos ícones ao passar o mouse */
 }
 
-.center{
-    width: 100%;
-    height: 100%;
+.nav-text {
+    display: none;
+    color: #fff; /* Cor padrão do texto */
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
 }
 
-.modelos{
+.sidebar.expanded .nav-text {
+    display: inline;
+    color: #f0e5d8; /* Cor do texto quando expandido */
+}
+
+/* ================================
+   Botão de Logout
+   ================================ */
+#logoutButton {
+    color: white;
+    border: 1px solid white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    padding: 10px;
+}
+
+#logoutButton .material-icons {
+    margin-right: 8px;
+}
+
+#logoutButton .logout-text {
+    display: inline;
+}
+
+.sidebar:not(.expanded) #logoutButton .logout-text {
+    display: none;
+}
+
+#logoutButton:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+/* ================================
+   Foco para Acessibilidade
+   ================================ */
+.sidebar a:focus,
+#logoutButton:focus {
+    outline: 2px solid #007bff;
+}
+
+.modelos {
     padding: 20px;
     width: 100%;
     display: flex;
@@ -109,7 +174,7 @@ nav {
     gap: 6px;
 }
 
-.modelo{
+.modelo {
     border-radius: 8px;
     background-color: rgba(133, 125, 125, 0.486);
     padding: 10px 50px;
@@ -121,23 +186,23 @@ nav {
     align-items: center;
 }
 
-.modelo h3{
+.modelo h3 {
     font-size: 18px;
     color: rgba(0, 0, 0, 0.514);
 }
 
-.modelo span{
+.modelo span {
     font-size: 16px;
     color: rgba(0, 0, 0, 0.767);
 }
 
-.div-left-modelo{
+.div-left-modelo {
     width: 80%;
     display: flex;
     justify-content: space-between;
 }
 
-.nome-situcao select{
+.nome-situcao select {
     background-color: aqua;
     padding: 3px 20px;
     border-radius: 12px;
@@ -182,29 +247,32 @@ select.situation:focus {
     outline: none; /* Remove o contorno padrão do navegador */
 }
 
-.baixar-peticao, .arquivar-btn, .more-files {
-    background-color: #0e3754; 
-    color: #ffffff; 
-    border: 1px solid #071e2e; 
-    border-radius: 4px; 
-    padding: 6px 12px; 
-    font-size: 14px; 
-    text-align: center; 
-    cursor: pointer; 
+.baixar-peticao,
+.arquivar-btn,
+.more-files {
+    background-color: #0e3754;
+    color: #ffffff;
+    border: 1px solid #071e2e;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-.baixar-peticao:hover, .arquivar-btn:hover, .more-files {
+.baixar-peticao:hover,
+.arquivar-btn:hover,
+.more-files {
     background-color: #071e2e;
     border-color: #0e3754;
 }
 
-
-.consultar-modelo{
+.consultar-modelo {
     max-height: max-content;
 }
 
-.center1{
+.center1 {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -213,43 +281,43 @@ select.situation:focus {
     background-color: #aecade;
 }
 
-.center-selects{
+.center-selects {
     display: flex;
     gap: 20px;
 }
 
-.div-select h3{
+.div-select h3 {
     font-size: 16px;
 }
 
-.div-select select{
+.div-select select {
     border: 1px solid rgba(0,0,0,0.5);
     padding: 5px;
 }
 
-.instancia{
+.instancia {
     width: 100%;
 }
 
-.instancia h3{
+.instancia h3 {
     font-size: 16px;
 }
 
-.instancia select{
+.instancia select {
     width: 100%;
     background-color: rgba(240, 248, 255, 0.712);
     height: 35px;
     padding-left: 20px;
 }
 
-.consultar-busca{
+.consultar-busca {
     padding-top: 30px;
     display: flex;
     gap: 30px;
     align-items: center;
 }
 
-.consultar-busca button{
+.consultar-busca button {
     background-color: rgba(255, 187, 0, 0.795) !important;
     max-width: max-content;
     border: 1px solid rgba(0, 0, 0, 0.418);
@@ -257,32 +325,32 @@ select.situation:focus {
     padding: 8px;
 }
 
-.consultar-busca span{
+.consultar-busca span {
     font-size: 14px;
     color: rgb(82, 165, 238);
 }
 
-.todos-os-checks{
+.todos-os-checks {
     padding-top: 30px;
 }
 
-.checks1{
+.checks1 {
     display: flex;
     gap: 20px;
     padding-left: 20px;
 }
 
-.ckeck2-div{
+.ckeck2-div {
     padding-top: 20px;
 }
 
-.checks2{
+.checks2 {
     display: flex;
     gap: 20px;
     padding-left: 20px;
 }
 
-.check-name{
+.check-name {
     width: 180px;
     gap: 5px;
     display: flex;
@@ -331,76 +399,39 @@ select#emNomeDe:focus {
     outline: none; /* Remove o contorno padrão do navegador */
 }
 
-.exportat-div{
+.exportat-div {
     width: 100%;
     display: flex;
     justify-content: end;
 }
 
 ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 li {
-	display: inline-block;
-	margin: 0 10px;
+    display: inline-block;
+    margin: 0 10px;
 }
 
 .more-files {
-    display:inline-block;
+    display: inline-block;
     width: 20%;
     border: 2px solid rgba(0, 0, 0, 0.507);
     background-color: #0e3754;
     border-radius: 2px;
-    margin: 5% auto; 
+    margin: 5% auto;
     color: white;
     transition: .3s;
     text-align: center;
     line-height: 20px;
     cursor: pointer;
-
 }
 
 .more-files:hover {
     border: 2px solid black;
-    color: black ;
+    color: black;
     background-color: rgb(106, 139, 201);
-}
-
-.table {
-    /* Cores personalizadas */
-    --table-color: #e0f7f6; /* Cor do texto na tabela */
-    --table-bg: #fdfdfd; /* Cor de fundo da tabela */
-    --table-border-color: #aecade; /* Cor da borda da tabela */
-    --table-accent-bg: #071e2e; /* Cor de destaque da tabela */
-    --table-striped-color: #e0f7f6; /* Cor do texto nas linhas listradas */
-    --table-striped-bg: #071e2e; /* Cor de fundo das linhas listradas */
-    --table-active-color: #fdfdfd; /* Cor do texto nas células ativas */
-    --table-active-bg: #071e2e; /* Cor de fundo das células ativas */
-    --table-hover-color: #e0f7f6; /* Cor do texto nas células quando passa o mouse */
-    --table-hover-bg: #071e2e; /* Cor de fundo das células quando passa o mouse */
-    border-radius: 5px; /* Define o raio da borda */
-    overflow: hidden;
-
-    /* Restante do CSS para estilizar a tabela */
-    width: 100%;
-    margin-bottom: 1rem;
-    vertical-align: middle;
-    border-color: var(--table-border-color);
-
-    > :not(caption) > * > * {
-        padding: .75rem .5rem;
-        color: var(--table-color);
-        background-color: var(--table-bg);
-        border-bottom-width: 3px;
-        box-shadow: inset 0 0 0 9999px var(--table-bg);
-    }
-}
-
-
-.custom-table th,
-.custom-table td {
-    color: #071e2e;
 }
