@@ -1,9 +1,10 @@
 function clickMenu() {
-    if(itens.style.display == 'block'){
-        itens.style.display = 'none';
-    } else {
-        itens.style.display = 'block'
-    }
+    const sidebar = document.querySelector('.sidebar');
+    const menuToggle = document.getElementById('menuToggle');
+    
+    menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('expanded');
+    });
 }
 
 document.getElementById('logoutButton').addEventListener('click', function() {
@@ -12,4 +13,13 @@ document.getElementById('logoutButton').addEventListener('click', function() {
     localStorage.removeItem('loggedInCliente');
 
     window.location.href = '../View/login.html';
+})
+
+function paginaPerfil() {
+    window.location.href = '../View/perfilAdvogado.html';
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    clickMenu();
 });
