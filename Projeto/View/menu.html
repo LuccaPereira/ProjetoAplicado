@@ -8,57 +8,44 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" href="menu.css">
 </head>
-    <body>
-        <nav class="navbar">
-            <div class="container-fluid inicial-conteiner">
-                <img class="navbar-brand" id="logo" src="../View/logo (2).png" alt="Logo">
-                <div class="profile-icon">
-                    <a href="./cadastro.html"><img src="./img/perfil-icon.png" alt="Ícone de Perfil" class="profile-img"></a>
-                </div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-              
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../View/menu.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../View/consultar-modelo.html">Consultar Petição</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../View/cadastrarPeticao.html">Cadastrar Petição</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../View/criarClientes.html">Cadastrar Clientes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../View/chatbot.html">Chatbot</a>
-                        </li>
-                    </ul>
-                    <button class="btn btn-outline-danger" id="logoutButton">Logout</button>
+<body>
+    <div class="sidebar">
+        <img class="logo" src="../View/logo (2).png" alt="Logo">
+        <span class="material-icons menu-icon" id="menuToggle">menu</span>
+        <button onClick="paginaPerfil()" class="btn btn-outline-center" id="loginBnt">
+            <span class="material-icons">account_circle</span>
+            <span class="login-text">Perfil</span>
+        </button>
+        <ul class="nav-list">
+            <li><a href="../View/menu.html"><span class="material-icons">home</span><span class="nav-text">Home</span></a></li>
+            <li><a href="../View/consultar-modelo.html"><span class="material-icons">search</span><span class="nav-text">Consultar Petição</span></a></li>
+            <li><a href="../View/cadastrarPeticao.html"><span class="material-icons">description</span><span class="nav-text">Cadastrar Petição</span></a></li>
+            <li><a href="../View/criarClientes.html"><span class="material-icons">person_add</span><span class="nav-text">Cadastrar Clientes</span></a></li>
+            <li><a href="../View/chatbot.html"><span class="material-icons">chat</span><span class="nav-text">Chatbot</span></a></li>
+        </ul>
+        <button class="btn btn-outline-danger" id="logoutButton">
+            <span class="material-icons">exit_to_app</span>
+            <span class="logout-text">Logout</span>
+        </button>
+    </div>
+    <div class="content">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-12 col-md-8 text-center">
+                    <img src="logo (2).png" alt="Logo do Sistema" width="150">
+                    <h1 class="mt-3">Bem-vindo ao Smart Legal</h1>
+                    <p class="lead">Nosso sistema é uma plataforma completa para gerenciamento de petições iniciais, clientes e interação por meio de um chatbot.</p>
                 </div>
             </div>
-             <!-- Adicione o ícone de perfil aqui, dentro da tag <nav>, mas fora do container de navegação -->
-
-        </nav>
-         
-    <div class="container mt-5">
-        <div class="row justify-content-center mb-5">
-            <div class="col-12 col-md-8 text-center">
-                <img src="logo (2).png" alt="Logo do Sistema" width="150">
-                <h1 class="mt-3">Bem-vindo ao Smart Legal</h1>
-                <p class="lead">Nosso sistema é uma plataforma completa para gerenciamento de petições iniciais, clientes e interação por meio de um chatbot.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <a href="../View/consultar-modelo.html" class="card-link">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Consulta de Petições</h5>
-                            <p class="card-text">Consulte petições previamente cadastradas em nossa base de dados para obter informações relevantes sobre os casos.</p>
+            <div class="row justify-content-center">
+                <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Consulta de Petições</h5>
+                                <div class="card-info">
+                                    <p class="card-text">Consulte petições previamente cadastradas em nossa base de dados para obter informações relevantes sobre os casos.</p>
+                                </div>
+                            </div>
                         </div>
                     </a>
                 </div>
