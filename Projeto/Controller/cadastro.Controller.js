@@ -127,7 +127,7 @@ async function submitForm() {
             await registrarUsuario(email, senha);
 
             const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-            const collectionPath = "Advogado";
+            const collectionPath = `Advogado/${OAB}/PerfilAdvogado.json`;
             const url = `${databaseURL}/${collectionPath}/${OAB}.json`;
 
             const oData = {
@@ -138,7 +138,7 @@ async function submitForm() {
                 senha: senha
             };
 
-            await axios.post(url, oData);
+            await axios.put(databaseURL + collectionPath, oData);
             alert("Novo advogado registrado com sucesso.");
             window.location.href = "../View/login.html";
         } catch (error) {

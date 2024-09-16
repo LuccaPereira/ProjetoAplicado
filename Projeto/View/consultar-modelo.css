@@ -182,11 +182,33 @@ select.situation:focus {
     outline: none; /* Remove o contorno padrão do navegador */
 }
 
-.arquivar-btn, .baixar-peticao {
-    background-color:#0e3754;
-    color: white !important;
-    border-style: none;
+.baixar-peticao {
+    background-color: #007bff; 
+    color: white; 
+    border: 1px solid #0056b3; 
+    border-radius: 4px; 
+    padding: 10px 20px; 
+    text-decoration: none; 
+    display: inline-block;
+    font-size: 16px; 
+    text-align: center; 
+    cursor: pointer; 
+    transition: background-color 0.3s, border-color 0.3s;
 }
+
+.arquivar-btn {
+    background-color: #007bff; 
+    color: white; 
+    border: 1px solid #0056b3; 
+    border-radius: 4px; 
+    padding: 10px 20px; 
+    text-align: center; 
+    font-size: 16px; 
+    cursor: pointer; 
+    transition: background-color 0.3s, border-color 0.3s; 
+    border-style: none; 
+}
+
 
 .consultar-modelo{
     max-height: max-content;
