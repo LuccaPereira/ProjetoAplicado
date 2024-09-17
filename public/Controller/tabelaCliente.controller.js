@@ -1,5 +1,5 @@
-import { firebaseConfig } from '../../model/firebaseConfig.js';
-import { oabAdvogadoLogado, fetchClientes, renderClientes } from '../../model/tabelaCliente.js';
+import { firebaseConfig } from '../model/firebaseConfig.js';
+import { oabAdvogadoLogado, fetchClientes, renderClientes } from '../model/tabelaCliente.js';
 
 firebase.initializeApp(firebaseConfig);
 

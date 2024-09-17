@@ -1,4 +1,4 @@
-import { getLawyerByOAB, validarCPF, getCpfByCliente } from '../../src/model/login.js';
+const { getLawyerByOAB, validarCPF, getCpfByCliente } = require('../model/login');
 
 function login() {
     var oab = document.getElementById("OAB").value;
