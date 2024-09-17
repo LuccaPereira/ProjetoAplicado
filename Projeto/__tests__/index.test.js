@@ -1,5 +1,5 @@
-const request = require('supertest');
-const app = require('../index');
+import request from 'supertest';
+import app from '../src/index'; // Certifique-se de que o caminho está correto
 
 describe('GET /', () => {
     it('should return the login.html file', async () => {

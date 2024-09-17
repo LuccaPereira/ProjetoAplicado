@@ -1,4 +1,4 @@
-const { getLawyerByOAB, validarCPF, getCpfByCliente } = require ('../model/login');
+import { getLawyerByOAB, validarCPF, getCpfByCliente } from '../../src/model/login.js';
 
 function login() {
     var oab = document.getElementById("OAB").value;
@@ -32,7 +32,7 @@ function login() {
                     if (oab === positionCpf) {
                         if (senha === senhaClientela) {
                             localStorage.setItem('loggedInCliente', JSON.stringify(clienteGado));
-                            window.location.href = "../View/consultar.html";
+                            window.location.href = "../View/menu.html";
                             return true;
                         } else {
                             alert("Senha está incorreta");

@@ -4,7 +4,7 @@ const {
     updateClientDetails,
     getAllClients,
     uploadPDF
-} = require('../model/consultar-modelo');
+} = require('../../src/model/consultar-modelo');
 
 function clickMenu() {
     const sidebar = document.querySelector('.sidebar');

@@ -1,10 +1,16 @@
-const express = require('express');
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url'; // Importar fileURLToPath
+
+// Obtendo o diretório atual
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const router = express.Router();
-const path = require('path');
 
 // Rota para a página inicial
 router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/View/login.html')); // Corrigido o caminho
 });
 
-module.exports = router;
+export default router;
