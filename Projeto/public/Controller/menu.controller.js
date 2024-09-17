@@ -8,7 +8,6 @@ function clickMenu() {
 }
 
 document.getElementById('logoutButton').addEventListener('click', function() {
-    // Remover o token de autenticação do localStorage ou sessionStorage
     localStorage.removeItem('loggedInLawyer');
     localStorage.removeItem('loggedInCliente');
 

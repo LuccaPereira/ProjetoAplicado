@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../styles/loginCss.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="page-container">
+        <div class="container">
+            <img id="logo" src="logo (2).png" alt="Logo">
+            <div class="login-box">
+                <h2>Cadastre-se ou faça login</h2>
+                <form method="POST" action="">
+                    <input type="text" id="OAB" placeholder="Digite sua OAB ou CPF">
+                    <input type="password" id="senha" placeholder="Digite sua senha">
+                    <button type="submit" onclick="login()">Log In</button>
+                </form>
+                <a href="../View/cadastro.html"><button class="create-account">Cadastre-se</button></a>
+                <p>Esqueceu sua senha? <a href="../View/updateSenha.html">clique Aqui!</a></p>
+            </div>
+            <div class="introBox">
+                <h2>Um pouco sobre nós</h2>
+                <p>Este é um projeto voltado para a gestão de membros da Ordem dos Advogados do Brasil (OAB). Faça login com sua OAB e CPF para acessar.</p>
+            </div>
+        </div>
+        <footer>
+            <p>&copy; 2024 - Todos os direitos reservados</p>
+            <nav>
+                <ul>
+                    <li><a href="#">Termos de uso</a></li>
+                    <li><a href="#">Política de privacidade</a></li>
+                    <li><a href="#">Sobre nós</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </nav>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../Controller/login.controller.js"></script>
+</body>
+</html>

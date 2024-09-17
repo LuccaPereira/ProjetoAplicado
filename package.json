@@ -1,6 +1,30 @@
 {
+  "name": "projetoaplicado",
+  "version": "1.0.0",
+  "description": "ProjetoAplicado",
+  "main": "index.js",
+  "scripts": {
+    "start": "node Projeto/index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LuccaPereira/ProjetoAplicado.git"
+  },
+  "keywords": [
+    "web"
+  ],
+  "author": "Lucca Pereira",
+  "license": "ISC",
   "dependencies": {
     "axios": "^1.6.8",
-    "firebase": "^10.11.0"
+    "express": "^4.21.0",
+    "firebase": "^10.13.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
   }
 }
