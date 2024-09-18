@@ -6,6 +6,8 @@ import {
     uploadPDF
 } from '../model/consultar-modelo';
 import "../View/consultar-modelo.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 function clickMenu() {
     const sidebar = document.querySelector('.sidebar');
