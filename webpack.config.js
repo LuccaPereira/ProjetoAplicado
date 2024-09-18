@@ -12,6 +12,7 @@ module.exports = {
     perfilAdvogado: ['./public/Controller/perfilAdvogado.controller.js', './public/View/perfilAdvogado.css'],
     tabelaCliente: ['./public/Controller/tabelaCliente.controller.js', './public/View/tabelaCliente.css'],
     updateSenha: ['./public/Controller/redefinirSenha.controller.js', './public/View/updateSenhaCss.css'],
+    consultarModelo: ['./public/Controller/consultarModelo.controller.js', './public/View/consultar-modelo.css'],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -41,19 +42,25 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'cadastrarPeticao.html',
       template: path.resolve(__dirname, 'public/View/cadastrarPeticao.html'),
-      chunks: ['main', 'cadastrarPeticao'],
+      chunks: ['cadastrarPeticao'],
+      inject: true,
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'consultar-modelo.html',
+      template: path.resolve(__dirname, 'public/View/consultar-modelo.html'),
+      chunks: ['consultarModelo'],
       inject: true,
     }),
     new HtmlWebpackPlugin({
       filename: 'cadastroAdvogado.html',
       template: path.resolve(__dirname, 'public/View/cadastroAdvogado.html'),
-      chunks: ['main', 'cadastroAdvogado'],
+      chunks: ['cadastroAdvogado'],
       inject: true,
     }),
     new HtmlWebpackPlugin({
       filename: 'criarClientes.html',
       template: path.resolve(__dirname, 'public/View/criarClientes.html'),
-      chunks: ['main', 'criarClientes'],
+      chunks: ['criarClientes'],
       inject: true,
     }),
     new HtmlWebpackPlugin({
@@ -65,19 +72,19 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'perfilAdvogado.html',
       template: path.resolve(__dirname, 'public/View/perfilAdvogado.html'),
-      chunks: ['main', 'perfilAdvogado'],
+      chunks: ['perfilAdvogado'],
       inject: true,
     }),
     new HtmlWebpackPlugin({
       filename: 'tabelaCliente.html',
       template: path.resolve(__dirname, 'public/View/tabelaCliente.html'),
-      chunks: ['main', 'tabelaCliente'],
+      chunks: ['tabelaCliente'],
       inject: true,
     }),
     new HtmlWebpackPlugin({
       filename: 'updateSenha.html',
       template: path.resolve(__dirname, 'public/View/updateSenha.html'),
-      chunks: ['main', 'updateSenha'],
+      chunks: ['updateSenha'],
       inject: true,
     }),
     new MiniCssExtractPlugin({
@@ -107,7 +114,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               outputPath: 'images', // Onde os arquivos serão armazenados dentro da pasta dist
-              name: 'logo.png', // Nome do arquivo
+              name: '[name].[ext]', // Nome do arquivo preservado
             },
           },
         ], 
