@@ -1,10 +1,11 @@
-const {
+import {
     getClientData,
     archiveClientData,
     updateClientDetails,
     getAllClients,
     uploadPDF
-} = require('../../src/model/consultar-modelo');
+} from '../model/consultar-modelo';
+import "../View/consultar-modelo.css";
 
 function clickMenu() {
     const sidebar = document.querySelector('.sidebar');
@@ -20,7 +21,6 @@ function setupLogoutButton() {
         logout();
     });
 }
-
 
 function renderClientes(clientesFiltrados) {
     const clientesTable = document.getElementById("clientesBody");
@@ -140,7 +140,6 @@ function populateSelectOptions(advogadoData, selectId, property) {
     }
 }
 
-
 function showClientDetails(clienteFiltrado) {
     const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
     const logAdv = JSON.parse(loggedInLawyerString);
@@ -150,20 +149,17 @@ function showClientDetails(clienteFiltrado) {
         .then(response => {
             const cliente = response.data;
             if (cliente) {
-               
                 document.getElementById('modalNome').textContent = cliente.NomePeticionante || "Nome não disponível";
                 document.getElementById('modalCpf').textContent = cliente.CPFAtivo || "CPF não disponível";
                 document.getElementById('modalDescricao').textContent = cliente.Descrição || "Descrição não disponível";
                 document.getElementById('modalUltimaAlteracao').textContent = cliente.ultimaAlteracao || "Data não disponível";
                 document.getElementById('modalPeticao').innerHTML = `<a href="#">Visualizar</a>`;
                 
-            
                 document.getElementById('editNome').value = cliente.NomePeticionante || "";
                 document.getElementById('editCpf').value = cliente.CPFAtivo || "";
                 document.getElementById('editDescricao').value = cliente.Descrição || "";
                 document.getElementById('editUltimaAlteracao').value = cliente.ultimaAlteracao || "";
 
-          
                 const editButton = document.getElementById('editButton');
                 const saveButton = document.getElementById('saveButton');
 
@@ -228,6 +224,4 @@ function saveClientDetails(response, clienteKey) {
     }
 }
 
-
-module.exports = { clickMenu, setupLogoutButton };
-
+export { clickMenu, setupLogoutButton };

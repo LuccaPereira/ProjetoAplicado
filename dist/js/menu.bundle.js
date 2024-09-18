@@ -1,0 +1,2 @@
+(()=>{"use strict";document.getElementById("logoutButton").addEventListener("click",(function(){localStorage.removeItem("loggedInLawyer"),localStorage.removeItem("loggedInCliente"),window.location.href="../View/login.html"})),document.addEventListener("DOMContentLoaded",(function(){var e;e=document.querySelector(".sidebar"),document.getElementById("menuToggle").addEventListener("click",(function(){e.classList.toggle("expanded")}))}))})();
+//# sourceMappingURL=menu.bundle.js.map

@@ -1,3 +1,6 @@
+import "../View/updateSenhaCss.css";
+
+
 function redifinirSenha(event) {
     // Configuração do Firebase para a aplicação
     var config = {

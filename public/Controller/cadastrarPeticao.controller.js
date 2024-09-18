@@ -1,11 +1,5 @@
-const {
-    validarCPF,
-    validarCNPJ,
-    validarEmail,
-    validarValor,
-    validarTelefoneOficial,
-    montarOData
-} = require('../../model/cadastrarPeticao');
+import { validarCPF, validarCNPJ, validarEmail, validarValor, validarTelefoneOficial, montarOData } from '../model/cadastrarPeticao';
+import "../View/cadastrarPeticao.css"
 
 function enviarFormulario(event) {
     event.preventDefault();

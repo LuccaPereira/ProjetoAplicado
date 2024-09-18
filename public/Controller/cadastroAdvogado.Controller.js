@@ -1,9 +1,8 @@
-const {
-    validarCPF,
-    validarEmail,
-    registrarUsuario,
-    verificarOABExistente
-} = require('../model/cadastroAdvogado');
+import { validarCPF, validarEmail, registrarUsuario, verificarOABExistente } from '../model/cadastroAdvogado';
+import axios from 'axios';
+import "../View/cadastroAdvogado.css";
+
+
 
 async function submitForm(event) {
     event.preventDefault();

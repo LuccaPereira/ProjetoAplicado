@@ -12,10 +12,10 @@
             <img id="logo" src="logo (2).png" alt="Logo">
             <div class="login-box">
                 <h2>Cadastre-se ou faça login</h2>
-                <form method="POST" action="">
+                <form id="loginForm">
                     <input type="text" id="OAB" placeholder="Digite sua OAB ou CPF">
                     <input type="password" id="senha" placeholder="Digite sua senha">
-                    <button type="submit" onclick="login()">Log In</button>
+                    <button type="submit">Log In</button>
                 </form>
                 <a href="../View/cadastro.html"><button class="create-account">Cadastre-se</button></a>
                 <p>Esqueceu sua senha? <a href="../View/updateSenha.html">clique Aqui!</a></p>
@@ -37,8 +37,7 @@
             </nav>
         </footer>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="text/javascript" src="../Controller/login.controller.js"></script>
-    <script type="text/javascript" src="../scripts/bundle.js"></script>
+    <script type="module" src="../Controller/login.controller.js"></script> <!-- Mudei para type="module" -->
+    <script type="module" src="../scripts/bundle.js"></script> <!-- Mudei para type="module" -->
 </body>
 </html>

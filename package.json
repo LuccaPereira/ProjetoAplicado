@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "axios": "^1.7.7",
     "browserify-zlib": "^0.2.0",
     "crypto-browserify": "^3.12.0",
     "express": "^4.21.0",
@@ -12,7 +13,9 @@
   "description": "webProject",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server.js"
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development --open",
+    "dev": "webpack --mode development"
   },
   "keywords": [
     "web"
@@ -20,6 +23,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.25.4",
+    "babel-loader": "^9.2.1",
+    "css-loader": "^7.1.2",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.6.0",
+    "mini-css-extract-plugin": "^2.9.1",
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0"
