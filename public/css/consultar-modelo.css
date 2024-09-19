@@ -9,8 +9,8 @@
     --color-text-light: #f0e5d8;
     --color-text-dark: #000;
     --color-border: #ced4da;
-    --font-size-base: 18px;
-    --font-size-small: 16px;
+    --font-size-base: 20px; /* Aumentado para 20px */
+    --font-size-small: 18px; /* Aumentado para 18px */
     --border-radius: 5px;
 }
 
@@ -38,7 +38,7 @@ body {
 .sidebar {
     background-color: var(--color-primary);
     padding: 20px;
-    width: 60px;
+    width: 80px; /* Aumentado para 80px */
     position: fixed;
     top: 0;
     bottom: 0;
@@ -51,27 +51,27 @@ body {
 }
 
 .sidebar.expanded {
-    width: 250px;
+    width: 300px; /* Aumentado para 300px */
 }
 
 .logo {
-    width: 150%;
+    width: 100%; /* Ajustado para 100% */
     margin-bottom: 20px;
     display: block;
     transition: width 0.3s ease;
 }
 
 .sidebar.expanded .logo {
-    width: 40%;
+    width: 60%; /* Ajustado para 60% */
 }
 
 .content {
-    margin-left: 60px;
+    margin-left: 80px; /* Ajustado para 80px */
     transition: margin-left 0.3s ease;
 }
 
 .sidebar.expanded + .content {
-    margin-left: 250px;
+    margin-left: 300px; /* Ajustado para 300px */
 }
 
 /* ================================
@@ -89,7 +89,7 @@ body {
    Menu de Navegação
    ================================ */
 .menu-icon {
-    font-size: 32px;
+    font-size: 36px; /* Aumentado para 36px */
     color: #fff;
     cursor: pointer;
     margin-bottom: 20px;
@@ -127,7 +127,7 @@ body {
 }
 
 .material-icons {
-    font-size: 28px;
+    font-size: 32px; /* Aumentado para 32px */
     margin-right: 10px;
     color: #fff;
     transition: color 0.3s ease;
@@ -162,7 +162,7 @@ body {
 }
 
 #loginBnt .material-icons {
-    font-size: 28px;
+    font-size: 32px; /* Aumentado para 32px */
     margin-right: 10px;
     color: #fff;
     transition: color 0.3s ease;
@@ -251,7 +251,7 @@ body {
 }
 
 .modelo h3 {
-    font-size: 22px;
+    font-size: 24px; /* Aumentado para 24px */
     color: rgba(0, 0, 0, 0.514);
 }
 

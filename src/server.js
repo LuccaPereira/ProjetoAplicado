@@ -7,11 +7,12 @@ const port = 3000;
 // Servir arquivos estáticos da pasta 'public'
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Redirecionar para 'login.html'
+// Rota para a página inicial
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/View/login.html'));
+  res.sendFile(path.join(__dirname, '../public/View/login.html'));
 });
 
+// Iniciar o servidor
 app.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}`);
+  console.log(`Servidor rodando em http://localhost:${port}`);
 });

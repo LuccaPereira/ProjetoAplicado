@@ -5,10 +5,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   mode: 'development', // ou 'production', dependendo do ambiente
   entry: {
-    main: ['@babel/polyfill', './src/index.js'],
+    login: ['./public/Controller/login.controller.js', './public/View/loginCss.css'],
+    menu: ['./public/Controller/menu.controller.js', './public/View/menu.css'], // Novo ponto de entrada
     cadastrarPeticao: ['./public/Controller/cadastrarPeticao.controller.js', './public/View/cadastrarPeticao.css'],
     cadastroAdvogado: ['./public/Controller/cadastroAdvogado.controller.js', './public/View/cadastroAdvogado.css'],
-    menu: ['./public/Controller/menu.controller.js', './public/View/menu.css'],
     perfilAdvogado: ['./public/Controller/perfilAdvogado.controller.js', './public/View/perfilAdvogado.css'],
     tabelaCliente: ['./public/Controller/tabelaCliente.controller.js', './public/View/tabelaCliente.css'],
     updateSenha: ['./public/Controller/redefinirSenha.controller.js', './public/View/updateSenhaCss.css'],
@@ -17,7 +17,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'js/[name].bundle.js',
-    publicPath: '/', // Verifique se o caminho público está correto
+    publicPath: '/',
   },
   devtool: 'source-map', // Facilita depuração no ambiente de desenvolvimento
   devServer: {
@@ -39,6 +39,12 @@ module.exports = {
     },
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'login.html',
+      template: path.resolve(__dirname, 'public/View/login.html'),
+      chunks: ['login'], // Inclui o bundle para login
+      inject: true,
+    }),
     new HtmlWebpackPlugin({
       filename: 'cadastrarPeticao.html',
       template: path.resolve(__dirname, 'public/View/cadastrarPeticao.html'),
@@ -113,8 +119,8 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              outputPath: 'images', // Onde os arquivos serão armazenados dentro da pasta dist
-              name: '[name].[ext]', // Nome do arquivo preservado
+              outputPath: 'images',
+              name: '[name].[ext]',
             },
           },
         ], 

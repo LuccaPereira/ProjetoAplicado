@@ -3,13 +3,13 @@
 <head>  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../styles/loginCss.css">
+    <link rel="stylesheet" href="../css/loginCss.css">
     <title>Login</title>
 </head>
 <body>
     <div class="page-container">
         <div class="container">
-            <img id="logo" src="logo (2).png" alt="Logo">
+            <img id="logo" src="../img/logo.png" alt="Logo">
             <div class="login-box">
                 <h2>Cadastre-se ou faça login</h2>
                 <form id="loginForm">
@@ -17,8 +17,8 @@
                     <input type="password" id="senha" placeholder="Digite sua senha">
                     <button type="submit">Log In</button>
                 </form>
-                <a href="../View/cadastro.html"><button class="create-account">Cadastre-se</button></a>
-                <p>Esqueceu sua senha? <a href="../View/updateSenha.html">clique Aqui!</a></p>
+                <a href="cadastroAdvogado.html"><button class="create-account">Cadastre-se</button></a>
+                <p>Esqueceu sua senha? <a href="updateSenha.html">clique Aqui!</a></p>
             </div>
             <div class="introBox">
                 <h2>Um pouco sobre nós</h2>
@@ -37,7 +37,10 @@
             </nav>
         </footer>
     </div>
-    <script type="module" src="../Controller/login.controller.js"></script> <!-- Mudei para type="module" -->
-    <script type="module" src="../scripts/bundle.js"></script> <!-- Mudei para type="module" -->
+    <!-- Script do JavaScript para a funcionalidade da página -->
+    <script type="module" src="../Controller/login.controller.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Certifique-se de que o caminho está correto para o arquivo bundle.js -->
+    <!-- <script type="module" src="/scripts/bundle.js"></script> -->
 </body>
 </html>

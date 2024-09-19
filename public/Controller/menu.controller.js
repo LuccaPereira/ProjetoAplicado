@@ -1,7 +1,3 @@
-import "../View/menu.css";
-import "../View/logo.png";
-
-
 function clickMenu() {
     const sidebar = document.querySelector('.sidebar');
     const menuToggle = document.getElementById('menuToggle');

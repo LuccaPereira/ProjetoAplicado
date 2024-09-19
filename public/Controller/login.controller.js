@@ -1,5 +1,5 @@
 import { getLawyerByOAB, validarCPF, getCpfByCliente } from '../model/login.js';
-import axios from 'axios'; 
+//import axios from 'axios';
 
 export async function login(event) {
     event.preventDefault(); // Previne o comportamento padrão do formulário
@@ -69,7 +69,7 @@ export async function login(event) {
         if (PerfilAdvogado.OAB == oab) {
             if (PerfilAdvogado.senha == senha) {
                 localStorage.setItem('loggedInLawyer', JSON.stringify(PerfilAdvogado));
-                window.location.href = "/menu.html";
+                window.location.href = "/View/menu.html";
                 return true;
             } else {
                 alert("Senha está incorreta");

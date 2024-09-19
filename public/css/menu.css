@@ -9,7 +9,7 @@ html, body {
     font-optical-sizing: auto;
     font-style: normal;
     text-align: center;
-    font-size: 18px; /* Aumenta o tamanho da fonte base */
+    font-size: 20px; /* Aumenta o tamanho da fonte base */
 }
 
 body {
@@ -19,8 +19,8 @@ body {
 
 .sidebar {
     background-color: #0e3754;
-    padding: 30px; /* Aumenta o padding */
-    width: 80px; /* Largura inicial do menu lateral */
+    padding: 40px; /* Aumenta o padding */
+    width: 100px; /* Largura inicial do menu lateral */
     position: fixed;
     top: 0;
     bottom: 0;
@@ -29,29 +29,29 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-right: 2px solid #000; /* Aumenta a largura da borda */
+    border-right: 3px solid #000; /* Aumenta a largura da borda */
 }
 
 .sidebar.expanded {
-    width: 300px; /* Largura quando expandido */
+    width: 350px; /* Largura quando expandido */
 }
 
 .logo {
-    width: 200%; /* Ajusta o tamanho do logo conforme necessário */
-    margin-bottom: 30px; /* Aumenta o espaço abaixo do logo */
+    width: 150%; /* Ajusta o tamanho do logo conforme necessário */
+    margin-bottom: 40px; /* Aumenta o espaço abaixo do logo */
     display: block;
     transition: width 0.3s ease;
 }
 
 .sidebar.expanded .logo {
-    width: 50%; /* Ajusta o tamanho do logo quando expandido */
+    width: 60%; /* Ajusta o tamanho do logo quando expandido */
 }
 
 .menu-icon {
-    font-size: 36px; /* Aumenta o tamanho do ícone do menu */
+    font-size: 48px; /* Aumenta o tamanho do ícone do menu */
     color: white;
     cursor: pointer;
-    margin-bottom: 30px; /* Aumenta o espaço abaixo do ícone do menu */
+    margin-bottom: 40px; /* Aumenta o espaço abaixo do ícone do menu */
 }
 
 .nav-list {
@@ -62,7 +62,7 @@ body {
 }
 
 .nav-list li {
-    margin-bottom: 30px; /* Aumenta o espaço entre os itens da lista */
+    margin-bottom: 40px; /* Aumenta o espaço entre os itens da lista */
     display: flex;
     align-items: center;
     justify-content: center; /* Alinha os itens horizontalmente */
@@ -75,18 +75,18 @@ body {
     display: flex;
     align-items: center;
     transition: color 0.3s ease; /* Transição suave para a cor do texto */
-    font-size: 20px; /* Aumenta o tamanho da fonte dos links */
+    font-size: 24px; /* Aumenta o tamanho da fonte dos links */
 }
 
 .nav-list a:hover {
     color: #000; /* Cor do texto ao passar o mouse */
     background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
-    border-radius: 8px; /* Aumenta o raio da borda */
+    border-radius: 10px; /* Aumenta o raio da borda */
 }
 
 .material-icons {
-    font-size: 32px; /* Aumenta o tamanho dos ícones */
-    margin-right: 15px; /* Aumenta o espaço à direita dos ícones */
+    font-size: 40px; /* Aumenta o tamanho dos ícones */
+    margin-right: 20px; /* Aumenta o espaço à direita dos ícones */
     color: #fff; /* Cor padrão dos ícones */
     transition: color 0.3s ease; /* Transição suave para a cor dos ícones */
 }
@@ -99,7 +99,7 @@ body {
     display: none;
     color: #fff; /* Cor padrão do texto */
     transition: color 0.3s ease; /* Transição suave para a cor do texto */
-    font-size: 20px; /* Aumenta o tamanho da fonte do texto */
+    font-size: 24px; /* Aumenta o tamanho da fonte do texto */
 }
 
 .sidebar.expanded .nav-text {
@@ -108,11 +108,11 @@ body {
 }
 
 .card {
-    margin: 20px; /* Aumenta a margem do card */
-    border-radius: 16px; /* Aumenta o raio da borda */
+    margin: 30px; /* Aumenta a margem do card */
+    border-radius: 20px; /* Aumenta o raio da borda */
     background-color: #0e3754;
     color: white;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6); /* Aumenta a sombra do card */
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8); /* Aumenta a sombra do card */
     transition: box-shadow 0.5s ease, transform 0.5s ease, height 0.5s ease; /* Aumenta a duração da transição */
     overflow: hidden; /* Garante que o conteúdo extra não ultrapasse o card */
     position: relative;
@@ -127,23 +127,23 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 30px; /* Aumenta o padding */
+    padding: 40px; /* Aumenta o padding */
     box-sizing: border-box;
     text-align: center; /* Centraliza o texto */
     color: #ffffff; /* Cor do texto para garantir a visibilidade */
     z-index: 1; /* Garante que o conteúdo extra fique acima do conteúdo do card */
     transition: opacity 0.5s ease, transform 0.5s ease; /* Transição suave para visibilidade */
-    font-size: 1.5em; /* Aumenta o tamanho da fonte */
+    font-size: 25px; /* Aumenta o tamanho da fonte */
     font-weight: 500; /* Aumenta o peso da fonte */
-    line-height: 1.8; /* Ajusta a linha para melhorar a legibilidade */
+    line-height: 2; /* Ajusta a linha para melhorar a legibilidade */
     transform: translateY(100%); /* Inicialmente fora da tela */
     background: none; /* Remove o fundo do card-info */
 }
 
 .card:hover {
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8); /* Aumenta a sombra do card ao passar o mouse */
-    transform: translateY(-8px); /* Aumenta o deslocamento ao passar o mouse */
-    height: 300px; /* Altura quando o card é hoverado */
+    box-shadow: 0 20px 56px rgba(0, 0, 0, 0.9); /* Aumenta a sombra do card ao passar o mouse */
+    transform: translateY(-10px); /* Aumenta o deslocamento ao passar o mouse */
+    height: 350px; /* Altura quando o card é hoverado */
 }
 
 .card:hover .card-info {
@@ -152,7 +152,7 @@ body {
 }
 
 .card-body {
-    padding: 30px; /* Aumenta o padding do corpo do card */
+    padding: 40px; /* Aumenta o padding do corpo do card */
 }
 
 .card-title {
@@ -162,8 +162,8 @@ body {
 }
 
 .content {
-    margin-left: 80px; /* Compensa a largura da sidebar */
-    padding: 30px; /* Aumenta o padding */
+    margin-left: 100px; /* Compensa a largura da sidebar */
+    padding: 40px; /* Aumenta o padding */
     flex: 1;
 }
 
@@ -172,7 +172,7 @@ footer {
     color: #fff;
     text-align: center;
     width: 100%;
-    padding: 30px 0; /* Aumenta o padding */
+    padding: 40px 0; /* Aumenta o padding */
     margin-top: auto; 
 }
 
@@ -184,27 +184,27 @@ ul {
 
 li {
     display: inline-block;
-    margin: 0 15px; /* Aumenta a margem entre os itens da lista */
+    margin: 0 20px; /* Aumenta a margem entre os itens da lista */
 }
 
 footer a {
     color: #fff;
     text-decoration: none;
-    font-size: 20px; /* Aumenta o tamanho da fonte dos links no footer */
+    font-size: 24px; /* Aumenta o tamanho da fonte dos links no footer */
 }
 
 #logoutButton {
     color: white;
-    border: 2px solid white; /* Aumenta a largura da borda */
+    border: 3px solid white; /* Aumenta a largura da borda */
     transition: background-color 0.3s ease, color 0.3s ease;
     display: flex;
     align-items: center;
     font-weight: 700; /* Aumenta o peso da fonte */
-    padding: 15px; /* Aumenta o padding */
+    padding: 20px; /* Aumenta o padding */
 }
 
 #logoutButton .material-icons {
-    margin-right: 12px; /* Aumenta o espaço à direita dos ícones */
+    margin-right: 15px; /* Aumenta o espaço à direita dos ícones */
 }
 
 #logoutButton .logout-text {
@@ -223,7 +223,7 @@ footer a {
 
 .sidebar a:focus,
 #logoutButton:focus {
-    outline: 3px solid #007bff; /* Aumenta a largura do contorno de foco */
+    outline: 4px solid #007bff; /* Aumenta a largura do contorno de foco */
 }
 
 /* Estilo para a barra de rolagem */

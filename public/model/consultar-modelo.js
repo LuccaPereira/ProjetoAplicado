@@ -1,54 +1,67 @@
-const axios = require('axios');
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js';
+import { getStorage } from 'https://www.gstatic.com/firebasejs/9.6.6/firebase-storage.js';
 
-function fetchClientes(loggedInLawyer) {
-    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-    const collectionPath = `Advogado/${loggedInLawyer.OAB}.json`;
-    const url = `${databaseURL}/${collectionPath}`;
+const firebaseConfig = {
+    apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
+    authDomain: "projetoaplicado-1.firebaseapp.com",
+    databaseURL: "https://projetoaplicado-1-default-rtdb.firebaseio.com",
+    projectId: "projetoaplicado-1",
+    storageBucket: "projetoaplicado-1.appspot.com",
+    messagingSenderId: "546978495496",
+    appId: "1:546978495496:web:502e5bab60ead7fcd0a5bd",
+    measurementId: "G-WB0MPN3701"
+};
+
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
+
+const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+
+export function fetchClientes() {
+    const collectionPath = "Advogado";
+    const url = `${databaseURL}/${collectionPath}.json`;
 
     return axios.get(url);
 }
 
-function updateSituacaoInDatabase(clienteKey, situacao, cliente) {
-    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-    const url = `${databaseURL}/Advogado/${cliente.NomeAdvogado}/${clienteKey}/situacao.json`;
-
-    return axios.put(url, situacao);
-}
-
-const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-
-function getClientData(logAdv, clienteKey) {
+export function archiveClient(clienteKey) {
+    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
+    const logAdv = JSON.parse(loggedInLawyerString);
     const collectionPath = `Advogado/${logAdv.OAB}/${clienteKey}.json`;
-    return axios.get(`${databaseURL}/${collectionPath}`);
-}
-
-function archiveClientData(logAdv, clienteKey, clienteData) {
     const archivePath = `Arquivados/${clienteKey}.json`;
-    const collectionPath = `Advogado/${logAdv.OAB}/${clienteKey}.json`;
-    
-    return axios.put(`${databaseURL}/${archivePath}`, clienteData)
-        .then(() => axios.delete(`${databaseURL}/${collectionPath}`));
+
+    return axios.get(`${databaseURL}/${collectionPath}`)
+        .then(response => {
+            const clienteData = response.data;
+
+            return axios.put(`${databaseURL}/${archivePath}`, clienteData)
+                .then(() => axios.delete(`${databaseURL}/${collectionPath}`));
+        });
 }
 
-function updateClientDetails(logAdv, clienteKey, updatedDetails) {
-    const collectionPath = `Advogado/${logAdv.OAB}/${clienteKey}.json`;
-    return axios.patch(`${databaseURL}/${collectionPath}`, updatedDetails);
+export function updateSituacaoInDatabase(clienteKeyAtt, selectedValue) {
+    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
+    const logAdv = JSON.parse(loggedInLawyerString);
+    const urlAtt = `${databaseURL}/Advogado/${logAdv.OAB}/${clienteKeyAtt}.json`;
+
+    const updatedDetails = { situacao: selectedValue };
+
+    return axios.patch(urlAtt, updatedDetails);
 }
 
-function getAllClients(logAdv) {
-    const collectionPath = `Advogado/${logAdv.OAB}.json`;
-    return axios.get(`${databaseURL}/${collectionPath}`);
+export function saveClientDetails(urlAtt, updatedDetails, pdfFile) {
+    if (pdfFile) {
+        const timestamp = new Date().getTime();
+        const fileName = `${timestamp}_${pdfFile.name}`;
+        const storageRef = storage.ref(`pdfs/${fileName}`);
+
+        return storageRef.put(pdfFile)
+            .then(snapshot => snapshot.ref.getDownloadURL())
+            .then(downloadURL => {
+                updatedDetails.pdfURL = downloadURL;
+                return axios.patch(urlAtt, updatedDetails);
+            });
+    } else {
+        return axios.patch(urlAtt, updatedDetails);
+    }
 }
-
-function uploadPDF(pdfFile) {
-    const storage = firebase.storage();
-    const timestamp = new Date().getTime();
-    const fileName = `${timestamp}_${pdfFile.name}`;
-    const storageRef = storage.ref(`pdfs/${fileName}`);
-
-    return storageRef.put(pdfFile)
-        .then(snapshot => snapshot.ref.getDownloadURL());
-}
-
-
-module.exports = { fetchClientes, updateSituacaoInDatabase, getClientData, archiveClientData, updateClientDetails, getAllClients, uploadPDF};
