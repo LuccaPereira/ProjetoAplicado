@@ -6,6 +6,42 @@ export function oabAdvogadoLogado() {
     return loggedInLawyerString ? JSON.parse(loggedInLawyerString) : null;
 }
 
+function getCurrentDateTime() {
+    const date = new Date();
+    const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const formattedTime = `${hours}:${minutes}`;
+    return `${formattedDate} ${formattedTime}`;
+}
+
+
+function clickMenu() {
+    const sidebar = document.querySelector('.sidebar');
+    const menuToggle = document.getElementById('menuToggle');
+    
+    menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('expanded');
+    });
+}
+
+document.getElementById('logoutButton').addEventListener('click', function() {
+    localStorage.removeItem('loggedInLawyer');
+    localStorage.removeItem('loggedInCliente');
+
+    window.location.href = '../View/login.html';
+})
+
+function paginaPerfil() {
+    window.location.href = '../View/perfilAdvogado.html';
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    clickMenu();
+});
+
+
 export function renderClientes() {
     const loggedInLawyer = oabAdvogadoLogado();
     if (!loggedInLawyer) {
@@ -140,26 +176,23 @@ export function showClientDetails(clienteKey, advogadoData) {
 
     console.log(`Buscando detalhes do cliente: ${urlAtt}`);
     axios.get(urlAtt)
-        .then(response => {
-            console.log("Detalhes do cliente:", response.data);
-            const cliente = response.data;
+    .then(response => {
+        const cliente = response.data;
 
-            if (cliente) {
+        if (cliente) {
+            const adv = cliente.NomeAdvogado;
+            if (adv) {
+                // Preencher o modal com as informações do cliente
                 document.getElementById('modalNome').textContent = cliente.NomePeticionante || "Nome não disponível";
                 document.getElementById('modalCpf').textContent = cliente.CPFAtivo || "CPF não disponível";
                 document.getElementById('modalDescricao').textContent = cliente.Descrição || "Descrição não disponível";
                 document.getElementById('modalUltimaAlteracao').textContent = cliente.ultimaAlteracao || "Data não disponível";
-                //document.getElementById('modalObservacao').textContent = cliente.Procedimento || "Observação não disponível";
-                //document.getElementById('modalSituacao').textContent = cliente.situacao || "Situação não disponível";
 
-                const pdfUrl = cliente.pdfURL || '';
-                if (pdfUrl) {
-                    document.getElementById('modalPdfLink').innerHTML = `<a href="${pdfUrl}" target="_blank">Abrir PDF</a>`;
-                } 
-
-                
-                const modal = new bootstrap.Modal(document.getElementById('clienteModal'));
-                modal.show();
+                document.getElementById('editNome').value = cliente.NomePeticionante || "";
+                document.getElementById('editCpf').value = cliente.CPFAtivo || "";
+                document.getElementById('editDescricao').value = cliente.Descrição || "";
+                document.getElementById('editUltimaAlteracao').value = cliente.ultimaAlteracao || "";
+                document.getElementById('editUltimaAlteracao').readOnly = true;
 
                 const editButton = document.getElementById('editButton');
                 const saveButton = document.getElementById('saveButton');
@@ -169,14 +202,48 @@ export function showClientDetails(clienteKey, advogadoData) {
                 };
 
                 saveButton.onclick = () => {
-                    saveClientDetails(clienteKey, urlAtt);
+                    const updatedClientData = {
+                        NomePeticionante: document.getElementById('editNome').value,
+                        CPFAtivo: document.getElementById('editCpf').value,
+                        Descrição: document.getElementById('editDescricao').value,
+                        ultimaAlteracao: getCurrentDateTime(),
+                    };
+                    saveClientDetails(urlAtt, updatedClientData);
+                    if(saveClientDetails){
+                        Swal.fire({
+                            title: 'Sucesso!',
+                            text: `${updatedClientData.NomePeticionante} foi alterado com sucesso`,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                        modal.hide();
+                    }else {
+                        Swal.fire({
+                            title: 'Erro!',
+                            text: 'Houve um erro ao alterar os dados. Tente novamente.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                        console.error("Erro ao atualizar detalhes do cliente:", error);
+                    }
                 };
 
                 toggleEditMode(false);
+
+                const modal = new bootstrap.Modal(document.getElementById('clienteModal'));
+                modal.show();
+            } else {
+                console.error("Advogado não encontrado nos detalhes do cliente");
             }
-        })
-        .catch(error => console.error("Erro ao buscar detalhes do cliente:", error));
+        } else {
+            console.error("Detalhes do cliente não encontrados.");
+        }
+    })
+    .catch(error => {
+        console.error("Erro ao buscar detalhes do cliente:", error);
+    });
 }
+
 
 function toggleEditMode(editMode) {
     const viewElements = document.querySelectorAll('.form-control-plaintext');

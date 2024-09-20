@@ -1,5 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js';
 import { getStorage } from 'https://www.gstatic.com/firebasejs/9.6.6/firebase-storage.js';
+//import axios from 'https://cdn.jsdelivr.net/npm/axios@1.4.0/dist/axios.esm.min.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
@@ -49,7 +50,7 @@ export function updateSituacaoInDatabase(clienteKeyAtt, selectedValue) {
     return axios.patch(urlAtt, updatedDetails);
 }
 
-export function saveClientDetails(urlAtt, updatedDetails, pdfFile) {
+export function saveClientDetails(urlAtt, updatedClientData, pdfFile) {
     if (pdfFile) {
         const timestamp = new Date().getTime();
         const fileName = `${timestamp}_${pdfFile.name}`;
@@ -58,10 +59,10 @@ export function saveClientDetails(urlAtt, updatedDetails, pdfFile) {
         return storageRef.put(pdfFile)
             .then(snapshot => snapshot.ref.getDownloadURL())
             .then(downloadURL => {
-                updatedDetails.pdfURL = downloadURL;
-                return axios.patch(urlAtt, updatedDetails);
+                updatedClientData.pdfURL = downloadURL;
+                return axios.patch(urlAtt, updatedClientData); 
             });
     } else {
-        return axios.patch(urlAtt, updatedDetails);
+        return axios.patch(urlAtt, updatedClientData); 
     }
 }

@@ -1,4 +1,4 @@
-function validarCPF(cpf) {
+export function validarCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
     if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
         return false;
@@ -19,7 +19,7 @@ function validarCPF(cpf) {
     return parseInt(cpf.charAt(10)) === digitoVerif2;
 }
 
-function validarCNPJ(cnpj) {
+export function validarCNPJ(cnpj) {
     cnpj = cnpj.replace(/\D/g, '');
     if (cnpj.length !== 14 || /^(\d)\1+$/.test(cnpj)) {
         return false;
@@ -42,15 +42,15 @@ function validarCNPJ(cnpj) {
     return parseInt(cnpj.charAt(13)) === digitoVerif2;
 }
 
-function validarEmail(email) {
+export function validarEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function validarValor(valor) {
+export function validarValor(valor) {
     return /^R\$ \d{1,3}(\.\d{3})*,\d{2}$/.test(valor);
 }
 
-function validarTelefoneOficial(telefone) {
+export function validarTelefoneOficial(telefone) {
     telefone = telefone.replace(/\D/g, '');
     if (telefone.length === 10 || telefone.length === 11) {
         const ddd = parseInt(telefone.substring(0, 2));
@@ -67,7 +67,10 @@ function validarTelefoneOficial(telefone) {
     return false;
 }
 
-function montarOData() {
+export async function montarOData() {
+    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
+    const logAdv = JSON.parse(loggedInLawyerString);
+
     const nomePeticionante = document.getElementById('nomePeticionante')?.value || '';
     const nomeAdvogado = document.getElementById('nomeAdvogado')?.value || '';
     const foro = document.getElementById('foro')?.value || '';
@@ -88,6 +91,7 @@ function montarOData() {
         const year = date.getFullYear();
         return `${day}/${month}/${year}`;
     };
+
     const ultimaAlteracao = getFormattedDate();
 
     const firebaseConfig = {
@@ -105,46 +109,22 @@ function montarOData() {
         firebase.initializeApp(firebaseConfig);
     }
 
-    if (
-        !nomePeticionante ||
-        !nomeAdvogado ||
-        !foro ||
-        !acidente ||
-        !valor ||
-        !telefone ||
-        !procedimento ||
-        !auxilio ||
-        !email ||
-        !descricao ||
-        !cpfAtivo ||
-        !cnpjPassivo
-    ) {
-        return Promise.reject('Campos vazios');
+    // Validação
+    if (!nomePeticionante || !nomeAdvogado || !foro || !acidente || !valor || 
+        !telefone || !procedimento || !auxilio || !email || !descricao || 
+        !cpfAtivo || !cnpjPassivo) {
+        throw new Error('Campos vazios');
     }
 
-    if (!validarCPF(cpfAtivo)) {
-        return Promise.reject('CPF inválido');
-    }
-
-    if (!validarCNPJ(cnpjPassivo)) {
-        return Promise.reject('CNPJ inválido');
-    }
-
-    if (!validarEmail(email)) {
-        return Promise.reject('E-mail inválido');
-    }
-
-    if (!validarValor(valor)) {
-        return Promise.reject('Valor inválido');
-    }
-
-    if (!validarTelefoneOficial(telefone)) {
-        return Promise.reject('Telefone inválido');
-    }
+    if (!validarCPF(cpfAtivo)) throw new Error('CPF inválido');
+    if (!validarCNPJ(cnpjPassivo)) throw new Error('CNPJ inválido');
+    if (!validarEmail(email)) throw new Error('E-mail inválido');
+    if (!validarValor(valor)) throw new Error('Valor inválido');
+    if (!validarTelefoneOficial(telefone)) throw new Error('Telefone inválido');
 
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-    const collectionPath = "Cliente";
-    const url = `${databaseURL}/${collectionPath}.json`;
+    const collectionPath = "Advogado";
+    const url = `${databaseURL}/${collectionPath}/${logAdv.OAB}.json`;
 
     const oData = {
         [nomePeticionante]: {
@@ -165,35 +145,24 @@ function montarOData() {
     };
 
     const pdfFileElement = document.getElementById("pdfFile");
-    if (pdfFileElement) {
+    if (pdfFileElement && pdfFileElement.files.length > 0) {
         const storage = firebase.storage();
         const timestamp = new Date().getTime();
-        const fileName = `${timestamp}_${pdfFileElement.name}`;
+        const fileName = `${timestamp}_${pdfFileElement.files[0].name}`;
         const storageRef = storage.ref(`pdfs/${fileName}`);
         const pdfFile = pdfFileElement.files[0];
 
-        return storageRef.put(pdfFile)
-            .then((snapshot) => snapshot.ref.getDownloadURL())
-            .then((downloadURL) => {
-                oData[nomePeticionante].pdfURL = downloadURL;
+        try {
+            const snapshot = await storageRef.put(pdfFile);
+            const downloadURL = await snapshot.ref.getDownloadURL();
+            oData[nomePeticionante].pdfURL = downloadURL;
 
-                const url = `${databaseURL}/${collectionPath}/${nomeAdvogado}/${nomePeticionante}.json`;
-                return axios.post(url, oData);
-            })
-            .then(response => response.data)
-            .catch(error => Promise.reject(error));
+            const url = `${databaseURL}/${collectionPath}/${nomeAdvogado}/${nomePeticionante}.json`;
+            return axios.post(url, oData);
+        } catch (error) {
+            throw new Error('Erro ao enviar o PDF: ' + error.message);
+        }
     } else {
-        return axios.post(url, oData)
-            .then(response => response.data)
-            .catch(error => Promise.reject(error));
+        return axios.post(url, oData);
     }
 }
-
-module.exports = {
-    validarCPF,
-    validarCNPJ,
-    validarEmail,
-    validarValor,
-    validarTelefoneOficial,
-    montarOData
-};
