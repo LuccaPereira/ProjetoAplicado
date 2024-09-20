@@ -149,21 +149,59 @@ export function showClientDetails(clienteKey, advogadoData) {
                 document.getElementById('modalCpf').textContent = cliente.CPFAtivo || "CPF não disponível";
                 document.getElementById('modalDescricao').textContent = cliente.Descrição || "Descrição não disponível";
                 document.getElementById('modalUltimaAlteracao').textContent = cliente.ultimaAlteracao || "Data não disponível";
-                document.getElementById('modalObservacao').textContent = cliente.Observacao || "Observação não disponível";
-                document.getElementById('modalSituacao').textContent = cliente.situacao || "Situação não disponível";
+                //document.getElementById('modalObservacao').textContent = cliente.Procedimento || "Observação não disponível";
+                //document.getElementById('modalSituacao').textContent = cliente.situacao || "Situação não disponível";
 
                 const pdfUrl = cliente.pdfURL || '';
                 if (pdfUrl) {
                     document.getElementById('modalPdfLink').innerHTML = `<a href="${pdfUrl}" target="_blank">Abrir PDF</a>`;
-                } else {
-                    document.getElementById('modalPdfLink').textContent = "Nenhum PDF disponível";
-                }
+                } 
+
                 
-                // Exibir o modal
-                $('#clientDetailsModal').modal('show');
+                const modal = new bootstrap.Modal(document.getElementById('clienteModal'));
+                modal.show();
+
+                const editButton = document.getElementById('editButton');
+                const saveButton = document.getElementById('saveButton');
+
+                editButton.onclick = () => {
+                    toggleEditMode(true);
+                };
+
+                saveButton.onclick = () => {
+                    saveClientDetails(clienteKey, urlAtt);
+                };
+
+                toggleEditMode(false);
             }
         })
         .catch(error => console.error("Erro ao buscar detalhes do cliente:", error));
+}
+
+function toggleEditMode(editMode) {
+    const viewElements = document.querySelectorAll('.form-control-plaintext');
+    const editElements = document.querySelectorAll('.form-control');
+    const pdfFileButton = document.getElementById('pdfFile');
+
+    viewElements.forEach(el => {
+        if (editMode) {
+            el.classList.add('d-none');
+            pdfFileButton.disabled = true; 
+        } else {
+            el.classList.remove('d-none');
+        }
+    });
+
+    editElements.forEach(el => {
+        if (editMode) {
+            el.classList.remove('d-none');
+        } else {
+            el.classList.add('d-none');
+        }
+    });
+
+    document.getElementById('editButton').classList.toggle('d-none', editMode);
+    document.getElementById('saveButton').classList.toggle('d-none', !editMode);
 }
 
 export function populateSelectOptions(advogadoData, selectId, optionKey) {

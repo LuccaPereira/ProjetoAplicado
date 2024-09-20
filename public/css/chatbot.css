@@ -1,237 +1,91 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
-
-body{
-    background-color: rgb(220, 225, 230);
-    font-family: "Radio Canada Big", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    height: 100vh;
-    text-align: center;
-}
-
-.inicial-conteiner{
+/* Fonte padrão para o corpo do documento */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-nav{
-    background-color: #1f1515;
-}
-
-.navbar-brand{
-    padding-left: 20px;
-    font-size: 28px;
-    font-weight: 400;
-    color: white;
-}
-
-.navbar-toggler{
-    margin-right: 20px;
-    background-color: rgba(255, 255, 255, 0.26);
-}
-
-.nav-item{
-    font-weight: 600;
-    transition: .3s;
-}
-
-.active{
-    color: rgba(26, 201, 207, 0.808) !important;
-}
-
-.nav-item:hover{
-    background-color: rgba(240, 248, 255, 0.438);
-    transition: .3s;
-}
-
-.nav-link{
-    font-size: 18px;
-    padding-left: 20px;
-    color: white;
-
-}
-
-.center{
-    width: 100%;
-    height: 100%;
-}
-
-#logo {
-    width: 4%;
-}
-
-.petition-info {
-    width: 80%;
-    padding-top: 20px;
-    margin: auto;
-}
-
-.info-login {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.card-info {
-    background-color: white;
-    border-radius: 8px;
-    padding-bottom: 20px;
-}
-
-.card-info h1 {
-    padding-top: 20px;
-    padding-left: 20px;
-    font-size: 18px;
-    color: rgba(0, 0, 0, 0.658);
-}
-
-.card-info hr {
-    width: 100%;
-}
-
-.card-info-name {
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-.card-info input {
-    padding-left: 20px;
-    width: 100%;
-    border: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.521);
-    background-color: transparent;
-}
-
-.card-info-name h4 {
-    font-size: 16px;
-    color: rgba(0, 0, 0, 0.582);
-}
-
-.dados-para-processo {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.dados-para-processo input {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.103);
-}
-
-.left-card-section,
-.right-card-section{
-    width: 50%;
-}
-
-.more-files {
-    display:inline-block;
-    width: 30%;
-    border: 2px solid rgba(0, 0, 0, 0.507);
-    background-color: #473030;
-    border-radius: 2px;
-    margin: 5% auto; 
-    color: white;
-    transition: .3s;
-    text-align: center;
-    line-height: 40px;
-    cursor: pointer;
-}
-
-.more-files:hover {
-    border: 2px solid black;
-    color: black;
-    background-color: rgb(106, 139, 201);
-}
-
-.vertical-line {
-    border-left: 1px solid black;
-    height: 100%;
-    margin: 0 20px;
-}
-
-#adicionais {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.chatbot-container {
-    width: 50%;
-    margin: auto;
-    margin-top: 50px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+/* Estiliza o container do chat */
+.chat-container {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
 }
 
-.chat-window {
-    max-height: 300px;
-    overflow-y: auto;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    padding: 10px;
+/* Estiliza o título do chat */
+.chat-container h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
     margin-bottom: 20px;
 }
 
-.messages {
+/* Estiliza a janela de mensagens */
+.chat-window {
+    height: 400px;
     overflow-y: auto;
-}
-
-.user-message, .bot-message {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
     padding: 10px;
-    border-radius: 10px;
     margin-bottom: 10px;
-    max-width: 80%;
 }
 
-.user-message {
-    background-color: #f0f0f0;
-    text-align: left;
-    align-self: flex-start;
+/* Estiliza as mensagens */
+.messages {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estiliza as mensagens do bot e do usuário */
+.bot-message, .user-message {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    max-width: 70%;
+    clear: both;
 }
 
 .bot-message {
-    background-color: #e6f2ff;
-    text-align: left;
+    background-color: #e1e1e1;
+    align-self: flex-start;
+}
+
+.user-message {
+    background-color: #007bff;
+    color: #fff;
     align-self: flex-end;
 }
 
-.input-group {
-    margin-top: 20px;
+/* Estiliza a área de entrada */
+.input-container {
     display: flex;
+    justify-content: space-between;
 }
 
-.form-control {
+/* Estiliza o campo de entrada de texto */
+.chat-input {
     flex: 1;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
 }
 
-.btn {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+/* Estiliza o botão de envio */
+.send-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
 }
 
-footer {
-	background-color: #1f1515;
-	color: #fff;
-	padding: 20px;
-	text-align: center;
-	margin-top: 50px;
-}
-
-ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-li {
-	display: inline-block;
-	margin: 0 10px;
-}
-
-a {
-	color: #fff;
-	text-decoration: none;
+.send-button:hover {
+    background-color: #0056b3;
 }

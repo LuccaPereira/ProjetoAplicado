@@ -1,31 +1,32 @@
 {
-  "dependencies": {
-    "@popperjs/core": "^2.11.8",
-    "axios": "^1.7.7",
-    "bootstrap": "^5.3.3",
-    "browserify-zlib": "^0.2.0",
-    "crypto-browserify": "^3.12.0",
-    "express": "^4.21.0",
-    "firebase": "^10.13.2",
-    "path-browserify": "^1.0.1",
-    "querystring-es3": "^0.2.1",
-    "stream-browserify": "^3.0.0"
-  },
-  "name": "projetoaplicado",
+  "name": "projeto-unificado",
   "version": "1.0.0",
-  "description": "webProject",
-  "main": "index.js",
+  "description": "Projeto com IA e front-end",
+  "main": "server.js",
   "scripts": {
     "build": "webpack --mode production",
     "start": "node ./src/server.js",
     "dev": "webpack-dev-server --mode development --open",
     "clean": "rimraf dist"
   },
-  "keywords": [
-    "web"
-  ],
+  "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.17.1",
+    "body-parser": "^1.20.3",
+    "docx": "^8.5.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "file-saver": "^2.0.5",
+    "@popperjs/core": "^2.11.8",
+    "axios": "^1.7.7",
+    "bootstrap": "^5.3.3",
+    "firebase": "^10.13.2",
+    "path-browserify": "^1.0.1",
+    "querystring-es3": "^0.2.1",
+    "stream-browserify": "^3.0.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/polyfill": "^7.12.1",
