@@ -47,6 +47,163 @@ document.addEventListener('DOMContentLoaded', () => {
     clickMenu();
 });
 
+/* Modificação */
+$(document).ready(function() {
+    const table = $('#peticoesTable').DataTable();
+
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+    const collectionPath = "Advogado";
+
+    const loggedInLawyer = oabAdvogadoLogado();
+    const url = `${databaseURL}/${collectionPath}/${loggedInLawyer.OAB}.json`;
+
+    axios.get(url)
+        .then(response => {
+            console.log(response.data);
+            console.log(loggedInLawyer.OAB);
+
+            const data = response.data;
+            const petitions = [];
+
+            Object.keys(data).forEach(key => {
+                // Para a parte 'Lucca Pereira' (ou outros nomes de peticionante)
+                if (key !== "PerfilAdvogado") {
+                    petitions.push({
+                        peticionante: key, // O nome que está como chave
+                        nomePeticionante: data[key].NomePeticionante,
+                        acidente: data[key].Acidente,
+                        auxilio: data[key].Auxilio,
+                        cnpj: data[key].CNPJ,
+                        cpfAtivo: data[key].CPFAtivo,
+                        descricao: data[key].Descricao,
+                        foro: data[key].Foro,
+                        advogado: data[key].NomeAdvogado,
+                        procedimento: data[key].Procedimento,
+                        telefone: data[key].Telefone,
+                        ultimaAlteracao: data[key].ultimaAlteracao,
+                        valor: data[key].Valor,
+                        situacao: data[key].situacao
+                    });
+                }
+            });
+
+            //Montando a tabela
+            petitions.forEach(petition => {
+                table.row.add([
+                    petition.nomePeticionante,
+                    petition.cpfAtivo,
+                    petition.descricao,
+                    petition.ultimaAlteracao,
+                    petition.situacao,
+                    `
+                    <div class="actions-column">
+                        <span class="icon-action"><i class="bi bi-eye" title="Visualizar" onclick="showClientDetails('${petition.peticionante}')"></i></span>
+                        <span class="icon-action"><i class="bi bi-archive" title="Arquivar" onclick="archivePetition('${petition.peticionante}')"></i></span>
+                        <span class="icon-action"><i class="bi bi-pencil-square" title="Editar" onclick="editStatusPetition('${petition.peticionante}')"></i></span>
+                    </div>
+                    `
+                ]).draw(false);
+            });
+
+            console.log(petitions);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar petições: ', error);
+        });
+});
+
+function editStatusPetition(peticionante) {
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+    const collectionPath = "Advogado";
+
+    const loggedInLawyer = oabAdvogadoLogado();
+    const url = `${databaseURL}/${collectionPath}/${loggedInLawyer.OAB}/${peticionante}.json`;
+
+    axios.get(url)
+        .then(response => {
+            console.log(response.data);
+            const petition = response.data;
+                    
+            // Preencha os campos do modal com os dados retornados
+            $('#petitionId').val(peticionante);
+            $('#petitionStatus').val(petition.situacao || 'pendente');
+            $('#protocolNumber').val(petition.protocoloNum || '');
+            $('#protocolDate').val(petition.protocoloData ? new Date(petition.protocoloData).toISOString().substring(0, 10) : '');
+            $('#petitionPortal').val(petition.protocoloPortal || '');
+            $('#petitionObservations').val(petition.protocoloObservacao || '');
+        
+            // Abra o modal
+            $('#editPetitionModal').modal('show');
+        })
+        .catch(error => {
+            console.error('Erro ao buscar os dados da petição:', error);
+        })
+}
+
+function saveStatus() {
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+    const collectionPath = "Advogado";
+
+    const peticionante = $('#petitionId').val();
+    const status = $('#petitionStatus').val();
+    const protocolNumber = $('#protocolNumber').val();
+    const protocolDate = $('#protocolDate').val();
+    const petitionPortal = $('#petitionPortal').val();
+    const petitionObservations = $('#petitionObservations').val();
+
+    const loggedInLawyer = oabAdvogadoLogado();
+    const url = `${databaseURL}/${collectionPath}/${loggedInLawyer.OAB}/${peticionante}.json`;
+
+    axios.patch(url, {
+        situacao: status,
+        protocoloNum: protocolNumber,
+        protocoloData: protocolDate,
+        protocoloPortal: petitionPortal,
+        protocoloObservacao: petitionObservations
+    })
+    .then(response => {
+        // Fechar o modal e mostrar uma mensagem de sucesso
+        $('#editPetitionModal').modal('hide');
+        //alert('Status da petição e informações de protocolamento atualizados com sucesso!');
+    
+        // Atualizar a tabela ou executar ações adicionais
+        location.reload(); // Recarregar a página para refletir a mudança
+    })
+    .catch(error => {
+        console.error('Erro ao atualizar o status da petição:', error); 
+    })
+}
+
+function archivePetition(peticionante) {
+    Swal.fire({
+        title: 'Você tem certeza?',
+        text: `Deseja mesmo arquivar o processo de ${peticionante}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#0a3030',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, arquivar!',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const clienteKey = peticionante;
+            archiveClient(clienteKey);
+            Swal.fire(
+                'Arquivado!',
+                'O processo foi arquivado com sucesso.',
+                'success'
+            );
+            window.reload();
+        } else {
+            Swal.fire(
+                'Cancelado',
+                'O processo não foi arquivado.',
+                'error'
+            );
+        }
+    });
+}
+//Fim
 
 function fetchClientes(loggedInLawyer, loggedInLawyerString) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
@@ -412,7 +569,8 @@ function showClientDetails(clienteFiltrado) {
     const logAdv = JSON.parse(loggedInLawyerString);
     //const cleanKey = clienteKey.replace(/-/g, ' ').replace(/[^\w\s]/g, '').replace(/ç/g, 'c');
     //const cliente = clientes[cleanKey];
-    const clienteKeyAtt = clienteFiltrado.NomePeticionante;
+    //const clienteKeyAtt = clienteFiltrado.NomePeticionante;
+    const clienteKeyAtt = clienteFiltrado;
 
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = `Advogado`;
@@ -428,7 +586,7 @@ function showClientDetails(clienteFiltrado) {
                 
                     document.getElementById('modalNome').textContent = cliente.NomePeticionante || "Nome não disponível";
                     document.getElementById('modalCpf').textContent = cliente.CPFAtivo || "CPF não disponível";
-                    document.getElementById('modalDescricao').textContent = cliente.Descrição || "Descrição não disponível";
+                    document.getElementById('modalDescricao').textContent = cliente.Descricao || "Descrição não disponível";
                     document.getElementById('modalUltimaAlteracao').textContent = cliente.ultimaAlteracao || "Data não disponível";
                     document.getElementById('modalPeticao').innerHTML = `<a href="#">Visualizar</a>`;
 

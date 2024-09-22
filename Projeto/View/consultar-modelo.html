@@ -6,8 +6,43 @@
     <title>Consulta de Petições</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" href="../View/consultar-modelo.css">
+    <style>
+        #peticoesTable_wrapper{
+            padding: 30px;
+        }
+
+        #dt-search-0, #dt-length-0{
+            background-color: #fff;
+        }
+
+        .actions-column {
+            text-align: center;  /* Centraliza o conteúdo horizontalmente */
+            vertical-align: middle;  /* Centraliza verticalmente, se necessário */
+        }
+
+        .icon-action {
+            background-color: #dad7d7;  /* Cor de fundo cinza claro */
+            border-radius: 5px;         /* Bordas arredondadas */
+            padding: 7px;              /* Espaçamento interno para criar o quadrado */
+            margin: 0 5px;              /* Espaçamento entre os ícones */
+            cursor: pointer;
+            display: inline-block;
+            font-size: 1.2em;           /* Aumenta o tamanho dos ícones */
+            transition: background-color 0.3s;  /* Animação suave no hover */
+        }
+
+        .icon-action:hover {
+            background-color: #1da1f2;  /* Fundo mais escuro no hover */
+        }
+
+        .icon-action:hover i {
+            color: #fff;  /* Ícone branco quando o fundo está azul */
+        }
+    </style>
 </head>
 <body>
     <div class="sidebar">
@@ -30,7 +65,24 @@
         </button>
     </div>
     <div class="content">
-        <div class="consultar-modelo">
+        <div class="container-fluid">
+            <h2 style="margin-top: 20px;">Petições</h2>
+            <table id="peticoesTable" class="display table custom-table">
+                <thead>
+                    <tr>
+                        <th style="vertical-align: middle; text-align: center" scope="col">Nome</th>
+                        <th style="vertical-align: middle; text-align: center" scope="col">Cpf</th>
+                        <th style="vertical-align: middle; text-align: center" scope="col">Descrição</th>
+                        <th style="vertical-align: middle; text-align: center" scope="col">Ultima alteração</th>
+                        <th style="vertical-align: middle; text-align: center" scope="col">Situação</th>
+                        <th style="vertical-align: middle; text-align: center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <!-- <div class="consultar-modelo">
             <div class="center1">
                 <div class="center-selects">
                     <div class="second-select div-select">
@@ -57,8 +109,69 @@
 
                 </tbody>
             </table>   
+        </div> -->
+    </div>
+
+    <!-- Modificação -->
+    <!-- Modal para editar o status da petição -->
+    <div class="modal fade" style="margin-left: 75px;" id="editPetitionModal" tabindex="-1" aria-labelledby="editPetitionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editPetitionModalLabel">Protocolar Petição</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="editPetitionForm">
+                  <!-- Status da Petição -->
+                  <div class="mb-3">
+                    <label for="petitionStatus" class="form-label">Status da Petição</label>
+                    <select id="petitionStatus" class="form-select">
+                      <option value="pendente">Pendente</option>
+                      <option value="protocolada">Protocolada</option>
+                      <option value="aceita">Aceita</option>
+                      <option value="rejeitada">Rejeitada</option>
+                      <option value="causa-ganha">Causa Ganha</option>
+                    </select>
+                  </div>
+        
+                  <div class="mb-3">
+                    <label for="protocolNumber" class="form-label">Número do Protocolo</label>
+                    <input type="text" id="protocolNumber" class="form-control" placeholder="Digite o número do protocolo">
+                  </div>
+        
+                  <div class="mb-3">
+                    <label for="protocolDate" class="form-label">Data Protocolo</label>
+                    <input type="date" id="protocolDate" class="form-control">
+                  </div>
+        
+                  <div class="mb-3">
+                    <label for="petitionPortal" class="form-label">Portal de Peticionamento</label>
+                    <input type="text" id="petitionPortal" class="form-control">
+                    <!-- <select id="petitionPortal" class="form-select">
+                      <option value="pje">PJe</option>
+                      <option value="esaj">e-SAJ</option>
+                      <option value="projudi">Projudi</option>
+                      <option value="outro">Outro</option>
+                    </select> -->
+                  </div>
+        
+                  <div class="mb-3">
+                    <label for="petitionObservations" class="form-label">Observações</label>
+                    <textarea id="petitionObservations" class="form-control" rows="3" placeholder="Observações sobre o envio"></textarea>
+                  </div>
+                  <input type="hidden" id="petitionId" /> <!-- Input oculto para armazenar o ID da petição -->
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="saveStatus()">Salvar</button>
+              </div>
+            </div>
         </div>
     </div>
+    <!-- Fim -->
+
     <div class="modal fade" id="clienteModal" tabindex="-1" aria-labelledby="clienteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -102,12 +215,17 @@
         </div>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script type="text/javascript" src="./../Controller/consultarModelo.controller.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-storage-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
+
+<script type="text/javascript" src="./../Controller/consultarModelo.controller.js"></script>
 </html>
