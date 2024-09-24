@@ -9,26 +9,25 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
 </head>
 <body>
-    <body>
-        <div class="sidebar">
-            <img class="logo" src="../img/logo.png" alt="Logo da empresa">
-            <span class="material-icons menu-icon" id="menuToggle">menu</span>
-            <button onClick="paginaPerfil()" class="btn btn-outline-primary" id="loginBnt">
-                <span class="material-icons">account_circle</span>
-                <span class="login-text">Perfil</span>
-            </button><br>
-            <ul class="nav-list">
-                <li><a href="../View/menu.html"><span class="material-icons">home</span><span class="nav-text">Home</span></a></li><br>
-                <li><a href="../View/consultar-modelo.html"><span class="material-icons">search</span><span class="nav-text">Consultar Petição</span></a></li><br>
-                <li><a href="../View/cadastrarPeticao.html"><span class="material-icons">description</span><span class="nav-text">Cadastrar Petição</span></a></li><br>
-                <li><a href="../View/criarClientes.html"><span class="material-icons">person_add</span><span class="nav-text">Cadastrar Clientes</span></a></li><br>
-                <li><a href="../View/chatbot.html"><span class="material-icons">chat</span><span class="nav-text">Chatbot</span></a></li><br>
-            </ul>
-            <button class="btn btn-outline-danger" id="logoutButton">
-                <span class="material-icons">exit_to_app</span>
-                <span class="logout-text">Logout</span>
-            </button>
-        </div>
+    <div class="sidebar">
+        <img class="logo" src="../img/logo.png" alt="Logo da empresa">
+        <span class="material-icons menu-icon" id="menuToggle">menu</span>
+        <button onClick="paginaPerfil()" class="btn btn-outline-primary" id="loginBnt">
+            <span class="material-icons">account_circle</span>
+            <span class="login-text">Perfil</span>
+        </button><br>
+        <ul class="nav-list">
+            <li><a href="../View/menu.html"><span class="material-icons">home</span><span class="nav-text">Home</span></a></li><br>
+            <li><a href="../View/consultar-modelo.html"><span class="material-icons">search</span><span class="nav-text">Consultar Petição</span></a></li><br>
+            <li><a href="../View/cadastrarPeticao.html"><span class="material-icons">description</span><span class="nav-text">Cadastrar Petição</span></a></li><br>
+            <li><a href="../View/criarClientes.html"><span class="material-icons">person_add</span><span class="nav-text">Cadastrar Clientes</span></a></li><br>
+            <li><a href="../View/chatbot.html"><span class="material-icons">chat</span><span class="nav-text">Chatbot</span></a></li><br>
+        </ul>
+        <button class="btn btn-outline-danger" id="logoutButton">
+            <span class="material-icons">exit_to_app</span>
+            <span class="logout-text">Logout</span>
+        </button>
+    </div>
     <div class="container">
         <div class="cadastro-box">
             <h2>Cadastrar Cliente</h2>
@@ -39,7 +38,7 @@
                 <label for="senha">Senha:</label>
                 <input type="password" id="senha" required><br><br>
 
-                <button type="submit" onclick="submitClientes(event)">Cadastrar</button>
+                <button type="submit">Cadastrar</button>
             </form>
         </div>
     </div>
