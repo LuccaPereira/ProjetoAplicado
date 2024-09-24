@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bem-vindo ao Nosso Sistema</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="../css/menu.css">
+    </head>
+    <body>
+        <body>
+            <div class="sidebar">
+                <img class="logo" src="../img/logo.png" alt="Logo da empresa">
+                <span class="material-icons menu-icon" id="menuToggle">menu</span>
+                <button onClick="paginaPerfil()" class="btn btn-outline-primary" id="loginBnt">
+                    <span class="material-icons">account_circle</span>
+                    <span class="login-text">Perfil</span>
+                </button><br>
+                <ul class="nav-list">
+                    <li><a href="../View/menu.html"><span class="material-icons">home</span><span class="nav-text">Home</span></a></li><br>
+                    <li><a href="../View/consultar-modelo.html"><span class="material-icons">search</span><span class="nav-text">Consultar Petição</span></a></li><br>
+                    <li><a href="../View/cadastrarPeticao.html"><span class="material-icons">description</span><span class="nav-text">Cadastrar Petição</span></a></li><br>
+                    <li><a href="../View/criarClientes.html"><span class="material-icons">person_add</span><span class="nav-text">Cadastrar Clientes</span></a></li><br>
+                    <li><a href="../View/chatbot.html"><span class="material-icons">chat</span><span class="nav-text">Chatbot</span></a></li><br>
+                </ul>
+                <button class="btn btn-outline-danger" id="logoutButton">
+                    <span class="material-icons">exit_to_app</span>
+                    <span class="logout-text">Logout</span>
+                </button>
+            </div>
+        <div class="content">
+            <div class="container">
+                <div class="row justify-content-center mb-5">
+                    <div class="col-12 col-md-8 text-center">
+                        <img src="../img/logo.png" alt="Logo do Sistema" width="150">
+                        <h1 class="mt-3">Bem-vindo ao Smart Legal</h1>
+                        <p class="lead">Nosso sistema é uma plataforma completa para gerenciamento de petições iniciais, clientes e interação por meio de um chatbot.</p>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Consulta de Petições</h5><br>
+                                    <div class="card-info">
+                                        <p class="card-text">Consulte petições previamente cadastradas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cadastro de Petições</h5><br>
+                                    <div class="card-info">
+                                        <p class="card-text">Cadastre novas petições, fornecendo informações detalhadas sobre o caso, partes envolvidas e procedimentos legais.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cadastro de Clientes</h5><br>
+                                    <div class="card-info">
+                                        <p class="card-text">Cadastre clientes para manter um registro organizado de todas as partes relacionadas aos casos.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Interação com o Chatbot</h5><br>
+                                    <div class="card-info">
+                                        <p class="card-text">Utilize nosso chatbot para criar petições iniciais de maneira eficiente.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-8 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Nosso Objetivo</h5><br>
+                                <div class="card-info">
+                                    <p class="card-text">Nosso objetivo é oferecer uma solução integrada e eficiente para advogados e profissionais jurídicos, simplificando o gerenciamento de processos e aumentando a produtividade.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+        </div>
+        <footer>
+            <p>&copy; 2024 - Todos os direitos reservados</p>
+            <nav>
+                <ul class="list-unstyled">
+                    <li><a href="#">Termos de uso</a></li>
+                    <li><a href="#">Política de privacidade</a></li>
+                    <li><a href="#">Sobre nós</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </nav>
+        </footer>
+    </body>
+    <script src="../Controller/menu.controller.js"></script>
+</html>
