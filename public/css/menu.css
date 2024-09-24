@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #aecade;
+    font-family: "Radio Canada Big", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    text-align: center;
+    font-size: 20px; /* Aumenta o tamanho da fonte base */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar {
+    background-color: #0e3754;
+    padding: 40px; /* Aumenta o padding */
+    width: 100px; /* Largura inicial do menu lateral */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 3px solid #000; /* Aumenta a largura da borda */
+}
+
+.sidebar.expanded {
+    width: 350px; /* Largura quando expandido */
+}
+
+.logo {
+    width: 150%; /* Ajusta o tamanho do logo conforme necessário */
+    margin-bottom: 40px; /* Aumenta o espaço abaixo do logo */
+    display: block;
+    transition: width 0.3s ease;
+}
+
+.sidebar.expanded .logo {
+    width: 60%; /* Ajusta o tamanho do logo quando expandido */
+}
+
+.menu-icon {
+    font-size: 48px; /* Aumenta o tamanho do ícone do menu */
+    color: white;
+    cursor: pointer;
+    margin-bottom: 40px; /* Aumenta o espaço abaixo do ícone do menu */
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Garante que a lista ocupe toda a largura disponível */
+}
+
+.nav-list li {
+    margin-bottom: 40px; /* Aumenta o espaço entre os itens da lista */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alinha os itens horizontalmente */
+}
+
+.nav-list a {
+    color: white; /* Cor do texto inicialmente */
+    text-decoration: none;
+    font-weight: 700; /* Aumenta o peso da fonte */
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+    font-size: 24px; /* Aumenta o tamanho da fonte dos links */
+}
+
+.nav-list a:hover {
+    color: #000; /* Cor do texto ao passar o mouse */
+    background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
+    border-radius: 10px; /* Aumenta o raio da borda */
+}
+
+.material-icons {
+    font-size: 40px; /* Aumenta o tamanho dos ícones */
+    margin-right: 20px; /* Aumenta o espaço à direita dos ícones */
+    color: #fff; /* Cor padrão dos ícones */
+    transition: color 0.3s ease; /* Transição suave para a cor dos ícones */
+}
+
+.nav-list a:hover .material-icons {
+    color: #000; /* Cor dos ícones ao passar o mouse */
+}
+
+.nav-text {
+    display: none;
+    color: #fff; /* Cor padrão do texto */
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+    font-size: 24px; /* Aumenta o tamanho da fonte do texto */
+}
+
+.sidebar.expanded .nav-text {
+    display: inline;
+    color: #f0e5d8; /* Cor do texto quando expandido */
+}
+
+.card {
+    margin: 30px; /* Aumenta a margem do card */
+    border-radius: 20px; /* Aumenta o raio da borda */
+    background-color: #0e3754;
+    color: white;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8); /* Aumenta a sombra do card */
+    transition: box-shadow 0.5s ease, transform 0.5s ease, height 0.5s ease; /* Aumenta a duração da transição */
+    overflow: hidden; /* Garante que o conteúdo extra não ultrapasse o card */
+    position: relative;
+}
+
+.card-info {
+    display: flex; /* Usa flexbox para centralizar o texto */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    height: 100%; /* Faz com que o card-info ocupe toda a altura do card */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px; /* Aumenta o padding */
+    box-sizing: border-box;
+    text-align: center; /* Centraliza o texto */
+    color: #ffffff; /* Cor do texto para garantir a visibilidade */
+    z-index: 1; /* Garante que o conteúdo extra fique acima do conteúdo do card */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Transição suave para visibilidade */
+    font-size: 25px; /* Aumenta o tamanho da fonte */
+    font-weight: 500; /* Aumenta o peso da fonte */
+    line-height: 2; /* Ajusta a linha para melhorar a legibilidade */
+    transform: translateY(100%); /* Inicialmente fora da tela */
+    background: none; /* Remove o fundo do card-info */
+}
+
+.card:hover {
+    box-shadow: 0 20px 56px rgba(0, 0, 0, 0.9); /* Aumenta a sombra do card ao passar o mouse */
+    transform: translateY(-10px); /* Aumenta o deslocamento ao passar o mouse */
+    height: 350px; /* Altura quando o card é hoverado */
+}
+
+.card:hover .card-info {
+    opacity: 1; /* Torna o conteúdo visível ao passar o mouse */
+    transform: translateY(0); /* Move o conteúdo para dentro do card */
+}
+
+.card-body {
+    padding: 40px; /* Aumenta o padding do corpo do card */
+}
+
+.card-title {
+    font-size: 1.5em; /* Aumenta o tamanho da fonte do título */
+    font-weight: 700; /* Ajuste conforme necessário */
+    color: white;
+}
+
+.content {
+    margin-left: 100px; /* Compensa a largura da sidebar */
+    padding: 40px; /* Aumenta o padding */
+    flex: 1;
+}
+
+footer {
+    background-color: #0e3754;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    padding: 40px 0; /* Aumenta o padding */
+    margin-top: auto; 
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    display: inline-block;
+    margin: 0 20px; /* Aumenta a margem entre os itens da lista */
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px; /* Aumenta o tamanho da fonte dos links no footer */
+}
+
+#logoutButton {
+    color: white;
+    border: 3px solid white; /* Aumenta a largura da borda */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-weight: 700; /* Aumenta o peso da fonte */
+    padding: 20px; /* Aumenta o padding */
+}
+
+#logoutButton .material-icons {
+    margin-right: 15px; /* Aumenta o espaço à direita dos ícones */
+}
+
+#logoutButton .logout-text {
+    display: inline;
+}
+
+.sidebar:not(.expanded) #logoutButton .logout-text {
+    display: none;
+}
+
+#logoutButton:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+.sidebar a:focus,
+#logoutButton:focus {
+    outline: 4px solid #007bff; /* Aumenta a largura do contorno de foco */
+}
+
+/* Estilo para a barra de rolagem */
+::-webkit-scrollbar {
+    width: 16px; /* Aumenta a largura da barra de rolagem */
+}
+
+/* Cor de fundo da barra de rolagem */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Cor do fundo da trilha */
+}
+
+/* Cor e estilo da barra de rolagem */
+::-webkit-scrollbar-thumb {
+    background-color: #0e3754; /* Cor da barra de rolagem */
+    border-radius: 12px; /* Aumenta o raio da borda */
+    border: 4px solid #aecade; /* Aumenta a largura da borda ao redor da barra */
+}
+
+/* Alterar a cor no hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #274255; /* Cor ao passar o mouse */
+}

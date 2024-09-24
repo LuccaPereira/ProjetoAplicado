@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
+
+body {
+    background-color: #aecade;
+    font-family: "Radio Canada Big", sans-serif;
+    height: 100vh;
+    text-align: center;
+    margin: 0; /* Remover margem padrão */
+    padding-bottom: 50px; /* Espaço para o footer */
+}
+
+.sidebar {
+    background-color: #0e3754;
+    padding: 20px;
+    width: 90px; /* Largura inicial */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1.5px solid rgba(0, 0, 0, 0.2);
+    font-size: larger !important;
+}
+
+.sidebar.expanded {
+    width: 250px; /* Largura expandida */
+}
+
+.logo {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#menuToggle {
+    color: #fff;
+    cursor: pointer;
+}
+
+.nav-text {
+    display: none; /* Esconder texto por padrão */
+}
+
+.sidebar.expanded .nav-text {
+    display: inline; /* Mostrar texto quando expandida */
+}
+
+.petition-info {
+    width: 80%;
+    margin: auto;
+    padding-left: 80px;
+}
+
+.info-login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Aumentar o espaço entre os cards */
+}
+
+.card-info {
+    margin-top: 2% !important;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px; /* Ajustado para espaço interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+}
+
+.card-info h1 {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.card-info hr {
+    margin: 10px 0; /* Espaçamento do HR */
+}
+
+.card-info-name {
+    padding: 0 20px; /* Ajustar padding */
+}
+
+.card-info input {
+    padding: 10px; /* Melhorar o padding interno */
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    background-color: transparent;
+    margin-bottom: 10px; /* Espaçamento entre inputs */
+}
+
+.card-info-name h4 {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.dados-para-processo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dados-para-processo input {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.left-card-section,
+.right-card-section {
+    width: 48%; /* Melhorar espaçamento entre seções */
+}
+
+.more-files {
+    display: inline-block;
+    width: 30%;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    background-color: #0e3754;
+    border-radius: 2px;
+    margin: 20px auto; /* Melhorar centralização */
+    color: white;
+    transition: 0.3s;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+.more-files:hover {
+    border: 2px solid black;
+    color: black;
+    background-color: rgb(106, 139, 201);
+}
+
+footer {
+    background-color: #0e3754;
+    color: #fff;
+    padding: 10px; /* Melhorar padding */
+    text-align: center;
+    position: fixed; /* Fixa o footer */
+    bottom: 0; /* Posiciona o footer na parte inferior */
+    left: 0; /* Alinha o footer à esquerda */
+    right: 0; /* Alinha o footer à direita */
+    z-index: 1000; /* Garante que o footer fique acima de outros elementos */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    display: inline-block;
+    margin: 0;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}

@@ -1,0 +1,409 @@
+/* Reset básico */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-y: auto;
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Permite que o footer fique na parte inferior */
+    justify-content: space-between; /* Distribui o espaço entre o conteúdo e o footer */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f5f5f7;
+    color: #1c1c1e;
+    overflow-y: auto;
+}
+
+main {
+    flex: 1;
+    overflow-y: auto; /* Faz com que o main ocupe o espaço restante */
+}
+
+/* Profile container styling */
+.profile-container {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 80%; /* Ajuste a largura se necessário */
+    max-width: 600px; /* Defina uma largura máxima se necessário */
+    margin: 2% auto; /* Centraliza horizontalmente */
+    padding: 20px;
+    text-align: left;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.profile-header {
+    position: relative;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 4px solid #d1d1d6;
+    cursor: pointer;
+}
+
+#profile-image-upload {
+    display: none;
+}
+
+.profile-field-container {
+    margin-bottom: 15px;
+}
+
+.profile-field-container label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.profile-field {
+    padding: 8px;
+    border: 1px solid #d1d1d6;
+    border-radius: 4px;
+    background-color: #f5f5f7;
+}
+
+.profile-field.readonly {
+    background-color: #f5f5f7;
+}
+
+.profile-field.editable {
+    background-color: #ffffff;
+    border: 1px solid #007aff;
+}
+
+.profile-field input {
+    width: 100%;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+/* Botão de edição e salvar */
+.profile-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #0e3754;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    margin: 0 5px;
+}
+
+button:hover {
+    background-color: #0051a8;
+}
+
+#saveProfileBtn {
+    background-color: #007aff;
+    color: white;
+}
+
+#saveProfileBtn:hover {
+    background-color: #0051a8;
+}
+/* Modal styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Subtle backdrop */
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 50%; /* Ajuste a largura conforme necessário */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    max-height: 80vh; /* Limita a altura do modal a 80% da altura da viewport */
+    overflow-y: auto;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #ff3b30;
+}
+
+form label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1c1c1e;
+    margin: 10px 0 5px;
+}
+
+form input {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #d1d1d6;
+    font-size: 16px;
+    background-color: #f5f5f7;
+    transition: border-color 0.3s;
+}
+
+form input:focus {
+    outline: none;
+    border-color: #007aff;
+}
+
+/* Apple-like button for form */
+button[type="button"] {
+    width: 100%;
+    background-color: #34c759;
+    border: none;
+    color: white;
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 2px 10px rgba(52, 199, 89, 0.2);
+}
+
+button[type="button"]:hover {
+    background-color: #28a745;
+    box-shadow: 0 4px 20px rgba(52, 199, 89, 0.3);
+}
+
+.sidebar {
+    background-color: #0e3754;
+    padding: 5px; /* Diminui o padding da sidebar */
+    width: 40px; /* Largura reduzida */
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #000;
+    z-index: 1000;
+}
+
+.sidebar.expanded {
+    width: 160px; /* Largura quando expandido */
+}
+
+.logo {
+    width: 100%; /* Ajusta o tamanho do logo conforme necessário */
+    margin-bottom: 5px; /* Reduz a margem inferior do logo */
+    display: block;
+    transition: width 0.3s ease;
+}
+
+.sidebar.expanded .logo {
+    width: 80%; /* Ajusta o tamanho do logo quando expandido */
+}
+
+/* ================================
+   Menu de Navegação
+   ================================ */
+.menu-icon {
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.sidebar.expanded + .container {
+    margin-left: 200px; /* Ajusta a margem quando a sidebar está expandida */
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Garante que a lista ocupe toda a largura disponível */
+}
+
+.nav-list li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alinha os itens horizontalmente */
+}
+
+/* Botões da Sidebar */
+.nav-list a {
+    color: white; /* Cor do texto inicialmente */
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px; /* Adiciona padding aos itens */
+    border-radius: 12px; /* Adiciona bordas arredondadas aos itens */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Transição suave */
+}
+
+.nav-list a:hover {
+    color: #000; /* Cor do texto ao passar o mouse */
+    background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
+}
+
+/* Estilização dos ícones dentro dos links */
+.material-icons {
+    font-size: 24px;
+    margin-right: 8px;
+    color: #fff; /* Cor padrão dos ícones */
+    transition: color 0.3s ease; /* Transição suave para a cor dos ícones */
+}
+
+.nav-list a:hover .material-icons {
+    color: #000; /* Cor dos ícones ao passar o mouse */
+}
+
+.nav-text {
+    display: none;
+    color: #fff; /* Cor padrão do texto */
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+}
+
+.sidebar.expanded .nav-text {
+    display: inline;
+    color: #f0e5d8; /* Cor do texto quando expandido */
+}
+
+footer {
+    background-color: #0e3754;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    padding: 5px 0; /* Diminui o padding do footer */
+    margin-top: auto; 
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    display: inline-block;
+    margin: 0 5px; /* Ajuste o espaçamento entre itens conforme necessário */
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* ================================
+   Estilo para o botão de logout
+   ================================ */
+
+/* Estilização do botão de login e logout */
+#loginBnt, #logoutButton {
+    background-color: #007aff; /* Cor de fundo padrão */
+    color: white;
+    border: none;
+    padding: 10px 20px; /* Ajuste o padding conforme necessário */
+    border-radius: 12px;
+    font-size: 14px; /* Tamanho de fonte ajustado */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 2px 10px rgba(0, 122, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Remove o sublinhado padrão de links */
+}
+
+#loginBnt {
+    background-color: #007bff;
+}
+
+#logoutButton {
+    background-color: #dc3545; /* Cor de fundo padrão para logout */
+}
+
+#loginBnt:hover {
+    background-color: #0051a8;
+    box-shadow: 0 4px 20px rgba(0, 122, 255, 0.3);
+}
+
+#logoutButton:hover {
+    background-color: #c82333;
+    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
+}
+
+#loginBnt .material-icons, #logoutButton .material-icons {
+    margin-right: 8px;
+}
+
+#loginBnt .login-text, #logoutButton .logout-text {
+    display: inline;
+}
+
+.sidebar:not(.expanded) #logoutButton .logout-text {
+    display: none;
+}
+
+.sidebar:not(.expanded) #loginBnt .login-text {
+    display: none;
+}
+
+/* ================================
+   Foco para Acessibilidade
+   ================================ */
+.sidebar a:focus,
+#logoutButton:focus, #loginBnt:focus {
+    outline: 2px solid #007bff;
+}
+
+::-webkit-scrollbar {
+    width: 10px; /* Largura da barra de rolagem */
+}
+
+::-webkit-scrollbar-track {
+    background: #0e3754; /* Cor de fundo da trilha da barra de rolagem */
+    border-radius: 10px; /* Arredondamento das bordas da trilha */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #007aff; /* Cor da "mão" (a parte que se move) */
+    border-radius: 3px; /* Arredondamento das bordas da "mão" */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0051a8; /* Cor da "mão" ao passar o mouse sobre ela */
+}
