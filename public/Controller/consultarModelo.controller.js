@@ -110,7 +110,7 @@ export function renderClientes() {
 
                     const select = newRow.querySelector(`#selectSituation-${Keyfiltrada}`);
                     if (select) {
-                        select.value = cliente.situacao || 'em cadastramento';
+                        select.value = cliente.situacao || 'Protocolada';
                         select.addEventListener('change', function() {
                             const selectedValue = this.value;
                             if (selectedValue === 'emcadastramento') {
