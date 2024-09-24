@@ -64,6 +64,63 @@
             </div>
         </div>
 
+        <div class="modal fade" id="editPetitionModal" tabindex="-1" aria-labelledby="editPetitionModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="editPetitionModalLabel">Protocolar Petição</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="editPetitionForm">
+                      <!-- Status da Petição -->
+                      <div class="mb-3">
+                        <label for="petitionStatus" class="form-label">Status da Petição</label>
+                        <select id="petitionStatus" class="form-select">
+                          <option value="pendente">Pendente</option>
+                          <option value="protocolada">Protocolada</option>
+                          <option value="aceita">Aceita</option>
+                          <option value="rejeitada">Rejeitada</option>
+                          <option value="causa-ganha">Causa Ganha</option>
+                        </select>
+                      </div>
+            
+                      <div class="mb-3">
+                        <label for="protocolNumber" class="form-label">Número do Protocolo</label>
+                        <input type="text" id="protocolNumber" class="form-control" placeholder="Digite o número do protocolo">
+                      </div>
+            
+                      <div class="mb-3">
+                        <label for="protocolDate" class="form-label">Data Protocolo</label>
+                        <input type="date" id="protocolDate" class="form-control">
+                      </div>
+            
+                      <div class="mb-3">
+                        <label for="petitionPortal" class="form-label">Portal de Peticionamento</label>
+                        <input type="text" id="petitionPortal" class="form-control">
+                        <!-- <select id="petitionPortal" class="form-select">
+                          <option value="pje">PJe</option>
+                          <option value="esaj">e-SAJ</option>
+                          <option value="projudi">Projudi</option>
+                          <option value="outro">Outro</option>
+                        </select> -->
+                      </div>
+            
+                      <div class="mb-3">
+                        <label for="petitionObservations" class="form-label">Observações</label>
+                        <textarea id="petitionObservations" class="form-control" rows="3" placeholder="Observações sobre o envio"></textarea>
+                      </div>
+                      <input type="hidden" id="petitionId" /> <!-- Input oculto para armazenar o ID da petição -->
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="saveStatus()">Salvar</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Modal -->
         <div class="modal fade" id="clienteModal" tabindex="-1" aria-labelledby="clienteModalLabel">
             <div class="modal-dialog">

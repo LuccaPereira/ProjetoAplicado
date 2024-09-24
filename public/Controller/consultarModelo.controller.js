@@ -108,6 +108,10 @@ export function renderClientes() {
                         select.value = cliente.situacao || 'em cadastramento';
                         select.addEventListener('change', function() {
                             const selectedValue = this.value;
+                            if (selectedValue === 'emcadastramento') {
+                                const modal = new bootstrap.Modal(document.getElementById('editPetitionModal'));
+                                modal.show();
+                            }
                             console.log(`Alterando situação do cliente ${clienteKey} para ${selectedValue}`);
                             updateSituacaoInDatabase(clienteKey, selectedValue)
                                 .then(() => alert("Nosso banco de dados foi atualizado!"))
@@ -122,7 +126,6 @@ export function renderClientes() {
                             showClientDetails(clienteKey, advogadoData);
                         });
                     });
-
                     document.querySelectorAll('.arquivar-btn').forEach(button => {
                         button.addEventListener('click', function() {
                             const row = this.closest('tr');
