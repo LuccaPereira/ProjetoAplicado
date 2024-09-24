@@ -69,3 +69,18 @@ a {
     color: #1877f2;
     text-decoration: none;
 }
+.profile-icon {
+    position: absolute;
+    right: 100px;
+       cursor: pointer;
+   }
+   
+   .profile-img{
+       width: 40px;
+       height: 40px;
+   }
+   
+   .profile-img:hover{
+       background-color: rgba(126, 143, 156);
+       border-radius: 35px;;
+   }   

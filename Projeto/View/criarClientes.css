@@ -250,3 +250,48 @@ footer a {
 #logoutButton:focus {
     outline: 2px solid #007bff;
 }
+
+/* Estilo para o botão de perfil no menu */
+#loginBnt {
+    color: white; /* Cor do texto inicialmente */
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease, background-color 0.3s ease; /* Transição suave para a cor do texto e fundo */
+    border-radius: 5px; /* Arredondar bordas para corresponder ao padrão */
+    padding: 10px; /* Espaçamento interno */
+}
+
+/* Estilo do ícone do perfil */
+#loginBnt .material-icons {
+    font-size: 24px; /* Tamanho do ícone igual ao dos outros itens */
+    margin-right: 10px; /* Espaço entre o ícone e o texto */
+    color: white; /* Cor do ícone */
+    transition: color 0.3s ease; /* Transição suave para a cor do ícone */
+}
+
+/* Estilo do texto do perfil */
+#loginBnt .login-text {
+    color: #f0e5d8; /* Cor do texto */
+    display: none; /* Oculta o texto quando a barra lateral não está expandida */
+}
+
+/* Exibe o texto "Perfil" somente quando a barra lateral estiver expandida */
+.sidebar.expanded #loginBnt .login-text {
+    display: inline; /* Exibe o texto "Perfil" */
+    color:#f0e5d8;
+}
+
+/* Estilo ao passar o mouse sobre o botão de perfil */
+#loginBnt:hover {
+    color: #000; /* Cor do texto ao passar o mouse */
+    background-color:#40E0D0; /* Cor de fundo ao passar o mouse */
+    border-radius: 5px; /* Arredondar bordas para corresponder ao padrão */
+}
+
+/* Estilo do ícone ao passar o mouse */
+#loginBnt:hover .material-icons {
+    color: #000; /* Cor do ícone ao passar o mouse */
+}
+

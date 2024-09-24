@@ -173,7 +173,7 @@ body {
 #loginBnt .material-icons {
     font-size: 24px; /* Tamanho do ícone igual ao dos outros itens */
     margin-right: 10px; /* Espaço entre o ícone e o texto */
-    color: white; /* Cor do ícone */
+    color:white; /* Cor do ícone */
     transition: color 0.3s ease; /* Transição suave para a cor do ícone */
 }
 
@@ -186,6 +186,7 @@ body {
 /* Exibe o texto "Perfil" somente quando a barra lateral estiver expandida */
 .sidebar.expanded #loginBnt .login-text {
     display: inline; /* Exibe o texto "Perfil" */
+    color:#f0e5d8;
 }
 
 /* Estilo ao passar o mouse sobre o botão de perfil */

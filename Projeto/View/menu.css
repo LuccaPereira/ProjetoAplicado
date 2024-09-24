@@ -16,6 +16,9 @@ body {
     flex-direction: column;
 }
 
+/* ================================
+   Barra Lateral
+   ================================ */
 .sidebar {
     background-color: #0e3754;
     padding: 20px;
@@ -46,11 +49,15 @@ body {
     width: 40%; /* Ajuste o tamanho do logo quando expandido */
 }
 
+/* ================================
+   Menu de Navegação
+   ================================ */
 .menu-icon {
     font-size: 28px;
     color: white;
     cursor: pointer;
     margin-bottom: 20px;
+    display: block;
 }
 
 .nav-list {
@@ -110,7 +117,7 @@ body {
     background-color: #0e3754;
     color: white;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    transition: box-shadow 0.5s ease, transform 0.5s ease, height 0.5s ease; /* Aumenta a duração da transição */
+    transition: box-shadow 0.9s ease, transform 0.9s ease, height 0.9s ease; /* Aumenta a duração da transição */
     overflow: hidden; /* Garante que o conteúdo extra não ultrapasse o card */
     position: relative;
 }
@@ -129,7 +136,7 @@ body {
     text-align: center; /* Centraliza o texto */
     color: #ffffff; /* Cor do texto para garantir a visibilidade */
     z-index: 1; /* Garante que o conteúdo extra fique acima do conteúdo do card */
-    transition: opacity 0.5s ease, transform 0.5s ease; /* Transição suave para visibilidade */
+    transition: opacity 0.9s ease, transform 0.9s ease; /* Transição suave para visibilidade */
     font-size: 1em; /* Igual ao .card-title */
     font-weight: 400; /* Igual ao .card-title */
     line-height: 1.5; /* Ajuste a linha para melhorar a legibilidade */
@@ -164,13 +171,15 @@ body {
     flex: 1;
 }
 
+/* ================================
+   Rodapé
+   ================================ */
 footer {
     background-color: #0e3754;
     color: #fff;
     text-align: center;
-    width: 100%;
-    padding: 20px 0;
-    margin-top: auto; 
+    margin-top: 10px;
+    border-top: 1px solid #000;
 }
 
 ul {
@@ -189,6 +198,9 @@ footer a {
     text-decoration: none;
 }
 
+/* ================================
+   Botão de Logout
+   ================================ */
 #logoutButton {
     color: white;
     border: 1px solid white;
@@ -217,29 +229,72 @@ footer a {
     border-color: #dc3545;
 }
 
+/* ================================
+   Foco para Acessibilidade
+   ================================ */
 .sidebar a:focus,
 #logoutButton:focus {
     outline: 2px solid #007bff;
 }
 
+/* Estilo para o botão de perfil no menu */
+#loginBnt {
+    color: white; /* Cor do texto inicialmente */
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease, background-color 0.3s ease; /* Transição suave para a cor do texto e fundo */
+    border-radius: 5px; /* Arredondar bordas para corresponder ao padrão */
+    padding: 10px; /* Espaçamento interno */
+}
+
+/* Estilo do ícone do perfil */
+#loginBnt .material-icons {
+    font-size: 24px; /* Tamanho do ícone igual ao dos outros itens */
+    margin-right: 10px; /* Espaço entre o ícone e o texto */
+    color: white; /* Cor do ícone */
+    transition: color 0.3s ease; /* Transição suave para a cor do ícone */
+}
+
+/* Estilo do texto do perfil */
+#loginBnt .login-text {
+    color: #f0e5d8; /* Cor do texto */
+    display: none; /* Oculta o texto quando a barra lateral não está expandida */
+}
+
+/* Exibe o texto "Perfil" somente quando a barra lateral estiver expandida */
+.sidebar.expanded #loginBnt .login-text {
+    display: inline; /* Exibe o texto "Perfil" */
+    color: #f0e5d8;
+}
+
+/* Estilo ao passar o mouse sobre o botão de perfil */
+#loginBnt:hover {
+    color: #000; /* Cor do texto ao passar o mouse */
+    background-color: #40E0D0; /* Cor de fundo ao passar o mouse */
+    border-radius: 5px; /* Arredondar bordas para corresponder ao padrão */
+}
+
+/* Estilo do ícone ao passar o mouse */
+#loginBnt:hover .material-icons {
+    color: #000; /* Cor do ícone ao passar o mouse */
+}
+
 /* Estilo para a barra de rolagem */
 ::-webkit-scrollbar {
-    width: 12px; /* Largura da barra de rolagem */
+    width: 12px;
 }
 
-/* Cor de fundo da barra de rolagem */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Cor do fundo da trilha */
+    background: #f1f1f1;
 }
 
-/* Cor e estilo da barra de rolagem */
 ::-webkit-scrollbar-thumb {
-    background-color: #0e3754; /* Cor da barra de rolagem */
-    border-radius: 10px; /* Bordas arredondadas */
-    border: 3px solid #aecade; /* Cor ao redor da barra (espaço interno) */
+    background: #888;
 }
 
-/* Alterar a cor no hover */
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #274255; /* Cor ao passar o mouse */
+    background: #555;
 }
+

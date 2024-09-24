@@ -1,7 +1,7 @@
 function getLawyerByOAB(OAB) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = "Advogado";
-    const url = `${databaseURL}/${collectionPath}/${OAB}.json`;
+    const url = '${databaseURL}/${collectionPath}/${OAB}.json';
 
     return axios.get(url);
 }
@@ -39,7 +39,7 @@ function validarCPF(cpf) {
 function getCpfByCliente(cpfAtivo) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = "Cliente";
-    const url = `${databaseURL}/${collectionPath}.json`;
+    const url = '${databaseURL}/${collectionPath}.json';
 
     return axios.get(url);
 }
@@ -78,11 +78,8 @@ function login() {
                             localStorage.setItem('loggedInCliente', JSON.stringify(clienteGado));
                             window.location.href = "../View/consultar.html";
                             return true;
-                        } else {
-                            alert("Senha está incorreta");
-                            return false;
-                        }
-                    }
+                        } 
+                    }    
 
                     return false;
                 });
@@ -133,4 +130,3 @@ function login() {
 
 event.preventDefault();
 }
-
