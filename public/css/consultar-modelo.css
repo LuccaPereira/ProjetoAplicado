@@ -517,3 +517,52 @@ select.situation {
         margin-left: 0;
     }
 }
+
+/* mudanças modal natalia */
+#peticoesTable_wrapper{
+    padding: 30px;
+}
+
+#dt-search-0, #dt-length-0{
+    background-color: #fff;
+}
+
+.actions-column {
+    text-align: center;  /* Centraliza o conteúdo horizontalmente */
+    vertical-align: middle;  /* Centraliza verticalmente, se necessário */
+}
+
+.icon-action {
+    background-color: #dad7d7;  /* Cor de fundo cinza claro */
+    border-radius: 5px;         /* Bordas arredondadas */
+    padding: 7px;              /* Espaçamento interno para criar o quadrado */
+    margin: 0 5px;              /* Espaçamento entre os ícones */
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.2em;           /* Aumenta o tamanho dos ícones */
+    transition: background-color 0.3s;  /* Animação suave no hover */
+}
+
+.icon-action:hover {
+    background-color: #1da1f2;  /* Fundo mais escuro no hover */
+}
+
+.icon-action:hover i {
+    color: #fff;  /* Ícone branco quando o fundo está azul */
+}
+
+/* Exemplo de estilização básica para a tabela */
+table.dataTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.dataTable th, table.dataTable td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table.dataTable th {
+    background-color: #f4f4f4;
+}
