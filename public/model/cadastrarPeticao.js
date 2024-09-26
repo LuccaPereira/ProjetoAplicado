@@ -105,9 +105,7 @@ export async function montarOData() {
         measurementId: "G-WB0MPN3701"
     };
 
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+    firebase.initializeApp(firebaseConfig);
 
     // Validação
     if (!nomePeticionante || !nomeAdvogado || !foro || !acidente || !valor || 
