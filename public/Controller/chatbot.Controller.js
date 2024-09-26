@@ -1,3 +1,5 @@
+//import "../model/chatbot.js";
+
 document.addEventListener('DOMContentLoaded', function() {
     const sendButton = document.getElementById('sendButton');
     const chatInput = document.getElementById('chatInput');
@@ -182,3 +184,4 @@ document.addEventListener('DOMContentLoaded', function() {
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
 });
+
