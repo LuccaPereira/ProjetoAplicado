@@ -1,0 +1,91 @@
+/* Fonte padrão para o corpo do documento */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estiliza o container do chat */
+.chat-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* Estiliza o título do chat */
+.chat-container h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estiliza a janela de mensagens */
+.chat-window {
+    height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Estiliza as mensagens */
+.messages {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estiliza as mensagens do bot e do usuário */
+.bot-message, .user-message {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    max-width: 70%;
+    clear: both;
+}
+
+.bot-message {
+    background-color: #e1e1e1;
+    align-self: flex-start;
+}
+
+.user-message {
+    background-color: #007bff;
+    color: #fff;
+    align-self: flex-end;
+}
+
+/* Estiliza a área de entrada */
+.input-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Estiliza o campo de entrada de texto */
+.chat-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+/* Estiliza o botão de envio */
+.send-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.send-button:hover {
+    background-color: #0056b3;
+}
