@@ -1,8 +1,5 @@
 import { validarCPF, validarEmail, registrarUsuario, verificarOABExistente } from '../model/cadastroAdvogado';
-import axios from 'axios';
-import "../View/cadastroAdvogado.css";
-
-
+//import axios from 'axios';
 
 async function submitForm(event) {
     event.preventDefault();

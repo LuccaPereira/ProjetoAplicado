@@ -3,89 +3,154 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    background-color: #f0f4f8; /* Cor de fundo suave */
+    display: flex; /* Flexbox para alinhar a sidebar e o chat */
 }
 
-/* Estiliza o container do chat */
-.chat-container {
-    max-width: 800px;
-    margin: 0 auto;
+/* Estiliza a sidebar */
+.sidebar {
+    background-color: #0e3754; /* Cor de fundo escura */
     padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+    width: 80px; /* Largura inicial da sidebar (fechada) */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto; /* Permite rolagem */
+    border-right: 3px solid #007bff; /* Borda direita colorida */
+    transition: width 0.3s ease; /* Transição suave ao expandir/contrair */
 }
 
-/* Estiliza o título do chat */
-.chat-container h1 {
-    text-align: center;
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
+/* Largura quando expandida */
+.sidebar.expanded {
+    width: 200px; /* Largura quando expandida */
 }
 
-/* Estiliza a janela de mensagens */
-.chat-window {
-    height: 400px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
+/* Logo da sidebar */
+.logo {
+    width: 80%; /* Largura do logo */
+    margin-bottom: 30px; /* Espaço abaixo do logo */
+}
+
+/* Ícone do menu */
+.menu-icon {
+    font-size: 36px; /* Tamanho do ícone do menu */
+    color: #ffffff; /* Cor do ícone */
+    cursor: pointer;
+    margin-bottom: 30px; /* Espaço abaixo do ícone */
+}
+
+/* Lista de navegação */
+.nav-list {
+    list-style: none; /* Remove marcadores da lista */
+    padding: 0;
+}
+
+/* Botões na sidebar */
+.btn {
+    background-color: transparent; /* Fundo transparente */
+    border: none;
+    color: white; /* Cor do texto */
+    display: flex;
+    align-items: center;
+    margin: 10px 0; /* Margem entre botões */
+    font-size: 18px; /* Tamanho do texto */
+    width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
+    border-radius: 5px; /* Bordas arredondadas */
+    transition: background-color 0.3s; /* Transição suave */
 }
 
-/* Estiliza as mensagens */
+/* Efeitos de hover nos botões */
+.btn:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Efeito de hover */
+}
+
+/* Exibe o texto da sidebar quando expandida */
+.sidebar.expanded .nav-text {
+    display: inline; /* Exibe o texto quando expandida */
+}
+
+/* Oculta o texto da sidebar quando fechada */
+.nav-text {
+    display: none; /* Oculta o texto por padrão */
+}
+
+/* Estilos para a área de chat */
+.chat-container {
+    margin-left: 80px; /* Compensa a largura da sidebar (fechada) */
+    padding: 20px; /* Espaçamento interno */
+    flex: 1; /* Preenche o restante do espaço */
+    display: flex; /* Flexbox para centralizar o conteúdo */
+    flex-direction: column; /* Direção em coluna */
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: center; /* Centraliza verticalmente */
+}
+
+/* Estilo da janela de chat */
+.chat-window {
+    height: 500px; /* Altura da janela de chat */
+    border: 1px solid #ddd; /* Borda ao redor da janela */
+    border-radius: 8px; /* Bordas arredondadas */
+    background-color: #ffffff; /* Cor de fundo da janela */
+    padding: 10px; /* Espaçamento interno */
+    margin-bottom: 20px; /* Espaço abaixo da janela */
+    overflow-y: auto; /* Permite rolagem */
+    width: 100%; /* Largura total da janela de chat */
+    max-width: 800px; /* Largura máxima da janela de chat */
+}
+
+/* Estilo das mensagens */
 .messages {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Direção das mensagens */
+    max-height: 350px; /* Altura máxima das mensagens */
+    overflow-y: auto; /* Permite rolagem */
 }
 
-/* Estiliza as mensagens do bot e do usuário */
+/* Estilo das mensagens do bot e do usuário */
 .bot-message, .user-message {
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
-    max-width: 70%;
-    clear: both;
+    max-width: 70%; /* Largura máxima das mensagens */
 }
 
 .bot-message {
-    background-color: #e1e1e1;
-    align-self: flex-start;
+    background-color: #e1e1e1; /* Cor das mensagens do bot */
+    align-self: flex-start; /* Alinha à esquerda */
 }
 
 .user-message {
-    background-color: #007bff;
-    color: #fff;
-    align-self: flex-end;
+    background-color: #007bff; /* Cor das mensagens do usuário */
+    color: #fff; /* Cor do texto */
+    align-self: flex-end; /* Alinha à direita */
 }
 
-/* Estiliza a área de entrada */
+/* Estilo da área de entrada de texto */
 .input-container {
-    display: flex;
-    justify-content: space-between;
+    display: flex; /* Flexbox para o campo de entrada */
+    justify-content: space-between; /* Espaço entre os elementos */
+    align-items: center; /* Alinha verticalmente */
+    width: 100%; /* Largura total da área de entrada */
 }
 
-/* Estiliza o campo de entrada de texto */
+/* Estilo do campo de entrada de texto */
 .chat-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-right: 10px;
+    flex: 1; /* Ocupa o espaço restante */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ddd; /* Borda do campo */
+    border-radius: 4px; /* Bordas arredondadas */
+    margin-right: 10px; /* Espaço à direita */
 }
 
-/* Estiliza o botão de envio */
+/* Estilo do botão de envio */
 .send-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
+    padding: 10px 20px; /* Espaçamento interno */
+    border: none; /* Remove borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    background-color: #007bff; /* Cor de fundo */
+    color: #fff; /* Cor do texto */
+    cursor: pointer; /* Cursor em forma de mão */
+    transition: background-color 0.3s; /* Transição suave */
 }
 
-.send-button:hover {
-    background-color: #0056b3;
-}

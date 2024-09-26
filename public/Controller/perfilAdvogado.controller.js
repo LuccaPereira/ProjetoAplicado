@@ -1,6 +1,4 @@
 import { getLoggedInLawyer, updateProfileInDatabase, updateLocalStorage } from '../model/perfilAdvogado.js';
-import "../View/perfilAdvogado.css";
-
 
 export function editProfile() {
     document.querySelectorAll('.profile-field').forEach(field => {
