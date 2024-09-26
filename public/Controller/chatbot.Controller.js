@@ -1,3 +1,12 @@
+//import "../model/chatbot.js";
+
+const menuToggle = document.getElementById('menuToggle');
+const sidebar = document.querySelector('.sidebar');
+
+menuToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('expanded'); // Alterna a classe expanded
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     const sendButton = document.getElementById('sendButton');
     const chatInput = document.getElementById('chatInput');
@@ -182,3 +191,4 @@ document.addEventListener('DOMContentLoaded', function() {
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
 });
+

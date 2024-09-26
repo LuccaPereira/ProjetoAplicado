@@ -1,4 +1,6 @@
-import { fetchClientes, archiveClient, updateSituacaoInDatabase, saveClientDetails } from '../model/consultar-modelo.js';
+import { fetchClientes, archiveClient, updateSituacaoInDatabase, saveClientDetails} from '../model/consultar-modelo.js';
+
+let protocolNumber = "";
 
 export function oabAdvogadoLogado() {
     const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
@@ -15,6 +17,10 @@ function getCurrentDateTime() {
     return `${formattedDate} ${formattedTime}`;
 }
 
+function gerarNumeroAleatorio() {
+    const numeroAleatorio = Math.floor(Math.random() * 900) + 100;
+    return numeroAleatorio;
+}
 
 function clickMenu() {
     const sidebar = document.querySelector('.sidebar');
@@ -40,7 +46,6 @@ function paginaPerfil() {
 document.addEventListener('DOMContentLoaded', () => {
     clickMenu();
 });
-
 
 export function renderClientes() {
     const loggedInLawyer = oabAdvogadoLogado();
@@ -105,15 +110,27 @@ export function renderClientes() {
 
                     const select = newRow.querySelector(`#selectSituation-${Keyfiltrada}`);
                     if (select) {
-                        select.value = cliente.situacao || 'em cadastramento';
+                        select.value = cliente.situacao || 'Protocolada';
                         select.addEventListener('change', function() {
                             const selectedValue = this.value;
+                            if (selectedValue === 'protocolada') {
+                                var protocolField =  document.getElementById('protocolNumber'); 
+                                if (protocolField.value === "") {
+                                    protocolNumber = gerarNumeroAleatorio();
+                                    protocolField.value = protocolNumber;
+                                }
+                                protocolField.setAttribute('readonly', true);
+                    
+                                const modal = new bootstrap.Modal(document.getElementById('editPetitionModal'));
+                                modal.show();
+                            }
                             console.log(`Alterando situação do cliente ${clienteKey} para ${selectedValue}`);
                             updateSituacaoInDatabase(clienteKey, selectedValue)
                                 .then(() => alert("Nosso banco de dados foi atualizado!"))
                                 .catch(error => console.error("Erro ao salvar detalhes do cliente:", error));
                         });
                     }
+                    
 
                     document.querySelectorAll('.baixar-peticao').forEach(link => {
                         link.addEventListener('click', function(event) {
@@ -166,6 +183,39 @@ export function renderClientes() {
             });
         })
         .catch(error => console.error("Erro ao buscar clientes:", error));
+}
+
+function saveStatus() {
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+    const collectionPath = "Advogado";
+
+    const peticionante = document.getElementById('petitionId').value;
+    const status = document.getElementById('petitionStatus').value;
+    const protocolNumber = gerarNumeroAleatorio(); 
+    const protocolDate = document.getElementById('protocolDate').value;
+    const petitionPortal = document.getElementById('petitionPortal').value;
+    const petitionObservations = document.getElementById('petitionObservations').value;
+
+    // Atualiza o campo de número do protocolo com o valor gerado
+    document.getElementById('protocolNumber').value = protocolNumber;
+    console.log('Número do Protocolo gerado:', protocolNumber);
+    const loggedInLawyer = oabAdvogadoLogado();
+    const url = `${databaseURL}/${collectionPath}/${loggedInLawyer.OAB}/${peticionante}.json`;
+
+    axios.patch(url, {
+        situacao: status,
+        protocoloNum: protocolNumber,
+        protocoloData: protocolDate,
+        protocoloPortal: petitionPortal,
+        protocoloObservacao: petitionObservations
+    })
+    .then(response => {
+        modal.hide();
+        location.reload();
+    })
+    .catch(error => {
+        console.error('Erro ao atualizar o status da petição:', error); 
+    });
 }
 
 export function showClientDetails(clienteKey, advogadoData) {
