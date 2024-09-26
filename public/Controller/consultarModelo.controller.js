@@ -1,4 +1,4 @@
-import { fetchClientes, archiveClient, updateSituacaoInDatabase, saveClientDetails } from '../model/consultar-modelo.js';
+import { fetchClientes, archiveClient, updateSituacaoInDatabase, saveClientDetails} from '../model/consultar-modelo.js';
 
 let protocolNumber = "";
 

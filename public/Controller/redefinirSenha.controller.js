@@ -1,5 +1,3 @@
-import "../View/updateSenhaCss.css";
-
 
 function redifinirSenha(event) {
     // Configuração do Firebase para a aplicação
@@ -35,8 +33,6 @@ function redifinirSenha(event) {
         });
 }
 
-// Adiciona um evento de 'submit' ao formulário de redefinição de senha
-// Impede o comportamento padrão do formulário e chama a função 'redifinirSenha'
 document.querySelector('.redefinirSenhaForm').addEventListener('submit', function(event) {
     event.preventDefault();
     redifinirSenha();
