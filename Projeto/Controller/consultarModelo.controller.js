@@ -131,7 +131,13 @@ function editStatusPetition(peticionante) {
             $('#protocolDate').val(petition.protocoloData ? new Date(petition.protocoloData).toISOString().substring(0, 10) : '');
             $('#petitionPortal').val(petition.protocoloPortal || '');
             $('#petitionObservations').val(petition.protocoloObservacao || '');
-        
+            
+            
+            if($('#protocolNumber').val() != ''){
+                $('#viewProtocolSection').show();
+            }else{
+                $('#viewProtocolSection').hide();
+            }
             // Abra o modal
             $('#editPetitionModal').modal('show');
         })
@@ -140,10 +146,80 @@ function editStatusPetition(peticionante) {
         })
 }
 
+// Função para salvar as informações do protocolo
+function saveProtocolInfo() {
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+    const collectionPath = "Advogado";
+
+    const peticionante = $('#petitionId').val();
+    const status = $('#petitionStatus').val();
+    const protocolNumber = $('#protocolNumber').val();
+    const protocolDate = $('#protocolDate').val();
+    const petitionPortal = $('#petitionPortal').val();
+    const petitionObservations = $('#petitionObservations').val();
+
+    const loggedInLawyer = oabAdvogadoLogado();
+    const url = `${databaseURL}/${collectionPath}/${loggedInLawyer.OAB}/${peticionante}.json`;
+
+    axios.patch(url, {
+        situacao: status,
+        protocoloNum: protocolNumber,
+        protocoloData: protocolDate,
+        protocoloPortal: petitionPortal,
+        protocoloObservacao: petitionObservations
+    })
+    .then(response => {
+        // Fechar o modal de protocolo
+        $('#protocolInfoModal').modal('hide');
+    })
+    .catch(error => {
+        console.error('Erro ao atualizar o status da petição:', error); 
+    })
+    
+    // Exibir botão de visualização do protocolo no primeiro modal
+    $('#viewProtocolSection').show();
+}
+
+// Exibe o modal de informações de protocolo ao selecionar "protocolado"
+function onChangeStatus(obj) {
+    if (obj.value == 'protocolada' && $('#protocolNumber').val() == '') {
+        $('#protocolInfoModal').modal('show'); // Exibe o segundo modal
+    }
+}
+
+// Função para visualizar as informações do protocolo
+function showProtocolInfo() {
+    // Exibe o modal de protocolo com os campos em readonly
+    $('#protocolNumber').prop('readonly', true);
+    $('#protocolDate').prop('readonly', true);
+    $('#petitionPortal').prop('readonly', true);
+    $('#petitionObservations').prop('readonly', true);
+
+    // Desabilita o botão de salvar e habilita o botão de editar
+    $('#saveProtocolBtn').prop('disabled', true);
+    $('#editProtocolBtn').prop('disabled', false);
+
+    // Aqui você pode recuperar e exibir as informações salvas do protocolo, se necessário
+    $('#protocolInfoModal').modal('show');
+}
+
+function editProtocol() {
+    // Torna os campos editáveis
+    $('#protocolNumber').prop('readonly', false);
+    $('#protocolDate').prop('readonly', false);
+    $('#petitionPortal').prop('readonly', false);
+    $('#petitionObservations').prop('readonly', false);
+
+    // Habilita o botão de salvar e desabilita o botão de editar
+    $('#saveProtocolBtn').prop('disabled', false);
+    $('#editProtocolBtn').prop('disabled', true);
+}
+
 function saveStatus() {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = "Advogado";
 
+    console.log($('#petitionId').val());
     const peticionante = $('#petitionId').val();
     const status = $('#petitionStatus').val();
     const protocolNumber = $('#protocolNumber').val();
@@ -636,13 +712,13 @@ function toggleEditMode(editMode) {
         }
     });
 
-    editElements.forEach(el => {
+    /*editElements.forEach(el => {
         if (editMode) {
             el.classList.remove('d-none');
         } else {
             el.classList.add('d-none');
         }
-    });
+    });*/
 
     document.getElementById('editButton').classList.toggle('d-none', editMode);
     document.getElementById('saveButton').classList.toggle('d-none', !editMode);
