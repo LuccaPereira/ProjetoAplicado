@@ -1,158 +1,407 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
 
-body {
+body{
     background-color: #aecade;
     font-family: "Radio Canada Big", sans-serif;
-    height: 100vh;
-    text-align: center;
-    margin: 0; /* Remover margem padrão */
-    padding-bottom: 50px; /* Espaço para o footer */
-}
-
-.sidebar {
-    background-color: #0e3754;
-    padding: 20px;
-    width: 90px; /* Largura inicial */
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    transition: width 0.3s ease;
-    overflow: hidden;
+    font-optical-sizing: auto;
+    font-style: normal;
+    min-height: 100vh; /* Garantindo que o corpo ocupe pelo menos a altura total da viewport */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    border-right: 1.5px solid rgba(0, 0, 0, 0.2);
-    font-size: larger !important;
 }
 
-.sidebar.expanded {
-    width: 250px; /* Largura expandida */
+.inicial-conteiner{
+
+ padding: 0;
 }
 
-.logo {
+nav {
+    height: auto;
+    background-color: #0e3754;
+    margin-bottom: 15px; /* Diminuindo a margem inferior */
+}
+
+.navbar-brand {
+    padding: 2px; /* Reduzindo o padding */
+    font-size: 24px; /* Diminuindo o tamanho da fonte */
+    font-weight: 400;
+    color: white;
+}
+
+.navbar-toggler {
+    margin-right: 10px; /* Diminuindo a margem à direita */
+    background-color: rgba(255, 255, 255, 0.26);
+}
+
+.nav-item {
+    font-weight: 600;
+    transition: .3s;
+}
+
+.active {
+    color: rgba(26, 201, 207, 0.808) !important;
+}
+
+.nav-item:hover {
+    background-color: rgba(240, 248, 255, 0.438);
+    transition: .3s;
+}
+
+.nav-link {
+    font-size: 16px; /* Diminuindo o tamanho da fonte */
+    padding-left: 10px; /* Reduzindo o padding à esquerda */
+    color: white;
+}
+
+
+.center{
     width: 100%;
-    margin-bottom: 20px;
+    height: 100%;
 }
 
-#menuToggle {
-    color: #fff;
-    cursor: pointer;
-}
-
-.nav-text {
-    display: none; /* Esconder texto por padrão */
-}
-
-.sidebar.expanded .nav-text {
-    display: inline; /* Mostrar texto quando expandida */
+#logo {
+    width: 3%;
 }
 
 .petition-info {
-    width: 80%;
-    margin: auto;
-    padding-left: 80px;
+    width: calc(100% - 80px);
+    margin: 0;
+    margin-left: 80px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;;
 }
 
 .info-login {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Aumentar o espaço entre os cards */
+    gap: 6px;
 }
 
 .card-info {
-    margin-top: 2% !important;
     background-color: white;
     border-radius: 8px;
-    padding: 20px; /* Ajustado para espaço interno */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+    padding-bottom: 20px;
 }
 
 .card-info h1 {
-    font-size: 20px;
-    color: rgba(0, 0, 0, 0.8);
+    padding-top: 20px;
+    padding-left: 20px;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.658);
 }
 
 .card-info hr {
-    margin: 10px 0; /* Espaçamento do HR */
+    width: 100%;
 }
 
 .card-info-name {
-    padding: 0 20px; /* Ajustar padding */
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .card-info input {
-    padding: 10px; /* Melhorar o padding interno */
+    padding-left: 20px;
     width: 100%;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.521);
     background-color: transparent;
-    margin-bottom: 10px; /* Espaçamento entre inputs */
 }
 
 .card-info-name h4 {
     font-size: 16px;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.582);
 }
 
 .dados-para-processo {
     display: flex;
     justify-content: space-between;
+    gap: 10px;
 }
 
 .dados-para-processo input {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.103);
 }
 
 .left-card-section,
-.right-card-section {
-    width: 48%; /* Melhorar espaçamento entre seções */
+.right-card-section{
+    width: 50%;
 }
 
 .more-files {
-    display: inline-block;
-    width: 30%;
-    border: 2px solid rgba(0, 0, 0, 0.5);
+    display:inline-block;
+    width:180px;
+    border: 2px solid rgba(0, 0, 0, 0.507);
     background-color: #0e3754;
     border-radius: 2px;
-    margin: 20px auto; /* Melhorar centralização */
+    margin: 4.2% auto; 
     color: white;
-    transition: 0.3s;
+    transition: .3s;
     text-align: center;
     line-height: 40px;
     cursor: pointer;
+    margin: 4.2% auto; /* Aqui você já tem uma margem, mas ela é aplicada em todos os lados */
+    margin-right: 150px;
+    margin-left: 150px;
+
 }
 
 .more-files:hover {
     border: 2px solid black;
-    color: black;
+    color: black ;
     background-color: rgb(106, 139, 201);
 }
 
-footer {
-    background-color: #0e3754;
-    color: #fff;
-    padding: 10px; /* Melhorar padding */
-    text-align: center;
-    position: fixed; /* Fixa o footer */
-    bottom: 0; /* Posiciona o footer na parte inferior */
-    left: 0; /* Alinha o footer à esquerda */
-    right: 0; /* Alinha o footer à direita */
-    z-index: 1000; /* Garante que o footer fique acima de outros elementos */
+.vertical-line {
+    border-left: 1px solid black;
+    height: 100%;
+    margin: 0 20px;
 }
 
+#adicionais {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+footer {
+    background-color: #0e3754; /* Cor de fundo do footer */
+    color: #fff; /* Cor do texto do footer */
+    padding: 5px; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    width: calc(100% - 80px);
+    margin-left: 80px;
+    text-align: center;
+    margin-top: auto; /* Faz com que o footer fique sempre na parte inferior */
+    border: none; /* Remover borda preta */
+}
+
+footer ul {
+    list-style: none; /* Remove a marcação da lista */
+    padding: 0; /* Remove o padding padrão */
+    margin: 0; /* Remove a margem padrão */
+    display: flex; /* Usa flexbox para alinhar os itens em linha */
+    justify-content: center; /* Centraliza os itens na horizontal */
+}
+
+footer li {
+    margin: 0 15px; /* Espaçamento horizontal entre os itens */
+}
+
+footer a {
+    color: #fff; /* Cor do texto dos links */
+    text-decoration: none; /* Remove o sublinhado */
+}
+
+footer a:hover {
+    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
+
 ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
 li {
-    display: inline-block;
-    margin: 0;
+	display: inline-block;
+	margin: 0;
 }
 
 a {
-    color: #fff;
+	color: #fff;
+	text-decoration: none;
+}
+
+
+
+/* ================================
+   Barra Lateral
+   ================================ */
+   .sidebar {
+    background-color: #0e3754;
+    padding: 20px;
+    width: 80px; /* Largura inicial do menu lateral */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 99999;
+
+    transition: width 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1.5px solid #000;
+}
+
+.sidebar.expanded {
+    width: 250px; /* Largura quando expandido */
+}
+
+.logo {
+    width: 150%; /* Ajuste o tamanho do logo conforme necessário */
+    margin-bottom: 20px;
+    display: block;
+    transition: width 0.3s ease;
+}
+
+.sidebar.expanded .logo {
+    width: 40%; /* Ajuste o tamanho do logo quando expandido */
+}
+
+/* ================================
+   Menu de Navegação
+   ================================ */
+.menu-icon {
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Garante que a lista ocupe toda a largura disponível */
+}
+
+.nav-list li {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alinha os itens horizontalmente */
+}
+
+.nav-list a {
+    color: white; /* Cor do texto inicialmente */
     text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+}
+
+.nav-list a:hover {
+    color: #000; /* Cor do texto ao passar o mouse */
+    background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
+    border-radius: 5px;
+}
+
+.material-icons {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #fff; /* Cor padrão dos ícones */
+    transition: color 0.3s ease; /* Transição suave para a cor dos ícones */
+}
+
+.nav-list a:hover .material-icons {
+    color: #000; /* Cor dos ícones ao passar o mouse */
+}
+
+.nav-text {
+    display: none;
+    color: #fff; /* Cor padrão do texto */
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+}
+
+.sidebar.expanded .nav-text {
+    display: inline;
+    color: #f0e5d8; /* Cor do texto quando expandido */
+}
+
+/* ================================
+   Botão de Logout
+   ================================ */
+   #logoutButton {
+    color: #f0e5d8;
+    border: 1px solid white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    padding: 10px;
+}
+
+#logoutButton .material-icons {
+    margin-right: 8px;
+}
+
+#logoutButton .logout-text {
+    display: inline;
+}
+
+.sidebar:not(.expanded) #logoutButton .logout-text {
+    display: none;
+}
+
+#logoutButton:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+/* ================================
+   Foco para Acessibilidade
+   ================================ */
+   .sidebar a:focus,
+   #logoutButton:focus {
+       outline: 2px solid #007bff;
+   }
+   
+/* Estilo para o botão de perfil no menu */
+#loginBnt {
+    color: white; /* Cor do texto inicialmente */
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease, background-color 0.3s ease; /* Transição suave para a cor do texto e fundo */
+    border-radius: 5px; /* Arredondar bordas para corresponder ao padrão */
+    padding: 10px; /* Espaçamento interno */
+}
+
+
+/* Estilo do ícone do perfil */
+#loginBnt .material-icons {
+    font-size: 24px; /* Tamanho do ícone igual ao dos outros itens */
+    margin-right: 10px; /* Espaço entre o ícone e o texto */
+    color:white; /* Cor do ícone */
+    transition: color 0.3s ease; /* Transição suave para a cor do ícone */
+}
+
+/* Estilo do texto do perfil */
+#loginBnt .login-text {
+    color: #f0e5d8; /* Cor do texto */
+    display: none; /* Oculta o texto quando a barra lateral não está expandida */
+}
+
+/* Exibe o texto "Perfil" somente quando a barra lateral estiver expandida */
+.sidebar.expanded #loginBnt .login-text {
+    display: inline; /* Exibe o texto "Perfil" */
+    color:#f0e5d8;
+}
+
+/* Estilo ao passar o mouse sobre o botão de perfil */
+#loginBnt:hover {
+    color: #000; /* Cor do texto ao passar o mouse */
+    background-color:#40E0D0; /* Cor de fundo ao passar o mouse */
+    border-radius: 5px; /* Arredondar bordas para corresponder ao padrão */
+}
+
+/* Estilo do ícone ao passar o mouse */
+#loginBnt:hover .material-icons {
+    color: #000; /* Cor do ícone ao passar o mouse */
+
 }

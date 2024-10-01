@@ -1,156 +1,464 @@
-/* Fonte padrão para o corpo do documento */
-body {
-    font-family: 'Arial', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
+
+body{
+    background-color: rgb(220, 225, 230);
+    font-family: "Radio Canada Big", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    text-align: center;
+    height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #f0f4f8; /* Cor de fundo suave */
-    display: flex; /* Flexbox para alinhar a sidebar e o chat */
+    display: flex;
+    flex-direction: column;
 }
+html, body {
+    height: 100%;
+    margin: 0;
+} 
 
-/* Estiliza a sidebar */
-.sidebar {
-    background-color: #0e3754; /* Cor de fundo escura */
-    padding: 20px;
-    width: 80px; /* Largura inicial da sidebar (fechada) */
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    overflow-y: auto; /* Permite rolagem */
-    border-right: 3px solid #007bff; /* Borda direita colorida */
-    transition: width 0.3s ease; /* Transição suave ao expandir/contrair */
-}
 
-/* Largura quando expandida */
-.sidebar.expanded {
-    width: 200px; /* Largura quando expandida */
-}
-
-/* Logo da sidebar */
-.logo {
-    width: 80%; /* Largura do logo */
-    margin-bottom: 30px; /* Espaço abaixo do logo */
-}
-
-/* Ícone do menu */
-.menu-icon {
-    font-size: 36px; /* Tamanho do ícone do menu */
-    color: #ffffff; /* Cor do ícone */
-    cursor: pointer;
-    margin-bottom: 30px; /* Espaço abaixo do ícone */
-}
-
-/* Lista de navegação */
-.nav-list {
-    list-style: none; /* Remove marcadores da lista */
+.inicial-conteiner{
     padding: 0;
 }
 
-/* Botões na sidebar */
-.btn {
-    background-color: transparent; /* Fundo transparente */
-    border: none;
-    color: white; /* Cor do texto */
-    display: flex;
-    align-items: center;
-    margin: 10px 0; /* Margem entre botões */
-    font-size: 18px; /* Tamanho do texto */
+nav{
+    background-color: #1f1515;
+}
+
+
+.navbar-brand{
+    padding-left: 20px;
+    font-size: 28px;
+    font-weight: 400;
+    color: white;
+}
+
+.navbar-toggler{
+    margin-right: 20px;
+    background-color: rgba(255, 255, 255, 0.26);
+}
+
+.nav-item{
+    font-weight: 600;
+    transition: .3s;
+}
+
+.active{
+    color: rgba(26, 201, 207, 0.808) !important;
+}
+
+.nav-item:hover{
+    background-color: rgba(240, 248, 255, 0.438);
+    transition: .3s;
+}
+
+.nav-link{
+    font-size: 18px;
+    padding-left: 20px;
+    color: white;
+
+}
+
+.center{
     width: 100%;
-    padding: 10px;
-    border-radius: 5px; /* Bordas arredondadas */
-    transition: background-color 0.3s; /* Transição suave */
+    height: 100%;
 }
 
-/* Efeitos de hover nos botões */
-.btn:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Efeito de hover */
+#logo {
+    width: 4%;
 }
 
-/* Exibe o texto da sidebar quando expandida */
-.sidebar.expanded .nav-text {
-    display: inline; /* Exibe o texto quando expandida */
+.petition-info {
+    width: 80%;
+    padding-top: 20px;
+    margin: auto;
 }
 
-/* Oculta o texto da sidebar quando fechada */
-.nav-text {
-    display: none; /* Oculta o texto por padrão */
-}
-
-/* Estilos para a área de chat */
-.chat-container {
-    margin-left: 80px; /* Compensa a largura da sidebar (fechada) */
-    padding: 20px; /* Espaçamento interno */
-    flex: 1; /* Preenche o restante do espaço */
-    display: flex; /* Flexbox para centralizar o conteúdo */
-    flex-direction: column; /* Direção em coluna */
-    align-items: center; /* Centraliza horizontalmente */
-    justify-content: center; /* Centraliza verticalmente */
-}
-
-/* Estilo da janela de chat */
-.chat-window {
-    height: 500px; /* Altura da janela de chat */
-    border: 1px solid #ddd; /* Borda ao redor da janela */
-    border-radius: 8px; /* Bordas arredondadas */
-    background-color: #ffffff; /* Cor de fundo da janela */
-    padding: 10px; /* Espaçamento interno */
-    margin-bottom: 20px; /* Espaço abaixo da janela */
-    overflow-y: auto; /* Permite rolagem */
-    width: 100%; /* Largura total da janela de chat */
-    max-width: 800px; /* Largura máxima da janela de chat */
-}
-
-/* Estilo das mensagens */
-.messages {
+.info-login {
+    width: 100%;
     display: flex;
-    flex-direction: column; /* Direção das mensagens */
-    max-height: 350px; /* Altura máxima das mensagens */
-    overflow-y: auto; /* Permite rolagem */
+    flex-direction: column;
+    gap: 6px;
 }
 
-/* Estilo das mensagens do bot e do usuário */
-.bot-message, .user-message {
+.card-info {
+    background-color: white;
+    border-radius: 8px;
+    padding-bottom: 20px;
+}
+
+.card-info h1 {
+    padding-top: 20px;
+    padding-left: 20px;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.658);
+}
+
+.card-info hr {
+    width: 100%;
+}
+
+.card-info-name {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.card-info input {
+    padding-left: 20px;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.521);
+    background-color: transparent;
+}
+
+.card-info-name h4 {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.582);
+}
+
+.dados-para-processo {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.dados-para-processo input {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.103);
+}
+
+.left-card-section,
+.right-card-section{
+    width: 50%;
+}
+
+.more-files {
+    display:inline-block;
+    width: 30%;
+    border: 2px solid rgba(0, 0, 0, 0.507);
+    background-color: #473030;
+    border-radius: 2px;
+    margin: 5% auto; 
+    color: white;
+    transition: .3s;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+.more-files:hover {
+    border: 2px solid black;
+    color: black;
+    background-color: rgb(106, 139, 201);
+}
+
+.vertical-line {
+    border-left: 1px solid black;
+    height: 100%;
+    margin: 0 20px;
+}
+
+#adicionais {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.chatbot-container {
+    width: 50%;
+    margin: auto;
+    margin-top: 50px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.chat-window {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 2px solid #ccc;
+    border-radius: 10px;
     padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    max-width: 70%; /* Largura máxima das mensagens */
+    margin-bottom: 20px;
 }
 
-.bot-message {
-    background-color: #e1e1e1; /* Cor das mensagens do bot */
-    align-self: flex-start; /* Alinha à esquerda */
+.messages {
+    overflow-y: auto;
+}
+
+.user-message, .bot-message {
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    max-width: 80%;
 }
 
 .user-message {
-    background-color: #007bff; /* Cor das mensagens do usuário */
-    color: #fff; /* Cor do texto */
-    align-self: flex-end; /* Alinha à direita */
+    background-color: #f0f0f0;
+    text-align: left;
+    align-self: flex-start;
 }
 
-/* Estilo da área de entrada de texto */
-.input-container {
-    display: flex; /* Flexbox para o campo de entrada */
-    justify-content: space-between; /* Espaço entre os elementos */
-    align-items: center; /* Alinha verticalmente */
-    width: 100%; /* Largura total da área de entrada */
+.bot-message {
+    background-color: #e6f2ff;
+    text-align: left;
+    align-self: flex-end;
 }
 
-/* Estilo do campo de entrada de texto */
-.chat-input {
-    flex: 1; /* Ocupa o espaço restante */
-    padding: 10px; /* Espaçamento interno */
-    border: 1px solid #ddd; /* Borda do campo */
-    border-radius: 4px; /* Bordas arredondadas */
-    margin-right: 10px; /* Espaço à direita */
+.input-group {
+    margin-top: 20px;
+    display: flex;
 }
 
-/* Estilo do botão de envio */
-.send-button {
-    padding: 10px 20px; /* Espaçamento interno */
-    border: none; /* Remove borda */
-    border-radius: 4px; /* Bordas arredondadas */
-    background-color: #007bff; /* Cor de fundo */
-    color: #fff; /* Cor do texto */
-    cursor: pointer; /* Cursor em forma de mão */
-    transition: background-color 0.3s; /* Transição suave */
+.form-control {
+    flex: 1;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
+.btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+footer {
+	background-color: #0e3754;
+	color: #fff;
+	padding: 5px; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    width: calc(100% - 80px);
+    margin-left: 80px;
+	text-align: center;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+li {
+	display: inline-block;
+	margin: 0 10px;
+}
+
+a {
+	color: #fff;
+	text-decoration: none;
+}
+
+
+
+
+/* ================================
+   Barra Lateral
+   ================================ */
+   .sidebar {
+    background-color: #0e3754;
+    padding: 20px;
+    width: 80px; /* Largura inicial do menu lateral */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 99999;
+    border-right: 1.5px solid #000;
+}
+
+.sidebar.expanded {
+    width: 250px; /* Largura quando expandido */
+}
+
+.logo {
+    width: 150%; /* Ajuste o tamanho do logo conforme necessário */
+    margin-bottom: 20px;
+    display: block;
+    transition: width 0.3s ease;
+}
+
+.sidebar.expanded .logo {
+    width: 40%; /* Ajuste o tamanho do logo quando expandido */
+}
+
+/* ================================
+   Menu de Navegação
+   ================================ */
+.menu-icon {
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Garante que a lista ocupe toda a largura disponível */
+}
+
+.nav-list li {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alinha os itens horizontalmente */
+}
+
+.nav-list a {
+    color: white; /* Cor do texto inicialmente */
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+}
+
+.nav-list a:hover {
+    color: #000; /* Cor do texto ao passar o mouse */
+    background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
+    border-radius: 5px;
+}
+
+.material-icons {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #fff; /* Cor padrão dos ícones */
+    transition: color 0.3s ease; /* Transição suave para a cor dos ícones */
+}
+
+.nav-list a:hover .material-icons {
+    color: #000; /* Cor dos ícones ao passar o mouse */
+}
+
+.nav-text {
+    display: none;
+    color: #fff; /* Cor padrão do texto */
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+}
+
+.sidebar.expanded .nav-text {
+    display: inline;
+    color: #f0e5d8; /* Cor do texto quando expandido */
+}
+
+
+
+.chatBotContainer{
+
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px 0 100px;
+    flex: 1; /* Isso fará com que a div ocupe o espaço restante */
+}
+
+/* ================================
+   Botão de Logout
+   ================================ */
+   #logoutButton {
+    color: white;
+    border: 1px solid white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    padding: 10px;
+}
+
+#logoutButton .material-icons {
+    margin-right: 8px;
+}
+
+#logoutButton .logout-text {
+    display: inline;
+}
+
+.sidebar:not(.expanded) #logoutButton .logout-text {
+    display: none;
+}
+
+#logoutButton:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+/* ================================
+   Foco para Acessibilidade
+   ================================ */
+   .sidebar a:focus,
+   #logoutButton:focus {
+       outline: 2px solid #007bff;
+   }
+   
+
+/* Estilo para o botão de perfil no menu */
+#loginBnt {
+    color: white;
+    /* Cor do texto inicialmente */
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    /* Transição suave para a cor do texto e fundo */
+    border-radius: 5px;
+    /* Arredondar bordas para corresponder ao padrão */
+    padding: 10px;
+    /* Espaçamento interno */
+}
+
+/* Estilo do ícone do perfil */
+#loginBnt .material-icons {
+    font-size: 24px;
+    /* Tamanho do ícone igual ao dos outros itens */
+    margin-right: 10px;
+    /* Espaço entre o ícone e o texto */
+    color: white;
+    /* Cor do ícone */
+    transition: color 0.3s ease;
+    /* Transição suave para a cor do ícone */
+}
+
+/* Estilo do texto do perfil */
+#loginBnt .login-text {
+    color: #f0e5d8;
+    /* Cor do texto */
+    display: none;
+    /* Oculta o texto quando a barra lateral não está expandida */
+}
+
+/* Exibe o texto "Perfil" somente quando a barra lateral estiver expandida */
+.sidebar.expanded #loginBnt .login-text {
+    display: inline;
+    /* Exibe o texto "Perfil" */
+    color: #f0e5d8;
+}
+
+/* Estilo ao passar o mouse sobre o botão de perfil */
+#loginBnt:hover {
+    color: #000;
+    /* Cor do texto ao passar o mouse */
+    background-color: #40E0D0;
+    /* Cor de fundo ao passar o mouse */
+    border-radius: 5px;
+    /* Arredondar bordas para corresponder ao padrão */
+}
+
+/* Estilo do ícone ao passar o mouse */
+#loginBnt:hover .material-icons {
+    color: #000;
+    /* Cor do ícone ao passar o mouse */
+}

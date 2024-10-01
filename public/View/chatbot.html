@@ -3,43 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot de Petições</title>
+    <title>Chatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" href="../css/chatbot.css">
-    <link rel="stylesheet" href="../css/chatbot.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
+
     <div class="sidebar">
-        <img class="logo" src="../img/logo.png" alt="Logo da empresa">
+        <img class="logo" src="../img/logo.png" alt="Logo">
         <span class="material-icons menu-icon" id="menuToggle">menu</span>
-        <button onClick="paginaPerfil()" class="btn btn-outline-primary" id="loginBnt">
+        <button onClick="paginaPerfil()" class="btn bnt-outline-center" id="loginBnt">
             <span class="material-icons">account_circle</span>
-            <span class="login-text">Perfil</span>
+             <span class="login-text">Perfil</span>
         </button><br>
         <ul class="nav-list">
-            <li><a href="../View/menu.html"><span class="material-icons">home</span><span class="nav-text">Home</span></a></li><br>
-            <li><a href="../View/consultar-modelo.html"><span class="material-icons">search</span><span class="nav-text">Consultar Petição</span></a></li><br>
-            <li><a href="../View/cadastrarPeticao.html"><span class="material-icons">description</span><span class="nav-text">Cadastrar Petição</span></a></li><br>
-            <li><a href="../View/criarClientes.html"><span class="material-icons">person_add</span><span class="nav-text">Cadastrar Clientes</span></a></li><br>
-            <li><a href="../View/chatbot.html"><span class="material-icons">chat</span><span class="nav-text">Chatbot</span></a></li><br>
+            <li><a href="../View/menu.html"><span class="material-icons">home</span><span class="nav-text">Home</span></a></li>
+            <li><a href="../View/consultar-modelo.html"><span class="material-icons">search</span><span class="nav-text">Consultar Petição</span></a></li>
+            <li><a href="../View/cadastrarPeticao.html"><span class="material-icons">description</span><span class="nav-text">Cadastrar Petição</span></a></li>
+            <li><a href="../View/criarClientes.html"><span class="material-icons">person_add</span><span class="nav-text">Cadastrar Clientes</span></a></li>
+            <li><a href="../View/chatbot.html"><span class="material-icons">chat</span><span class="nav-text">Chatbot</span></a></li>
         </ul>
         <button class="btn btn-outline-danger" id="logoutButton">
             <span class="material-icons">exit_to_app</span>
             <span class="logout-text">Logout</span>
         </button>
     </div>
-    <div class="chat-container">
-        <h1>Assistente de Petições</h1>
-        <div id="chat-window" class="chat-window">
-            <div id="messages" class="messages"></div>
+
+    <div class="chatBotContainer">
+        <div class="chatbot-card">
+            <div class="card-body">
+                <h5 class="card-title">Chatbot</h5>
+                <div class="chat-window" id="chatWindow">
+                    <div class="messages" id="messages"></div>
+                </div>
+                <div class="input-group mt-3">
+                    <input type="text" class="form-control" id="chatInput" placeholder="Digite sua mensagem">
+                    <button class="btn btn-primary" type="button" id="sendButton">Enviar</button>
+                </div>
+            </div>
         </div>
-        <div class="input-container">
-            <input type="text" id="chatInput" class="chat-input" placeholder="Digite sua mensagem...">
-            <button id="sendButton" class="send-button">Enviar</button>
-        </div>
-    </div>
-    <script type="module" src="../Controller/chatbot.Controller.js"></script>
+    </div>    
+
+    <footer>
+        <p>&copy; 2024 - Todos os direitos reservados</p>
+        <ul>
+            <li><a href="#">Termos de uso</a></li>
+            <li><a href="#">Política de privacidade</a></li>
+            <li><a href="#">Sobre nós</a></li>
+            <li><a href="#">Contato</a></li>
+        </ul>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="module" src="../model/chatbot.js"></script>
+    <script src="../Controller/menu.controller.js"></script>
+
 </body>
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </html>
