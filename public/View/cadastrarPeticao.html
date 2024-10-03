@@ -18,7 +18,7 @@
     <div class="sidebar">
         <img class="logo" src="../img/logo.png" alt="Logo">
         <span class="material-icons menu-icon" id="menuToggle">menu</span>
-        <button onClick="paginaPerfil()" class="btn bnt-outline-center" id="loginBnt">
+        <button onclick="paginaPerfil()" class="btn bnt-outline-center" id="loginBnt">
             <span class="material-icons">account_circle</span>
              <span class="login-text">Perfil</span>
         </button><br>
@@ -96,7 +96,7 @@
         <div id="upload-area" class="petition-upload-area">
             <input type="file" id="pdfFile" accept=".pdf" style="display: none;">
             <button onclick="document.getElementById('pdfFile').click()" class="more-files">PDF</button>
-            <button onclick="montarOData()" class="more-files">Enviar</button>
+            <button onclick="enviarFormulario()" class="more-files">Enviar</button>
         </div>
     </div>
     </div>
@@ -109,7 +109,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-storage-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="../controller/cadastrarPeticao.controller.js"></script>
+    <script type="module" src="../controller/cadastrarPeticao.controller.js"></script>
 
     <footer>
         <p>&copy; 2024 - Todos os direitos reservados</p>

@@ -12,7 +12,7 @@
     <div class="sidebar">
         <img class="logo" src="../img/logo.png" alt="Logo">
         <span class="material-icons menu-icon" id="menuToggle">menu</span>
-        <button onClick="paginaPerfil()" class="btn bnt-outline-center" id="loginBnt">
+        <button onclick="paginaPerfil()" class="btn bnt-outline-center" id="loginBnt">
             <span class="material-icons">account_circle</span>
             <span class="login-text">Perfil</span>
         </button><br>
@@ -111,6 +111,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="../Controller/menu.controller.js"></script>
+    <script type="module" src="../Controller/menu.controller.js"></script>
 </body>
 </html>

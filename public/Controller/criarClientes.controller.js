@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', submitClientes);
     }
 
+    function paginaPerfil() {
+        window.location.href = '../View/perfilAdvogado.html';
+    }
+
     clickMenu();
 });
 

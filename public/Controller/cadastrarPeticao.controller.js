@@ -21,11 +21,13 @@ function paginaPerfil() {
 }
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    clickMenu();
-});
-
-document.getElementById('formulario').addEventListener('submit', enviarFormulario);
+//document.addEventListener('DOMContentLoaded', () => {
+//    clickMenu();
+//    const formulario = "";
+//    if (formulario) {
+//        formulario.addEventListener('submit', enviarFormulario);
+//      }
+//});
 
 function enviarFormulario(event) {
     event.preventDefault();

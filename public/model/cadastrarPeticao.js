@@ -47,7 +47,7 @@ export function validarEmail(email) {
 }
 
 export function validarValor(valor) {
-    return /^R\$ \d{1,3}(\.\d{3})*,\d{2}$/.test(valor);
+    return /^\d{1,3}(\.\d{3})*,\d{2}$/.test(valor.replace('R$ ', ''));
 }
 
 export function validarTelefoneOficial(telefone) {

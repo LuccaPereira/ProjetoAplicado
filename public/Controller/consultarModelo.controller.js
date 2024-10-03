@@ -42,9 +42,9 @@ function paginaPerfil() {
     window.location.href = '../View/perfilAdvogado.html';
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
     clickMenu();
+    //paginaPerfil();
 });
 
 export function renderClientes() {
