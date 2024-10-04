@@ -8,16 +8,16 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
-// Middleware para parsear o corpo das requisições como JSON
+
 app.use(bodyParser.json());
 
-// Instanciar a API do Google Generative AI com a chave da API
+
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
-// Servir arquivos estáticos da pasta 'public'
+
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Rota para a página inicial
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/View/login.html'));
 });
@@ -30,7 +30,6 @@ app.post('/generate-petition', async (req, res) => {
       pedidosAutor, outrasInformacoes
   } = req.body;
 
-  // Validação dos dados recebidos
   if (!nomeCliente || !cpfCnpjCliente || !nomeReu || !motivoAcao) {
       return res.status(400).send('Dados insuficientes para gerar a petição.');
   }
@@ -66,7 +65,7 @@ app.post('/generate-petition', async (req, res) => {
   }
 });
 
-// Iniciar o servidor
+
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
     console.log('API Key:', process.env.API_KEY);

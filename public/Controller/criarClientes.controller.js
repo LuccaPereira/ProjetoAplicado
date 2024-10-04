@@ -1,4 +1,4 @@
-import { getClientes, updateCliente, addCliente, validarCPF } from '../model/criarClientes.js';
+import { getClientes, updateCliente, addCliente, validarCPF, getLoggedInLawyer } from '../model/criarClientes.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     function clickMenu() {
@@ -21,9 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const form = document.getElementById('clienteForm');
-    if (form) {
-        form.addEventListener('submit', submitClientes);
+    const formClientes = document.getElementById("clienteForm");
+
+    if (formClientes) {
+        formClientes.addEventListener("submit", submitClientes);
+    } else {
+        console.error("Elemento com ID 'formClientes' não foi encontrado.");
     }
 
     function paginaPerfil() {
@@ -32,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     clickMenu();
 });
-
 
 async function submitClientes(event) {
     event.preventDefault();
@@ -52,6 +54,7 @@ async function submitClientes(event) {
         firebase.initializeApp(firebaseConfig);
     }
 
+    const form = document.getElementById("formClientes");
     const cpf = document.getElementById("cpf").value;
     const senha = document.getElementById("senha").value;
 
@@ -70,9 +73,12 @@ async function submitClientes(event) {
         return;
     }
 
-    const databaseURL = firebaseConfig.databaseURL;
-    const collectionPath = "Cliente";
-    const url = `${databaseURL}/${collectionPath}.json`;
+    const Lawyer = getLoggedInLawyer();
+    console.log("Advogado logado:", Lawyer.OAB);
+    
+    const collectionPath = `Advogado`;
+    const PerfilDoCliente = "PerfilDoCliente";
+    const url = `${firebaseConfig.databaseURL}/${collectionPath}/${Lawyer.OAB}/${PerfilDoCliente}.json`;
 
     try {
         const response = await getClientes(url);
@@ -83,15 +89,8 @@ async function submitClientes(event) {
             for (let clienteKey in clientes) {
                 if (clientes.hasOwnProperty(clienteKey)) {
                     const cliente = clientes[clienteKey];
-
                     if (cliente.cpf === cpf) {
                         clienteKeyExistente = clienteKey;
-
-                        if (cliente.senha === senha) {
-                            alert("Usuário já cadastrado");
-                            return; 
-                        }
-
                         break;
                     }
                 }
@@ -99,20 +98,26 @@ async function submitClientes(event) {
         }
 
         if (clienteKeyExistente) {
-            const databaseURL = firebaseConfig.databaseURL;
-            const collectionPath = "Cliente";
-            const urtl = `${databaseURL}/${collectionPath}/${clienteKeyExistente}.json`;
+         
+            const urtl = `${firebaseConfig.databaseURL}/${collectionPath}/${Lawyer.OAB}/${PerfilDoCliente}/${clienteKeyExistente}.json`;
             const oData = { senha: senha };
             await updateCliente(urtl, oData);
             alert("Senha do cliente foi atualizada com sucesso!");
-            window.location.href = "../View/menu.html"; 
+            window.location.href = "../View/menu.html";
         } else {
-            const oData = { cpf: cpf, senha: senha };
-            await addCliente(url, oData);
+            const oData = {
+                [cpf]: {
+                   cpf: cpf,
+                   senha: senha,
+                }
+            };        
+            const uvl = `${firebaseConfig.databaseURL}/${collectionPath}/${Lawyer.OAB}/${PerfilDoCliente}.json`;  
+            await addCliente(uvl, oData);
             alert("Novo cliente foi adicionado com sucesso!");
-            form.reset(); 
+            window.location.href = "../View/menu.html";
         }
     } catch (error) {
+        console.error("Erro ao acessar o Firebase: ", error);
         alert("Erro: " + error.message);
     }
 }
