@@ -47,7 +47,9 @@ export function validarEmail(email) {
 }
 
 export function validarValor(valor) {
-    return /^\d{1,3}(\.\d{3})*,\d{2}$/.test(valor);
+    valor = valor.replace('R$', '').trim().replace(/\s+/g, '').replace(',', '.');
+
+    return /^\d+(\.\d{2})?$/.test(valor);
 }
 
 
@@ -91,6 +93,7 @@ export async function montarOData() {
     if (!limiteCaracteres(nomeAdvogado, 100)) throw new Error('Nome do Advogado muito longo');
     if (!limiteCaracteres(foro, 100)) throw new Error('Foro muito longo');
     if (!limiteCaracteres(acidente, 200)) throw new Error('Descrição do Acidente muito longa');
+    if (!limiteCaracteres(procedimento, 200)) throw new Error('Descrição do Acidente muito longa');
     if (!limiteCaracteres(descricao, 500)) throw new Error('Descrição muito longa');
 
     const getFormattedDate = () => {
