@@ -166,7 +166,7 @@ body {
    Conteúdo Principal Ajustável
    ================================ */
 
-.petition-info, .center1 {
+.petition-info, .center1, .tabela {
     width: calc(100% - 80px); /* Considera a sidebar colapsada */
     margin-left: 80px;
     padding: 30px 20px;
@@ -177,23 +177,9 @@ body {
 
 .sidebar.expanded + .petition-info,
 .sidebar.expanded + .center1,
-.sidebar.expanded {
+.sidebar.expanded + .tabela {
     width: calc(100% - 160px); /* Considera a sidebar expandida */
     margin-left: 160px;
-}
-
-.tabela {
-    width: calc(70% - 80px); /* Reduzindo a largura para 70% e considerando a sidebar colapsada */
-    margin-left: 100px; /* Margem esquerda aumentada */
-    padding: 30px 20px;
-    box-sizing: border-box;
-    background-color: #aecade;
-    transition: width 0.3s ease, margin-left 0.3s ease;
-}
-
-.sidebar.expanded + .tabela {
-    width: calc(60% - 160px); /* Reduzindo ainda mais a largura para 60% quando a sidebar está expandida */
-    margin-left: 180px; /* Aumentando a margem esquerda quando a sidebar está expandida */
 }
 
 /* Estilização Geral de Contêineres */
