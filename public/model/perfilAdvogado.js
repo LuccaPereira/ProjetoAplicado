@@ -1,4 +1,4 @@
-import axios from 'axios';
+//import axios from 'axios';
 
 const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
 

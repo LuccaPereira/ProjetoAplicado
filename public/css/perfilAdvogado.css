@@ -202,13 +202,13 @@ button[type="button"]:hover {
 
 .sidebar {
     background-color: #0e3754;
-    padding: 5px; /* Diminui o padding da sidebar */
-    width: 40px; /* Largura reduzida */
+    padding: 5px; /* Reduz o padding da sidebar */
+    width: 80px; /* Aumentada a largura inicial da sidebar */
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
-    transition: width 0.3s ease;
+    transition: width 0.3s ease; /* Transição suave na largura */
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -218,7 +218,7 @@ button[type="button"]:hover {
 }
 
 .sidebar.expanded {
-    width: 160px; /* Largura quando expandido */
+    width: 160px; /* Largura quando expandida */
 }
 
 .logo {

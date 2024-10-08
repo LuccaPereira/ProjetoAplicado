@@ -47,7 +47,7 @@ export function validarEmail(email) {
 }
 
 export function validarValor(valor) {
-    return /^R\$ \d{1,3}(\.\d{3})*,\d{2}$/.test(valor);
+    return /^\d{1,3}(\.\d{3})*,\d{2}$/.test(valor.replace('R$ ', ''));
 }
 
 export function validarTelefoneOficial(telefone) {
@@ -105,9 +105,7 @@ export async function montarOData() {
         measurementId: "G-WB0MPN3701"
     };
 
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+    firebase.initializeApp(firebaseConfig);
 
     // Validação
     if (!nomePeticionante || !nomeAdvogado || !foro || !acidente || !valor || 

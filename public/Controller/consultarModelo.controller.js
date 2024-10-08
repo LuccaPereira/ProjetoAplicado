@@ -38,13 +38,13 @@ document.getElementById('logoutButton').addEventListener('click', function() {
     window.location.href = '../View/login.html';
 })
 
-function paginaPerfil() {
+document.getElementById('loginBnt').addEventListener('click', function() {
     window.location.href = '../View/perfilAdvogado.html';
-}
-
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     clickMenu();
+    //paginaPerfil();
 });
 
 export function renderClientes() {
@@ -113,7 +113,7 @@ export function renderClientes() {
                         select.value = cliente.situacao || 'Protocolada';
                         select.addEventListener('change', function() {
                             const selectedValue = this.value;
-                            if (selectedValue === 'emcadastramento') {
+                            if (selectedValue === 'protocolada') {
                                 var protocolField =  document.getElementById('protocolNumber'); 
                                 if (protocolField.value === "") {
                                     protocolNumber = gerarNumeroAleatorio();

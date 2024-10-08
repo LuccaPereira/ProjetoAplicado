@@ -1,33 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
 
-
-/* ================================
-   Variáveis Globais
-   ================================ */
-   :root {
-    --font-main: "Radio Canada Big", sans-serif;
-    --color-bg: #aecade;
-    --color-primary: #0e3754;
-    --color-secondary: #40E0D0;
-    --color-text-light: #f0e5d8;
-    --color-text-dark: #000;
-    --color-border: #ced4da;
-    --font-size-base: 20px; /* Aumentado para 20px */
-    --font-size-small: 18px; /* Aumentado para 18px */
-    --border-radius: 5px;
-}
-
-/* ================================
-   Estilos Globais
-   ================================ */
-
 body {
-    background-color: var(--color-bg);
-    font-family: var(--font-main);
-    font-size: var(--font-size-base);
-    text-align: center;
+    background-color: #aecade;
+    font-family: "Radio Canada Big", sans-serif;
+    font-optical-sizing: auto;
     margin: 0;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    text-align: center;
 }
 
 .inicial-conteiner {
@@ -35,534 +16,249 @@ body {
 }
 
 /* ================================
-   Barra Lateral
+   Sidebar Estilos
    ================================ */
-   .sidebar {
-    background-color: var(--color-primary);
-    padding: 20px;
-    width: 70px; /* Largura inicial ajustada */
+
+.sidebar {
+    background-color: #0e3754;
+    padding: 10px 5px; /* Mais espaçamento vertical */
+    width: 80px; 
     position: fixed;
     top: 0;
+    left: 0;
     bottom: 0;
     transition: width 0.3s ease;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-right: 1.5px solid var(--color-text-dark);
+    border-right: 1px solid #000;
+    z-index: 1000;
+    overflow: hidden; /* Esconde conteúdo extra na sidebar */
 }
 
 .sidebar.expanded {
-    width: 250px; /* Largura expandida ajustada */
+    width: 160px;
 }
 
+/* Logo */
 .logo {
     width: 100%;
-    margin-bottom: 20px;
-    display: block;
+    margin-bottom: 10px;
     transition: width 0.3s ease;
 }
 
 .sidebar.expanded .logo {
-    width: 90%; /* Ajustado para 60% */
+    width: 80%;
 }
 
-/* Estilos gerais para a área de consulta */
-.content {
-    padding: 20px; /* Espaçamento interno */
-    font-size:larger;
-}
-
-/* Estilos para o título */
-.consultar-modelo h3 {
-    font-size: 20px; /* Tamanho do texto */
-    color: #0e3754; /* Cor do texto */
-    margin-bottom: 10px; /* Espaçamento abaixo do título */
-    font-size:larger;
-
-}
-
-/* Estilo para o container do select */
-.center1 {
-    display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Alinha verticalmente */
-}
-
-/* Estilo para o container dos selects */
-.center-selects {
-    display: flex;
-    flex-direction: column; /* Organiza os selects verticalmente */
-    align-items: center; /* Centraliza os selects */
-}
-
-/* Estilo para o segundo select */
-.second-select {
-    width: 100%;
-    max-width: 400px; /* Largura máxima do dropdown */
-}
-
-/* Estilo para o select dropdown */
-.second-select select {
-    width: 100%;
-    padding: 12px 20px; /* Espaçamento interno */
-    border: 2px solid #ced4da; /* Borda padrão */
-    border-radius: 10px; /* Bordas arredondadas */
-    background-color: #ffffff; /* Cor de fundo */
-    color: #495057; /* Cor do texto */
-    font-size: 16px; /* Tamanho da fonte */
-    appearance: none; /* Remove o estilo padrão do select */
-    -webkit-appearance: none; /* Remove o estilo padrão do select em Safari */
-    -moz-appearance: none; /* Remove o estilo padrão do select em Firefox */
-    transition: border-color 0.3s, box-shadow 0.3s; /* Transições suaves */
-    font-size:larger;
-}
-
-/* Adiciona uma seta customizada */
-.second-select::after {
-    content: '▼'; /* Seta para baixo */
-    position: absolute;
-    right: 15px; /* Distância da borda direita */
-    top: 50%; /* Centraliza verticalmente */
-    transform: translateY(-50%); /* Centraliza verticalmente */
-    font-size: 16px; /* Tamanho da seta */
-    color: #495057; /* Cor da seta */
-    pointer-events: none; /* Permite cliques no select */
-    font-size:larger;
-}
-
-/* Estilo ao focar no select */
-.second-select select:focus {
-    border-color: #80bdff; /* Cor da borda ao focar */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra ao focar */
-    outline: none; /* Remove o contorno padrão */
-}
-
-/* Estilo para opções selecionadas */
-.second-select select option {
-    padding: 10px; /* Espaçamento interno das opções */
-}
-
-
-.sidebar.expanded + .content {
-    margin-left: 250px; /* Largura expandida ajustada */
-}
-
-
-/* ================================
-   Tabela
-   ================================ */
-.table {
-    width: 90%;
-    max-width: 10000px;
-    margin: 20px auto;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    font-size: larger !important;
-}
-
-
-
-/* ================================
-   Menu de Navegação
-   ================================ */
+/* Ícone do menu */
 .menu-icon {
-    font-size: 36px;
-    color: #fff;
+    font-size: 28px;
+    color: white;
     cursor: pointer;
-    margin-bottom: 20px;
-    display: block;
+    margin-bottom: 15px;
 }
 
+/* Lista de navegação */
 .nav-list {
     list-style: none;
     padding: 0;
-    margin: 0;
     width: 100%;
+    margin: 0;
 }
 
 .nav-list li {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .nav-list a {
-    color: #fff;
-    text-decoration: none;
+    color: white;
     font-weight: 600;
+    text-decoration: none;
     display: flex;
     align-items: center;
-    font-size: var(--font-size-base);
-    transition: color 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 12px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .nav-list a:hover {
-    color: var(--color-text-dark);
-    background-color: rgba(255, 255, 255, 0.644);
-    border-radius: var(--border-radius);
+    color: #000;
+    background-color: rgba(255, 255, 255, 0.65);
 }
 
 .material-icons {
-    font-size: 32px;
+    font-size: 24px;
     margin-right: 10px;
-    color: #fff;
-    transition: color 0.3s ease;
+    transition: color 0.3s;
 }
 
 .nav-list a:hover .material-icons {
-    color: var(--color-text-dark);
+    color: #000;
 }
 
+/* Texto da sidebar */
 .nav-text {
     display: none;
-    color: #fff;
-    font-size: var(--font-size-base);
-    transition: color 0.3s ease;
 }
 
 .sidebar.expanded .nav-text {
     display: inline;
-    color: var(--color-text-light);
-}
-
-#loginBnt {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    font-size: var(--font-size-base);
-    transition: color 0.3s ease, background-color 0.3s ease;
-    border-radius: var(--border-radius);
-    padding: 10px;
-}
-
-#loginBnt .material-icons {
-    font-size: 32px;
-    margin-right: 10px;
-    color: #fff;
-    transition: color 0.3s ease;
-}
-
-#loginBnt .login-text {
-    color: var(--color-text-light);
-    font-size: var(--font-size-base);
-    display: none;
-}
-
-.sidebar.expanded #loginBnt .login-text {
-    display: inline;
-}
-
-#loginBnt:hover {
-    color: var(--color-text-dark);
-    background-color: var(--color-secondary);
-}
-
-#loginBnt:hover .material-icons {
-    color: var(--color-text-dark);
+    color: #f0e5d8;
 }
 
 /* ================================
-   Botão de Logout
+   Botões de Login e Logout
    ================================ */
-#logoutButton {
-    color: var(--color-text-light);
-    border: 1px solid #fff;
-    transition: background-color 0.3s ease, color 0.3s ease;
+
+#loginBnt, #logoutButton {
+    background-color: #007aff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 122, 255, 0.2);
     display: flex;
     align-items: center;
-    font-weight: 600;
-    font-size: var(--font-size-base);
-    padding: 10px;
+    justify-content: center;
+    text-decoration: none;
 }
 
-#logoutButton .material-icons {
+#logoutButton {
+    background-color: #dc3545;
+}
+
+#loginBnt:hover {
+    background-color: #0051a8;
+    box-shadow: 0 4px 20px rgba(0, 122, 255, 0.3);
+}
+
+#logoutButton:hover {
+    background-color: #c82333;
+    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
+}
+
+#loginBnt .material-icons, #logoutButton .material-icons {
     margin-right: 8px;
 }
 
-#logoutButton .logout-text {
-    display: inline;
-}
-
+.sidebar:not(.expanded) #loginBnt .login-text, 
 .sidebar:not(.expanded) #logoutButton .logout-text {
     display: none;
 }
 
-#logoutButton:hover {
-    background-color: #dc3545;
-    color: #fff;
-    border-color: #dc3545;
-}
-
 /* ================================
-   Foco para Acessibilidade
+   Acessibilidade (Foco)
    ================================ */
-.sidebar a:focus,
-#logoutButton:focus {
+
+.sidebar a:focus, #loginBnt:focus, #logoutButton:focus {
     outline: 2px solid #007bff;
 }
 
 /* ================================
-   Modal
+   Conteúdo Principal Ajustável
    ================================ */
-   .modal-body {
-    border-radius: 12px; /* Aumentado para bordas mais arredondadas */
-    background-color: rgba(133, 125, 125, 0.486);
-    padding: 30px; /* Aumentado o padding */
+
+.petition-info, .center1, .tabela {
+    width: calc(100% - 80px); /* Considera a sidebar colapsada */
+    margin-left: 80px;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    background-color: #aecade;
+    transition: width 0.3s ease, margin-left 0.3s ease;
+}
+
+.sidebar.expanded + .petition-info,
+.sidebar.expanded + .center1,
+.sidebar.expanded + .tabela {
+    width: calc(100% - 160px); /* Considera a sidebar expandida */
+    margin-left: 160px;
+}
+
+/* Estilização Geral de Contêineres */
+.center-selects {
     display: flex;
-    flex-direction: column;
-    gap: 20px; /* Aumentado o espaço entre elementos */
-    border: 2px solid rgba(0, 0, 0, 0.253); /* Aumentado a espessura da borda */
-    width: 100%;
-    max-width: 800px; /* Limita a largura máxima */
-    margin: auto; /* Centraliza no meio da tela */
+    gap: 20px;
 }
 
-.modal-body .mb-3 {
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-body label {
-    font-size: 18px; /* Aumentado para 18px */
-    color: rgba(0, 0, 0, 0.7);
-    margin-bottom: 8px; /* Aumentado o espaço abaixo do título */
-}
-
-.modal-body span {
-    font-size: 16px; /* Aumentado para 16px */
-    color: rgba(0, 0, 0, 0.85);
-}
-
-.modal-body input.form-control,
-.modal-body textarea.form-control {
-    font-size: 16px; /* Aumentado para 16px */
-    padding: 12px; /* Aumentado o padding */
-    border-radius: 6px; /* Aumentado para bordas mais arredondadas */
-    border: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.modal-body .more-files {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px; /* Aumentado o padding */
-    border: none;
-    border-radius: 6px; /* Aumentado para bordas mais arredondadas */
-    cursor: pointer;
-    font-size: 18px; /* Aumentado para 18px */
-}
-
-.modal-body .more-files:hover {
-    background-color: #0056b3;
-}
-#editUltimaAlteracao {
-    background-color: #f0f0f0; /* Cor de fundo diferenciada */
-    color: #666; /* Cor do texto */
-    border: 1px solid #ccc; /* Borda mais clara */
-    pointer-events: none; /* Desabilita interação */
-    opacity: 0.7; /* Faz o campo parecer desativado */
-}
-
-.nome-situcao select {
-    background-color: aqua;
-    padding: 3px 20px;
-    border-radius: 12px;
-    font-size: var(--font-size-small);
-}
-
-select.situation {
-    width: 50%;
-    padding: 0.5%;
-    border: 1px solid var(--color-border);
-    border-radius: 0.375rem;
-    background-color: #fff;
-    color: #495057;
-    font-size: var(--font-size-small);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    font-size:large !important;
-}
-
-.select-container {
+.div-select, .instancia {
     width: 100%;
 }
 
-.select-container select {
-    font-size: var(--font-size-small);
-}
-
-/* ================================
-   Botões
-   ================================ */
-.baixar-peticao,
-.arquivar-btn {
-    background-color: #008cba;
-    color: #fff;
-    border: none;
-    border-radius: var(--border-radius);
-    padding: 10px 20px;
-    font-size: var(--font-size-small);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.baixar-peticao:hover,
-.arquivar-btn:hover {
-    background-color: #005f6b;
-}
-
-/* ================================
-   Buscar
-   ================================ */
-.consultar-busca button {
-    font-size: var(--font-size-small);
-}
-
-.check-name p {
-    font-size: var(--font-size-small);
-}
-
-/* ================================
-   Estilos Responsivos
-   ================================ */
-
-/* Ajustes para telas médias (entre 768px e 1024px) */
-/* ================================
-   Estilos Responsivos
-   ================================ */
-
-/* Ajustes para telas médias (entre 768px e 1024px) */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .sidebar {
-        width: 80px; /* Largura ajustada */
-    }
-
-    .sidebar.expanded {
-        width: 220px; /* Largura expandida ajustada */
-    }
-
-    .content {
-        margin-left: 80px; /* Largura inicial ajustada */
-    }
-
-    .sidebar.expanded + .content {
-        margin-left: 220px; /* Largura expandida ajustada */
-    }
-
-    .menu-icon {
-        font-size: 28px; /* Ajustado para um valor intermediário */
-    }
-
-    .material-icons {
-        font-size: 28px; /* Ajustado para um valor intermediário */
-    }
-
-    .table {
-        width: 95%; /* Ajustado para 95% */
-    }
-}
-
-/* Ajustes para telas grandes (maiores que 1024px) */
-/* Ajustes para telas grandes (maiores que 1024px) */
-@media (min-width: 1025px) {
-    .sidebar {
-        width: 90px; /* Largura ajustada */
-    }
-
-    .sidebar.expanded {
-        width: 200px; /* Largura expandida ajustada */
-    }
-
-    .content {
-        margin-left: 90px; /* Largura inicial ajustada */
-    }
-
-    .sidebar.expanded + .content {
-        margin-left: 200px; /* Largura expandida ajustada */
-    }
-
-    .menu-icon {
-        font-size: 40px; /* Aumentado para melhorar a legibilidade */
-    }
-
-    .material-icons {
-        font-size: 36px; /* Aumentado para melhorar a legibilidade */
-    }
-
-    .nav-list a {
-        font-size: 22px; /* Aumentado para melhor legibilidade */
-    }
-
-    .nav-text {
-        font-size: 20px; /* Aumentado para melhor legibilidade */
-    }
-
-    .table {
-        width: 95%; /* Ajustado para 95% */
-    }
-}
-
-/* Exclusão para telas menores que 768px (Mobile) */
-@media (max-width: 768px) {
-    .sidebar {
-        display: none;
-    }
-
-    .content {
-        margin-left: 0;
-    }
-}
-
-/* mudanças modal natalia */
-#peticoesTable_wrapper{
-    padding: 30px;
-}
-
-#dt-search-0, #dt-length-0{
-    background-color: #fff;
-}
-
-.actions-column {
-    text-align: center;  /* Centraliza o conteúdo horizontalmente */
-    vertical-align: middle;  /* Centraliza verticalmente, se necessário */
-}
-
-.icon-action {
-    background-color: #dad7d7;  /* Cor de fundo cinza claro */
-    border-radius: 5px;         /* Bordas arredondadas */
-    padding: 7px;              /* Espaçamento interno para criar o quadrado */
-    margin: 0 5px;              /* Espaçamento entre os ícones */
-    cursor: pointer;
-    display: inline-block;
-    font-size: 1.2em;           /* Aumenta o tamanho dos ícones */
-    transition: background-color 0.3s;  /* Animação suave no hover */
-}
-
-.icon-action:hover {
-    background-color: #1da1f2;  /* Fundo mais escuro no hover */
-}
-
-.icon-action:hover i {
-    color: #fff;  /* Ícone branco quando o fundo está azul */
-}
-
-/* Exemplo de estilização básica para a tabela */
-table.dataTable {
+.instancia select, select#emNomeDe, select.situation {
     width: 100%;
-    border-collapse: collapse;
-}
-
-table.dataTable th, table.dataTable td {
     padding: 8px;
-    text-align: left;
-    border: 1px solid #ddd;
+    border: 1px solid #ced4da;
+    border-radius: 12px;
+    font-size: 1rem;
+    background-color: #f0f8ff;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-table.dataTable th {
-    background-color: #f4f4f4;
+/* ================================
+   Botões Secundários
+   ================================ */
+
+.baixar-peticao, .arquivar-btn, .more-files {
+    background-color: #0e3754;
+    color: #ffffff;
+    border: 1px solid #071e2e;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.baixar-peticao:hover, .arquivar-btn:hover, .more-files:hover {
+    background-color: #071e2e;
+    border-color: #0e3754;
+}
+
+/* ================================
+   Estilo do Footer
+   ================================ */
+
+footer {
+    background-color: #0e3754;
+    color: #fff;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    width: calc(100% - 80px); /* Considera a sidebar colapsada */
+    position: fixed;
+    bottom: 0;
+    left: 80px;
+    transition: width 0.3s, left 0.3s;
+}
+
+.sidebar.expanded + footer {
+    width: calc(100% - 160px);
+    left: 160px;
+}
+
+footer ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+}
+
+footer ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer ul li a:hover {
+    text-decoration: underline;
 }

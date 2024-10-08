@@ -28,9 +28,9 @@ document.getElementById('logoutButton').addEventListener('click', function() {
 =======
 })
 
-function paginaPerfil() {
+document.getElementById('loginBnt').addEventListener('click', function() {
     window.location.href = '../View/perfilAdvogado.html';
-}
+});
 
 
 document.addEventListener('DOMContentLoaded', () => {
