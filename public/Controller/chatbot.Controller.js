@@ -3,6 +3,11 @@
 const menuToggle = document.getElementById('menuToggle');
 const sidebar = document.querySelector('.sidebar');
 
+document.getElementById('loginBnt').addEventListener('click', function() {
+    window.location.href = '../View/perfilAdvogado.html';
+});
+
+
 menuToggle.addEventListener('click', () => {
     sidebar.classList.toggle('expanded'); // Alterna a classe expanded
 });
