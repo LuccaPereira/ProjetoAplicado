@@ -47,8 +47,9 @@ export function validarEmail(email) {
 }
 
 export function validarValor(valor) {
-    return /^\d{1,3}(\.\d{3})*,\d{2}$/.test(valor.replace('R$ ', ''));
+    return /^\d{1,3}(\.\d{3})*,\d{2}$/.test(valor);
 }
+
 
 export function validarTelefoneOficial(telefone) {
     telefone = telefone.replace(/\D/g, '');
@@ -84,6 +85,14 @@ export async function montarOData() {
     const cpfAtivo = document.getElementById('cpfAtivo')?.value || '';
     const cnpjPassivo = document.getElementById('cnpjPassivo')?.value || '';
 
+    const limiteCaracteres = (campo, limite) => campo.length <= limite;
+
+    if (!limiteCaracteres(nomePeticionante, 100)) throw new Error('Nome do Peticionante muito longo');
+    if (!limiteCaracteres(nomeAdvogado, 100)) throw new Error('Nome do Advogado muito longo');
+    if (!limiteCaracteres(foro, 100)) throw new Error('Foro muito longo');
+    if (!limiteCaracteres(acidente, 200)) throw new Error('Descrição do Acidente muito longa');
+    if (!limiteCaracteres(descricao, 500)) throw new Error('Descrição muito longa');
+
     const getFormattedDate = () => {
         const date = new Date();
         const day = String(date.getDate()).padStart(2, '0');
@@ -95,7 +104,7 @@ export async function montarOData() {
     const ultimaAlteracao = getFormattedDate();
 
     const firebaseConfig = {
-        apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
+        apiKey: "API_KEY",
         authDomain: "projetoaplicado-1.firebaseapp.com",
         databaseURL: "https://projetoaplicado-1-default-rtdb.firebaseio.com",
         projectId: "projetoaplicado-1",
@@ -107,9 +116,8 @@ export async function montarOData() {
 
     firebase.initializeApp(firebaseConfig);
 
-    // Validação
-    if (!nomePeticionante || !nomeAdvogado || !foro || !acidente || !valor || 
-        !telefone || !procedimento || !auxilio || !email || !descricao || 
+    if (!nomePeticionante || !nomeAdvogado || !foro || !acidente || !valor ||
+        !telefone || !procedimento || !auxilio || !email || !descricao ||
         !cpfAtivo || !cnpjPassivo) {
         throw new Error('Campos vazios');
     }
@@ -155,8 +163,8 @@ export async function montarOData() {
             const downloadURL = await snapshot.ref.getDownloadURL();
             oData[nomePeticionante].pdfURL = downloadURL;
 
-            const url = `${databaseURL}/${collectionPath}/${nomeAdvogado}/${nomePeticionante}.json`;
-            return axios.post(url, oData);
+            const postUrl = `${databaseURL}/${collectionPath}/${nomeAdvogado}/${nomePeticionante}.json`;
+            return axios.post(postUrl, oData);
         } catch (error) {
             throw new Error('Erro ao enviar o PDF: ' + error.message);
         }
@@ -164,3 +172,28 @@ export async function montarOData() {
         return axios.post(url, oData);
     }
 }
+
+function aplicarMascaraValor(elemento) {
+    elemento.addEventListener('input', (e) => {
+        let valor = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
+        valor = (valor / 100).toFixed(2) + ''; // Divide por 100 para ajustar casas decimais
+        valor = valor.replace('.', ','); // Troca o ponto decimal por vírgula
+        valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Adiciona pontos a cada milhar
+        e.target.value = 'R$ ' + valor; // Adiciona o 'R$' no início
+    });
+
+    // Coloca o cursor sempre no final
+    elemento.addEventListener('focus', (e) => {
+        setTimeout(() => {
+            e.target.selectionStart = e.target.selectionEnd = e.target.value.length;
+        }, 0);
+    });
+}
+
+// Chamando a função ao carregar a página, aplicando a máscara no campo de valor
+window.onload = function() {
+    const valorCampo = document.getElementById('valor');
+    if (valorCampo) {
+        aplicarMascaraValor(valorCampo);
+    }
+};
