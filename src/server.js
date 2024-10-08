@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const dotenv = require('dotenv');
 
+
 dotenv.config();
 const app = express();
 const port = 3000;
@@ -40,6 +41,7 @@ app.post('/generate-petition', async (req, res) => {
       const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
       const prompt = `
       Escreva uma petição inicial com as seguintes informações:
+
       - Nome do cliente: ${nomeCliente}, CPF/CNPJ: ${cpfCnpjCliente}, Endereço: ${enderecoCliente}, Profissão: ${profissaoCliente}, Estado Civil: ${estadoCivil}
       - Nome do réu: ${nomeReu}, CPF/CNPJ: ${cpfCnpjReu}, Endereço: ${enderecoReu}
       - Tipo de ação: ${tipoAcao}
@@ -49,6 +51,11 @@ app.post('/generate-petition', async (req, res) => {
       - Cidade onde a petição será ajuizada: ${cidadePeticao}
       - Solicitação de justiça gratuita: ${justiçaGratuita}
       - Informações adicionais: ${outrasInformacoes}
+
+      Deixe o fim da peticao assim:
+      - **SÃO PAULO, **[Data]**.
+      - **ASSINATURA DO ADVOGADO**
+      - **OAB/SP **Número]**
       `;
 
       console.log('Prompt:', prompt);
