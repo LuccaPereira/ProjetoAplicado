@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>    
-            <div class="container-fluid">
+            <div class="container-fluid" id="tabela">
                 <table id="clientesTable" class="table custom-table">
                     <thead>
                       <tr>
@@ -74,7 +74,65 @@
         </nav>
     </footer>
 
-    <div class="modal fade" id="clienteModal" tabindex="-1" aria-labelledby="clienteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editPetitionModal" tabindex="-1" aria-labelledby="editPetitionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editPetitionModalLabel">Protocolar Petição</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="editPetitionForm">
+                  <!-- Status da Petição -->
+                  <div class="mb-3">
+                    <label for="petitionStatus" class="form-label">Status da Petição</label>
+                    <select id="petitionStatus" class="form-select">
+                      <option value="pendente">Pendente</option>
+                      <option value="protocolada">Protocolada</option>
+                      <option value="aceita">Aceita</option>
+                      <option value="rejeitada">Rejeitada</option>
+                      <option value="causa-ganha">Causa Ganha</option>
+                    </select>
+                  </div>
+        
+                  <div class="mb-3">
+                    <label for="protocolNumber" class="form-label">Número do Protocolo</label>
+                    <input type="text" id="protocolNumber" class="form-control" placeholder="Digite o número do protocolo">
+                  </div>
+        
+                  <div class="mb-3">
+                    <label for="protocolDate" class="form-label">Data Protocolo</label>
+                    <input type="date" id="protocolDate" class="form-control">
+                  </div>
+        
+                  <div class="mb-3">
+                    <label for="petitionPortal" class="form-label">Portal de Peticionamento</label>
+                    <input type="text" id="petitionPortal" class="form-control">
+                    <!-- <select id="petitionPortal" class="form-select">
+                      <option value="pje">PJe</option>
+                      <option value="esaj">e-SAJ</option>
+                      <option value="projudi">Projudi</option>
+                      <option value="outro">Outro</option>
+                    </select> -->
+                  </div>
+        
+                  <div class="mb-3">
+                    <label for="petitionObservations" class="form-label">Observações</label>
+                    <textarea id="petitionObservations" class="form-control" rows="3" placeholder="Observações sobre o envio"></textarea>
+                  </div>
+                  <input type="hidden" id="petitionId" /> <!-- Input oculto para armazenar o ID da petição -->
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="saveStatus()">Salvar</button>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="clienteModal" tabindex="-1" aria-labelledby="clienteModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -100,14 +158,15 @@
                     <div class="mb-3">
                         <label for="modalUltimaAlteracao" class="form-label">Última alteração:</label>
                         <span id="modalUltimaAlteracao" class="form-control-plaintext"></span>
-                        <input type="text" id="editUltimaAlteracao" class="form-control d-none">
+                        <input type="text" id="editUltimaAlteracao" class="form-control d-none edit-disabled">
                     </div>
                     <div class="mb-3">
                         <label for="modalPeticao" class="form-label">PDF:</label>
                         <span id="modalPeticao" class="form-control-plaintext"></span>
                         <input type="file" id="pdfFile" accept=".pdf" style="display: none;">
-                        <button onclick="document.getElementById('pdfFile').click()" class="more-files">PDF</button>
+                        <button onclick="document.getElementById('pdfFile').click()" class="more-files">Selecione um arquivo PDF</button>
                     </div>
+                </div>                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     <button type="button" class="btn btn-primary" id="editButton">Editar</button>
@@ -116,15 +175,12 @@
             </div>
         </div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="module" src="../Controller/consultarModelo.controller.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-storage-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Scripts necessários para o funcionamento do modal e outros comportamentos -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.4.0/dist/axios.min.js" defer></script>
+    <script type="module" src="../Controller/consultarModelo.controller.js" defer></script>
 </body>
 </html>
 
