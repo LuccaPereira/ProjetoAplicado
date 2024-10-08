@@ -13,13 +13,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
-    "axios": "^1.6.8",
-    "firebase": "^10.11.0",
-    "openai": "^4.56.0",
-    "type": "module"
-
-=======
     "@google/generative-ai": "^0.17.1",
     "@popperjs/core": "^2.11.8",
     "axios": "^1.7.7",
@@ -47,6 +40,5 @@
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0"
->>>>>>> 312306bfab98b1842a5574410ef17c893e5c3e6c
   }
 }
