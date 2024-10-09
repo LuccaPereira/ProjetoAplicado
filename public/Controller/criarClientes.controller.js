@@ -124,7 +124,7 @@ async function submitClientes(event) {
                 // Se o cliente não existe, cria um novo cliente
                 const oData = { cpf: cpf, senha: senha };
 
-                clienteRef.push(oData) // Usa o push para adicionar um novo cliente
+                clienteRef.child(cpf).set(oData) // Usa o push para adicionar um novo cliente
                     .then(async () => {
                         alert("Novo cliente foi adicionado com sucesso!");
                         await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado);
