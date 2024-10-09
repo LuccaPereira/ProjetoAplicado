@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "projetoaplicado-2f578"
-  }
+    "default": "projetoaplicado-1",
+    "projetoaplicado": "projetoaplicado-1"
+  },
+  "targets": {},
+  "etags": {}
 }

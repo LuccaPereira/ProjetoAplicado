@@ -3,6 +3,18 @@
 const menuToggle = document.getElementById('menuToggle');
 const sidebar = document.querySelector('.sidebar');
 
+document.getElementById('loginBnt').addEventListener('click', function() {
+    window.location.href = '../View/perfilAdvogado.html';
+});
+
+document.getElementById('logoutButton').addEventListener('click', function() {
+    localStorage.removeItem('loggedInLawyer');
+    localStorage.removeItem('loggedInCliente');
+
+    window.location.href = '../View/login.html';
+})
+
+
 menuToggle.addEventListener('click', () => {
     sidebar.classList.toggle('expanded'); // Alterna a classe expanded
 });

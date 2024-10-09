@@ -38,13 +38,13 @@ document.getElementById('logoutButton').addEventListener('click', function() {
     window.location.href = '../View/login.html';
 })
 
-function paginaPerfil() {
+document.getElementById('loginBnt').addEventListener('click', function() {
     window.location.href = '../View/perfilAdvogado.html';
-}
-
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     clickMenu();
+    //paginaPerfil();
 });
 
 export function renderClientes() {

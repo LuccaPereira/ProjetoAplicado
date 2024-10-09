@@ -154,12 +154,8 @@ nav {
     background-color:#aecade;
 }
 
-.footer {
-    background-color: #1f1515;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    width: 100%; /* Garante que o footer ocupe toda a largura */
+footer {
+    color:white;
 }
 
 ul {
@@ -176,4 +172,18 @@ li {
 a {
 	color: #fff;
 	text-decoration: none;
+}
+
+/* Estilo para o botão de logout */
+#logoutButton {
+    margin-left: auto; /* Empurra o botão para a direita */
+    color: white;
+    border: 1px solid white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#logoutButton:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
 }

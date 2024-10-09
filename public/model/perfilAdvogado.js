@@ -17,3 +17,12 @@ export function updateProfileInDatabase(oab, profileData) {
 export function updateLocalStorage(profileData) {
     localStorage.setItem('loggedInLawyer', JSON.stringify(profileData));
 }
+
+export function getLoggedInLawyerEmail() {
+    const loggedInLawyer = getLoggedInLawyer(); // Obtenha os dados do advogado logado
+
+    if (loggedInLawyer && loggedInLawyer.email) {
+        return loggedInLawyer.email; // Retorne o e-mail
+    }
+    return null; // Retorne null se não encontrar
+}

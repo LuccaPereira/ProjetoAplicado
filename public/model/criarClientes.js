@@ -28,6 +28,12 @@ export function validarCPF(cpf) {
     return true;
 }
 
+export function getLoggedInLawyer() {
+    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
+    return loggedInLawyerString ? JSON.parse(loggedInLawyerString) : null;
+}
+
+
 export function getClientes(url) {
     return axios.get(url);
 };

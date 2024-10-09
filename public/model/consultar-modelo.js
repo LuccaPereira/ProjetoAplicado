@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js';
 import { getStorage } from 'https://www.gstatic.com/firebasejs/9.6.6/firebase-storage.js';
-//import axios from 'https://cdn.jsdelivr.net/npm/axios@1.4.0/dist/axios.esm.min.js';
+// import axios from 'https://cdn.jsdelivr.net/npm/axios@1.4.0/dist/axios.esm.min.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
