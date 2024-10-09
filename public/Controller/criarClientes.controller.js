@@ -76,89 +76,68 @@ async function submitClientes(event) {
 
     const Lawyer = getLoggedInLawyer();
     console.log("Advogado logado:", Lawyer.OAB);
-
-    // Passar o nome e a OAB do advogado para a função enviarEmail
-    const nomeAdvogado = Lawyer.nome; // Supondo que o nome esteja armazenado em 'nome'
+    const nomeAdvogado = Lawyer.nome;
     const oabAdvogado = Lawyer.OAB;
 
+    const collectionPath = "Advogado";
+    const clienteRef = firebase.database().ref(`${collectionPath}/${oabAdvogado}/PerfilDoCliente`);
 
-    const databaseURL = firebaseConfig.databaseURL;
-    const collectionPath = "Cliente";
-    const url = `${databaseURL}/${collectionPath}.json`;
+    clienteRef.once("value")
+        .then(async snapshot => {
+            const clientes = snapshot.val();
+            let clienteKeyExistente = null;
 
-    if (clienteForm) {
-        if (clienteForm.checkValidity()) {
-            // Sua lógica
-        } else {
-            console.error("O clienteFormulário não é válido.");
-        }
-    } else {
-        console.error("Elemento com ID 'clienteForm' não foi encontrado.");
-    }
+            if (clientes) {
+                for (let clienteKey in clientes) {
+                    if (clientes.hasOwnProperty(clienteKey)) {
+                        const cliente = clientes[clienteKey];
 
-    // Verifica se o clienteFormulário é válido
-    if (clienteForm.checkValidity()) {
-        const databaseURL = firebaseConfig.databaseURL;
-        const collectionPath = "Cliente";
-        const url = `${databaseURL}/${collectionPath}.json`;
+                        if (cliente.cpf === cpf) {
+                            clienteKeyExistente = clienteKey;
 
-        axios.get(url)
-            .then(response => {
-                const clientes = response.data;
-                let clienteKeyExistente = null;
-
-                if (clientes) {
-                    for (let clienteKey in clientes) {
-                        if (clientes.hasOwnProperty(clienteKey)) {
-                            const cliente = clientes[clienteKey];
-
-                            if (cliente.cpf === cpf) {
-                                clienteKeyExistente = clienteKey;
-
-                                // Verifica se a senha é a mesma do cliente existente
-                                if (cliente.senha === senha) {
-                                    alert("Usuário já cadastrado");
-                                    return;
-                                }
-
-                                break;
+                            // Verifica se a senha é a mesma do cliente existente
+                            if (cliente.senha === senha) {
+                                alert("Usuário já cadastrado");
+                                await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado);
+                                return; // Para aqui se a senha já estiver cadastrada
                             }
+                            break; // Pare aqui se encontrar o cliente
                         }
                     }
                 }
+            }
 
-                if (clienteKeyExistente) {
-                    const oData = { senha: senha };
-                    const clientRef = firebase.database().ref(`${collectionPath}/${clienteKeyExistente}`);
+            // Se o cliente já existe e a senha é diferente, atualiza a senha
+            if (clienteKeyExistente) {
+                const clientRef = firebase.database().ref(`${collectionPath}/${oabAdvogado}/PerfilDoCliente/${clienteKeyExistente}`);
+                
+                clientRef.update({ senha: senha })
+                    .then(async () => {
+                        alert("Senha do cliente foi atualizada com sucesso!");
+                        await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado);
+                        clienteForm.reset();
+                    })
+                    .catch(error => {
+                        alert("Erro ao atualizar senha do cliente: " + error.message);
+                    });
+            } else {
+                // Se o cliente não existe, cria um novo cliente
+                const oData = { cpf: cpf, senha: senha };
 
-                    clientRef.update(oData)
-                        .then(async () => {
-                            alert("Senha do cliente foi atualizada com sucesso!");
-                            await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado); // Chamada atualizada
-                            window.location.href = "../View/menu.html";
-                            clienteForm.reset();
-                        })
-                        .catch(error => {
-                            alert("Erro ao atualizar senha do cliente: " + error.message);
-                        });
-                } else {
-                    const oData = { cpf: cpf, senha: senha };
-
-                    axios.post(url, oData)
-                        .then(async () => {
-                            alert("Novo cliente foi adicionado com sucesso!");
-                            await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado); // Chamada atualizada
-                            clienteForm.reset();
-                        })
-                        .catch(error => {
-                            alert("Erro ao adicionar novo cliente: " + error.message);
-                        });
-                }
-            })
-            .catch(error => {
-                alert("Erro ao buscar clientes: " + error.message);
-            });
-    }
+                clienteRef.push(oData) // Usa o push para adicionar um novo cliente
+                    .then(async () => {
+                        alert("Novo cliente foi adicionado com sucesso!");
+                        await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado);
+                        clienteForm.reset();
+                    })
+                    .catch(error => {
+                        alert("Erro ao adicionar novo cliente: " + error.message);
+                    });
+            }
+        })
+        .catch(error => {
+            alert("Erro ao buscar clientes: " + error.message);
+        });
 }
 
 async function enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado) {
