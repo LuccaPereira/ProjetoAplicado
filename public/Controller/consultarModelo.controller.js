@@ -218,6 +218,26 @@ function saveStatus() {
     });
 }
 
+function populateModalFields(cliente) {
+    if (!cliente) return;
+    
+    document.getElementById('modalnomePeticionante').value = cliente.NomePeticionante || "Nome não disponível";
+    document.getElementById('modalnomeAdvogado').value = cliente.NomeAdvogado || "Nome não disponível";
+    document.getElementById('Modalforo').value = cliente.Foro || "Não disponível";
+    document.getElementById('Modalacidente').value = cliente.Acidente || "Não disponível";
+    document.getElementById('Modalvalor').value = cliente.Valor || "Não disponível";
+    document.getElementById('Modaltelefone').value = cliente.Telefone || "Não disponível";
+    document.getElementById('Modalprocedimento').value = cliente.Procedimento || "Não disponível";
+    document.getElementById('Modalauxilio').value = cliente.Auxilio || "Não disponível";
+    document.getElementById('Modalemail').value = cliente.Email || "Não disponível";
+    document.getElementById('Modaldescricao').value = cliente.Descrição || "Não disponível";
+    document.getElementById('ModalcpfAtivo').value = cliente.CPFAtivo || "Não disponível";
+    document.getElementById('ModalcnpjPassivo').value = cliente.CNPJ || "Não disponível";
+    document.getElementById('editUltimaAlteracao').value = cliente.ultimaAlteracao || "";
+    document.getElementById('situação').value = cliente.situacao || "";
+    
+}
+
 export function showClientDetails(clienteKey, advogadoData) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
@@ -226,97 +246,102 @@ export function showClientDetails(clienteKey, advogadoData) {
 
     console.log(`Buscando detalhes do cliente: ${urlAtt}`);
     axios.get(urlAtt)
-    .then(response => {
-        const cliente = response.data;
+        .then(response => {
+            const cliente = response.data;
 
-        if (cliente) {
-            const adv = cliente.NomeAdvogado;
-            if (adv) {
-                // Preencher o modal com as informações do cliente
-                document.getElementById('modalNome').textContent = cliente.NomePeticionante || "Nome não disponível";
-                document.getElementById('modalCpf').textContent = cliente.CPFAtivo || "CPF não disponível";
-                document.getElementById('modalDescricao').textContent = cliente.Descrição || "Descrição não disponível";
-                document.getElementById('modalUltimaAlteracao').textContent = cliente.ultimaAlteracao || "Data não disponível";
+            if (cliente) {
+                const modalElement = document.getElementById('clienteModal');
+                const modal = new bootstrap.Modal(modalElement);
 
-                document.getElementById('editNome').value = cliente.NomePeticionante || "";
-                document.getElementById('editCpf').value = cliente.CPFAtivo || "";
-                document.getElementById('editDescricao').value = cliente.Descrição || "";
-                document.getElementById('editUltimaAlteracao').value = cliente.ultimaAlteracao || "";
-                document.getElementById('editUltimaAlteracao').readOnly = true;
+                modal.show();
+            
+                populateModalFields(cliente);
+            
+                const fieldsToMakeReadonly = [
+                    'modalnomePeticionante',
+                    'modalnomeAdvogado',
+                    'Modalforo',
+                    'Modalacidente',
+                    'Modalvalor',
+                    'Modaltelefone',
+                    'Modalprocedimento',
+                    'Modalauxilio',
+                    'Modalemail',
+                    'Modaldescricao',
+                    'ModalcpfAtivo',
+                    'ModalcnpjPassivo',
+                    'editUltimaAlteracao'
+                ];
 
+                fieldsToMakeReadonly.forEach(field => {
+                    document.getElementById(field).readOnly = true;
+                });
+
+                // Botão de editar
                 const editButton = document.getElementById('editButton');
-                const saveButton = document.getElementById('saveButton');
-
                 editButton.onclick = () => {
-                    toggleEditMode(true);
+                    toggleEditMode(true, fieldsToMakeReadonly); // Ativa o modo de edição
                 };
-
+            
+                // Botão de salvar
+                const saveButton = document.getElementById('saveButton');
                 saveButton.onclick = () => {
                     const updatedClientData = {
-                        NomePeticionante: document.getElementById('editNome').value,
-                        CPFAtivo: document.getElementById('editCpf').value,
-                        Descrição: document.getElementById('editDescricao').value,
+                        NomePeticionante: document.getElementById('modalnomePeticionante').value,
+                        CPFAtivo: document.getElementById('ModalcpfAtivo').value,
+                        Descrição: document.getElementById('Modaldescricao').value,
                         ultimaAlteracao: getCurrentDateTime(),
+                        NomeAdvogado: document.getElementById('modalnomeAdvogado').value,
+                        Foro: document.getElementById('Modalforo').value,
+                        Acidente: document.getElementById('Modalacidente').value,
+                        Valor: document.getElementById('Modalvalor').value,
+                        Telefone: document.getElementById('Modaltelefone').value,
+                        Procedimento: document.getElementById('Modalprocedimento').value,
+                        Auxilio: document.getElementById('Modalauxilio').value,
+                        Email: document.getElementById('Modalemail').value,
+                        CNPJ: document.getElementById('ModalcnpjPassivo').value
                     };
-                    saveClientDetails(urlAtt, updatedClientData);
-                    if(saveClientDetails){
-                        Swal.fire({
-                            title: 'Sucesso!',
-                            text: `${updatedClientData.NomePeticionante} foi alterado com sucesso`,
-                            icon: 'success',
-                            confirmButtonText: 'OK'
+
+                    // Salva os dados atualizados no Firebase
+                    saveClientDetails(urlAtt, updatedClientData)
+                        .then(() => {
+                            Swal.fire({
+                                title: 'Sucesso!',
+                                text: `${updatedClientData.NomePeticionante} foi alterado com sucesso`,
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
+                            modal.hide();
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                title: 'Erro!',
+                                text: 'Houve um erro ao alterar os dados. Tente novamente.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                            console.error("Erro ao atualizar detalhes do cliente:", error);
                         });
-                        modal.hide();
-                    }else {
-                        Swal.fire({
-                            title: 'Erro!',
-                            text: 'Houve um erro ao alterar os dados. Tente novamente.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                        console.error("Erro ao atualizar detalhes do cliente:", error);
-                    }
                 };
-
-                toggleEditMode(false);
-
-                const modal = new bootstrap.Modal(document.getElementById('clienteModal'));
-                modal.show();
             } else {
-                console.error("Advogado não encontrado nos detalhes do cliente");
+                console.error("Detalhes do cliente não encontrados.");
             }
-        } else {
-            console.error("Detalhes do cliente não encontrados.");
-        }
-    })
-    .catch(error => {
-        console.error("Erro ao buscar detalhes do cliente:", error);
-    });
+        })
+        .catch(error => {
+            console.error("Erro ao buscar detalhes do cliente:", error);
+        });
 }
 
-
-function toggleEditMode(editMode) {
-    const viewElements = document.querySelectorAll('.form-control-plaintext');
-    const editElements = document.querySelectorAll('.form-control');
-    const pdfFileButton = document.getElementById('pdfFile');
-
-    viewElements.forEach(el => {
-        if (editMode) {
-            el.classList.add('d-none');
-            pdfFileButton.disabled = true; 
-        } else {
-            el.classList.remove('d-none');
+// Função que alterna entre modos de visualização e edição
+function toggleEditMode(editMode, fieldsToMakeEditable) {
+    fieldsToMakeEditable.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.readOnly = !editMode; // Alterna entre readonly e editável
         }
     });
 
-    editElements.forEach(el => {
-        if (editMode) {
-            el.classList.remove('d-none');
-        } else {
-            el.classList.add('d-none');
-        }
-    });
-
+    // Alterna a visibilidade dos botões
     document.getElementById('editButton').classList.toggle('d-none', editMode);
     document.getElementById('saveButton').classList.toggle('d-none', !editMode);
 }
