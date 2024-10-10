@@ -265,3 +265,81 @@ footer ul li a:hover {
     text-decoration: underline;
 }
 
+/* Modal */
+/* Estilo do Modal */
+.modal {
+    --bs-modal-bg: transparent !important; /* Ou uma cor específica, como '#ffffff' */
+    background-color: var(--bs-modal-bg); /* Aplique a variável atualizada */
+}
+.modal-dialog {
+    max-width: 800px; /* Altere o valor conforme necessário */
+    width: 100%; /* Garante que o modal utilize a largura máxima definida */
+}
+.modal-content {
+    height: auto; /* Altere para '300px', '400px', ou outro valor desejado */
+    min-height: 400px; /* Defina uma altura mínima se necessário */
+}
+/* Estilo geral do conteúdo do modal */
+.petition-info {
+    padding: 20px !important; /* Espaçamento interno, usando !important */
+    background-color: #f0f8ff; /* Cor de fundo */
+}
+
+/* Estilo das seções dentro do modal */
+.card-info {
+    margin-bottom: 20px !important; /* Espaçamento entre as seções */
+    background-color: #ffffff; /* Cor de fundo das seções */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    padding: 15px; /* Espaçamento interno das seções */
+}
+
+/* Estilo dos títulos das seções */
+.card-info h1 {
+    font-size: 20px; /* Tamanho do título */
+    color: #333; /* Cor do título */
+    margin-bottom: 10px; /* Espaçamento abaixo do título */
+}
+
+/* Estilo dos campos de entrada */
+.card-info-name,
+.lastAlteration {
+    margin-bottom: 15px; /* Espaçamento entre os campos de entrada */
+}
+
+.card-info-name input,
+.lastAlteration input {
+    width: 100%; /* Largura total */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ccc; /* Borda padrão */
+    border-radius: 4px; /* Bordas arredondadas */
+    transition: border-color 0.3s; /* Transição para a borda */
+}
+
+.card-info-name input:focus,
+.lastAlteration input:focus {
+    border-color: #007aff; /* Cor da borda ao focar */
+    outline: none; /* Remover contorno padrão */
+}
+
+/* Estilo dos botões */
+.buttons {
+    display: flex; /* Alinhar os botões lado a lado */
+    justify-content: space-between; /* Espaçamento igual entre os botões */
+    margin-top: 20px; /* Espaçamento acima dos botões */
+}
+
+#saveButton, #editButton {
+    background-color: #007aff; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    border: none; /* Sem borda */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 10px 20px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Cursor de ponteiro */
+    transition: background-color 0.3s; /* Transição para a mudança de cor */
+}
+
+#saveButton:hover, #editButton:hover {
+    background-color: #0051a8; /* Cor ao passar o mouse */
+}

@@ -22,11 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const formClientes = document.getElementById("clienteForm");
-    if (formClientes) {
-        formClientes.addEventListener("submit", submitClientes);
+    const clienteForm = document.getElementById("clienteForm");
+    if (clienteForm) {
+        clienteForm.addEventListener("submit", submitClientes);
     } else {
-        console.error("Elemento com ID 'formClientes' não foi encontrado.");
+        console.error("Elemento com ID 'clienteForm' não foi encontrado.");
     }
 
     document.getElementById('loginBnt').addEventListener('click', function() {
@@ -54,7 +54,7 @@ async function submitClientes(event) {
         firebase.initializeApp(firebaseConfig);
     }
     
-    const form = document.getElementById("formClientes");
+    const clienteForm = document.getElementById("clienteForm");
     const cpf = document.getElementById("cpf").value;
     const senha = document.getElementById("senha").value;
     const email = document.getElementById("email").value;
@@ -76,56 +76,68 @@ async function submitClientes(event) {
 
     const Lawyer = getLoggedInLawyer();
     console.log("Advogado logado:", Lawyer.OAB);
-
-    // Passar o nome e a OAB do advogado para a função enviarEmail
-    const nomeAdvogado = Lawyer.nome; // Supondo que o nome esteja armazenado em 'nome'
+    const nomeAdvogado = Lawyer.nome;
     const oabAdvogado = Lawyer.OAB;
 
+    const collectionPath = "Advogado";
+    const clienteRef = firebase.database().ref(`${collectionPath}/${oabAdvogado}/PerfilDoCliente`);
 
-    const collectionPath = `Advogado`;
-    const PerfilDoCliente = "PerfilDoCliente";
-    const url = `${firebaseConfig.databaseURL}/${collectionPath}/${Lawyer.OAB}/${PerfilDoCliente}.json`;
+    clienteRef.once("value")
+        .then(async snapshot => {
+            const clientes = snapshot.val();
+            let clienteKeyExistente = null;
 
-    try {
-        const response = await getClientes(url);
-        const clientes = response.data;
-        let clienteKeyExistente = null;
+            if (clientes) {
+                for (let clienteKey in clientes) {
+                    if (clientes.hasOwnProperty(clienteKey)) {
+                        const cliente = clientes[clienteKey];
 
-        if (clientes) {
-            for (let clienteKey in clientes) {
-                if (clientes.hasOwnProperty(clienteKey)) {
-                    const cliente = clientes[clienteKey];
-                    if (cliente.cpf === cpf) {
-                        clienteKeyExistente = clienteKey;
-                        break;
+                        if (cliente.cpf === cpf) {
+                            clienteKeyExistente = clienteKey;
+
+                            // Verifica se a senha é a mesma do cliente existente
+                            if (cliente.senha === senha) {
+                                alert("Usuário já cadastrado");
+                                await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado);
+                                return; // Para aqui se a senha já estiver cadastrada
+                            }
+                            break; // Pare aqui se encontrar o cliente
+                        }
                     }
                 }
             }
-        }
 
-        if (clienteKeyExistente) {
-            const urtl = `${firebaseConfig.databaseURL}/${collectionPath}/${Lawyer.OAB}/${PerfilDoCliente}/${clienteKeyExistente}.json`;
-            const oData = { senha: senha };
-            await updateCliente(urtl, oData);
-            alert("Senha do cliente foi atualizada com sucesso!");
-            // Enviar o e-mail com as credenciais usando EmailJS
-            await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado); // Chamada atualizada
-        } else {
-            const oData = {
-                [cpf]: {
-                   cpf: cpf,
-                   senha: senha,
-                }
-            };
-            const uvl = `${firebaseConfig.databaseURL}/${collectionPath}/${Lawyer.OAB}/${PerfilDoCliente}.json`;
-            await addCliente(uvl, oData);
-            alert("Novo cliente foi adicionado com sucesso!");
-            await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado); // Chamada atualizada
-        }
-    } catch (error) {
-        console.error("Erro ao acessar o Firebase: ", error);
-        alert("Erro: " + error.message);
-    }
+            // Se o cliente já existe e a senha é diferente, atualiza a senha
+            if (clienteKeyExistente) {
+                const clientRef = firebase.database().ref(`${collectionPath}/${oabAdvogado}/PerfilDoCliente/${clienteKeyExistente}`);
+                
+                clientRef.update({ senha: senha })
+                    .then(async () => {
+                        alert("Senha do cliente foi atualizada com sucesso!");
+                        await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado);
+                        clienteForm.reset();
+                    })
+                    .catch(error => {
+                        alert("Erro ao atualizar senha do cliente: " + error.message);
+                    });
+            } else {
+                // Se o cliente não existe, cria um novo cliente
+                const oData = { cpf: cpf, senha: senha };
+
+                clienteRef.child(cpf).set(oData) // Usa o push para adicionar um novo cliente
+                    .then(async () => {
+                        alert("Novo cliente foi adicionado com sucesso!");
+                        await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado);
+                        clienteForm.reset();
+                    })
+                    .catch(error => {
+                        alert("Erro ao adicionar novo cliente: " + error.message);
+                    });
+            }
+        })
+        .catch(error => {
+            alert("Erro ao buscar clientes: " + error.message);
+        });
 }
 
 async function enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado) {
