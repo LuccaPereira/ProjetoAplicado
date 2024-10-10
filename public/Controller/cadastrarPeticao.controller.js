@@ -1,13 +1,14 @@
 import { montarOData } from '../model/cadastrarPeticao.js';
 
-function clickMenu() {
+
+document.getElementById('Click').addEventListener('click', function() {
     const sidebar = document.querySelector('.sidebar');
     const menuToggle = document.getElementById('menuToggle');
     
     menuToggle.addEventListener('click', () => {
         sidebar.classList.toggle('expanded');
     });
-}
+});
 
 document.getElementById('logoutButton').addEventListener('click', function() {
     localStorage.removeItem('loggedInLawyer');
@@ -16,21 +17,11 @@ document.getElementById('logoutButton').addEventListener('click', function() {
     window.location.href = '../View/login.html';
 })
 
-function paginaPerfil() {
+document.getElementById('loginBnt').addEventListener('click', function() {
     window.location.href = '../View/perfilAdvogado.html';
-}
+});
 
-
-//document.addEventListener('DOMContentLoaded', () => {
-//    clickMenu();
-//    const formulario = "";
-//    if (formulario) {
-//        formulario.addEventListener('submit', enviarFormulario);
-//      }
-//});
-
-function enviarFormulario(event) {
-    event.preventDefault();
+document.getElementById('envio').addEventListener('click', function() {
     montarOData()
         .then(() => {
             alert("Novo cliente cadastrado com sucesso!");
@@ -39,4 +30,4 @@ function enviarFormulario(event) {
         .catch(error => {
             alert(`Erro: ${error}`);
         });
-}
+});

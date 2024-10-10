@@ -4,12 +4,13 @@ body {
     background-color: #aecade;
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
-    font-style: normal;
+    margin: 40px;
+    margin-left: 160px;
+    margin-right: 100px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     text-align: center;
-    margin: 0;
-    display: flex; /* Flexbox para o layout do body */
-    flex-direction: column; /* Direção das colunas */
-    min-height: 100vh; 
 }
 
 .inicial-conteiner {
@@ -17,1051 +18,250 @@ body {
 }
 
 /* ================================
-   Barra Lateral
+   Sidebar Estilos
    ================================ */
-/* Garante que o conteúdo principal ocupe o espaço disponível */
 
-
-
-.content {
-    flex: 1; /* Faz o conteúdo principal ocupar o máximo de espaço possível */
-    margin-left: 60px; /* Ajuste de acordo com a largura da sidebar */
-    transition: margin-left 0.3s ease; /* Transição suave para a margem */
-
-}
-   .sidebar{
+.sidebar {
     background-color: #0e3754;
-    padding: 20px;
-    width: 60px;
+    padding: 10px 5px; /* Mais espaçamento vertical */
+    width: 80px; 
     position: fixed;
     top: 0;
+    left: 0;
     bottom: 0;
     transition: width 0.3s ease;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-right: 1.5px solid #000;
+    border-right: 1px solid #000;
+    z-index: 1000;
+    overflow: hidden; /* Esconde conteúdo extra na sidebar */
 }
 
 .sidebar.expanded {
-    width: 250px; /* Largura quando expandido */
+    width: 160px;
 }
 
+/* Logo */
 .logo {
-    width: 150%; /* Ajuste o tamanho do logo conforme necessário */
-    margin-bottom: 20px;
-    display: block;
+    width: 100%;
+    margin-bottom: 10px;
     transition: width 0.3s ease;
 }
 
 .sidebar.expanded .logo {
-    width: 40%; /* Ajuste o tamanho do logo quando expandido */
+    width: 80%;
 }
 
-.content {
-    margin-left: 60px; /* Largura da barra lateral quando não expandida */
-    transition: margin-left 0.3s ease; /* Transição suave para a margem ao expandir */
-}
-
-.sidebar.expanded + .content {
-    margin-left: 250px; /* Largura da barra lateral quando expandida */
-}
-
-/* Ajuste a tabela para que ela se ajuste corretamente */
-.table {
-    width: 90%; /* Define a largura da tabela */
-    max-width: 10000px; /* Define uma largura máxima para a tabela */
-    margin: 20px auto; /* Adiciona margem automática para centralizar a tabela */
-    border-radius: 5px; /* Define o raio da borda */
-    overflow: hidden;
-}
-
-/* ================================
-   Menu de Navegação
-   ================================ */
-   .menu-icon {
+/* Ícone do menu */
+.menu-icon {
     font-size: 28px;
     color: white;
     cursor: pointer;
-    margin-bottom: 20px;
-    display: block;
+    margin-bottom: 15px;
 }
 
+/* Lista de navegação */
 .nav-list {
     list-style: none;
     padding: 0;
+    width: 100%;
     margin: 0;
-    width: 100%; /* Garante que a lista ocupe toda a largura disponível */
 }
 
 .nav-list li {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     display: flex;
     align-items: center;
-    justify-content: center; /* Alinha os itens horizontalmente */
+    justify-content: center;
 }
 
 .nav-list a {
-    color: white; /* Cor do texto inicialmente */
-    text-decoration: none;
+    color: white;
     font-weight: 600;
+    text-decoration: none;
     display: flex;
     align-items: center;
-    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+    padding: 10px 15px;
+    border-radius: 12px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .nav-list a:hover {
-    color: #000; /* Cor do texto ao passar o mouse */
-    background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
-    border-radius: 5px;
+    color: #000;
+    background-color: rgba(255, 255, 255, 0.65);
 }
 
 .material-icons {
     font-size: 24px;
     margin-right: 10px;
-    color: #fff; /* Cor padrão dos ícones */
-    transition: color 0.3s ease; /* Transição suave para a cor dos ícones */
+    transition: color 0.3s;
 }
 
 .nav-list a:hover .material-icons {
-    color: #000; /* Cor dos ícones ao passar o mouse */
+    color: #000;
 }
 
+/* Texto da sidebar */
 .nav-text {
     display: none;
-    color: #fff; /* Cor padrão do texto */
-    transition: color 0.3s ease; /* Transição suave para a cor do texto */
 }
 
 .sidebar.expanded .nav-text {
     display: inline;
-    color: #f0e5d8; /* Cor do texto quando expandido */
+    color: #f0e5d8;
 }
 
 /* ================================
-   Botão de Logout
+   Botões de Login e Logout
    ================================ */
-#logoutButton {
-    color: #f0e5d8;
-    border: 1px solid white;
-    transition: background-color 0.3s ease, color 0.3s ease;
+
+#loginBnt, #logoutButton {
+    background-color: #007aff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 122, 255, 0.2);
     display: flex;
     align-items: center;
-    font-weight: 600;
-    padding: 10px;
+    justify-content: center;
+    text-decoration: none;
 }
 
-#logoutButton .material-icons {
+#logoutButton {
+    background-color: #dc3545;
+}
+
+#loginBnt:hover {
+    background-color: #0051a8;
+    box-shadow: 0 4px 20px rgba(0, 122, 255, 0.3);
+}
+
+#logoutButton:hover {
+    background-color: #c82333;
+    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
+}
+
+#loginBnt .material-icons, #logoutButton .material-icons {
     margin-right: 8px;
 }
 
-#logoutButton .logout-text {
-    display: inline;
-}
-
+.sidebar:not(.expanded) #loginBnt .login-text, 
 .sidebar:not(.expanded) #logoutButton .logout-text {
     display: none;
 }
 
-#logoutButton:hover {
-    background-color: #dc3545;
-    color: white;
-    border-color: #dc3545;
-}
-/* Estilo para o botão de perfil no menu */
-#loginBnt {
-    color: white; /* Cor do texto inicialmente */
-    text-decoration: none;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s ease, background-color 0.3s ease; /* Transição suave para a cor do texto e fundo */
-    border-radius: 5px; /* Arredondar bordas para corresponder ao padrão */
-    padding: 10px; /* Espaçamento interno */
-}
-
-/* Estilo do ícone do perfil */
-#loginBnt .material-icons {
-    font-size: 24px; /* Tamanho do ícone igual ao dos outros itens */
-    margin-right: 10px; /* Espaço entre o ícone e o texto */
-    color:white; /* Cor do ícone */
-    transition: color 0.3s ease; /* Transição suave para a cor do ícone */
-}
-
-/* Estilo do texto do perfil */
-#loginBnt .login-text {
-    color: #f0e5d8; /* Cor do texto */
-    display: none; /* Oculta o texto quando a barra lateral não está expandida */
-}
-
-/* Exibe o texto "Perfil" somente quando a barra lateral estiver expandida */
-.sidebar.expanded #loginBnt .login-text {
-    display: inline; /* Exibe o texto "Perfil" */
-    color:#f0e5d8;
-}
-
-/* Estilo ao passar o mouse sobre o botão de perfil */
-#loginBnt:hover {
-    color: #000; /* Cor do texto ao passar o mouse */
-    background-color:#40E0D0; /* Cor de fundo ao passar o mouse */
-    border-radius: 5px; /* Arredondar bordas para corresponder ao padrão */
-}
-
-/* Estilo do ícone ao passar o mouse */
-#loginBnt:hover .material-icons {
-    color: #000; /* Cor do ícone ao passar o mouse */
-}
-
-
 /* ================================
-   Foco para Acessibilidade
+   Acessibilidade (Foco)
    ================================ */
-.sidebar a:focus,
-#logoutButton:focus {
+
+.sidebar a:focus, #loginBnt:focus, #logoutButton:focus {
     outline: 2px solid #007bff;
 }
 
-.modelos {
-    padding: 20px;
+/* ================================
+   Conteúdo Principal Ajustável
+   ================================ */
+
+.petition-info, .center1, .tabela {
+    width: calc(100% - 90px); /* Considera a sidebar colapsada */
+    margin-left: 25px;
+    padding:20px;
+    box-sizing: border-box;
+    background-color: #aecade;
+    transition: width 0.3s ease, margin-left 0.3s ease;
+}
+
+.sidebar.expanded + .petition-info,
+.sidebar.expanded + .center1,
+.sidebar.expanded + .tabela {
+    width: calc(100% - 160px); /* Considera a sidebar expandida */
+    margin-left: 160px;
+}
+
+/* Estilização Geral de Contêineres */
+.center-selects {
+    display: flex;
+    gap: 20px;
+}
+
+.div-select, .instancia {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
 }
 
-.modelo {
-    border-radius: 8px;
-    background-color: rgba(133, 125, 125, 0.486);
-    padding: 10px 50px;
+.instancia select, select#emNomeDe, select.situation {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid rgba(0, 0, 0, 0.253);
-    height: 100px;
-    align-items: center;
-}
-
-.modelo h3 {
-    font-size: 18px;
-    color: rgba(0, 0, 0, 0.514);
-}
-
-.modelo span {
-    font-size: 16px;
-    color: rgba(0, 0, 0, 0.767);
-}
-
-.div-left-modelo {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-}
-
-.nome-situcao select {
-    background-color: aqua;
-    padding: 3px 20px;
+    padding: 8px;
+    border: 1px solid #ced4da;
     border-radius: 12px;
+    font-size: 1rem;
+    background-color: #f0f8ff;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-select.situation {
-    width: 50%; /* Faz com que o select ocupe toda a largura disponível */
-    padding: 0.5%; /* Espaçamento interno */
-    border: 1px solid #ced4da; /* Cor da borda */
-    border-radius: 0.375rem; /* Bordas arredondadas */
-    background-color: #ffffff; /* Cor de fundo do select */
-    color: #495057; /* Cor do texto */
-    font-size: 1rem; /* Tamanho da fonte */
-    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Transição suave */
-    cursor: pointer; /* Cursor de ponteiro */
-    appearance: none; /* Remove a aparência padrão do select */
-    -webkit-appearance: none; /* Remove a aparência padrão em WebKit */
-    -moz-appearance: none; /* Remove a aparência padrão em Firefox */
-}
+/* ================================
+   Botões Secundários
+   ================================ */
 
-/* Adicionando um ícone de seta para o select */
-select.situation::after {
-    content: '▼'; /* Símbolo de seta */
-    position: absolute;
-    right: 1rem; /* Posiciona a seta à direita */
-    top: 50%; /* Centraliza verticalmente */
-    transform: translateY(-50%); /* Ajusta a posição da seta */
-    pointer-events: none; /* Evita que a seta seja clicável */
-}
-
-/* Estilo do contêiner do select */
-.select-container {
-    position: relative;
-    display: inline-block;
-}
-
-/* Estilo para o select em foco */
-select.situation:focus {
-    border-color: #007bff; /* Cor da borda em foco */
-    background-color: #fff; /* Cor de fundo em foco */
-    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25); /* Sombra de foco */
-    outline: none; /* Remove o contorno padrão do navegador */
-}
-
-.baixar-peticao,
-.arquivar-btn,
-.more-files {
+.baixar-peticao, .arquivar-btn, .more-files {
     background-color: #0e3754;
     color: #ffffff;
     border: 1px solid #071e2e;
     border-radius: 4px;
     padding: 6px 12px;
     font-size: 14px;
-    text-align: center;
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-.baixar-peticao:hover,
-.arquivar-btn:hover,
-.more-files {
+.baixar-peticao:hover, .arquivar-btn:hover, .more-files:hover {
     background-color: #071e2e;
     border-color: #0e3754;
 }
 
-.consultar-modelo {
-    max-height: max-content;
-}
+/* ================================
+   Estilo do Footer
+   ================================ */
 
-.center1 {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 30px;
-    background-color: #aecade;
-}
-
-.center-selects {
-    display: flex;
-    gap: 20px;
-}
-
-.div-select h3 {
-    font-size: 16px;
-}
-
-.div-select select {
-    border: 1px solid rgba(0,0,0,0.5);
-    padding: 5px;
-}
-
-.instancia {
-    width: 100%;
-}
-
-.instancia h3 {
-    font-size: 16px;
-}
-
-.instancia select {
-    width: 100%;
-    background-color: rgba(240, 248, 255, 0.712);
-    height: 35px;
-    padding-left: 20px;
-}
-
-.consultar-busca {
-    padding-top: 30px;
-    display: flex;
-    gap: 30px;
-    align-items: center;
-}
-
-.consultar-busca button {
-    background-color: rgba(255, 187, 0, 0.795) !important;
-    max-width: max-content;
-    border: 1px solid rgba(0, 0, 0, 0.418);
-    border-radius: 6px;
-    padding: 8px;
-}
-
-.consultar-busca span {
-    font-size: 14px;
-    color: rgb(82, 165, 238);
-}
-
-.todos-os-checks {
-    padding-top: 30px;
-}
-
-.checks1 {
-    display: flex;
-    gap: 20px;
-    padding-left: 20px;
-}
-
-.ckeck2-div {
-    padding-top: 20px;
-}
-
-.checks2 {
-    display: flex;
-    gap: 20px;
-    padding-left: 20px;
-}
-
-.check-name {
-    width: 180px;
-    gap: 5px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-}
-
-.check-name input[type="checkbox"] {
-    vertical-align: middle; /* Alinha verticalmente com o texto */
-}
-
-.check-name p {
-    margin: 0; /* Remove a margem padrão do parágrafo */
-}
-
-select#emNomeDe {
-    width: 100%; /* Faz com que o select ocupe toda a largura disponível */
-    padding: 2%; /* Espaçamento interno */
-    border: 1px solid #728597; /* Cor da borda */
-    border-radius: 0.375rem; /* Bordas arredondadas */
-    background-color: #ffffff; /* Cor de fundo do select */
-    color: #495057; /* Cor do texto */
-    font-size: 1rem; /* Tamanho da fonte */
-    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Transição suave */
-    cursor: pointer; /* Cursor de ponteiro */
-    appearance: none; /* Remove a aparência padrão do select */
-    -webkit-appearance: none; /* Remove a aparência padrão em WebKit */
-    -moz-appearance: none; /* Remove a aparência padrão em Firefox */
-}
-
-/* Adicionando um ícone de seta para o select */
-select#emNomeDe::after {
-    content: '▼'; /* Símbolo de seta */
-    position: absolute;
-    right: 1rem; /* Posiciona a seta à direita */
-    top: 50%; /* Centraliza verticalmente */
-    transform: translateY(-50%); /* Ajusta a posição da seta */
-    pointer-events: none; /* Evita que a seta seja clicável */
-}
-
-/* Estilo para o select em foco */
-select#emNomeDe:focus {
-    border-color: #007bff; /* Cor da borda em foco */
-    background-color: #fff; /* Cor de fundo em foco */
-    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25); /* Sombra de foco */
-    outline: none; /* Remove o contorno padrão do navegador */
-}
-
-.exportat-div {
-    width: 100%;
-    display: flex;
-    justify-content: end;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-li {
-    display: inline-block;
-    margin: 0 10px;
-}
-
-.more-files {
-    display: inline-block;
-    width: 20%;
-    border: 2px solid rgba(0, 0, 0, 0.507);
-    background-color: #0e3754;
-    border-radius: 2px;
-    margin: 5% auto;
-    color: white;
-    transition: .3s;
-    text-align: center;
-    line-height: 20px;
-    cursor: pointer;
-}
-
-.more-files:hover {
-    border: 2px solid black;
-    color: black;
-    background-color: rgb(106, 139, 201);
-}
-
-/* Estilização do footer */
 footer {
-    background-color: #0e3754; /* Cor de fundo do footer */
-    color: #fff; /* Cor do texto do footer (branco) */
-    padding: 5px; 
-    box-sizing: border-box;
+    background-color: #0e3754;
+    color: #fff;
+    padding: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 120px;
-    width: calc(100% - 60px); /* Reduzir a largura pela largura da sidebar */
-    position: fixed; /* Garante que o footer fique fixo no final */
-    bottom: 0; /* Posiciona o footer no final da página */
-    left: 60px; /* Posiciona o footer exatamente ao lado da sidebar */
-    text-align: center;
-    border: none; /* Remover borda preta */
-}
-
-footer ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-footer ul li {
-    display: inline;
-    margin: 0 10px;
-}
-
-footer ul li a {
-    color: #fff; /* Cor do link em branco */
-    text-decoration: none;
-}
-
-footer ul li a:hover {
-    text-decoration: underline; /* Efeito ao passar o mouse */
-
-}
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
-
-body {
-    background-color: #aecade;
-    font-family: "Radio Canada Big", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    text-align: center;
-    margin: 0;
-    display: flex; /* Flexbox para o layout do body */
-    flex-direction: column; /* Direção das colunas */
-    min-height: 100vh; /* Altura mínima do body 
-}
-
-.inicial-conteiner {
-    padding: 0;
-}
-
-/* ================================
-   Barra Lateral
-   ================================ */
-/* Garante que o conteúdo principal ocupe o espaço disponível */
-
-
-
-.content {
-    flex: 1; /* Faz o conteúdo principal ocupar o máximo de espaço possível */
-    margin-left: 60px; /* Ajuste de acordo com a largura da sidebar */
-    transition: margin-left 0.3s ease; /* Transição suave para a margem */
-
-}
-   .sidebar{
-    background-color: #0e3754;
-    padding: 20px;
-    width: 60px;
+    width: calc(100% - 80px); /* Considera a sidebar colapsada */
     position: fixed;
-    top: 0;
     bottom: 0;
-    transition: width 0.3s ease;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-right: 1.5px solid #000;
+    left: 80px;
+    transition: width 0.3s, left 0.3s;
 }
 
-.sidebar.expanded {
-    width: 250px; /* Largura quando expandido */
-}
-
-.logo {
-    width: 150%; /* Ajuste o tamanho do logo conforme necessário */
-    margin-bottom: 20px;
-    display: block;
-    transition: width 0.3s ease;
-}
-
-.sidebar.expanded .logo {
-    width: 40%; /* Ajuste o tamanho do logo quando expandido */
-}
-
-.content {
-    margin-left: 60px; /* Largura da barra lateral quando não expandida */
-    transition: margin-left 0.3s ease; /* Transição suave para a margem ao expandir */
-}
-
-.sidebar.expanded + .content {
-    margin-left: 250px; /* Largura da barra lateral quando expandida */
-}
-
-/* Ajuste a tabela para que ela se ajuste corretamente */
-.table {
-    width: 90%; /* Define a largura da tabela */
-    max-width: 10000px; /* Define uma largura máxima para a tabela */
-    margin: 20px auto; /* Adiciona margem automática para centralizar a tabela */
-    border-radius: 5px; /* Define o raio da borda */
-    overflow: hidden;
-}
-
-/* ================================
-   Menu de Navegação
-   ================================ */
-   .menu-icon {
-    font-size: 28px;
-    color: white;
-    cursor: pointer;
-    margin-bottom: 20px;
-    display: block;
-}
-
-.nav-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%; /* Garante que a lista ocupe toda a largura disponível */
-}
-
-.nav-list li {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Alinha os itens horizontalmente */
-}
-
-.nav-list a {
-    color: white; /* Cor do texto inicialmente */
-    text-decoration: none;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s ease; /* Transição suave para a cor do texto */
-}
-
-.nav-list a:hover {
-    color: #000; /* Cor do texto ao passar o mouse */
-    background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
-    border-radius: 5px;
-}
-
-.material-icons {
-    font-size: 24px;
-    margin-right: 10px;
-    color: #fff; /* Cor padrão dos ícones */
-    transition: color 0.3s ease; /* Transição suave para a cor dos ícones */
-}
-
-.nav-list a:hover .material-icons {
-    color: #000; /* Cor dos ícones ao passar o mouse */
-}
-
-.nav-text {
-    display: none;
-    color: #fff; /* Cor padrão do texto */
-    transition: color 0.3s ease; /* Transição suave para a cor do texto */
-}
-
-.sidebar.expanded .nav-text {
-    display: inline;
-    color: #f0e5d8; /* Cor do texto quando expandido */
-}
-
-/* ================================
-   Botão de Logout
-   ================================ */
-#logoutButton {
-    color: #f0e5d8;
-    border: 1px solid white;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-    padding: 10px;
-}
-
-#logoutButton .material-icons {
-    margin-right: 8px;
-}
-
-#logoutButton .logout-text {
-    display: inline;
-}
-
-.sidebar:not(.expanded) #logoutButton .logout-text {
-    display: none;
-}
-
-#logoutButton:hover {
-    background-color: #dc3545;
-    color: white;
-    border-color: #dc3545;
-}
-/* Estilo para o botão de perfil no menu */
-#loginBnt {
-    color: white; /* Cor do texto inicialmente */
-    text-decoration: none;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s ease, background-color 0.3s ease; /* Transição suave para a cor do texto e fundo */
-    border-radius: 5px; /* Arredondar bordas para corresponder ao padrão */
-    padding: 10px; /* Espaçamento interno */
-}
-
-/* Estilo do ícone do perfil */
-#loginBnt .material-icons {
-    font-size: 24px; /* Tamanho do ícone igual ao dos outros itens */
-    margin-right: 10px; /* Espaço entre o ícone e o texto */
-    color:white; /* Cor do ícone */
-    transition: color 0.3s ease; /* Transição suave para a cor do ícone */
-}
-
-/* Estilo do texto do perfil */
-#loginBnt .login-text {
-    color: #f0e5d8; /* Cor do texto */
-    display: none; /* Oculta o texto quando a barra lateral não está expandida */
-}
-
-/* Exibe o texto "Perfil" somente quando a barra lateral estiver expandida */
-.sidebar.expanded #loginBnt .login-text {
-    display: inline; /* Exibe o texto "Perfil" */
-    color:#f0e5d8;
-}
-
-/* Estilo ao passar o mouse sobre o botão de perfil */
-#loginBnt:hover {
-    color: #000; /* Cor do texto ao passar o mouse */
-    background-color:#40E0D0; /* Cor de fundo ao passar o mouse */
-    border-radius: 5px; /* Arredondar bordas para corresponder ao padrão */
-}
-
-/* Estilo do ícone ao passar o mouse */
-#loginBnt:hover .material-icons {
-    color: #000; /* Cor do ícone ao passar o mouse */
-}
-
-
-/* ================================
-   Foco para Acessibilidade
-   ================================ */
-.sidebar a:focus,
-#logoutButton:focus {
-    outline: 2px solid #007bff;
-}
-
-.modelos {
-    padding: 20px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.modelo {
-    border-radius: 8px;
-    background-color: rgba(133, 125, 125, 0.486);
-    padding: 10px 50px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid rgba(0, 0, 0, 0.253);
-    height: 100px;
-    align-items: center;
-}
-
-.modelo h3 {
-    font-size: 18px;
-    color: rgba(0, 0, 0, 0.514);
-}
-
-.modelo span {
-    font-size: 16px;
-    color: rgba(0, 0, 0, 0.767);
-}
-
-.div-left-modelo {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-}
-
-.nome-situcao select {
-    background-color: aqua;
-    padding: 3px 20px;
-    border-radius: 12px;
-}
-
-select.situation {
-    width: 50%; /* Faz com que o select ocupe toda a largura disponível */
-    padding: 0.5%; /* Espaçamento interno */
-    border: 1px solid #ced4da; /* Cor da borda */
-    border-radius: 0.375rem; /* Bordas arredondadas */
-    background-color: #ffffff; /* Cor de fundo do select */
-    color: #495057; /* Cor do texto */
-    font-size: 1rem; /* Tamanho da fonte */
-    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Transição suave */
-    cursor: pointer; /* Cursor de ponteiro */
-    appearance: none; /* Remove a aparência padrão do select */
-    -webkit-appearance: none; /* Remove a aparência padrão em WebKit */
-    -moz-appearance: none; /* Remove a aparência padrão em Firefox */
-}
-
-/* Adicionando um ícone de seta para o select */
-select.situation::after {
-    content: '▼'; /* Símbolo de seta */
-    position: absolute;
-    right: 1rem; /* Posiciona a seta à direita */
-    top: 50%; /* Centraliza verticalmente */
-    transform: translateY(-50%); /* Ajusta a posição da seta */
-    pointer-events: none; /* Evita que a seta seja clicável */
-}
-
-/* Estilo do contêiner do select */
-.select-container {
-    position: relative;
-    display: inline-block;
-}
-
-/* Estilo para o select em foco */
-select.situation:focus {
-    border-color: #007bff; /* Cor da borda em foco */
-    background-color: #fff; /* Cor de fundo em foco */
-    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25); /* Sombra de foco */
-    outline: none; /* Remove o contorno padrão do navegador */
-}
-
-.baixar-peticao,
-.arquivar-btn,
-.more-files {
-    background-color: #0e3754;
-    color: #ffffff;
-    border: 1px solid #071e2e;
-    border-radius: 4px;
-    padding: 6px 12px;
-    font-size: 14px;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-.baixar-peticao:hover,
-.arquivar-btn:hover,
-.more-files {
-    background-color: #071e2e;
-    border-color: #0e3754;
-}
-
-.consultar-modelo {
-    max-height: max-content;
-}
-
-.center1 {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 30px;
-    background-color: #aecade;
-}
-
-.center-selects {
-    display: flex;
-    gap: 20px;
-}
-
-.div-select h3 {
-    font-size: 16px;
-}
-
-.div-select select {
-    border: 1px solid rgba(0,0,0,0.5);
-    padding: 5px;
-}
-
-.instancia {
-    width: 100%;
-}
-
-.instancia h3 {
-    font-size: 16px;
-}
-
-.instancia select {
-    width: 100%;
-    background-color: rgba(240, 248, 255, 0.712);
-    height: 35px;
-    padding-left: 20px;
-}
-
-.consultar-busca {
-    padding-top: 30px;
-    display: flex;
-    gap: 30px;
-    align-items: center;
-}
-
-.consultar-busca button {
-    background-color: rgba(255, 187, 0, 0.795) !important;
-    max-width: max-content;
-    border: 1px solid rgba(0, 0, 0, 0.418);
-    border-radius: 6px;
-    padding: 8px;
-}
-
-.consultar-busca span {
-    font-size: 14px;
-    color: rgb(82, 165, 238);
-}
-
-.todos-os-checks {
-    padding-top: 30px;
-}
-
-.checks1 {
-    display: flex;
-    gap: 20px;
-    padding-left: 20px;
-}
-
-.ckeck2-div {
-    padding-top: 20px;
-}
-
-.checks2 {
-    display: flex;
-    gap: 20px;
-    padding-left: 20px;
-}
-
-.check-name {
-    width: 180px;
-    gap: 5px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-}
-
-.check-name input[type="checkbox"] {
-    vertical-align: middle; /* Alinha verticalmente com o texto */
-}
-
-.check-name p {
-    margin: 0; /* Remove a margem padrão do parágrafo */
-}
-
-select#emNomeDe {
-    width: 100%; /* Faz com que o select ocupe toda a largura disponível */
-    padding: 2%; /* Espaçamento interno */
-    border: 1px solid #728597; /* Cor da borda */
-    border-radius: 0.375rem; /* Bordas arredondadas */
-    background-color: #ffffff; /* Cor de fundo do select */
-    color: #495057; /* Cor do texto */
-    font-size: 1rem; /* Tamanho da fonte */
-    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Transição suave */
-    cursor: pointer; /* Cursor de ponteiro */
-    appearance: none; /* Remove a aparência padrão do select */
-    -webkit-appearance: none; /* Remove a aparência padrão em WebKit */
-    -moz-appearance: none; /* Remove a aparência padrão em Firefox */
-}
-
-/* Adicionando um ícone de seta para o select */
-select#emNomeDe::after {
-    content: '▼'; /* Símbolo de seta */
-    position: absolute;
-    right: 1rem; /* Posiciona a seta à direita */
-    top: 50%; /* Centraliza verticalmente */
-    transform: translateY(-50%); /* Ajusta a posição da seta */
-    pointer-events: none; /* Evita que a seta seja clicável */
-}
-
-/* Estilo para o select em foco */
-select#emNomeDe:focus {
-    border-color: #007bff; /* Cor da borda em foco */
-    background-color: #fff; /* Cor de fundo em foco */
-    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25); /* Sombra de foco */
-    outline: none; /* Remove o contorno padrão do navegador */
-}
-
-.exportat-div {
-    width: 100%;
-    display: flex;
-    justify-content: end;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-li {
-    display: inline-block;
-    margin: 0 10px;
-}
-
-.more-files {
-    display: inline-block;
-    width: 20%;
-    border: 2px solid rgba(0, 0, 0, 0.507);
-    background-color: #0e3754;
-    border-radius: 2px;
-    margin: 5% auto;
-    color: white;
-    transition: .3s;
-    text-align: center;
-    line-height: 20px;
-    cursor: pointer;
-}
-
-.more-files:hover {
-    border: 2px solid black;
-    color: black;
-    background-color: rgb(106, 139, 201);
-}
-
-/* Estilização do footer */
-footer {
-    background-color: #0e3754; /* Cor de fundo do footer */
-    color: #fff; /* Cor do texto do footer (branco) */
-    padding: 5px; 
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 120px;
-    width: calc(100% - 60px); /* Reduzir a largura pela largura da sidebar */
-    position: fixed; /* Garante que o footer fique fixo no final */
-    bottom: 0; /* Posiciona o footer no final da página */
-    left: 60px; /* Posiciona o footer exatamente ao lado da sidebar */
-    text-align: center;
-    border: none; /* Remover borda preta */
+.sidebar.expanded + footer {
+    width: calc(100% - 160px);
+    left: 160px;
 }
 
 footer ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-footer ul li {
-    display: inline;
-    margin: 0 10px;
+    display: flex;
+    gap: 10px;
 }
 
 footer ul li a {
-    color: #fff; /* Cor do link em branco */
+    color: #fff;
     text-decoration: none;
 }
 
 footer ul li a:hover {
-    text-decoration: underline; /* Efeito ao passar o mouse */
+    text-decoration: underline;
+}
 
-}
-}

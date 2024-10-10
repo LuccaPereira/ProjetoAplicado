@@ -98,10 +98,12 @@ export function initialize() {
         clickMenu();
         bringInfoModal();
         uploadProfileImage();
+        
     });
 
     document.getElementById('logoutButton').addEventListener('click', logout);
     document.getElementById('saveProfileBtn').addEventListener('click', saveProfile);
+    document.getElementById('editProfileButton').addEventListener('click', editProfile);
 }
 
 initialize();

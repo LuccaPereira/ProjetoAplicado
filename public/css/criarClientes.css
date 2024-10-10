@@ -1,7 +1,7 @@
 /* ================================
    Estilos Gerais
    ================================ */
-   body {
+.body {
     background-color: #aecade;
     font-family: "Radio Canada Big", sans-serif;
     height: 100vh;
@@ -13,125 +13,228 @@
 .page-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100vh; /* Garante que o contêiner ocupe pelo menos a altura da janela */
 }
 
 /* ================================
    Barra Lateral
    ================================ */
-.sidebar {
+   .sidebar {
     background-color: #0e3754;
-    padding: 20px;
-    width: 80px; /* Largura inicial do menu lateral */
+    padding: 5px; /* Reduz o padding da sidebar */
+    width: 80px; /* Aumentada a largura inicial da sidebar */
     position: fixed;
     top: 0;
+    left: 0;
     bottom: 0;
-    transition: width 0.3s ease;
+    transition: width 0.3s ease; /* Transição suave na largura */
     overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-right: 1.5px solid #000;
+    border-right: 1px solid #000;
+    z-index: 1000;
 }
 
 .sidebar.expanded {
-    width: 250px; /* Largura quando expandido */
+    width: 160px; /* Largura quando expandida */
 }
 
 .logo {
-    width: 150%; /* Ajuste o tamanho do logo conforme necessário */
-    margin-bottom: 20px;
+    width: 100%; /* Ajusta o tamanho do logo conforme necessário */
+    margin-bottom: 5px; /* Reduz a margem inferior do logo */
     display: block;
-    transition: width 0.3s ease; 
+    transition: width 0.3s ease; /* Transição suave no tamanho do logo */
 }
 
 .sidebar.expanded .logo {
-    width: 40%; /* Ajuste o tamanho do logo quando expandido */
+    width: 80%; /* Tamanho do logo quando a sidebar está expandida */
 }
 
-/* ================================
-   Menu de Navegação
-   ================================ */
+/* Ícone do menu */
 .menu-icon {
     font-size: 28px;
     color: white;
     cursor: pointer;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     display: block;
 }
 
+/* Lista de navegação */
 .nav-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    width: max-content; /* Garante que a lista ocupe toda a largura disponível */
+    width: 100%; /* A lista ocupa toda a largura */
 }
 
 .nav-list li {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     display: flex;
     align-items: center;
-    justify-content: center; /* Alinha os itens horizontalmente */
+    justify-content: center;
 }
 
+/* Links da sidebar */
 .nav-list a {
-    color: white; /* Cor do texto inicialmente */
+    color: white; /* Cor inicial do texto */
     text-decoration: none;
     font-weight: 600;
     display: flex;
     align-items: center;
-    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+    padding: 10px 15px; /* Padding nos itens */
+    border-radius: 12px; /* Bordas arredondadas */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Transições suaves */
 }
 
 .nav-list a:hover {
     color: #000; /* Cor do texto ao passar o mouse */
     background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
-    border-radius: 5px;
 }
 
+/* Ícones da sidebar */
 .material-icons {
     font-size: 24px;
-    margin-right: 10px;
-    color: #fff; /* Cor padrão dos ícones */
-    transition: color 0.3s ease; /* Transição suave para a cor dos ícones */
+    margin-right: 8px;
+    color: #fff; /* Cor dos ícones */
+    transition: color 0.3s ease; /* Transição suave nos ícones */
 }
 
 .nav-list a:hover .material-icons {
     color: #000; /* Cor dos ícones ao passar o mouse */
 }
 
+/* Texto dos links da sidebar */
 .nav-text {
     display: none;
-    color: #fff; /* Cor padrão do texto */
-    transition: color 0.3s ease; /* Transição suave para a cor do texto */
+    color: #fff; /* Cor inicial do texto */
+    transition: color 0.3s ease; /* Transição suave na cor do texto */
 }
 
 .sidebar.expanded .nav-text {
     display: inline;
-    color: #f0e5d8; /* Cor do texto quando expandido */
+    color: #f0e5d8; /* Cor do texto quando a sidebar está expandida */
+}
+
+/* Estilo do botão de logout */
+#logoutButton {
+    background-color: #dc3545; /* Cor de fundo padrão para logout */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 2px 10px rgba(220, 53, 69, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+#logoutButton:hover {
+    background-color: #c82333;
+    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
+}
+
+#logoutButton .material-icons {
+    margin-right: 8px;
+}
+
+#logoutButton .logout-text {
+    display: inline;
+}
+
+.sidebar:not(.expanded) #logoutButton .logout-text {
+    display: none;
+}
+
+#loginBnt, #logoutButton {
+    background-color: #007aff; /* Cor de fundo padrão */
+    color: white;
+    border: none;
+    padding: 10px 20px; /* Ajuste o padding conforme necessário */
+    border-radius: 12px;
+    font-size: 14px; /* Tamanho de fonte ajustado */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 2px 10px rgba(0, 122, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Remove o sublinhado padrão de links */
+}
+
+#loginBnt {
+    background-color: #007bff;
+}
+
+#logoutButton {
+    background-color: #dc3545; /* Cor de fundo padrão para logout */
+}
+
+#loginBnt:hover {
+    background-color: #0051a8;
+    box-shadow: 0 4px 20px rgba(0, 122, 255, 0.3);
+}
+
+#logoutButton:hover {
+    background-color: #c82333;
+    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
+}
+
+#loginBnt .material-icons, #logoutButton .material-icons {
+    margin-right: 8px;
+}
+
+#loginBnt .login-text, #logoutButton .logout-text {
+    display: inline;
+}
+
+.sidebar:not(.expanded) #logoutButton .logout-text {
+    display: none;
+}
+
+.sidebar:not(.expanded) #loginBnt .login-text {
+    display: none;
 }
 
 /* ================================
-   Container
+   Foco para Acessibilidade
    ================================ */
-.container {
-    margin-left: 60px; /* Compensa o tamanho da barra lateral */
-    width: calc(100% - 60px);
-    max-width: 400px;
-    padding-top: 50px;
-    flex: 1;
-    transition: margin-left 0.3s ease;
+.sidebar a:focus,
+#logoutButton:focus, #loginBnt:focus {
+    outline: 2px solid #007bff;
 }
 
-.sidebar.expanded ~ .container {
-    margin-left: 250px; /* Compensa o tamanho da barra lateral expandida */
-    width: calc(100% - 250px);
+.petition-info {
+    width: calc(100% - 80px);
+    margin: 0;
+    margin-left: 80px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;;
 }
+
+.info-login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
 
 /* ================================
    Formulário de Cadastro
    ================================ */
 .cadastro-box {
+    margin-top: 25%;
     background-color: #f7f5f5;
     padding: 20px;
     border-radius: 8px;
@@ -186,120 +289,69 @@ a {
 }
 
 /* ================================
+   Conteúdo Principal
+   ================================ */
+   .content-wrapper {
+    flex: 1; /* Faz com que o conteúdo se expanda para ocupar o espaço disponível */
+    padding: 20px;
+    width: calc(100% - 80px);
+    margin-left: 80px; /* Compensa a largura da sidebar */
+    box-sizing: border-box;
+}
+
+/* ================================
    Rodapé
    ================================ */
    footer {
-	background-color: #0e3754;
-	color: #fff;
-	padding: 5px; 
-    box-sizing: border-box;
+    background-color: #0e3754;
+    color: #fff;
+    padding: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 120px;
-    width: calc(100% - 80px);
-    margin-left: 80px;
-	text-align: center;
+    width: calc(100% - 80px); /* Considera a sidebar colapsada */
+    position: fixed;
+    bottom: 0;
+    left: 80px;
+    transition: width 0.3s, left 0.3s;
 }
 
+.sidebar.expanded + footer {
+    width: calc(100% - 160px);
+    left: 160px;
+}
 
 ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
 li {
-    display: inline-block;
-    margin: 0 10px;
+	display: inline-block;
+	margin: 0 10px;
 }
 
-footer a {
-    color: #fff;
-    text-decoration: none;
+a {
+	color: #fff;
+	text-decoration: none;
 }
 
-/* ================================
-   Botão de Logout
-   ================================ */
-#logoutButton {
-    color: white;
-    border: 1px solid white;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-    padding: 10px;
+/* Estilo para a barra de rolagem */
+::-webkit-scrollbar {
+    width: 12px;
 }
 
-#logoutButton .material-icons {
-    margin-right: 8px;
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
 }
 
-#logoutButton .logout-text {
-    display: inline;
+::-webkit-scrollbar-thumb {
+    background: #888;
 }
 
-.sidebar:not(.expanded) #logoutButton .logout-text {
-    display: none;
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
-
-#logoutButton:hover {
-    background-color: #dc3545;
-    color: white;
-    border-color: #dc3545;
-}
-
-/* ================================
-   Foco para Acessibilidade
-   ================================ */
-.sidebar a:focus,
-#logoutButton:focus {
-    outline: 2px solid #007bff;
-}
-
-/* Estilo para o botão de perfil no menu */
-#loginBnt {
-    color: white; /* Cor do texto inicialmente */
-    text-decoration: none;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s ease, background-color 0.3s ease; /* Transição suave para a cor do texto e fundo */
-    border-radius: 5px; /* Arredondar bordas para corresponder ao padrão */
-    padding: 10px; /* Espaçamento interno */
-}
-
-/* Estilo do ícone do perfil */
-#loginBnt .material-icons {
-    font-size: 24px; /* Tamanho do ícone igual ao dos outros itens */
-    margin-right: 10px; /* Espaço entre o ícone e o texto */
-    color: white; /* Cor do ícone */
-    transition: color 0.3s ease; /* Transição suave para a cor do ícone */
-}
-
-/* Estilo do texto do perfil */
-#loginBnt .login-text {
-    color: #f0e5d8; /* Cor do texto */
-    display: none; /* Oculta o texto quando a barra lateral não está expandida */
-}
-
-/* Exibe o texto "Perfil" somente quando a barra lateral estiver expandida */
-.sidebar.expanded #loginBnt .login-text {
-    display: inline; /* Exibe o texto "Perfil" */
-    color:#f0e5d8;
-}
-
-/* Estilo ao passar o mouse sobre o botão de perfil */
-#loginBnt:hover {
-    color: #000; /* Cor do texto ao passar o mouse */
-    background-color:#40E0D0; /* Cor de fundo ao passar o mouse */
-    border-radius: 5px; /* Arredondar bordas para corresponder ao padrão */
-}
-
-/* Estilo do ícone ao passar o mouse */
-#loginBnt:hover .material-icons {
-    color: #000; /* Cor do ícone ao passar o mouse */
-}
-
