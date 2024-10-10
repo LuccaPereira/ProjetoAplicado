@@ -343,3 +343,107 @@ footer ul li a:hover {
 #saveButton:hover, #editButton:hover {
     background-color: #0051a8; /* Cor ao passar o mouse */
 }
+
+
+/* Modal 2*/
+
+/* Estilização geral do modal */
+/* Estilização geral do modal */
+.modal-content {
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Sombra mais forte para profundidade */
+}
+
+/* Estilização do cabeçalho do modal */
+.modal-header {
+    background-color: #007bff; /* Cor de fundo do cabeçalho */
+    color: white; /* Cor do texto do cabeçalho */
+    border-top-left-radius: 8px; /* Bordas arredondadas à esquerda */
+    border-top-right-radius: 8px; /* Bordas arredondadas à direita */
+}
+
+/* Estilização do título do modal */
+.modal-title {
+    margin: 0; /* Remove margens padrão do título */
+    font-size: 1.5rem; /* Tamanho da fonte do título */
+    font-weight: bold; /* Negrito para o título */
+}
+
+/* Estilização do botão de fechar */
+.btn-close {
+    background: transparent; /* Remove fundo do botão de fechar */
+    border: none; /* Remove borda */
+    color: white; /* Cor do ícone de fechar */
+    font-size: 1.25rem; /* Tamanho do ícone de fechar */
+}
+
+/* Estilização do corpo do modal */
+.modal-body {
+    background-color: #f8f9fa; /* Cor de fundo do corpo do modal */
+    padding: 20px; /* Espaçamento interno da área do corpo do modal */
+}
+
+/* Estilização dos formulários */
+.form-label {
+    font-weight: bold; /* Negrito para os rótulos */
+    margin-bottom: 0.5rem; /* Espaçamento abaixo do rótulo */
+    color: #495057; /* Cor dos rótulos */
+}
+
+.form-control {
+    border-radius: 4px; /* Bordas arredondadas para campos de formulário */
+    border: 1px solid #ced4da; /* Borda padrão */
+    transition: border-color 0.3s; /* Transição suave para mudança de cor */
+    padding: 10px; /* Espaçamento interno dos campos de formulário */
+}
+
+.form-control:focus {
+    border-color: #007bff; /* Cor da borda ao focar */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Sombra ao focar */
+}
+
+/* Estilização da área de texto */
+textarea.form-control {
+    resize: vertical; /* Permite redimensionamento apenas vertical */
+}
+
+/* Estilização dos botões */
+.btn {
+    border-radius: 4px; /* Bordas arredondadas para botões */
+    padding: 10px 20px; /* Espaçamento interno dos botões */
+    font-size: 1rem; /* Tamanho da fonte dos botões */
+}
+
+.btn-secondary {
+    background-color: #6c757d; /* Cor de fundo do botão "Cancelar" */
+    border: none; /* Remove borda */
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* Cor ao passar o mouse no botão "Cancelar" */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Cor de fundo do botão "Salvar" */
+    border: none; /* Remove borda */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Cor ao passar o mouse no botão "Salvar" */
+}
+
+/* Estilização do rodapé do modal */
+.modal-footer {
+    background-color: #f1f1f1; /* Cor de fundo do rodapé */
+    border-top: 1px solid #dee2e6; /* Linha separadora */
+    padding: 10px 20px; /* Espaçamento interno do rodapé */
+    border-bottom-right-radius: 8px; /* Bordas arredondadas na parte inferior direita */
+    border-bottom-left-radius: 8px; /* Bordas arredondadas na parte inferior esquerda */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .modal-dialog {
+        max-width: 90%; /* Limita a largura do modal em telas menores */
+    }
+}
