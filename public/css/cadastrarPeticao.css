@@ -1,13 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
 
-body{
-    background-color: #aecade;
-    font-family: "Radio Canada Big", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    min-height: 100vh; /* Garantindo que o corpo ocupe pelo menos a altura total da viewport */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-y: auto;
+}
+
+body {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Permite que o footer fique na parte inferior */
+    justify-content: space-between; /* Distribui o espaço entre o conteúdo e o footer */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f5f5f7;
+    color: #1c1c1e;
+    overflow-y: auto;
 }
 
 .inicial-conteiner{
@@ -40,14 +46,16 @@ body{
     width: 100%; /* Ajusta o tamanho do logo conforme necessário */
     margin-bottom: 5px; /* Reduz a margem inferior do logo */
     display: block;
-    transition: width 0.3s ease; /* Transição suave no tamanho do logo */
+    transition: width 0.3s ease;
 }
 
 .sidebar.expanded .logo {
-    width: 80%; /* Tamanho do logo quando a sidebar está expandida */
+    width: 80%; /* Ajusta o tamanho do logo quando expandido */
 }
 
-/* Ícone do menu */
+/* ================================
+   Menu de Navegação
+   ================================ */
 .menu-icon {
     font-size: 28px;
     color: white;
@@ -56,12 +64,16 @@ body{
     display: block;
 }
 
-/* Lista de navegação */
+.sidebar.expanded .nav-text {
+    display: inline;
+    color: #f0e5d8; /* Cor do texto quando a sidebar está expandida */
+}
+
 .nav-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    width: 100%; /* A lista ocupa toda a largura */
+    width: 100%; /* Garante que a lista ocupe toda a largura disponível */
 }
 
 .nav-list li {
@@ -71,16 +83,16 @@ body{
     justify-content: center;
 }
 
-/* Links da sidebar */
+/* Botões da Sidebar */
 .nav-list a {
-    color: white; /* Cor inicial do texto */
+    color: white; /* Cor do texto inicialmente */
     text-decoration: none;
     font-weight: 600;
     display: flex;
     align-items: center;
-    padding: 10px 15px; /* Padding nos itens */
-    border-radius: 12px; /* Bordas arredondadas */
-    transition: color 0.3s ease, background-color 0.3s ease; /* Transições suaves */
+    padding: 10px 15px; /* Adiciona padding aos itens */
+    border-radius: 12px; /* Adiciona bordas arredondadas aos itens */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Transição suave */
 }
 
 .nav-list a:hover {
@@ -88,65 +100,59 @@ body{
     background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
 }
 
-/* Ícones da sidebar */
+/* Estilização dos ícones dentro dos links */
 .material-icons {
     font-size: 24px;
     margin-right: 8px;
-    color: #fff; /* Cor dos ícones */
-    transition: color 0.3s ease; /* Transição suave nos ícones */
+    color: #fff; /* Cor padrão dos ícones */
+    transition: color 0.3s ease; /* Transição suave para a cor dos ícones */
 }
 
 .nav-list a:hover .material-icons {
     color: #000; /* Cor dos ícones ao passar o mouse */
 }
 
-/* Texto dos links da sidebar */
 .nav-text {
     display: none;
-    color: #fff; /* Cor inicial do texto */
-    transition: color 0.3s ease; /* Transição suave na cor do texto */
+    color: #fff; /* Cor padrão do texto */
+    transition: color 0.3s ease; /* Transição suave para a cor do texto */
 }
 
 .sidebar.expanded .nav-text {
     display: inline;
-    color: #f0e5d8; /* Cor do texto quando a sidebar está expandida */
+    color: #f0e5d8; /* Cor do texto quando expandido */
 }
 
-/* Estilo do botão de logout */
-#logoutButton {
-    background-color: #dc3545; /* Cor de fundo padrão para logout */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    box-shadow: 0 2px 10px rgba(220, 53, 69, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+footer {
+    background-color: #0e3754;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    padding: 5px 0; /* Diminui o padding do footer */
+    margin-top: auto; 
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    display: inline-block;
+    margin: 0 5px; /* Ajuste o espaçamento entre itens conforme necessário */
+}
+
+footer a {
+    color: #fff;
     text-decoration: none;
 }
 
-#logoutButton:hover {
-    background-color: #c82333;
-    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
-}
+/* ================================
+   Estilo para o botão de logout
+   ================================ */
 
-#logoutButton .material-icons {
-    margin-right: 8px;
-}
-
-#logoutButton .logout-text {
-    display: inline;
-}
-
-.sidebar:not(.expanded) #logoutButton .logout-text {
-    display: none;
-}
-
+/* Estilização do botão de login e logout */
 #loginBnt, #logoutButton {
     background-color: #007aff; /* Cor de fundo padrão */
     color: white;
@@ -206,6 +212,24 @@ body{
     outline: 2px solid #007bff;
 }
 
+::-webkit-scrollbar {
+    width: 10px; /* Largura da barra de rolagem */
+}
+
+::-webkit-scrollbar-track {
+    background: #0e3754; /* Cor de fundo da trilha da barra de rolagem */
+    border-radius: 10px; /* Arredondamento das bordas da trilha */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #007aff; /* Cor da "mão" (a parte que se move) */
+    border-radius: 3px; /* Arredondamento das bordas da "mão" */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0051a8; /* Cor da "mão" ao passar o mouse sobre ela */
+}
+
 .petition-info {
     width: calc(100% - 80px);
     margin: 0;
@@ -226,76 +250,87 @@ body{
 }
 
 .card-info {
-    background-color: white;
-    border-radius: 8px;
-    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o conteúdo horizontalmente */
+    justify-content: center;
+    width: 100%; /* Preenche toda a largura disponível */
+    max-width: 1200px; /* Define uma largura máxima */
+    margin: 0 auto; /* Centraliza o container na tela */
+    padding: 20px; /* Espaço interno para evitar que o conteúdo toque as bordas */
+    box-sizing: border-box; /* Inclui padding na largura e altura totais */
+    text-align: center; /* Centraliza o texto dentro do card */
 }
 
 .card-info h1 {
-    padding-top: 20px;
-    padding-left: 20px;
-    font-size: 18px;
-    color: rgba(0, 0, 0, 0.658);
+    margin-bottom: 20px; /* Espaço abaixo do título */
+    font-size: 24px; /* Tamanho da fonte do título */
+    color: #333; /* Cor do título */
 }
 
 .card-info hr {
-    width: 100%;
+    width: 100%; /* Linha horizontal ocupa toda a largura */
+    margin-bottom: 20px; /* Espaço abaixo da linha */
+    border: 1px solid #ccc; /* Cor da linha */
 }
 
 .card-info-name {
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-.card-info input {
-    padding-left: 20px;
-    width: 100%;
-    border: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.521);
-    background-color: transparent;
-}
-
-.card-info-name h4 {
-    font-size: 16px;
-    color: rgba(0, 0, 0, 0.582);
-}
-
-.dados-para-processo {
     display: flex;
-    justify-content: space-between;
-    gap: 10px;
+    justify-content: center; /* Centraliza as colunas */
+    gap: 40px; /* Espaço entre as colunas esquerda e direita */
+    width: 100%; /* Preenche a largura do card */
+    max-width: 1000px; /* Largura máxima para as seções internas */
 }
 
-.dados-para-processo input {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.103);
+.left-card-section, .right-card-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaço entre os inputs */
+    width: 100%; /* Faz com que cada seção ocupe toda a largura disponível */
+    max-width: 400px; /* Limita a largura máxima dos inputs */
 }
 
-.left-card-section,
-.right-card-section{
-    width: 50%;
+input[type="text"] {
+    padding: 10px; /* Espaço interno dos campos de texto */
+    font-size: 16px; /* Tamanho da fonte dos inputs */
+    border: 1px solid #ddd; /* Cor da borda dos inputs */
+    border-radius: 5px; /* Borda arredondada */
+    width: 100%; /* Faz com que o input ocupe a largura da coluna */
+    box-sizing: border-box; /* Inclui padding e border na largura do input */
 }
+
+input[type="text"]::placeholder {
+    color: #999; /* Cor do placeholder */
+}
+
+input[type="mandatory"] {
+    border-color: #ff0000; /* Coloca uma borda vermelha para inputs obrigatórios */
+}
+
+input:focus {
+    outline: none; /* Remove a borda padrão quando focado */
+    border-color: #007bff; /* Cor da borda ao focar */
+}
+
+
 
 .more-files {
-    display:inline-block;
-    width:180px;
+    display: inline-block;
+    width: 180px;
     border: 2px solid rgba(0, 0, 0, 0.507);
     background-color: #0e3754;
     border-radius: 2px;
-    margin: 4.2% auto; 
+    margin: 4.2% auto;
     color: white;
-    transition: .3s;
+    transition: 0.3s;
     text-align: center;
     line-height: 40px;
     cursor: pointer;
-    margin: 4.2% auto; /* Aqui você já tem uma margem, mas ela é aplicada em todos os lados */
-    margin-right: 150px;
-    margin-left: 150px;
-
 }
 
 .more-files:hover {
     border: 2px solid black;
-    color: black ;
+    color: black;
     background-color: rgb(106, 139, 201);
 }
 

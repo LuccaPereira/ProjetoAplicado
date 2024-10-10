@@ -273,7 +273,7 @@ footer ul li a:hover {
 }
 .modal-dialog {
     max-width: 800px; /* Altere o valor conforme necessário */
-    width: 100%; /* Garante que o modal utilize a largura máxima definida */
+    width: 100% !important; /* Garante que o modal utilize a largura máxima definida */
 }
 .modal-content {
     height: auto; /* Altere para '300px', '400px', ou outro valor desejado */
