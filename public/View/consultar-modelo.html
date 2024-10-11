@@ -10,26 +10,29 @@
     <link rel="stylesheet" href="../css/consultar-modelo.css">
 </head>
 <body>
-    <div class="wrapper">
-        <div class="sidebar">
-            <img class="logo" src="../img/logo.png" alt="Logo">
-            <span class="material-icons menu-icon" id="menuToggle">menu</span>
-            <button class="btn bnt-outline-center" id="loginBnt">
-                <span class="material-icons">account_circle</span>
-                <span class="login-text">Perfil</span>
-            </button><br>
-            <ul class="nav-list">
-                <li><a href="../View/menu.html"><span class="material-icons">home</span><span class="nav-text">Home</span></a></li>
-                <li><a href="../View/consultar-modelo.html"><span class="material-icons">search</span><span class="nav-text">Consultar Petição</span></a></li>
-                <li><a href="../View/cadastrarPeticao.html"><span class="material-icons">description</span><span class="nav-text">Cadastrar Petição</span></a></li>
-                <li><a href="../View/criarClientes.html"><span class="material-icons">person_add</span><span class="nav-text">Cadastrar Clientes</span></a></li>
-                <li><a href="../View/chatbot.html"><span class="material-icons">chat</span><span class="nav-text">Chatbot</span></a></li>
-            </ul>
-            <button class="btn btn-outline-danger" id="logoutButton">
-                <span class="material-icons">exit_to_app</span>
-                <span class="logout-text">Logout</span>
-            </button>
-        </div>
+    <div class="sidebar" id="sidebar">
+        <img class="logo" src="../img/logo.png" alt="Logo">
+        <span class="material-icons menu-icon" id="menuToggle">menu</span>
+        <ul class="nav-list">
+            <li>
+                <button class="btn btn-outline-center" id="loginButton">
+                    <span class="material-icons">account_circle</span>
+                    <span class="login-text">Perfil</span>
+                </button>
+            </li>
+            <li><a href="../View/menu.html"><span class="material-icons">home</span><span class="nav-text">Home</span></a></li>
+            <li><a href="../View/consultar-modelo.html"><span class="material-icons">search</span><span class="nav-text">Consultar Petição</span></a></li>
+            <li><a href="../View/cadastrarPeticao.html"><span class="material-icons">description</span><span class="nav-text">Cadastrar Petição</span></a></li>
+            <li><a href="../View/criarClientes.html"><span class="material-icons">person_add</span><span class="nav-text">Cadastrar Clientes</span></a></li>
+            <li><a href="../View/chatbot.html"><span class="material-icons">chat</span><span class="nav-text">Chatbot</span></a></li>
+            <li>
+                <button class="btn btn-outline-danger" id="logoutButton">
+                    <span class="material-icons">exit_to_app</span>
+                    <span class="logout-text">Logout</span>
+                </button>
+            </li>
+        </ul>
+    </div>
         <div class="content">
             <div class="consultar-modelo">
                 <div class="center1">
@@ -61,19 +64,6 @@
             </div>
         </div>
     </div>
-
-    <footer>
-        <p>&copy; 2024 - Todos os direitos reservados</p>
-        <nav>
-            <ul>
-                <li><a href="#">Termos de uso</a></li>
-                <li><a href="#">Política de privacidade</a></li>
-                <li><a href="#">Sobre nós</a></li>
-                <li><a href="#">Contato</a></li>
-            </ul>
-        </nav>
-    </footer>
-
     <div class="modal fade" id="editPetitionModal" tabindex="-1" aria-labelledby="editPetitionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -83,7 +73,7 @@
               </div>
               <div class="modal-body">
                 <form id="editPetitionForm">
-                  <!-- Status da Petição -->
+
                   <div class="mb-3">
                     <label for="petitionStatus" class="form-label">Status da Petição</label>
                     <select id="petitionStatus" class="form-select">
@@ -108,19 +98,13 @@
                   <div class="mb-3">
                     <label for="petitionPortal" class="form-label">Portal de Peticionamento</label>
                     <input type="text" id="petitionPortal" class="form-control">
-                    <!-- <select id="petitionPortal" class="form-select">
-                      <option value="pje">PJe</option>
-                      <option value="esaj">e-SAJ</option>
-                      <option value="projudi">Projudi</option>
-                      <option value="outro">Outro</option>
-                    </select> -->
                   </div>
         
                   <div class="mb-3">
                     <label for="petitionObservations" class="form-label">Observações</label>
                     <textarea id="petitionObservations" class="form-control" rows="3" placeholder="Observações sobre o envio"></textarea>
                   </div>
-                  <input type="hidden" id="petitionId" /> <!-- Input oculto para armazenar o ID da petição -->
+                  <input type="hidden" id="petitionId" />
                 </form>
               </div>
               <div class="modal-footer">

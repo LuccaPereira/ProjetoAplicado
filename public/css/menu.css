@@ -1,275 +1,172 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
+/* menu.css */
 
-html,
+/* Estilos Globais */
 body {
-    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
     margin: 0;
     padding: 0;
-    background-color: #aecade;
-    font-family: "Radio Canada Big", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    text-align: center;
-}
-
-body {
     display: flex;
+    min-height: 100vh;
     flex-direction: column;
 }
 
-/* ================================
-   Barra Lateral
-   ================================ */
+a {
+    text-decoration: none;
+    color: #3498db;
+}
+
+a:hover {
+    color: #2980b9;
+}
+
+/* Layout Principal */
+.main-container {
+    display: flex;
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Sidebar */
 .sidebar {
-    background-color: #0e3754;
-    padding: 5px; /* Reduz o padding da sidebar */
-    width: 80px; /* Aumentada a largura inicial da sidebar */
+    width: 150px; /* Largura inicial colapsada */
+    background-color: #2c3e50;
+    height: 100vh;
+    padding: 20px 10px; /* Menos padding para o estado colapsado */
     position: fixed;
     top: 0;
     left: 0;
-    bottom: 0;
-    transition: width 0.3s ease; /* Transição suave na largura */
-    overflow: hidden;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    border-right: 1px solid #000;
-    z-index: 1000;
+    justify-content: space-between;
+    transition: width 0.3s ease;
+    overflow: hidden;
 }
 
 .sidebar.expanded {
-    width: 160px; /* Largura quando expandida */
+    width: 250px; /* Largura expandida */
+    padding: 20px;
 }
 
-.logo {
-    width: 100%; /* Ajusta o tamanho do logo conforme necessário */
-    margin-bottom: 5px; /* Reduz a margem inferior do logo */
+.sidebar .logo {
+    width: 80px; /* Logo menor no estado colapsado */
+    margin: 1% auto;
     display: block;
-    transition: width 0.3s ease; /* Transição suave no tamanho do logo */
+    transition: width 0.3s ease;
+    margin-bottom: 15%;
 }
 
 .sidebar.expanded .logo {
-    width: 80%; /* Tamanho do logo quando a sidebar está expandida */
+    width: 150px; /* Logo maior no estado expandido */
 }
 
-/* Ícone do menu */
 .menu-icon {
-    font-size: 28px;
-    color: white;
+    font-size: 36px;
+    color: #ecf0f1;
     cursor: pointer;
-    margin-bottom: 10px;
-    display: block;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Lista de navegação */
-.nav-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%; /* A lista ocupa toda a largura */
+/* Itens da lista no estado colapsado */
+.nav-list .nav-text, .loginButton, .logoutButton {
+    display: none; /* Esconde o texto no estado colapsado */
+}
+
+.sidebar.expanded .nav-text, .loginButton, .logoutButton  {
+    display: inline; /* Mostra o texto quando expandido */
 }
 
 .nav-list li {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centraliza os itens horizontalmente */
+    justify-content: center; /* Centraliza os ícones no estado colapsado */
 }
 
-/* Links da sidebar */
-.nav-list a {
-    color: white; /* Cor inicial do texto */
-    text-decoration: none;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    padding: 10px 15px; /* Padding nos itens */
-    border-radius: 12px; /* Bordas arredondadas */
-    transition: color 0.3s ease, background-color 0.3s ease; /* Transições suaves */
+.sidebar.expanded .nav-list li {
+    justify-content: flex-start; /* Reposiciona os ícones e texto no estado expandido */
 }
 
-.nav-list a:hover {
-    color: #000; /* Cor do texto ao passar o mouse */
-    background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
-}
-
-/* Ícones da sidebar */
-.material-icons {
-    font-size: 24px;
-    margin-right: 8px;
-    color: #fff; /* Cor dos ícones */
-    transition: color 0.3s ease; /* Transição suave nos ícones */
-}
-
-.nav-list a:hover .material-icons {
-    color: #000; /* Cor dos ícones ao passar o mouse */
-}
-
-/* Texto dos links da sidebar */
-.nav-text {
-    display: none;
-    color: #fff; /* Cor inicial do texto */
-    transition: color 0.3s ease; /* Transição suave na cor do texto */
-}
-
-.sidebar.expanded .nav-text {
-    display: inline;
-    color: #f0e5d8; /* Cor do texto quando a sidebar está expandida */
-}
-
-/* Estilo do botão de logout */
-#logoutButton {
-    background-color: #dc3545; /* Cor de fundo padrão para logout */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    box-shadow: 0 2px 10px rgba(220, 53, 69, 0.2);
+/* Botões de Login e Logout */
+#loginButton, #logoutButton {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: transparent;
+    color: #ecf0f1;
+    border: 2px solid #ecf0f1;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
+    gap: 10px;
+    padding: 10px;
+    transition: background-color 0.3s ease;
 }
 
-#logoutButton:hover {
-    background-color: #c82333;
-    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
+#loginButton:hover, #logoutButton:hover {
+    background-color: #3498db;
+    color: #ecf0f1;
 }
 
-#logoutButton .material-icons {
-    margin-right: 8px;
+/* Lista de Navegação */
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
 }
 
-#logoutButton .logout-text {
-    display: inline;
+.nav-list li {
+    margin-bottom: 20px;
 }
 
-.sidebar:not(.expanded) #logoutButton .logout-text {
-    display: none;
-}
-
-#loginBnt, #logoutButton {
-    background-color: #007aff; /* Cor de fundo padrão */
-    color: white;
-    border: none;
-    padding: 10px 20px; /* Ajuste o padding conforme necessário */
-    border-radius: 12px;
-    font-size: 14px; /* Tamanho de fonte ajustado */
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    box-shadow: 0 2px 10px rgba(0, 122, 255, 0.2);
+.nav-list li a, #loginButton, #logoutButton {
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-decoration: none; /* Remove o sublinhado padrão de links */
+    gap: 10px;
+    font-size: 1.1rem;
+    color: #ecf0f1;
+    padding: 10px;
+    transition: background-color 0.3s ease;
 }
 
-#loginBnt {
-    background-color: #007bff;
+.nav-list li a:hover {
+    background-color: #3498db;
+    border-radius: 5px;
 }
 
-#logoutButton {
-    background-color: #dc3545; /* Cor de fundo padrão para logout */
+/* Conteúdo da Página */
+.content {
+    margin-left: 250px;
+    padding: 40px;
+    flex-grow: 1;
 }
 
-#loginBnt:hover {
-    background-color: #0051a8;
-    box-shadow: 0 4px 20px rgba(0, 122, 255, 0.3);
+h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
 }
 
-#logoutButton:hover {
-    background-color: #c82333;
-    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
+p.lead {
+    font-size: 1.1rem;
+    color: #7f8c8d;
 }
 
-#loginBnt .material-icons, #logoutButton .material-icons {
-    margin-right: 8px;
-}
-
-#loginBnt .login-text, #logoutButton .logout-text {
-    display: inline;
-}
-
-.sidebar:not(.expanded) #logoutButton .logout-text {
-    display: none;
-}
-
-.sidebar:not(.expanded) #loginBnt .login-text {
-    display: none;
-}
-
-/* ================================
-   Foco para Acessibilidade
-   ================================ */
-.sidebar a:focus,
-#logoutButton:focus, #loginBnt:focus {
-    outline: 2px solid #007bff;
-}
+/* Estilos dos Cards */
 .card {
-    margin: 10px;
-    border-radius: 12px;
-    background-color: #0e3754;
-    color: white;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    transition: box-shadow 0.9s ease, transform 0.9s ease, height 0.9s ease;
-    /* Aumenta a duração da transição */
-    overflow: hidden;
-    /* Garante que o conteúdo extra não ultrapasse o card */
-    position: relative;
-}
-
-.card-info {
-    display: flex;
-    /* Usa flexbox para centralizar o texto */
-    justify-content: center;
-    /* Centraliza horizontalmente */
-    align-items: center;
-    /* Centraliza verticalmente */
-    height: 100%;
-    /* Faz com que o card-info ocupe toda a altura do card */
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
-    /* Centraliza o texto */
-    color: #ffffff;
-    /* Cor do texto para garantir a visibilidade */
-    z-index: 1;
-    /* Garante que o conteúdo extra fique acima do conteúdo do card */
-    transition: opacity 0.9s ease, transform 0.9s ease;
-    /* Transição suave para visibilidade */
-    font-size: 1em;
-    /* Igual ao .card-title */
-    font-weight: 400;
-    /* Igual ao .card-title */
-    line-height: 1.5;
-    /* Ajuste a linha para melhorar a legibilidade */
-    transform: translateY(100%);
-    /* Inicialmente fora da tela */
-    background: none;
-    /* Remove o fundo do card-info */
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
     transform: translateY(-5px);
-    height: 200px;
-    /* Altura quando o card é hoverado */
-}
-
-.card:hover .card-info {
-    opacity: 1;
-    /* Torna o conteúdo visível ao passar o mouse */
-    transform: translateY(0);
-    /* Move o conteúdo para dentro do card */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .card-body {
@@ -277,68 +174,38 @@ body {
 }
 
 .card-title {
-    font-size: 1.25em;
-    /* Ajuste conforme necessário */
-    font-weight: 700;
-    /* Ajuste conforme necessário */
-    color: white;
+    font-size: 1.5rem;
+    color: #34495e;
 }
 
-.content {
-    margin-left: 60px;
-    /* Compensa a largura da sidebar */
-    padding: 20px;
-    flex: 1;
+.card-text {
+    font-size: 1rem;
+    color: #7f8c8d;
 }
 
-/* ================================
-   Rodapé
-   ================================ */
+/* Footer */
 footer {
-    background-color: #0e3754;
-    color: #fff;
-    padding: 5px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 120px;
-    width: calc(100% - 80px);
-    margin-left: 80px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px;
     text-align: center;
+    margin-top: auto;
+    width: 100%;
 }
 
-
-ul {
-    list-style: none;
+footer nav ul {
     padding: 0;
-    margin: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
-li {
-    display: inline-block;
-    margin: 0 10px;
+footer nav ul li a {
+    color: #ecf0f1;
+    font-weight: bold;
 }
 
-footer a {
-    color: #fff;
-    text-decoration: none;
-}
-
-/* Estilo para a barra de rolagem */
-::-webkit-scrollbar {
-    width: 12px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #888;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
+footer nav ul li a:hover {
+    color: #bdc3c7;
 }
