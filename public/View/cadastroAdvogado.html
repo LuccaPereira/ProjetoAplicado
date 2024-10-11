@@ -12,7 +12,7 @@
         <img id="logo" src="../img/logo.png" alt="Logo">
         <div class="cadastro-box">
             <h2>Cadastre-se</h2>
-            <form id="cadAdv" class="cadAdv" method="POST" action="">
+            <form id="cadAdv" class="cadAdv" method="POST">
                 <input type="text" id="nome" placeholder="Nome">
                 <input type="text" id="OAB" placeholder="OAB">
                 <input type="text" id="inputCpf" placeholder="Digite CPF">
@@ -21,14 +21,15 @@
                 <input type="email" id="email" placeholder="Digite seu Email">
                 <button type="submit" name="addAdv">Cadastrar</button>
             </form>
-            <p>Já possui uma conta? <a href="login.html">Faça login</a></p>
+            <p>Já possui uma conta? <a href="../View/login.html">Faça login</a></p>
         </div>
     </div>
-    <script type="module" src="../Controller/cadastroAdvogado.Controller.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-storage-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script type="module" src="../Controller/cadastroAdvogado.Controller.js"></script>
 </body>
 </html>

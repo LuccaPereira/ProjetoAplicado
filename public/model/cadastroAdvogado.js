@@ -1,3 +1,6 @@
+import firebase from 'firebase/app'; // Importe o Firebase
+import 'firebase/auth'; // Importe o módulo de autenticação
+import axios from 'axios';
 
 function validarCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
@@ -45,16 +48,17 @@ async function registrarUsuario(email, senha) {
         measurementId: "G-WB0MPN3701"
     };
 
+    // Inicializa o Firebase apenas uma vez
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
 
     try {
         const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, senha);
-        return userCredential.user;
+        return userCredential.user; // Retorna o usuário registrado
     } catch (error) {
         console.error("Erro ao registrar usuário:", error);
-        throw error;
+        throw error; // Propaga o erro
     }
 }
 
@@ -65,10 +69,10 @@ async function verificarOABExistente(OAB) {
 
     try {
         const response = await axios.get(url);
-        return response.data !== null;
+        return response.data !== null; // Retorna true se a OAB já existe
     } catch (error) {
         console.error("Erro ao verificar OAB:", error);
-        throw error;
+        throw error; // Propaga o erro
     }
 }
 

@@ -13,12 +13,12 @@
             <div class="login-box">
                 <h2>Cadastre-se ou faça login</h2>
                 <form id="loginForm">
-                    <input type="text" id="OAB" placeholder="Digite sua OAB ou CPF">
+                    <input type="email" id="email" placeholder="Seu E-mail" required>
                     <input type="password" id="senha" placeholder="Digite sua senha">
                     <button type="submit">Log In</button>
                 </form>
                 <a href="../View/cadastroAdvogado.html"><button class="create-account">Cadastre-se</button></a>
-                <p>Esqueceu sua senha? <a href="updateSenha.html">clique Aqui!</a></p>
+                <p>Esqueceu sua senha? <a href="../View/updateSenha.html">clique Aqui!</a></p>
             </div>
             <div class="introBox">
                 <h2>Um pouco sobre nós</h2>
@@ -37,6 +37,14 @@
             </nav>
         </footer>
     </div>
+    <!-- Modal de Erro -->
+     <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeModal">&times;</span>
+            <p id="errorMessage">Mensagem de erro aqui.</p>
+        </div>
+    </div>
+
     <!-- Script do JavaScript para a funcionalidade da página -->
     <script type="module" src="../Controller/login.controller.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
