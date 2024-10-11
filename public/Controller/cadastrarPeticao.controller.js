@@ -1,14 +1,10 @@
 import { montarOData } from '../model/cadastrarPeticao.js';
 
-
-document.getElementById('Click').addEventListener('click', function() {
+document.getElementById('menuToggle').addEventListener('click', function() {
     const sidebar = document.querySelector('.sidebar');
-    const menuToggle = document.getElementById('menuToggle');
-    
-    menuToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('expanded');
-    });
+    sidebar.classList.toggle('expanded');
 });
+
 
 document.getElementById('logoutButton').addEventListener('click', function() {
     localStorage.removeItem('loggedInLawyer');
@@ -17,7 +13,7 @@ document.getElementById('logoutButton').addEventListener('click', function() {
     window.location.href = '../View/login.html';
 })
 
-document.getElementById('loginBnt').addEventListener('click', function() {
+document.getElementById('loginButton').addEventListener('click', function() {
     window.location.href = '../View/perfilAdvogado.html';
 });
 
