@@ -38,7 +38,7 @@ document.getElementById('logoutButton').addEventListener('click', function() {
     window.location.href = '../View/login.html';
 })
 
-document.getElementById('loginBnt').addEventListener('click', function() {
+document.getElementById('loginButton').addEventListener('click', function() {
     window.location.href = '../View/perfilAdvogado.html';
 });
 

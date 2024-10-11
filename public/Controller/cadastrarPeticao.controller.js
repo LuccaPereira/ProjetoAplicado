@@ -12,6 +12,18 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('loggedInCliente');
         window.location.href = '../View/login.html';
     });
+document.getElementById('menuToggle').addEventListener('click', function() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('expanded');
+});
+
+
+document.getElementById('logoutButton').addEventListener('click', function() {
+    localStorage.removeItem('loggedInLawyer');
+    localStorage.removeItem('loggedInCliente');
+
+    window.location.href = '../View/login.html';
+})
 
     document.getElementById('loginBnt')?.addEventListener('click', function() {
         window.location.href = '../View/perfilAdvogado.html';
