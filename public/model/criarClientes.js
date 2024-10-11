@@ -28,6 +28,10 @@ export function validarCPF(cpf) {
     return true;
 }
 
+export function validarEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 export function getLoggedInLawyer() {
     const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
     return loggedInLawyerString ? JSON.parse(loggedInLawyerString) : null;
