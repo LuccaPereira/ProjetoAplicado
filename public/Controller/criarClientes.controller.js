@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Elemento com ID 'clienteForm' não foi encontrado.");
     }
 
-    document.getElementById('loginBnt').addEventListener('click', function() {
+    document.getElementById('loginButton').addEventListener('click', function() {
         window.location.href = '../View/perfilAdvogado.html';
     });
 

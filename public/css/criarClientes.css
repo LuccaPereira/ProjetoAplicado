@@ -49,7 +49,7 @@
 }
 
 .menu-icon {
-    font-size: 36px;
+    font-size: 36px !important;
     color: #ecf0f1;
     cursor: pointer;
     margin-bottom: 20px;
@@ -223,43 +223,37 @@ a {
 /* ================================
    Rodapé
    ================================ */
-   footer {
-    background-color: #0e3754;
+/* Footer */
+
+footer {
+    background-color: #2c3e50;
     color: #fff;
-    padding: 5px;
+    padding: 20px 0; 
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 120px;
-    width: calc(100% - 80px); /* Considera a sidebar colapsada */
-    position: fixed;
-    bottom: 0;
-    left: 80px;
-    transition: width 0.3s, left 0.3s;
-}
-
-.sidebar.expanded + footer {
-    width: calc(100% - 160px);
-    left: 160px;
+    width: 100%; /* Preenche toda a largura da tela */
+    position: relative; /* Pode ser 'relative' ou 'fixed', dependendo da sua necessidade */
+    margin-top: auto; /* Faz o footer ficar na parte inferior se houver espaço */
 }
 
 ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0; /* Margem superior para separar do texto do footer */
 }
 
 li {
-	display: inline-block;
-	margin: 0 10px;
+    display: inline-block;
+    margin: 0 10px;
 }
 
 a {
-	color: #fff !important;
-	text-decoration: none !important;
+    color: #fff;
+    text-decoration: none;
 }
-
 /* Estilo para a barra de rolagem */
 ::-webkit-scrollbar {
     width: 12px;

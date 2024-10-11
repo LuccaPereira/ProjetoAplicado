@@ -5,12 +5,6 @@
 }
 
 body {
-    background-color: #aecade;
-    font-family: "Radio Canada Big", sans-serif;
-    font-optical-sizing: auto;
-    margin: 40px;
-    margin-left: 160px;
-    margin-right: 100px;
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
     color: #333;
@@ -76,18 +70,25 @@ body {
     margin-bottom: 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* Centraliza os ícones no estado colapsado */
 }
 
-.nav-list a {
-    color: white;
-    font-weight: 600;
-    text-decoration: none;
+.sidebar.expanded .nav-list li {
+    justify-content: flex-start; /* Reposiciona os ícones e texto no estado expandido */
+}
+
+/* Botões de Login e Logout */
+#loginButton, #logoutButton {
+    width: 100% ;
+    margin-bottom: 20px;
+    background-color: transparent;
+    color: #ecf0f1;
+    border: 2px solid #ecf0f1;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content:center !important;
     gap: 10px;
-    padding: 10px;
+    padding: 20px;
     transition: background-color 0.3s ease;
 }
 
@@ -99,7 +100,7 @@ body {
 /* Lista de Navegação */
 .nav-list {
     list-style: none;
-    padding: 0;
+    padding: 0 !important;
     margin-top: 20px;
 }
 
@@ -123,216 +124,12 @@ body {
     border-radius: 5px;
 }
 
-#loginBnt:hover {
-    background-color: #0051a8;
-    box-shadow: 0 4px 20px rgba(0, 122, 255, 0.3);
-}
-
-#logoutButton:hover {
-    background-color: #c82333;
-    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
-}
-
-#loginBnt .material-icons, #logoutButton .material-icons {
-    margin-right: 8px;
-}
-
-.sidebar:not(.expanded) #loginBnt .login-text, 
-.sidebar:not(.expanded) #logoutButton .logout-text {
-    display: none;
-}
-
-/* ================================
-   Acessibilidade (Foco)
-   ================================ */
-
-.sidebar a:focus, #loginBnt:focus, #logoutButton:focus {
-    outline: 2px solid #007bff;
-}
-
-/* ================================
-   Conteúdo Principal Ajustável
-   ================================ */
-
-.petition-info, .center1, .tabela {
-    width: calc(100% - 90px); /* Considera a sidebar colapsada */
-    margin-left: 25px;
-    padding:20px;
-    box-sizing: border-box;
-    background-color: #aecade;
-    transition: width 0.3s ease, margin-left 0.3s ease;
 /* Estilo para os botões */
 .btn, #baixar-peticao {
     border-radius: 0.5rem; /* Arredonda os cantos dos botões */
     font-size: 1rem; /* Tamanho da fonte */
     padding: 0.5rem 1rem; /* Espaçamento interno */
     transition: background-color 0.3s ease, color 0.3s ease; /* Animação suave nas mudanças de cor */
-}
-
-.btn-primary, #baixar-peticao {
-    background-color: #007bff; /* Cor de fundo do botão primário */
-    color: #fff; /* Cor do texto do botão primário */
-}
-
-.btn-primary:hover, #baixar-peticao:hover {
-    background-color: #0056b3; /* Cor do fundo ao passar o mouse */
-}
-
-.btn-secondary, #baixar-peticao {
-    background-color: #6c757d; /* Cor de fundo do botão secundário */
-    color: #fff; /* Cor do texto do botão secundário */
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268; /* Cor do fundo ao passar o mouse */
-}
-
-.btn-outline-danger {
-    color: #dc3545; /* Cor do texto do botão de logout */
-    border: 1px solid #dc3545; /* Borda do botão de logout */
-}
-
-.btn-outline-danger:hover {
-    background-color: #dc3545; /* Cor do fundo ao passar o mouse */
-    color: #fff; /* Cor do texto ao passar o mouse */
-}
-
-.btn-outline-center {
-    color: #007bff; /* Cor do texto do botão de perfil */
-    border: 1px solid #007bff; /* Borda do botão de perfil */
-}
-
-.div-select, .instancia {
-    width: 100%;
-}
-
-.instancia select, select#emNomeDe, select.situation {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ced4da;
-    border-radius: 12px;
-    font-size: 1rem;
-    background-color: #f0f8ff;
-    cursor: pointer;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-/* Estilização dos botões */
-button {
-    background-color: #007bff; /* Cor de fundo do botão */
-    color: white; /* Cor do texto */
-    border: none; /* Sem borda */
-    border-radius: 4px; /* Bordas arredondadas */
-    padding: 10px 15px; /* Espaçamento interno */
-    cursor: pointer; /* Cursor de mão ao passar o mouse */
-    font-size: 16px; /* Tamanho da fonte */
-    transition: background-color 0.3s; /* Animação na mudança de cor */
-}
-
-button:hover {
-    background-color: #0056b3; /* Cor do botão ao passar o mouse */
-}
-
-/* ================================
-   Estilo do Footer
-   ================================ */
-
-footer {
-    background-color: #0e3754;
-    color: #fff;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    transition: background-color 0.3s ease;
-}
-
-#loginButton:hover, #logoutButton:hover {
-    background-color: #3498db;
-    color: #ecf0f1;
-}
-
-/* Lista de Navegação */
-.nav-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
-}
-
-.nav-list li {
-    margin-bottom: 20px;
-}
-
-.nav-list li a, #loginButton, #logoutButton {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.1rem;
-    color: #ecf0f1;
-    padding: 10px;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-}
-
-.nav-list li a:hover {
-    background-color: #3498db;
-    border-radius: 5px;
-}
-
-/* Modal */
-.modal-content {
-    padding: 20px;
-}
-
-.modal-header, .modal-footer {
-    border: none;
-}
-
-.card-info {
-    margin-bottom: 20px;
-}
-
-.card-info h1 {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-.card-info-name input {
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-.center1 {
-    display: flex;
-    justify-content: center;
-}
-
-.center-selects {
-    margin: 20px 0;
-}
-
-/* Modal geral */
-.modal-dialog {
-    max-width: 800px; /* Altere o valor conforme necessário */
-    width: 100% !important; /* Garante que o modal utilize a largura máxima definida */
-    max-width: 800px; /* Largura máxima do modal */
-    margin: 1.75rem auto; /* Centraliza o modal na tela */
-}
-
-.modal-content {
-    border-radius: 8px; /* Bordas arredondadas */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra */
-}
-
-.petition-info {
-    padding: 20px; /* Espaçamento interno */
 }
 
 .btn-primary, #baixar-peticao {
@@ -560,23 +357,6 @@ button {
 #editButton {
     background-color: #6c757d; /* Cor do botão editar */
     color: white; /* Cor do texto */
-}
-
-#editButton:hover {
-    background-color: #5a6268; /* Cor do botão ao passar o mouse */
-}
-
-
-/* Modal 2*/
-
-/* Estilização geral do modal */
-/* Estilização geral do modal */
-.modal-content {
-    border-radius: 8px; /* Bordas arredondadas */
-    padding: 10px 20px; /* Espaçamento interno */
-    font-size: 16px; /* Tamanho da fonte */
-    cursor: pointer; /* Cursor de ponteiro */
-    transition: background-color 0.3s; /* Transição para a mudança de cor */
 }
 
 #editButton:hover {
