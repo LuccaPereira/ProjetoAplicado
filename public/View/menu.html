@@ -9,24 +9,28 @@
     <link rel="stylesheet" href="../css/menu.css">
 </head>
 <body>
-    <div class="sidebar">
-        <img class="logo" src="../img/logo.png" alt="Logo da empresa">
+    <div class="sidebar" id="sidebar">
+        <img class="logo" src="../img/logo.png" alt="Logo">
         <span class="material-icons menu-icon" id="menuToggle">menu</span>
-        <button class="btn bnt-outline-center" id="loginBnt">
-            <span class="material-icons">account_circle</span>
-            <span class="login-text">Perfil</span>
-        </button><br>
         <ul class="nav-list">
-            <li><a href="../View/menu.html"><span class="material-icons">home</span><span class="nav-text">Home</span></a></li><br>
-            <li><a href="../View/consultar-modelo.html"><span class="material-icons">search</span><span class="nav-text">Consultar Petição</span></a></li><br>
-            <li><a href="../View/cadastrarPeticao.html"><span class="material-icons">description</span><span class="nav-text">Cadastrar Petição</span></a></li><br>
-            <li><a href="../View/criarClientes.html"><span class="material-icons">person_add</span><span class="nav-text">Cadastrar Clientes</span></a></li><br>
-            <li><a href="../View/chatbot.html"><span class="material-icons">chat</span><span class="nav-text">Chatbot</span></a></li><br>
+            <li>
+                <button class="btn btn-outline-center" id="loginButton">
+                    <span class="material-icons">account_circle</span>
+                    <span class="login-text">Perfil</span>
+                </button>
+            </li>
+            <li><a href="../View/menu.html"><span class="material-icons">home</span><span class="nav-text">Home</span></a></li>
+            <li><a href="../View/consultar-modelo.html"><span class="material-icons">search</span><span class="nav-text">Consultar Petição</span></a></li>
+            <li><a href="../View/cadastrarPeticao.html"><span class="material-icons">description</span><span class="nav-text">Cadastrar Petição</span></a></li>
+            <li><a href="../View/criarClientes.html"><span class="material-icons">person_add</span><span class="nav-text">Cadastrar Clientes</span></a></li>
+            <li><a href="../View/chatbot.html"><span class="material-icons">chat</span><span class="nav-text">Chatbot</span></a></li>
+            <li>
+                <button class="btn btn-outline-danger" id="logoutButton">
+                    <span class="material-icons">exit_to_app</span>
+                    <span class="logout-text">Logout</span>
+                </button>
+            </li>
         </ul>
-        <button class="btn btn-outline-danger" id="logoutButton">
-            <span class="material-icons">exit_to_app</span>
-            <span class="logout-text">Logout</span>
-        </button>
     </div>
     <div class="content">
         <div class="container">
@@ -76,7 +80,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Interação com o Chatbot</h5>
                                 <div class="card-info">
-                                    <p class="card-text">Utilize nosso chatbot para criar petições iniciais de maneira eficiente.</p>
+                                    <p class="card-text">Aproveite nosso chatbot para criar petições iniciais de forma rápida e eficiente, simplificando o processo e economizando seu tempo.</p>
                                 </div>
                             </div>
                         </div>

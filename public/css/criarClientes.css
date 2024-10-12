@@ -16,198 +16,114 @@
     min-height: 100vh; /* Garante que o contêiner ocupe pelo menos a altura da janela */
 }
 
-/* ================================
-   Barra Lateral
-   ================================ */
-   .sidebar {
-    background-color: #0e3754;
-    padding: 5px; /* Reduz o padding da sidebar */
-    width: 80px; /* Aumentada a largura inicial da sidebar */
+/* Sidebar */
+.sidebar {
+    width: 150px; /* Largura inicial colapsada */
+    background-color: #2c3e50;
+    height: 100vh;
+    padding: 20px 10px; /* Menos padding para o estado colapsado */
     position: fixed;
     top: 0;
     left: 0;
-    bottom: 0;
-    transition: width 0.3s ease; /* Transição suave na largura */
-    overflow: hidden;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    border-right: 1px solid #000;
-    z-index: 1000;
+    justify-content: space-between;
+    transition: width 0.3s ease;
+    overflow: hidden;
 }
 
 .sidebar.expanded {
-    width: 160px; /* Largura quando expandida */
+    width: 250px; /* Largura expandida */
+    padding: 20px;
 }
 
-.logo {
-    width: 100%; /* Ajusta o tamanho do logo conforme necessário */
-    margin-bottom: 5px; /* Reduz a margem inferior do logo */
+.sidebar .logo {
+    width: 80px; /* Logo menor no estado colapsado */
+    margin: 1% auto;
     display: block;
-    transition: width 0.3s ease; /* Transição suave no tamanho do logo */
+    transition: width 0.3s ease;
+    margin-bottom: 15%;
 }
 
 .sidebar.expanded .logo {
-    width: 80%; /* Tamanho do logo quando a sidebar está expandida */
+    width: 150px; /* Logo maior no estado expandido */
 }
 
-/* Ícone do menu */
 .menu-icon {
-    font-size: 28px;
-    color: white;
+    font-size: 36px;
+    color: #ecf0f1;
     cursor: pointer;
-    margin-bottom: 10px;
-    display: block;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Lista de navegação */
-.nav-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%; /* A lista ocupa toda a largura */
+/* Itens da lista no estado colapsado */
+.nav-list .nav-text, .loginButton, .logoutButton {
+    display: none; /* Esconde o texto no estado colapsado */
+}
+
+.sidebar.expanded .nav-text, .loginButton, .logoutButton  {
+    display: inline; /* Mostra o texto quando expandido */
 }
 
 .nav-list li {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza os ícones no estado colapsado */
+}
+
+.sidebar.expanded .nav-list li {
+    justify-content: flex-start; /* Reposiciona os ícones e texto no estado expandido */
+}
+
+/* Botões de Login e Logout */
+#loginButton, #logoutButton {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: transparent;
+    color: #ecf0f1;
+    border: 2px solid #ecf0f1;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    transition: background-color 0.3s ease;
 }
 
-/* Links da sidebar */
-.nav-list a {
-    color: white; /* Cor inicial do texto */
-    text-decoration: none;
-    font-weight: 600;
+#loginButton:hover, #logoutButton:hover {
+    background-color: #3498db;
+    color: #ecf0f1;
+}
+
+/* Lista de Navegação */
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.nav-list li {
+    margin-bottom: 20px;
+}
+
+.nav-list li a, #loginButton, #logoutButton {
     display: flex;
     align-items: center;
-    padding: 10px 15px; /* Padding nos itens */
-    border-radius: 12px; /* Bordas arredondadas */
-    transition: color 0.3s ease, background-color 0.3s ease; /* Transições suaves */
-}
-
-.nav-list a:hover {
-    color: #000; /* Cor do texto ao passar o mouse */
-    background-color: rgba(255, 255, 255, 0.644); /* Cor de fundo ao passar o mouse */
-}
-
-/* Ícones da sidebar */
-.material-icons {
-    font-size: 24px;
-    margin-right: 8px;
-    color: #fff; /* Cor dos ícones */
-    transition: color 0.3s ease; /* Transição suave nos ícones */
-}
-
-.nav-list a:hover .material-icons {
-    color: #000; /* Cor dos ícones ao passar o mouse */
-}
-
-/* Texto dos links da sidebar */
-.nav-text {
-    display: none;
-    color: #fff; /* Cor inicial do texto */
-    transition: color 0.3s ease; /* Transição suave na cor do texto */
-}
-
-.sidebar.expanded .nav-text {
-    display: inline;
-    color: #f0e5d8; /* Cor do texto quando a sidebar está expandida */
-}
-
-/* Estilo do botão de logout */
-#logoutButton {
-    background-color: #dc3545; /* Cor de fundo padrão para logout */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    box-shadow: 0 2px 10px rgba(220, 53, 69, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: #ecf0f1;
+    padding: 10px;
+    transition: background-color 0.3s ease;
     text-decoration: none;
 }
 
-#logoutButton:hover {
-    background-color: #c82333;
-    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
-}
-
-#logoutButton .material-icons {
-    margin-right: 8px;
-}
-
-#logoutButton .logout-text {
-    display: inline;
-}
-
-.sidebar:not(.expanded) #logoutButton .logout-text {
-    display: none;
-}
-
-#loginBnt, #logoutButton {
-    background-color: #007aff; /* Cor de fundo padrão */
-    color: white;
-    border: none;
-    padding: 10px 20px; /* Ajuste o padding conforme necessário */
-    border-radius: 12px;
-    font-size: 14px; /* Tamanho de fonte ajustado */
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    box-shadow: 0 2px 10px rgba(0, 122, 255, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none; /* Remove o sublinhado padrão de links */
-}
-
-#loginBnt {
-    background-color: #007bff;
-}
-
-#logoutButton {
-    background-color: #dc3545; /* Cor de fundo padrão para logout */
-}
-
-#loginBnt:hover {
-    background-color: #0051a8;
-    box-shadow: 0 4px 20px rgba(0, 122, 255, 0.3);
-}
-
-#logoutButton:hover {
-    background-color: #c82333;
-    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
-}
-
-#loginBnt .material-icons, #logoutButton .material-icons {
-    margin-right: 8px;
-}
-
-#loginBnt .login-text, #logoutButton .logout-text {
-    display: inline;
-}
-
-.sidebar:not(.expanded) #logoutButton .logout-text {
-    display: none;
-}
-
-.sidebar:not(.expanded) #loginBnt .login-text {
-    display: none;
-}
-
-/* ================================
-   Foco para Acessibilidade
-   ================================ */
-.sidebar a:focus,
-#logoutButton:focus, #loginBnt:focus {
-    outline: 2px solid #007bff;
+.nav-list li a:hover {
+    background-color: #3498db;
+    border-radius: 5px;
 }
 
 .petition-info {
@@ -272,8 +188,7 @@ button[type="submit"] {
 }
 
 input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"] {
+input[type="password"]:focus {
     outline: none;
     border-color: #007bff;
 }
