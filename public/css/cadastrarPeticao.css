@@ -61,11 +61,13 @@ body {
 /* Itens da lista no estado colapsado */
 .nav-list .nav-text, .loginButton, .logoutButton {
     display: none; /* Esconde o texto no estado colapsado */
+    text-align: center;
 }
 
 .sidebar.expanded .nav-text, .loginButton, .logoutButton  {
     display: inline; /* Mostra o texto quando expandido */
 }
+
 
 .nav-list li {
     margin-bottom: 20px;
@@ -74,8 +76,9 @@ body {
     justify-content: center; /* Centraliza os ícones no estado colapsado */
 }
 
+
 .sidebar.expanded .nav-list li {
-    justify-content: flex-start; /* Reposiciona os ícones e texto no estado expandido */
+    justify-content: center; /* Reposiciona os ícones e texto no estado expandido */
 }
 
 /* Botões de Login e Logout */
@@ -89,9 +92,11 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    border-radius: 7px;
     padding: 10px;
     transition: background-color 0.3s ease;
 }
+
 
 #loginButton:hover, #logoutButton:hover {
     background-color: #3498db;
@@ -229,6 +234,16 @@ footer {
     width: 100%;
 }
 
+nav{
+    display: flex;
+    justify-content: center;
+}
+
+nav a{
+    text-decoration: none;
+    color: white;
+}
+
 footer nav ul {
     padding: 0;
     list-style: none;
@@ -238,6 +253,7 @@ footer nav ul {
 }
 
 footer na ul li a {
+    display: flex;
     color: #ecf0f1 !important;
     font-weight: bold !important;
 }

@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = '../View/login.html';
     });
 document.getElementById('menuToggle').addEventListener('click', function() {
-    const sidebar = document.querySelector('.sidebar');
+    const sidebar = document.querySelectorAll('.sidebar');
     sidebar.classList.toggle('expanded');
 });
 

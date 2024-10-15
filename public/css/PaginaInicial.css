@@ -40,12 +40,15 @@ a:hover {
 .profile-icon img.profile-img {
     width: 50px;
     border-radius: 50%;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    background-color: transparent; /* Fundo padrão transparente */
 }
 
 .profile-icon img.profile-img:hover {
     transform: scale(1.1);
+    background-color: rgba(0, 123, 255, 0.2); 
 }
+
 
 /* Estilos dos Cards */
 .card {

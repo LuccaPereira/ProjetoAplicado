@@ -60,8 +60,7 @@ export function bringInfoModal() {
         console.log("Nenhum advogado está logado.");
     }
 }
-
-function clickMenu() {
+function clickMenucerto() {
     const sidebar = document.querySelector('.sidebar');
     const menuToggle = document.getElementById('menuToggle');
     
@@ -73,7 +72,7 @@ function clickMenu() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    clickMenu();
+    clickMenucerto();
 
     const logoutButton = document.getElementById('logoutButton');
     if (logoutButton) {

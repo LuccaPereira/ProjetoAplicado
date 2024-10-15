@@ -276,6 +276,12 @@ a {
 
 .sidebar.expanded .nav-text, .loginButton, .logoutButton  {
     display: inline; /* Mostra o texto quando expandido */
+    
+}
+
+.nav-text{
+    text-align: left;
+    left: 4px;
 }
 
 .nav-list li {
@@ -285,9 +291,14 @@ a {
     justify-content: center; /* Centraliza os ícones no estado colapsado */
 }
 
-.sidebar.expanded .nav-list li {
-    justify-content: flex-start; /* Reposiciona os ícones e texto no estado expandido */
+.nav-list btn .btn-outline-center{
+    background-color: red;
 }
+
+.sidebar.expanded .nav-list li {
+    justify-content: flex-center; /* Reposiciona os ícones e texto no estado expandido */
+}
+
 
 /* Botões de Login e Logout */
 #loginButton, #logoutButton {
@@ -300,6 +311,7 @@ a {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    border-radius: 7px;
     padding: 10px;
     transition: background-color 0.3s ease;
 }
