@@ -3,7 +3,7 @@
 const menuToggle = document.getElementById('menuToggle');
 const sidebar = document.querySelector('.sidebar');
 
-document.getElementById('loginBnt').addEventListener('click', function() {
+document.getElementById('loginButton').addEventListener('click', function() {
     window.location.href = '../View/perfilAdvogado.html';
 });
 

@@ -60,25 +60,36 @@ export function bringInfoModal() {
         console.log("Nenhum advogado está logado.");
     }
 }
-
-export function clickMenu() {
+function clickMenucerto() {
     const sidebar = document.querySelector('.sidebar');
     const menuToggle = document.getElementById('menuToggle');
     
-    menuToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('expanded');
-    });
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('expanded');
+        });
+    }
 }
 
-export function logout() {
-    localStorage.removeItem('loggedInLawyer');
-    localStorage.removeItem('loggedInCliente');
-    window.location.href = '../View/login.html';
-}
+document.addEventListener('DOMContentLoaded', () => {
+    clickMenucerto();
 
-export function paginaPerfil() {
-    window.location.href = '../View/perfilAdvogado.html';
-}
+    const logoutButton = document.getElementById('logoutButton');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', function() {
+            localStorage.removeItem('loggedInLawyer');
+            localStorage.removeItem('loggedInCliente');
+            window.location.href = '../View/login.html';
+        });
+    }
+
+    const loginBnt = document.getElementById('loginButton');
+    if (loginBnt) {
+        loginBnt.addEventListener('click', function() {
+            window.location.href = '../View/perfilAdvogado.html';
+        });
+    }
+});
 
 export function uploadProfileImage() {
     document.getElementById('profile-image-upload').addEventListener('change', function(event) {

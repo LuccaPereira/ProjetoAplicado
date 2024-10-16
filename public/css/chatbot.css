@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
 
-body{
+body {
     background-color: rgb(220, 225, 230);
     font-family: "Radio Canada Big", sans-serif;
     font-optical-sizing: auto;
@@ -12,14 +12,16 @@ body{
     display: flex;
     flex-direction: column;
 }
+
 html, body {
     height: 100%;
     margin: 0;
-} 
+    display: flex;
+    flex-direction: column;
+}
 
-
-.inicial-conteiner{
-    padding: 0;
+.inicial-conteiner {
+    flex: 1; /* Isso permite que o conteúdo principal ocupe o espaço restante */
 }
 
 .card-info {
@@ -68,17 +70,17 @@ html, body {
 }
 
 .left-card-section,
-.right-card-section{
+.right-card-section {
     width: 50%;
 }
 
 .more-files {
-    display:inline-block;
+    display: inline-block;
     width: 30%;
     border: 2px solid rgba(0, 0, 0, 0.507);
     background-color: #473030;
     border-radius: 2px;
-    margin: 5% auto; 
+    margin: 5% auto;
     color: white;
     transition: .3s;
     text-align: center;
@@ -121,27 +123,47 @@ html, body {
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 20px;
+    background-color: #f9f9f9; /* Cor de fundo clara para o chat */
+    width: 90%; /* Ajuste a largura para 90% */
+    margin-left: auto; /* Centraliza a janela do chat */
+    margin-right: auto; /* Centraliza a janela do chat */
 }
 
 .messages {
     overflow-y: auto;
 }
 
-.user-message, .bot-message {
-    padding: 10px;
+#sendButton {
+    flex: 1;
+    border: 2px solid #ccc; /* Borda ao redor do campo de entrada */
+    border-radius: 20px; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    width: 20%; /* Ajuste a largura para 90% */
+    margin-right: auto; /* Centraliza o campo de entrada */
+}
+
+#sendButton:hover {
+    background-color: #0056b3; /* Cor ao passar o mouse */
+    cursor: pointer; /* Indica que é clicável */
+}
+
+.user-message, .bot-message, #chatInput {
+    padding: 12px;
     border-radius: 10px;
     margin-bottom: 10px;
     max-width: 80%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para as mensagens */
 }
 
-.user-message {
-    background-color: #f0f0f0;
+.user-message, #chatInput {
+    background-color: #e6f2ff; /* Cor de fundo para a mensagem do usuário */
     text-align: left;
     align-self: flex-start;
 }
 
 .bot-message {
-    background-color: #e6f2ff;
+    background-color: #f0f0f0; /* Cor de fundo para a mensagem do bot */
     text-align: left;
     align-self: flex-end;
 }
@@ -153,203 +175,175 @@ html, body {
 
 .form-control {
     flex: 1;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border: 2px solid #ccc; /* Borda ao redor do campo de entrada */
+    border-radius: 20px; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    width: 90%; /* Ajuste a largura para 90% */
+    margin-left: auto; /* Centraliza o campo de entrada */
+    margin-right: auto; /* Centraliza o campo de entrada */
 }
 
 .btn {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    border-top-left-radius: 20px; /* Bordas arredondadas do botão */
+    border-bottom-left-radius: 20px;
+    background-color: #007bff; /* Cor do botão */
+    color: #fff; /* Cor do texto do botão */
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Cor do botão ao passar o mouse */
 }
 
 footer {
-	background-color: #0e3754;
-	color: #fff;
-	padding: 5px; 
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 20px 0; 
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 120px;
-    width: calc(100% - 80px);
-    margin-left: 80px;
-	text-align: center;
+    width: 100%; /* Preenche toda a largura da tela */
+    position: relative; /* Pode ser 'relative' ou 'fixed', dependendo da sua necessidade */
+    margin-top: auto; /* Faz o footer ficar na parte inferior se houver espaço */
 }
 
 ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0; /* Margem superior para separar do texto do footer */
 }
 
 li {
-	display: inline-block;
-	margin: 0 10px;
+    display: inline-block;
+    margin: 0 10px;
 }
 
 a {
-	color: #fff;
-	text-decoration: none;
+    color: #fff;
+    text-decoration: none;
 }
 
-
-
-
-/* ================================
-   Sidebar Estilos
-   ================================ */
-
-   .sidebar {
-    background-color: #0e3754;
-    padding: 10px 5px; /* Mais espaçamento vertical */
-    width: 80px; 
+/* Sidebar */
+.sidebar {
+    width: 150px; /* Largura inicial colapsada */
+    background-color: #2c3e50;
+    height: 100vh;
+    padding: 20px 10px; /* Menos padding para o estado colapsado */
     position: fixed;
     top: 0;
     left: 0;
-    bottom: 0;
-    transition: width 0.3s ease;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    border-right: 1px solid #000;
-    z-index: 1000;
-    overflow: hidden; /* Esconde conteúdo extra na sidebar */
+    justify-content: space-between;
+    transition: width 0.3s ease;
+    overflow: hidden;
 }
 
 .sidebar.expanded {
-    width: 160px;
+    width: 250px; /* Largura expandida */
+    padding: 20px;
 }
 
-/* Logo */
-.logo {
-    width: 100%;
-    margin-bottom: 10px;
+.sidebar .logo {
+    width: 80px; /* Logo menor no estado colapsado */
+    margin: 1% auto;
+    display: block;
     transition: width 0.3s ease;
+    margin-bottom: 15%;
 }
 
 .sidebar.expanded .logo {
-    width: 80%;
+    width: 150px; /* Logo maior no estado expandido */
 }
 
-/* Ícone do menu */
 .menu-icon {
-    font-size: 28px;
-    color: white;
+    font-size: 36px;
+    color: #ecf0f1;
     cursor: pointer;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Lista de navegação */
-.nav-list {
-    list-style: none;
-    padding: 0;
-    width: 100%;
-    margin: 0;
+/* Itens da lista no estado colapsado */
+.nav-list .nav-text, .loginButton, .logoutButton {
+    display: none; /* Esconde o texto no estado colapsado */
+}
+
+.sidebar.expanded .nav-text, .loginButton, .logoutButton  {
+    display: inline; /* Mostra o texto quando expandido */
+    
+}
+
+.nav-text{
+    text-align: left;
+    left: 4px;
 }
 
 .nav-list li {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* Centraliza os ícones no estado colapsado */
 }
 
-.nav-list a {
-    color: white;
-    font-weight: 600;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    border-radius: 12px;
-    transition: background-color 0.3s, color 0.3s;
+.nav-list btn .btn-outline-center{
+    background-color: red;
 }
 
-.nav-list a:hover {
-    color: #000;
-    background-color: rgba(255, 255, 255, 0.65);
+.sidebar.expanded .nav-list li {
+    justify-content: flex-center; /* Reposiciona os ícones e texto no estado expandido */
 }
 
-.material-icons {
-    font-size: 24px;
-    margin-right: 10px;
-    transition: color 0.3s;
-}
 
-.nav-list a:hover .material-icons {
-    color: #000;
-}
-
-/* Texto da sidebar */
-.nav-text {
-    display: none;
-}
-
-.sidebar.expanded .nav-text {
-    display: inline;
-    color: #f0e5d8;
-}
-
-/* ================================
-   Botões de Login e Logout
-   ================================ */
-
-#loginBnt, #logoutButton {
-    background-color: #007aff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 2px 10px rgba(0, 122, 255, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-}
-
-#logoutButton {
-    background-color: #dc3545;
-}
-
-#loginBnt:hover {
-    background-color: #0051a8;
-    box-shadow: 0 4px 20px rgba(0, 122, 255, 0.3);
-}
-
-#logoutButton:hover {
-    background-color: #c82333;
-    box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
-}
-
-#loginBnt .material-icons, #logoutButton .material-icons {
-    margin-right: 8px;
-}
-
-.sidebar:not(.expanded) #loginBnt .login-text, 
-.sidebar:not(.expanded) #logoutButton .logout-text {
-    display: none;
-}
-
-/* ================================
-   Acessibilidade (Foco)
-   ================================ */
-
-.sidebar a:focus, #loginBnt:focus, #logoutButton:focus {
-    outline: 2px solid #007bff;
-}
-
-.chatBotContainer{
+/* Botões de Login e Logout */
+#loginButton, #logoutButton {
     width: 100%;
+    margin-bottom: 20px;
+    background-color: transparent;
+    color: #ecf0f1;
+    border: 2px solid #ecf0f1;
     display: flex;
-    box-sizing: border-box;
     align-items: center;
     justify-content: center;
-    padding: 0 20px 0 100px;
-    flex: 1; /* Isso fará com que a div ocupe o espaço restante */
-    background-color: #f0f0f0;
+    gap: 10px;
+    border-radius: 7px;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#loginButton:hover, #logoutButton:hover {
+    background-color: #3498db;
+    color: #ecf0f1;
+}
+
+/* Lista de Navegação */
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.nav-list li {
+    margin-bottom: 20px;
+}
+
+.nav-list li a, #loginButton, #logoutButton {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: #ecf0f1;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.nav-list li a:hover {
+    background-color: #3498db;
+    border-radius: 5px;
 }

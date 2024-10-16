@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const loginBnt = document.getElementById('loginBnt');
+    const loginBnt = document.getElementById('loginButton');
     if (loginBnt) {
         loginBnt.addEventListener('click', function() {
             window.location.href = '../View/perfilAdvogado.html';

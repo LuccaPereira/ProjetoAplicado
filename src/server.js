@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/View/login.html'));
+  res.sendFile(path.join(__dirname, '../public/View/PaginaInicial.html'));
 });
 
 app.post('/generate-petition', async (req, res) => {

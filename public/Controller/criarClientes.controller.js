@@ -1,4 +1,4 @@
-import { getClientes, updateCliente, addCliente, validarCPF, getLoggedInLawyer } from '../model/criarClientes.js';
+import { getClientes, updateCliente, addCliente, validarCPF,validarEmail, getLoggedInLawyer } from '../model/criarClientes.js';
 import { getLoggedInLawyerEmail } from '../model/perfilAdvogado.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Elemento com ID 'clienteForm' não foi encontrado.");
     }
 
-    document.getElementById('loginBnt').addEventListener('click', function() {
+    document.getElementById('loginButton').addEventListener('click', function() {
         window.location.href = '../View/perfilAdvogado.html';
     });
 
@@ -58,8 +58,10 @@ async function submitClientes(event) {
     const cpf = document.getElementById("cpf").value;
     const senha = document.getElementById("senha").value;
     const email = document.getElementById("email").value;
+    const confirmarSenha = document.getElementById('confirmarSenha').value;
 
-    if (!cpf || !senha) {
+
+    if (!cpf || !senha || !email || !confirmarSenha) {
         alert('Por favor, preencha todos os campos.');
         return;
     }
@@ -73,6 +75,17 @@ async function submitClientes(event) {
         alert('A senha deve ter no mínimo 6 caracteres.');
         return;
     }
+
+    if (senha !== confirmarSenha) {
+        alert('As senhas não coincidem.');
+        return;
+    }
+
+    if (!validarEmail(email)) {
+        alert('Favor inserir um e-mail válido.');
+        return;
+    }
+
 
     const Lawyer = getLoggedInLawyer();
     console.log("Advogado logado:", Lawyer.OAB);
