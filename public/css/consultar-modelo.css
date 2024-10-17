@@ -74,7 +74,7 @@ body {
 }
 
 .sidebar.expanded .nav-list li {
-    justify-content: flex-start; /* Reposiciona os ícones e texto no estado expandido */
+    justify-content: center; /* Reposiciona os ícones e texto no estado expandido */
 }
 
 /* Botões de Login e Logout */
