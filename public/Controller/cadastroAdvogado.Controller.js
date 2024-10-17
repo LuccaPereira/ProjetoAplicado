@@ -51,7 +51,7 @@ async function registrarUsuario(email, senha) {
 
     try {
         const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, senha);
-        return userCredential.user; // Retorna o usuário registrado
+        return userCredential.user; // Retorna o objeto userCredential
     } catch (error) {
         console.error("Erro ao registrar usuário:", error);
         throw error; // Propaga o erro
@@ -161,15 +161,13 @@ async function submitForm(event) {
 
             // Registrar o usuário com Firebase Auth
             const userCredential = await registrarUsuario(email, senha); // Utiliza a função registrarUsuario
-            const uid = userCredential.uid; // Obter o UID do usuário
+            const uid = userCredential.user.uid; // Obter o UID do usuário
 
             // Salvar os dados do advogado no Realtime Database
             const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-            const collectionPath = `Advogado/${OAB}/PerfilAdvogado.json`;
-            const url = `${databaseURL}/${collectionPath}`;
+            const url = `${databaseURL}/Advogado/${uid}/PerfilAdvogado.json`; // Usando o UID como chave
 
             const oData = {
-                uid: uid, // Armazene o UID para referência futura
                 nome: nome,
                 OAB: OAB,
                 CPF: cpf,
