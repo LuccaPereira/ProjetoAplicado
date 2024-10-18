@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+import { getDatabase, ref, get, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 
 // Sua configuração do Firebase
 const firebaseConfig = {
@@ -15,54 +16,91 @@ const firebaseConfig = {
 
 // Inicialize o Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app); // Inicializa o Auth
+const auth = getAuth(app);
+const db = getDatabase(app);
 
-async function login(email, password) {
+// Função para login e redirecionamento baseado no e-mail
+async function loginWithEmailAndCheckClient(email, password) {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
         console.log('Usuário autenticado:', user);
-        
-        // Armazenar informações do usuário no localStorage
+
         const userInfo = {
             uid: user.uid,
             email: user.email,
         };
         localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
-    
-        // Redirecionar após login bem-sucedido
-        window.location.href = "../View/menu.html"; 
+
+        // Verifica se o e-mail existe na coleção 'Cliente'
+        const isClient = await checkIfEmailIsClient(email);
+
+        if (isClient) {
+            console.log('Redirecionando para tabelaCliente.html');
+            window.location.href = "../View/tabelaCliente.html"; // Redireciona para a página de clientes
+        } else {
+            console.log('Redirecionando para menu.html');
+            window.location.href = "../View/menu.html"; // Redireciona para a página de menu se não for cliente
+        }
+
     } catch (error) {
         console.error('Erro ao fazer login:', error);
-        
-        // Mensagem genérica para todos os erros de autenticação
-        if (error.code.startsWith('auth/')) {
-            showErrorModal('Credenciais inválidas. Verifique seu email e senha. Se você ainda não tem uma conta, considere se cadastrar.');
+        showErrorModal('Erro ao fazer login: ' + error.message);
+    }
+}
+
+// Função para verificar se o e-mail existe na coleção 'Cliente'
+async function checkIfEmailIsClient(email) {
+    const advogadoRef = ref(db, 'Advogado');
+    const advogadoSnapshot = await get(advogadoRef);
+
+    if (!advogadoSnapshot.exists()) {
+        console.log('Nenhum advogado encontrado.');
+        return false; // Retorna false se não houver advogados
+    }
+
+    const advogados = advogadoSnapshot.val();
+    // Percorre todos os advogados
+    for (const numeroOAB in advogados) {
+        const perfilClienteRef = ref(db, `Advogado/${numeroOAB}/PerfilDoCliente`);
+        const perfilClienteSnapshot = await get(perfilClienteRef);
+
+        if (perfilClienteSnapshot.exists()) {
+            const clientes = perfilClienteSnapshot.val();
+            // Percorre todos os clientes
+            for (const cpf in clientes) {
+                const loginData = clientes[cpf]; // Obtemos o objeto correspondente ao CPF
+                if (loginData && loginData.email === email) {
+                    console.log(`E-mail encontrado para o CPF ${cpf} no advogado ${numeroOAB}`);
+                    return true; // Retorna true se o e-mail for encontrado
+                }
+            }
         } else {
-            showErrorModal('Erro ao fazer login: ' + error.message);
+            console.log(`Perfil de cliente não encontrado para o advogado ${numeroOAB}`);
         }
     }
+
+    console.log('E-mail não encontrado em nenhum advogado.');
+    return false; // Retorna false se o e-mail não for encontrado em nenhum advogado
 }
 
 // Função para mostrar o modal de erro
 function showErrorModal(message) {
     const errorMessage = document.getElementById('errorMessage');
-    errorMessage.textContent = message; // Define a mensagem de erro
+    errorMessage.textContent = message;
     const modal = document.getElementById('errorModal');
-    modal.style.display = 'block'; // Exibe o modal
+    modal.style.display = 'block';
 
-    // Adiciona evento para fechar o modal ao clicar no botão de fechar
     document.getElementById('closeModal').onclick = function() {
-        modal.style.display = 'none'; // Oculta o modal
-    }
+        modal.style.display = 'none';
+    };
 
-    // Fecha o modal ao clicar fora dele
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = 'none';
         }
-    }
+    };
 }
 
 // Adiciona o listener ao evento de submissão do formulário
@@ -73,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             const email = document.getElementById('email').value; // Captura o e-mail
             const password = document.getElementById('senha').value; // Captura a senha
-            login(email, password);
+            loginWithEmailAndCheckClient(email, password);
         });
     } else {
         console.error("Formulário de login não encontrado.");

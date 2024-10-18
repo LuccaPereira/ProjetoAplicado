@@ -161,18 +161,19 @@ async function submitForm(event) {
 
             // Registrar o usuário com Firebase Auth
             const userCredential = await registrarUsuario(email, senha); // Utiliza a função registrarUsuario
-            const uid = userCredential.user.uid; // Obter o UID do usuário
+            const uid = userCredential.uid; // Obter o UID do usuário
 
             // Salvar os dados do advogado no Realtime Database
             const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-            const url = `${databaseURL}/Advogado/${uid}/PerfilAdvogado.json`; // Usando o UID como chave
+            const url = `${databaseURL}/Advogado/${OAB}/PerfilAdvogado.json`; // Usando o UID como chave
 
             const oData = {
                 nome: nome,
                 OAB: OAB,
                 CPF: cpf,
                 email: email,
-                senha: senha
+                senha: senha,
+                uid: uid // Incluindo o UID nos dados
             };
 
             await axios.put(url, oData);

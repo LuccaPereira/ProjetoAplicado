@@ -24,11 +24,13 @@ export function getLoggedInLawyer() {
     return loggedInLawyerString ? JSON.parse(loggedInLawyerString) : null;
 }
 
-export function updateProfileInDatabase(uid, profileData) {
+export async function updateProfileInDatabase(uid, profileData) {
     const db = getDatabase();
-    const lawyerRef = ref(db, 'Advogado/' + uid + '/PerfilAdvogado'); // Atualizando dentro de Advogado > uid > PerfilAdvogado
+    // Assume que você tenha o numeroOAB disponível em profileData ou o obtenha de outra maneira
+    const numeroOAB = profileData.OAB; // Ou de onde você está obtendo o número OAB
 
-    return update(lawyerRef, profileData);
+    const profileRef = ref(db, `Advogado/${numeroOAB}/PerfilAdvogado`);
+    return update(profileRef, profileData);
 }
 export function updateLocalStorage(profileData) {
     localStorage.setItem('loggedInLawyer', JSON.stringify(profileData));

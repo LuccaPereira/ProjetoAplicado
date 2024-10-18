@@ -33,9 +33,10 @@ export function validarEmail(email) {
 }
 
 export function getLoggedInLawyer() {
-    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
-    return loggedInLawyerString ? JSON.parse(loggedInLawyerString) : null;
+    const lawyer = JSON.parse(localStorage.getItem('loggedInLawyer'));
+    return lawyer || {}; // Retorna um objeto vazio se não encontrar o advogado
 }
+
 
 
 export function getClientes(url) {

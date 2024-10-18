@@ -1,5 +1,4 @@
-import { getClientes, updateCliente, addCliente, validarCPF,validarEmail, getLoggedInLawyer } from '../model/criarClientes.js';
-import { getLoggedInLawyerEmail } from '../model/perfilAdvogado.js';
+import { getClientes, updateCliente, addCliente, validarCPF, validarEmail } from '../model/criarClientes.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     function clickMenu() {
@@ -16,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoutButton = document.getElementById('logoutButton');
     if (logoutButton) {
         logoutButton.addEventListener('click', function() {
-            localStorage.removeItem('loggedInLawyer');
             localStorage.removeItem('loggedInCliente');
             window.location.href = '../View/login.html';
         });
@@ -36,32 +34,51 @@ document.addEventListener('DOMContentLoaded', () => {
     clickMenu();
 });
 
+// Inicialização do Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
+    authDomain: "projetoaplicado-1.firebaseapp.com",
+    databaseURL: "https://projetoaplicado-1-default-rtdb.firebaseio.com",
+    projectId: "projetoaplicado-1",
+    storageBucket: "projetoaplicado-1.appspot.com",
+    messagingSenderId: "546978495496",
+    appId: "1:546978495496:web:502e5bab60ead7fcd0a5bd",
+    measurementId: "G-WB0MPN3701"
+};
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
 async function submitClientes(event) {
     event.preventDefault();
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDs6dBCSuPHem7uxrtQNkmoM2KF-ZSEslE",
-        authDomain: "projetoaplicado-2f578.firebaseapp.com",
-        projectId: "projetoaplicado-2f578",
-        storageBucket: "projetoaplicado-2f578.appspot.com",
-        messagingSenderId: "115355511974",
-        appId: "1:115355511974:web:5fca38830eb5a49d3a1867",
-        measurementId: "G-T9MFZ37QLX",
-        databaseURL: "https://projetoaplicado-1-default-rtdb.firebaseio.com"
-    };
-
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
-    
     const clienteForm = document.getElementById("clienteForm");
-    const cpf = document.getElementById("cpf").value;
-    const senha = document.getElementById("senha").value;
-    const email = document.getElementById("email").value;
-    const confirmarSenha = document.getElementById('confirmarSenha').value;
+    if (!clienteForm) {
+        console.error("Elemento com ID 'clienteForm' não foi encontrado.");
+        return;
+    }
 
+    // Captura dos valores dos campos do formulário
+    const cpfElement = document.getElementById("cpf");
+    const senhaElement = document.getElementById("senha");
+    const emailElement = document.getElementById("email");
+    const confirmarSenhaElement = document.getElementById('confirmarSenha');
+    const numeroOABElement = document.getElementById("numeroOAB");
 
-    if (!cpf || !senha || !email || !confirmarSenha) {
+    if (!cpfElement || !senhaElement || !emailElement || !confirmarSenhaElement || !numeroOABElement) {
+        console.error("Um ou mais elementos do formulário não foram encontrados.");
+        return;
+    }
+
+    const cpf = cpfElement.value;
+    const senha = senhaElement.value;
+    const email = emailElement.value;
+    const confirmarSenha = confirmarSenhaElement.value;
+    const numeroOAB = numeroOABElement.value; // OAB do advogado
+
+    // Validações...
+    if (!cpf || !senha || !email || !confirmarSenha || !numeroOAB) {
         alert('Por favor, preencha todos os campos.');
         return;
     }
@@ -86,81 +103,98 @@ async function submitClientes(event) {
         return;
     }
 
+    const advCollectionPath = `Advogado/${numeroOAB}/PerfilDoCliente`; // Caminho da coleção para o advogado
+    const clienteRef = firebase.database().ref(advCollectionPath);
 
-    const Lawyer = getLoggedInLawyer();
-    console.log("Advogado logado:", Lawyer.OAB);
-    const nomeAdvogado = Lawyer.nome;
-    const oabAdvogado = Lawyer.OAB;
+    // Verificar se o advogado existe
+    const advRef = firebase.database().ref(`Advogado/${numeroOAB}`);
+    advRef.once("value")
+        .then(async advSnapshot => {
+            if (!advSnapshot.exists()) {
+                alert("Advogado com essa OAB não encontrado.");
+                return;
+            }
 
-    const collectionPath = "Advogado";
-    const clienteRef = firebase.database().ref(`${collectionPath}/${oabAdvogado}/PerfilDoCliente`);
+            // Verifica se o cliente já existe
+            clienteRef.once("value")
+                .then(async snapshot => {
+                    const cliente = snapshot.val();
+                    let clienteKeyExistente = null;
 
-    clienteRef.once("value")
-        .then(async snapshot => {
-            const clientes = snapshot.val();
-            let clienteKeyExistente = null;
+                    if (cliente) {
+                        for (let clienteKey in cliente) {
+                            if (cliente.hasOwnProperty(clienteKey)) {
+                                const clienteData = cliente[clienteKey];
 
-            if (clientes) {
-                for (let clienteKey in clientes) {
-                    if (clientes.hasOwnProperty(clienteKey)) {
-                        const cliente = clientes[clienteKey];
+                                if (clienteData.cpf === cpf) {
+                                    clienteKeyExistente = clienteKey;
 
-                        if (cliente.cpf === cpf) {
-                            clienteKeyExistente = clienteKey;
-
-                            // Verifica se a senha é a mesma do cliente existente
-                            if (cliente.senha === senha) {
-                                alert("Usuário já cadastrado");
-                                await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado);
-                                return; // Para aqui se a senha já estiver cadastrada
+                                    if (clienteData.senha === senha) {
+                                        alert("Usuário já cadastrado");
+                                        await enviarEmail(cpf, senha, email);
+                                        return;
+                                    }
+                                    break;
+                                }
                             }
-                            break; // Pare aqui se encontrar o cliente
                         }
                     }
-                }
-            }
 
-            // Se o cliente já existe e a senha é diferente, atualiza a senha
-            if (clienteKeyExistente) {
-                const clientRef = firebase.database().ref(`${collectionPath}/${oabAdvogado}/PerfilDoCliente/${clienteKeyExistente}`);
-                
-                clientRef.update({ senha: senha })
-                    .then(async () => {
-                        alert("Senha do cliente foi atualizada com sucesso!");
-                        await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado);
-                        clienteForm.reset();
-                    })
-                    .catch(error => {
-                        alert("Erro ao atualizar senha do cliente: " + error.message);
-                    });
-            } else {
-                // Se o cliente não existe, cria um novo cliente
-                const oData = { cpf: cpf, senha: senha };
+                    // Se o cliente já existe e a senha é diferente, atualiza a senha
+                    if (clienteKeyExistente) {
+                        const clientRef = clienteRef.child(clienteKeyExistente);
 
-                clienteRef.child(cpf).set(oData) // Usa o push para adicionar um novo cliente
-                    .then(async () => {
-                        alert("Novo cliente foi adicionado com sucesso!");
-                        await enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado);
-                        clienteForm.reset();
-                    })
-                    .catch(error => {
-                        alert("Erro ao adicionar novo cliente: " + error.message);
-                    });
-            }
+                        clientRef.update({ senha: senha })
+                            .then(async () => {
+                                alert("Senha do cliente foi atualizada com sucesso!");
+                                await enviarEmail(cpf, senha, email);
+                                clienteForm.reset();
+                            })
+                            .catch(error => {
+                                alert("Erro ao atualizar senha do cliente: " + error.message);
+                            });
+                    } else {
+                        // Se o cliente não existe, cria um novo cliente
+                        const oData = { cpf: cpf, senha: senha, email: email };
+
+                        try {
+                            const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, senha);
+                            const user = userCredential.user;
+
+                            // Adiciona o cliente no Firebase Database após o sucesso no registro
+                            await clienteRef.child(cpf).set({
+                                cpf: cpf,
+                                senha: senha,
+                                email: email,
+                                uid: user.uid
+                            });
+
+                            alert("Novo cliente foi adicionado com sucesso!");
+                            await enviarEmail(cpf, senha, email);
+                            clienteForm.reset();
+                        } catch (error) {
+                            alert("Erro ao registrar o e-mail: " + error.message);
+                        }
+                    }
+                })
+                .catch(error => {
+                    alert("Erro ao buscar cliente: " + error.message);
+                });
         })
         .catch(error => {
-            alert("Erro ao buscar clientes: " + error.message);
+            alert("Erro ao buscar advogado: " + error.message);
         });
 }
 
-async function enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado) {
-    const toEmail = document.getElementById('email').value;
-    const fromEmail = getLoggedInLawyerEmail(); // Obtém o e-mail do advogado logado
+async function enviarEmail(cpf, senha, email) {
+    const toEmail = email; // E-mail do cliente
+    const fromEmail = "smartlegalentrerprise@gmail.com"; // E-mail do remetente fixo
+
     console.log('E-mail do destinatário:', toEmail);
     console.log('E-mail do remetente:', fromEmail);
 
-    if (!toEmail || !fromEmail) {
-        console.error("E-mail do destinatário ou remetente não encontrado.");
+    if (!toEmail) {
+        console.error("E-mail do destinatário não encontrado.");
         return;
     }
 
@@ -170,11 +204,9 @@ async function enviarEmail(cpf, senha, email, nomeAdvogado, oabAdvogado) {
 
     const templateParams = {
         to_email: toEmail,
-        cpf: cpf,
+        email: toEmail,
         senha: senha,
-        nome_advogado: nomeAdvogado, // Adiciona o nome do advogado
-        oab_advogado: oabAdvogado,    // Adiciona a OAB do advogado
-        reply_to: fromEmail // Adiciona o e-mail do advogado no campo reply_to
+        reply_to: fromEmail
     };
 
     try {

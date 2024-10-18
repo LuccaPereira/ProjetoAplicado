@@ -20,27 +20,35 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app); // Inicializa a autenticação
 
 // Função para obter o advogado logado
-function getLoggedInLawyer() {
+// Função para obter o advogado logado
+async function getLoggedInLawyer() {
     return new Promise((resolve, reject) => {
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const uid = user.uid;
                 const db = getDatabase(app);
-                const lawyerRef = ref(db, 'Advogado/' + uid);
+                const advogadoRef = ref(db, 'Advogado');
 
-                get(lawyerRef)
-                    .then(snapshot => {
-                        if (snapshot.exists()) {
-                            resolve({ uid: uid, ...snapshot.val() });
-                        } else {
-                            console.log("Nenhum advogado encontrado com esse UID.");
-                            resolve(null);
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Erro ao acessar o banco de dados:", error);
-                        reject(error);
-                    });
+                try {
+                    const snapshot = await get(advogadoRef);
+                    if (snapshot.exists()) {
+                        snapshot.forEach((advogadoSnapshot) => {
+                            const advogadoData = advogadoSnapshot.val();
+                            const numeroOAB = advogadoSnapshot.key;
+
+                            if (advogadoData.PerfilAdvogado && advogadoData.PerfilAdvogado.uid === uid) {
+                                resolve({ uid: uid, numeroOAB: numeroOAB, ...advogadoData.PerfilAdvogado });
+                            }
+                        });
+                        resolve(null); // Se não encontrar, retorna null
+                    } else {
+                        console.log("Nenhum advogado encontrado.");
+                        resolve(null);
+                    }
+                } catch (error) {
+                    console.error("Erro ao acessar o banco de dados:", error);
+                    reject(error);
+                }
             } else {
                 console.log("Nenhum advogado está logado.");
                 resolve(null);
@@ -53,14 +61,44 @@ function getLoggedInLawyer() {
 onAuthStateChanged(auth, (user) => {
     if (user) {
         console.log("Usuário logado:", user.uid);
-        // Você pode chamar a função bringInfoModal aqui para carregar informações do advogado logado
-        bringInfoModal();
+        // Chamando a função para carregar as informações do advogado logado
+        bringInfoModal(); // Isso já está correto!
     } else {
         console.log("Nenhum usuário logado.");
         // Aqui você pode redirecionar para a página de login, se necessário
     }
 });
 
+async function bringInfoModal() {
+    console.log("Chamando bringInfoModal...");
+    try {
+        const advogadoInfo = await getLoggedInLawyer(); // Chama a função para obter os dados do advogado
+
+        // Logando os dados retornados para depuração
+        console.log("Advogado Info:", advogadoInfo); 
+
+        if (advogadoInfo) {
+            console.log("Dados do advogado logado:", advogadoInfo);
+            // Atualizando os elementos do modal ou qualquer parte da UI com os dados do advogado
+            document.getElementById('nome').innerText = advogadoInfo.nome || "Nome não disponível";
+            document.getElementById('email').innerText = advogadoInfo.email || "Email não disponível";
+            document.getElementById('oab').innerText = advogadoInfo.OAB || "OAB não disponível";
+            document.getElementById('senha').innerText = advogadoInfo.senha|| "CPF não disponível";
+            document.getElementById('job').innerText = advogadoInfo.job|| "Advogado";
+
+            // Caso tenha mais campos no modal, você pode adicioná-los aqui
+            // Exemplo: 
+            // document.getElementById('telefone').innerText = advogadoInfo.telefone || "Telefone não disponível";
+            
+        } else {
+            console.log("Nenhum advogado encontrado com esse UID.");
+            // Aqui você pode exibir uma mensagem ao usuário ou lidar com a ausência de dados
+        }
+    } catch (error) {
+        console.error("Erro ao trazer informações do advogado:", error);
+        // Aqui você pode lidar com o erro, como mostrar uma mensagem de erro ao usuário
+    }
+}
 function toggleEditMode(field) {
     field.classList.toggle('readonly');
     field.classList.toggle('editable');
@@ -92,13 +130,20 @@ export async function saveProfile() {
 
     const loggedInLawyer = await getLoggedInLawyer();
     if (loggedInLawyer) {
-        updateProfileInDatabase(loggedInLawyer.uid, profileData) // Agora passando o UID corretamente
+        // Atualiza o perfil no nó correto
+        updateProfileInDatabase(loggedInLawyer.numeroOAB, profileData) // Agora passando o número OAB corretamente
             .then(() => {
                 alert("Perfil atualizado com sucesso!");
                 updateLocalStorage(profileData);
                 document.querySelectorAll('.profile-field').forEach(field => {
                     toggleEditMode(field);
-                    field.innerHTML = field.querySelector('input').value; // Atualiza o valor final
+                    const inputElement = field.querySelector('input');
+                
+                    if (inputElement) { // Verifica se o input existe
+                        field.innerHTML = inputElement.value; // Atualiza o valor final
+                    } else {
+                        console.warn("Nenhum input encontrado para o campo:", field);
+                    }
                 });
                 document.getElementById('saveProfileBtn').style.display = 'none';
             })
@@ -111,32 +156,6 @@ export async function saveProfile() {
     }
 }
 
-
-export async function bringInfoModal() {
-    const loggedInLawyer = await getLoggedInLawyer();
-    console.log("Dados do advogado logado:", loggedInLawyer); 
-
-    // Verifica se os elementos HTML existem
-    console.log("Elementos do DOM:");
-    console.log("nome:", document.getElementById('nome'));
-    console.log("job:", document.getElementById('job'));
-    console.log("email:", document.getElementById('email'));
-    console.log("senha:", document.getElementById('senha'));
-    console.log("OAB:", document.getElementById('oab'));
-
-    if (loggedInLawyer && loggedInLawyer.PerfilAdvogado) {
-        // Acessa os dados do advogado na nova estrutura
-        const perfilAdvogado = loggedInLawyer.PerfilAdvogado;
-
-        document.getElementById('nome').innerText = perfilAdvogado.nome || '';
-        document.getElementById('job').innerText = perfilAdvogado.job || 'Advogado';
-        document.getElementById('email').innerText = perfilAdvogado.email || '';
-        document.getElementById('senha').innerText = perfilAdvogado.senha || '';
-        document.getElementById('oab').innerText = perfilAdvogado.OAB || '';
-    } else {
-        console.log("Nenhum advogado está logado.");
-    }
-}
 
 function clickMenu() {
     const sidebar = document.querySelector('.sidebar');
