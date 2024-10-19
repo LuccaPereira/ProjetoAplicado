@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-import { getDatabase, ref, get, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 
 // Sua configuração do Firebase
 const firebaseConfig = {
@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-// Função para login e redirecionamento baseado no e-mail
+// Função para login e buscar dados do advogado no Realtime Database
 async function loginWithEmailAndCheckClient(email, password) {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -27,26 +27,49 @@ async function loginWithEmailAndCheckClient(email, password) {
 
         console.log('Usuário autenticado:', user);
 
-        const userInfo = {
-            uid: user.uid,
-            email: user.email,
-        };
-        localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
+        // Recupera os dados adicionais do advogado no Realtime Database
+        const userInfo = await getAdvogadoInfo(user.uid);
 
-        // Verifica se o e-mail existe na coleção 'Cliente'
+        // Verifica se o usuário é cliente ou advogado
         const isClient = await checkIfEmailIsClient(email);
 
+        // Salva as informações completas no localStorage
+        localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
+        console.log('Informações do usuário salvas no localStorage:', userInfo);
+
+        // Redireciona conforme o tipo de usuário
         if (isClient) {
             console.log('Redirecionando para tabelaCliente.html');
-            window.location.href = "../View/tabelaCliente.html"; // Redireciona para a página de clientes
+            window.location.href = "../View/tabelaCliente.html";
         } else {
             console.log('Redirecionando para menu.html');
-            window.location.href = "../View/menu.html"; // Redireciona para a página de menu se não for cliente
+            window.location.href = "../View/menu.html";
         }
 
     } catch (error) {
         console.error('Erro ao fazer login:', error);
         showErrorModal('Erro ao fazer login: ' + error.message);
+    }
+}
+
+// Função para buscar as informações completas do advogado no Realtime Database
+async function getAdvogadoInfo(uid) {
+    const advogadoRef = ref(db, `Advogado/PerfilAdvogado/${uid}`);
+    const snapshot = await get(advogadoRef);
+
+    if (snapshot.exists()) {
+        const dadosAdvogado = snapshot.val();
+        return {
+            uid: uid,
+            email: auth.currentUser.email,
+            nome: dadosAdvogado.nome || '',
+            oab: dadosAdvogado.OAB || '',
+            senha: dadosAdvogado.senha || '',
+            cpf: dadosAdvogado.CPF || ''
+        };
+    } else {
+        console.log('Perfil do advogado não encontrado no banco de dados.');
+        return { uid: uid, email: auth.currentUser.email };
     }
 }
 
@@ -57,23 +80,21 @@ async function checkIfEmailIsClient(email) {
 
     if (!advogadoSnapshot.exists()) {
         console.log('Nenhum advogado encontrado.');
-        return false; // Retorna false se não houver advogados
+        return false;
     }
 
     const advogados = advogadoSnapshot.val();
-    // Percorre todos os advogados
     for (const numeroOAB in advogados) {
         const perfilClienteRef = ref(db, `Advogado/${numeroOAB}/PerfilDoCliente`);
         const perfilClienteSnapshot = await get(perfilClienteRef);
 
         if (perfilClienteSnapshot.exists()) {
             const clientes = perfilClienteSnapshot.val();
-            // Percorre todos os clientes
             for (const cpf in clientes) {
-                const loginData = clientes[cpf]; // Obtemos o objeto correspondente ao CPF
+                const loginData = clientes[cpf];
                 if (loginData && loginData.email === email) {
                     console.log(`E-mail encontrado para o CPF ${cpf} no advogado ${numeroOAB}`);
-                    return true; // Retorna true se o e-mail for encontrado
+                    return true;
                 }
             }
         } else {
@@ -82,7 +103,7 @@ async function checkIfEmailIsClient(email) {
     }
 
     console.log('E-mail não encontrado em nenhum advogado.');
-    return false; // Retorna false se o e-mail não for encontrado em nenhum advogado
+    return false;
 }
 
 // Função para mostrar o modal de erro
@@ -109,8 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
         loginForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            const email = document.getElementById('email').value; // Captura o e-mail
-            const password = document.getElementById('senha').value; // Captura a senha
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('senha').value;
             loginWithEmailAndCheckClient(email, password);
         });
     } else {

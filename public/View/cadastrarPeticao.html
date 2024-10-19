@@ -45,10 +45,10 @@
                 <h2>Informações do Peticionante</h2>
                 <div class="row">
                     <div class="col-md-6">
-                        <input type="text" id="nomePeticionante" class="form-control" placeholder="Nome do Peticionante" required>
+                        <input type="text" id="nomePeticionante" class="form-control" placeholder="Nome do Peticionante">
                     </div>
                     <div class="col-md-6">
-                        <input type="text" id="nomeAdvogado" class="form-control" placeholder="Nome do Advogado" required>
+                        <input type="text" id="nomeAdvogado" class="form-control" placeholder="Nome do Advogado">
                     </div>
                 </div>
             </div>
@@ -57,74 +57,73 @@
                 <h2>Dados para o Processo</h2>
                 <div class="row">
                     <div class="col-md-6">
-                        <input type="text" id="foro" class="form-control" placeholder="Foro" required>
+                        <input type="text" id="foro" class="form-control" placeholder="Foro">
                     </div>
                     <div class="col-md-6">
-                        <input type="text" id="procedimento" class="form-control" placeholder="Procedimento" required>
+                        <input type="text" id="procedimento" class="form-control" placeholder="Procedimento">
                     </div>
                     <div class="col-md-6">
-                        <input type="text" id="acidente" class="form-control" placeholder="Acidente" required>
+                        <input type="text" id="acidente" class="form-control" placeholder="Acidente">
                     </div>
                     <div class="col-md-6">
-                        <input type="text" id="telefone" class="form-control" placeholder="Telefone" required>
+                        <input type="text" id="telefone" class="form-control" placeholder="Telefone">
                     </div>
                     <div class="col-md-6">
-                        <input type="text" id="valor" class="form-control" placeholder="Valor (R$)" required>
+                        <input type="text" id="valor" class="form-control" placeholder="Valor (R$)">
                     </div>
                     <div class="col-md-6">
-                        <input type="email" id="email" class="form-control" placeholder="E-mail" required>
+                        <input type="email" id="email" class="form-control" placeholder="E-mail">
                     </div>
                     <div class="col-md-6">
-                        <input type="text" id="OAB" class="form-control" placeholder="OAB" required>
+                        <input type="text" id="OAB" class="form-control" placeholder="OAB">
                     </div>
                     <div class="col-md-6">
-                        <input type="text" id="auxilio" class="form-control" placeholder="Código Auxílio" required>
+                        <input type="text" id="auxilio" class="form-control" placeholder="Código Auxílio">
                     </div>
                     <div class="col-md-12">
-                        <textarea id="descricao" class="form-control" placeholder="Descrição" required></textarea>
+                        <textarea id="descricao" class="form-control" placeholder="Descrição"></textarea>
                     </div>
                 </div>
             </div>
 
             <div class="card-info">
                 <h2>Polo Ativo</h2>
-                <input type="text" id="cpfAtivo" class="form-control" placeholder="CPF do Requerente" required>
+                <input type="text" id="cpfAtivo" class="form-control" placeholder="CPF do Requerente">
             </div>
 
             <div class="card-info">
                 <h2>Polo Passivo</h2>
-                <input type="text" id="cnpjPassivo" class="form-control" placeholder="CNPJ do Requerido" required>
+                <input type="text" id="cnpjPassivo" class="form-control" placeholder="CNPJ do Requerido">
             </div>
             
             <h2>Upload de Documentos ou envio:</h2>
             <div class="petition-upload-area">
-                <input type="file" id="pdfFile" accept=".pdf" style="display: none;" required>
+                <input type="file" id="pdfFile" accept=".pdf">
                 <button type="button" onclick="document.getElementById('pdfFile').click()" class="more-files">Selecionar PDF</button>
                 <button type="submit" class="more-files" id="envio">Enviar</button>
             </div>
         </form>
     </div>
 
-    <footer>
+    <footer class="text-center py-3">
         <p>&copy; 2024 - Todos os direitos reservados</p>
         <nav>
-            <ul>
+            <ul class="list-unstyled d-inline-flex gap-3">
                 <li><a href="#">Termos de uso</a></li>
                 <li><a href="#">Política de privacidade</a></li>
                 <li><a href="#">Sobre nós</a></li>
                 <li><a href="#">Contato</a></li>
             </ul>
         </nav>
-       
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-storage-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
     <script type="module" src="../controller/cadastrarPeticao.controller.js"></script>
 </body>
 

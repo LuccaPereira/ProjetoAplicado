@@ -18,7 +18,9 @@ document.getElementById('loginButton').addEventListener('click', function() {
     window.location.href = '../View/perfilAdvogado.html';
 });
 
-document.getElementById('envio').addEventListener('click', function() {
+const form = document.getElementById('petitionForm');
+form.addEventListener('submit', function (event) {
+    event.preventDefault();
     montarOData()
         .then(() => {
             alert("Novo cliente cadastrado com sucesso!");

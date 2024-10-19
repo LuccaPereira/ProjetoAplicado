@@ -25,19 +25,8 @@
                 <p>Este é um projeto voltado para a gestão de membros da Ordem dos Advogados do Brasil (OAB). Faça login com sua OAB e CPF para acessar.</p>
             </div>
         </div>
-        <footer>
-            <p>&copy; 2024 - Todos os direitos reservados</p>
-            <nav>
-                <ul>
-                    <li><a href="#">Termos de uso</a></li>
-                    <li><a href="#">Política de privacidade</a></li>
-                    <li><a href="#">Sobre nós</a></li>
-                    <li><a href="#">Contato</a></li>
-                </ul>
-            </nav>
-        </footer>
     </div>
-    <!-- Modal de Erro -->
+
      <div id="errorModal" class="modal">
         <div class="modal-content">
             <span class="close-button" id="closeModal">&times;</span>
@@ -45,10 +34,19 @@
         </div>
     </div>
 
-    <!-- Script do JavaScript para a funcionalidade da página -->
+    <footer class="text-center py-3">
+        <p>&copy; 2024 - Todos os direitos reservados</p>
+        <nav>
+            <ul class="list-unstyled d-inline-flex gap-3">
+                <li><a href="#">Termos de uso</a></li>
+                <li><a href="#">Política de privacidade</a></li>
+                <li><a href="#">Sobre nós</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
+    </footer>
+
     <script type="module" src="../Controller/login.controller.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- Certifique-se de que o caminho está correto para o arquivo bundle.js -->
-    <!-- <script type="module" src="/scripts/bundle.js"></script> -->
 </body>
 </html>

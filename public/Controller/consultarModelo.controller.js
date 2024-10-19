@@ -3,7 +3,7 @@ import { fetchClientes, archiveClient, updateSituacaoInDatabase, saveClientDetai
 let protocolNumber = "";
 
 export function oabAdvogadoLogado() {
-    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
+    const loggedInLawyerString = localStorage.getItem('loggedInUser');
     console.log("Advogado logado (localStorage):", loggedInLawyerString);
     return loggedInLawyerString ? JSON.parse(loggedInLawyerString) : null;
 }
@@ -66,8 +66,10 @@ export function renderClientes() {
             }
 
             clientesTable.innerHTML = "";
-            const advLogado = loggedInLawyer.OAB;
-            const advogadoData = clientes[advLogado];
+            const advLogado = loggedInLawyer.uid;
+            const perfil = clientes["PerfilAdvogado"];
+            const advogadoData = perfil[advLogado];
+            
             if (!advogadoData) {
                 console.error("Advogado não encontrado.");
                 return;
@@ -84,8 +86,8 @@ export function renderClientes() {
 
                 if (nomePeticionante) {
                     const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
-                    const descricao = cliente.Descrição || "Descrição não disponível";
-                    const ultimaAlteracao = cliente.ultimaAlteracao || "#";
+                    const descricao = cliente.Descricao || "Descrição não disponível";
+                    const ultimaAlteracao = cliente.UltimaAlt || "#";
 
                     const newRow = document.createElement('tr');
                     newRow.setAttribute('data-cliente-key', clienteKey);
@@ -240,9 +242,9 @@ function populateModalFields(cliente) {
 
 export function showClientDetails(clienteKey, advogadoData) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
+    const loggedInLawyerString = localStorage.getItem('loggedInUser');
     const logAdv = JSON.parse(loggedInLawyerString);
-    const urlAtt = `${databaseURL}/Advogado/${logAdv.OAB}/${clienteKey}.json`;
+    const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}/${clienteKey}.json`;
 
     console.log(`Buscando detalhes do cliente: ${urlAtt}`);
     axios.get(urlAtt)
