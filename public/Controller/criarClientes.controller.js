@@ -1,4 +1,31 @@
 import { getClientes, updateCliente, addCliente, validarCPF, validarEmail } from '../model/criarClientes.js';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+import { getDatabase, ref, get, set} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+
+// Sua configuração do Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
+    authDomain: "projetoaplicado-1.firebaseapp.com",
+    databaseURL: "https://projetoaplicado-1-default-rtdb.firebaseio.com",
+    projectId: "projetoaplicado-1",
+    storageBucket: "projetoaplicado-1.appspot.com",
+    messagingSenderId: "546978495496",
+    appId: "1:546978495496:web:502e5bab60ead7fcd0a5bd",
+    measurementId: "G-WB0MPN3701"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+const userLogged = localStorage.getItem('loggedInUser');
+const userLoggedJson = JSON.parse(userLogged);
+//const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}.json`;
+const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com";
+const clienteCollectionPath = `Cliente/PerfilDoCliente`; 
+const clienteRef = ref(db, clienteCollectionPath);
 
 document.addEventListener('DOMContentLoaded', () => {
     function clickMenu() {
@@ -33,18 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     clickMenu();
 });
-
-// Inicialização do Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
-    authDomain: "projetoaplicado-1.firebaseapp.com",
-    databaseURL: "https://projetoaplicado-1-default-rtdb.firebaseio.com",
-    projectId: "projetoaplicado-1",
-    storageBucket: "projetoaplicado-1.appspot.com",
-    messagingSenderId: "546978495496",
-    appId: "1:546978495496:web:502e5bab60ead7fcd0a5bd",
-    measurementId: "G-WB0MPN3701"
-};
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
@@ -103,12 +118,9 @@ async function submitClientes(event) {
         return;
     }
 
-    const advCollectionPath = `Advogado/${numeroOAB}/PerfilDoCliente`; // Caminho da coleção para o advogado
-    const clienteRef = firebase.database().ref(advCollectionPath);
-
     // Verificar se o advogado existe
-    const advRef = firebase.database().ref(`Advogado/${numeroOAB}`);
-    advRef.once("value")
+    const advRef = ref(db, `Advogado/PerfilAdvogado/${userLoggedJson.uid}`);
+    get(advRef)
         .then(async advSnapshot => {
             if (!advSnapshot.exists()) {
                 alert("Advogado com essa OAB não encontrado.");
@@ -116,74 +128,72 @@ async function submitClientes(event) {
             }
 
             // Verifica se o cliente já existe
-            clienteRef.once("value")
-                .then(async snapshot => {
-                    const cliente = snapshot.val();
-                    let clienteKeyExistente = null;
+            const clienteSnapshot = await get(clienteRef);
+            const clientes = clienteSnapshot.val();
+            let clienteKeyExistente = null;
 
-                    if (cliente) {
-                        for (let clienteKey in cliente) {
-                            if (cliente.hasOwnProperty(clienteKey)) {
-                                const clienteData = cliente[clienteKey];
+            if (clientes) {
+                for (let clienteKey in clientes) {
+                    const clienteData = clientes[clienteKey];
 
-                                if (clienteData.cpf === cpf) {
-                                    clienteKeyExistente = clienteKey;
+                    if (clienteData.cpf === cpf) {
+                        clienteKeyExistente = clienteKey;
 
-                                    if (clienteData.senha === senha) {
-                                        alert("Usuário já cadastrado");
-                                        await enviarEmail(cpf, senha, email);
-                                        return;
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    // Se o cliente já existe e a senha é diferente, atualiza a senha
-                    if (clienteKeyExistente) {
-                        const clientRef = clienteRef.child(clienteKeyExistente);
-
-                        clientRef.update({ senha: senha })
-                            .then(async () => {
-                                alert("Senha do cliente foi atualizada com sucesso!");
-                                await enviarEmail(cpf, senha, email);
-                                clienteForm.reset();
-                            })
-                            .catch(error => {
-                                alert("Erro ao atualizar senha do cliente: " + error.message);
-                            });
-                    } else {
-                        // Se o cliente não existe, cria um novo cliente
-                        const oData = { cpf: cpf, senha: senha, email: email };
-
-                        try {
-                            const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, senha);
-                            const user = userCredential.user;
-
-                            // Adiciona o cliente no Firebase Database após o sucesso no registro
-                            await clienteRef.child(cpf).set({
-                                cpf: cpf,
-                                senha: senha,
-                                email: email,
-                                uid: user.uid
-                            });
-
-                            alert("Novo cliente foi adicionado com sucesso!");
+                        if (clienteData.senha === senha) {
+                            alert("Usuário já cadastrado");
                             await enviarEmail(cpf, senha, email);
-                            clienteForm.reset();
-                        } catch (error) {
-                            alert("Erro ao registrar o e-mail: " + error.message);
+                            return;
                         }
+                        break;
                     }
-                })
-                .catch(error => {
-                    alert("Erro ao buscar cliente: " + error.message);
-                });
+                }
+            }
+
+            // Se o cliente já existe e a senha é diferente, atualiza a senha
+            if (clienteKeyExistente) {
+                const clientRef = ref(db, `${clienteCollectionPath}/${clienteKeyExistente}`);
+
+                update(clientRef, { senha: senha })
+                    .then(async () => {
+                        alert("Senha do cliente foi atualizada com sucesso!");
+                        await enviarEmail(cpf, senha, email);
+                        clienteForm.reset();
+                    })
+                    .catch(error => {
+                        alert("Erro ao atualizar senha do cliente: " + error.message);
+                    });
+            } else {
+                // Se o cliente não existe, cria um novo cliente
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+                    const user = userCredential.user;
+                    const uid = user.uid;
+                    
+                    const oData = {
+                        [uid]: {
+                            cpf: cpf,
+                            senha: senha,
+                            email: email,
+                            uid: uid
+                        }
+                    };
+                    await refFunction(clienteCollectionPath, oData);
+                    alert("Novo cliente foi adicionado com sucesso!");
+                    await enviarEmail(cpf, senha, email);
+                    clienteForm.reset();
+                } catch (error) {
+                    alert("Erro ao registrar o e-mail: " + error.message);
+                }
+            }
         })
         .catch(error => {
             alert("Erro ao buscar advogado: " + error.message);
         });
+}
+
+async function refFunction(clienteCollectionPath, oData) {
+    const clienteReferencia = ref(db, `${clienteCollectionPath}`);
+    await set(clienteReferencia, oData);
 }
 
 async function enviarEmail(cpf, senha, email) {

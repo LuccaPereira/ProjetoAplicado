@@ -19,31 +19,32 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-// Função para login e buscar dados do advogado no Realtime Database
 async function loginWithEmailAndCheckClient(email, password) {
     try {
+
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
         console.log('Usuário autenticado:', user);
 
-        // Recupera os dados adicionais do advogado no Realtime Database
-        const userInfo = await getAdvogadoInfo(user.uid);
+        const cpfOab = document.getElementById('cpfOab').value;
 
-        // Verifica se o usuário é cliente ou advogado
-        const isClient = await checkIfEmailIsClient(email);
+        let userInfo;
 
-        // Salva as informações completas no localStorage
-        localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
-        console.log('Informações do usuário salvas no localStorage:', userInfo);
-
-        // Redireciona conforme o tipo de usuário
-        if (isClient) {
-            console.log('Redirecionando para tabelaCliente.html');
-            window.location.href = "../View/tabelaCliente.html";
+        if (validarCPF(cpfOab)) {
+            userInfo = await getClienteInfo(user.uid);
+            localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
+            console.log('Informações do usuário salvas no localStorage:', userInfo);
+            window.location.href = "../View/telaInicialCliente.html";
         } else {
-            console.log('Redirecionando para menu.html');
+            userInfo = await getAdvogadoInfo(user.uid);
+            localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
+            console.log('Informações do usuário salvas no localStorage:', userInfo);
             window.location.href = "../View/menu.html";
+        }
+
+        if (!userInfo) {
+            throw new Error('Usuário não encontrado no banco de dados.');
         }
 
     } catch (error) {
@@ -52,7 +53,36 @@ async function loginWithEmailAndCheckClient(email, password) {
     }
 }
 
-// Função para buscar as informações completas do advogado no Realtime Database
+
+function validarCPF(cpf) {
+    cpf = cpf.replace(/\D/g, '');
+
+    if (cpf.length !== 11) {
+        return false;
+    }
+
+    let soma = 0;
+    for (let i = 0; i < 9; i++) {
+        soma += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    let digitoVerif1 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+
+    if (parseInt(cpf.charAt(9)) !== digitoVerif1) {
+        return false;
+    }
+
+    soma = 0;
+    for (let i = 0; i < 10; i++) {
+        soma += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    let digitoVerif2 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+
+    if (parseInt(cpf.charAt(10)) !== digitoVerif2) {
+        return false;
+    }
+
+    return true;
+}
 async function getAdvogadoInfo(uid) {
     const advogadoRef = ref(db, `Advogado/PerfilAdvogado/${uid}`);
     const snapshot = await get(advogadoRef);
@@ -73,8 +103,28 @@ async function getAdvogadoInfo(uid) {
     }
 }
 
+// Função para buscar as informações completas do advogado no Realtime Database
+async function getClienteInfo(uid) {
+    const ClienteRef = ref(db, `Cliente/PerfilDoCliente/${uid}`);
+    const snapshot = await get(ClienteRef);
+    console.log(snapshot);
+    if (snapshot.exists()) {
+        const dadoscliente = snapshot.val();
+        return {
+            uid: uid,
+            email: auth.currentUser.email,
+            nome: dadoscliente.cpf || '',
+            senha: dadoscliente.senha || '',
+            uid: dadoscliente.uid || ''
+        };
+    } else {
+        console.log('Perfil do advogado não encontrado no banco de dados.');
+        return { uid: uid, email: auth.currentUser.email };
+    }
+}
+
 // Função para verificar se o e-mail existe na coleção 'Cliente'
-async function checkIfEmailIsClient(email) {
+/* async function checkIfEmailIsClient(email) {
     const advogadoRef = ref(db, 'Advogado');
     const advogadoSnapshot = await get(advogadoRef);
 
@@ -104,7 +154,7 @@ async function checkIfEmailIsClient(email) {
 
     console.log('E-mail não encontrado em nenhum advogado.');
     return false;
-}
+} */
 
 // Função para mostrar o modal de erro
 function showErrorModal(message) {

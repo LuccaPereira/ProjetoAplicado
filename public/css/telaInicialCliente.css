@@ -1,0 +1,177 @@
+/* Estilos Globais */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Organiza os itens verticalmente */
+    justify-content: center; /* Centraliza o conteúdo verticalmente */
+    align-items: center;     /* Centraliza o conteúdo horizontalmente */
+}
+
+/* Títulos */
+h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin: 0; /* Remover margens padrões */
+}
+
+h3 {
+    color: #2c3e50;
+    margin: 0; /* Remover margens padrões */
+}
+
+p {
+    font-size: 1.1rem;
+    color: #ecf0f1;
+    margin: 0; /* Evitar margens não controladas */
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: #3498db;
+    transition: color 0.3s ease; /* Transição suave para hover */
+}
+
+a:hover {
+    color: #2980b9;
+}
+
+/* Container principal */
+.container {
+    max-width: 1200px;
+    width: 100%; /* O container deve ocupar 100% da largura disponível */
+    margin: 0 auto; /* Centraliza o container */
+    padding: 20px; /* Adiciona espaçamento interno */
+}
+
+#ProfileContainer {
+    display: flex;               /* Usando flexbox para disposição em linha */
+    align-items: center;        /* Alinha os itens no centro verticalmente */
+    justify-content: center;     /* Centraliza os itens horizontalmente */
+    padding: 10px;             /* Adiciona algum preenchimento ao contêiner */
+    border-radius: 8px;        /* Cantos arredondados para um visual mais suave */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    background-color: #2c3e50; /* Cor de fundo escura */
+}
+
+.profile-icon ul {
+    list-style: none;          /* Remove marcadores da lista */
+    margin: 0;                /* Remove margem padrão */
+    padding: 0;               /* Remove preenchimento padrão */
+    display: flex;            /* Usando flexbox para os itens da lista */
+    gap: 20px;                /* Espaço entre os ícones */
+}
+
+.profile-icon li {
+    display: flex;            /* Mantém os itens do li em linha */
+    align-items: center;      /* Alinha o conteúdo no centro verticalmente */
+}
+
+.material-icons {
+    font-size: 40px;          /* Tamanho do ícone do material design */
+    cursor: pointer;          /* Cursor pointer para indicar clicabilidade */
+    transition: color 0.3s;   /* Animação de transição suave para a cor */
+}
+
+.material-icons:hover {
+    color: #007BFF;           /* Cor do ícone ao passar o mouse */
+}
+
+#Profile{
+    color:white;
+}
+
+#Profile:hover{
+    color:#007BFF;
+}
+
+#tabelaView{
+    color:white;
+}
+
+#tabelaView:hover{
+    color:#007BFF;
+}
+
+#ChatBot{
+    color:white;
+}
+
+#ChatBot:hover{
+    color:#007BFF;
+}
+
+#logoutButton{
+    color: red !important;
+}
+/* Estilos dos Cards */
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px; /* Adiciona espaçamento entre os cards */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    color: #34495e;
+    margin-bottom: 15px;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin: 0; /* Evitar margens não controladas */
+}
+
+.card-info {
+    margin-top: 10px;
+}
+
+/* Estilos do Footer */
+footer {
+    background-color: #2c3e50 !important;
+    color: #ecf0f1 !important;
+    padding: 10px 0 !important;
+    text-align: center !important;
+    margin-top: auto !important;
+    width: 100%; /* Garante que o footer ocupe toda a largura */
+}
+
+footer p {
+    margin-bottom: 10px !important;
+}
+
+footer nav ul {
+    padding: 0;
+    margin: 0; /* Remove as margens e o padding padrão */
+    list-style: none;
+    display: flex; /* Flexbox para organizar os itens de navegação */
+    justify-content: center; /* Centraliza os links horizontalmente */
+    gap: 10px; /* Adiciona espaçamento entre os itens */
+}
+
+footer nav ul li a {
+    color: #ecf0f1;
+    font-weight: bold;
+    transition: color 0.3s ease; /* Transição suave para hover */
+}
+
+footer nav ul li a:hover {
+    color: #bdc3c7;
+}
+
