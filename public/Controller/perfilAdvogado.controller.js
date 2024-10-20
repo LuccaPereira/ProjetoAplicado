@@ -1,6 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js';
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js';
-import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js';
+import { getDatabase, ref, get, } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js';
+
 import { updateProfileInDatabase, updateLocalStorage } from '../model/perfilAdvogado.js';
 
 // Configuração do Firebase
@@ -25,24 +26,17 @@ async function getLoggedInLawyer() {
     return new Promise((resolve, reject) => {
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                const uid = user.uid;
+                const uid = user.uid; // Obter o uid do usuário logado
                 const db = getDatabase(app);
-                const advogadoRef = ref(db, 'Advogado');
+                const advogadoRef = ref(db, `Advogado/PerfilAdvogado/${uid}`); // Acesse diretamente pelo uid
 
                 try {
                     const snapshot = await get(advogadoRef);
                     if (snapshot.exists()) {
-                        snapshot.forEach((advogadoSnapshot) => {
-                            const advogadoData = advogadoSnapshot.val();
-                            const numeroOAB = advogadoSnapshot.key;
-
-                            if (advogadoData.PerfilAdvogado && advogadoData.PerfilAdvogado.uid === uid) {
-                                resolve({ uid: uid, numeroOAB: numeroOAB, ...advogadoData.PerfilAdvogado });
-                            }
-                        });
-                        resolve(null); // Se não encontrar, retorna null
+                        // Retorna os dados do advogado
+                        resolve({ uid: uid, ...snapshot.val() });
                     } else {
-                        console.log("Nenhum advogado encontrado.");
+                        console.log("Nenhum advogado encontrado com esse UID.");
                         resolve(null);
                     }
                 } catch (error) {
@@ -56,7 +50,6 @@ async function getLoggedInLawyer() {
         });
     });
 }
-
 // Monitorar o estado de autenticação
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -73,9 +66,6 @@ async function bringInfoModal() {
     console.log("Chamando bringInfoModal...");
     try {
         const advogadoInfo = await getLoggedInLawyer(); // Chama a função para obter os dados do advogado
-
-        // Logando os dados retornados para depuração
-        console.log("Advogado Info:", advogadoInfo); 
 
         if (advogadoInfo) {
             console.log("Dados do advogado logado:", advogadoInfo);
@@ -128,10 +118,10 @@ export async function saveProfile() {
         email: document.getElementById('email').querySelector('input').value
     };
 
-    const loggedInLawyer = await getLoggedInLawyer();
+    const loggedInLawyer = await getLoggedInLawyer(); // Obtém os dados do advogado logado
     if (loggedInLawyer) {
-        // Atualiza o perfil no nó correto
-        updateProfileInDatabase(loggedInLawyer.numeroOAB, profileData) // Agora passando o número OAB corretamente
+        // Passando o uid do advogado logado
+        updateProfileInDatabase(loggedInLawyer.uid, profileData) // Passando o uid corretamente
             .then(() => {
                 alert("Perfil atualizado com sucesso!");
                 updateLocalStorage(profileData);
@@ -155,7 +145,6 @@ export async function saveProfile() {
         console.log("Nenhum advogado está logado.");
     }
 }
-
 
 function clickMenu() {
     const sidebar = document.querySelector('.sidebar');

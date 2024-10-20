@@ -26,12 +26,13 @@ export function getLoggedInLawyer() {
 
 export async function updateProfileInDatabase(uid, profileData) {
     const db = getDatabase();
-    // Assume que você tenha o numeroOAB disponível em profileData ou o obtenha de outra maneira
-    const numeroOAB = profileData.OAB; // Ou de onde você está obtendo o número OAB
 
-    const profileRef = ref(db, `Advogado/${numeroOAB}/PerfilAdvogado`);
+    // Agora salvando os dados no caminho desejado: Advogado/PerfilAdvogado/{uid}
+    const profileRef = ref(db, `Advogado/PerfilAdvogado/${uid}`);
+    
     return update(profileRef, profileData);
 }
+
 export function updateLocalStorage(profileData) {
     localStorage.setItem('loggedInLawyer', JSON.stringify(profileData));
 }

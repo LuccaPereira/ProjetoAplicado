@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redefinir Senha</title>
+    <link rel="stylesheet" href="../css/redefinirsenha.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Redefinir sua senha</h2>
+        <form id="resetPasswordForm">
+            <div class="input-group">
+                <label for="newPassword">Nova senha:</label>
+                <input type="password" id="newPassword" placeholder="Digite sua nova senha" required>
+            </div>
+            <button type="submit">Redefinir senha</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script type=module src="../model/redefinirsenha2.js"></script>
+</body>
+</html>
