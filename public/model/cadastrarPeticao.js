@@ -1,3 +1,18 @@
+const firebaseConfig = {
+    apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
+    authDomain: "projetoaplicado-1.firebaseapp.com",
+    databaseURL: "https://projetoaplicado-1-default-rtdb.firebaseio.com",
+    projectId: "projetoaplicado-1",
+    storageBucket: "projetoaplicado-1.appspot.com",
+    messagingSenderId: "546978495496",
+    appId: "1:546978495496:web:502e5bab60ead7fcd0a5bd",
+    measurementId: "G-WB0MPN3701"
+};
+
+const app = firebase.initializeApp(firebaseConfig); 
+const auth = firebase.auth(); 
+const database = firebase.database();
+
 export function validarCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
     if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
@@ -70,9 +85,19 @@ export function validarTelefoneOficial(telefone) {
     return false;
 }
 
+export function oabAdvogadoLogado() {
+    const loggedInLawyerString = localStorage.getItem('loggedInUser');
+    console.log("Advogado logado (localStorage):", loggedInLawyerString);
+    return loggedInLawyerString ? JSON.parse(loggedInLawyerString) : null;
+}
+
+async function naosuportomais(uid, oData){
+    await database.ref(`Advogado/PerfilAdvogado/${uid}`).update(oData);
+}
+
 export async function montarOData() {
-    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
-    const logAdv = JSON.parse(loggedInLawyerString);
+    const loggedInLawyer = oabAdvogadoLogado();
+    const logAdv = loggedInLawyer;
 
     const nomePeticionante = document.getElementById('nomePeticionante')?.value || '';
     const nomeAdvogado = document.getElementById('nomeAdvogado')?.value || '';
@@ -106,19 +131,6 @@ export async function montarOData() {
 
     const ultimaAlteracao = getFormattedDate();
 
-    const firebaseConfig = {
-        apiKey: "API_KEY",
-        authDomain: "projetoaplicado-1.firebaseapp.com",
-        databaseURL: "https://projetoaplicado-1-default-rtdb.firebaseio.com",
-        projectId: "projetoaplicado-1",
-        storageBucket: "projetoaplicado-1.appspot.com",
-        messagingSenderId: "546978495496",
-        appId: "1:546978495496:web:502e5bab60ead7fcd0a5bd",
-        measurementId: "G-WB0MPN3701"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-
     if (!nomePeticionante || !nomeAdvogado || !foro || !acidente || !valor ||
         !telefone || !procedimento || !auxilio || !email || !descricao ||
         !cpfAtivo || !cnpjPassivo) {
@@ -130,10 +142,6 @@ export async function montarOData() {
     if (!validarEmail(email)) throw new Error('E-mail inválido');
     if (!validarValor(valor)) throw new Error('Valor inválido');
     if (!validarTelefoneOficial(telefone)) throw new Error('Telefone inválido');
-
-    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-    const collectionPath = "Advogado";
-    const url = `${databaseURL}/${collectionPath}/${logAdv.OAB}.json`;
 
     const oData = {
         [nomePeticionante]: {
@@ -151,28 +159,38 @@ export async function montarOData() {
             CPFAtivo: cpfAtivo,
             UltimaAlt: ultimaAlteracao
         }
-    };
+    };  
 
     const pdfFileElement = document.getElementById("pdfFile");
     if (pdfFileElement && pdfFileElement.files.length > 0) {
-        const storage = firebase.storage();
         const timestamp = new Date().getTime();
         const fileName = `${timestamp}_${pdfFileElement.files[0].name}`;
-        const storageRef = storage.ref(`pdfs/${fileName}`);
         const pdfFile = pdfFileElement.files[0];
-
+    
+        const pdfStorageRef = storageRef(storage, `pdfs/${fileName}`);
+    
         try {
-            const snapshot = await storageRef.put(pdfFile);
-            const downloadURL = await snapshot.ref.getDownloadURL();
+            await uploadBytes(pdfStorageRef, pdfFile);
+            const downloadURL = await getDownloadURL(pdfStorageRef);
             oData[nomePeticionante].pdfURL = downloadURL;
-
-            const postUrl = `${databaseURL}/${collectionPath}/${nomeAdvogado}/${nomePeticionante}.json`;
-            return axios.post(postUrl, oData);
+    
+            const uid = logAdv.uid;
+            console.log('UID:', uid);
+            console.log('oData:', oData);
+            
+            await naosuportomais(uid, oData);
         } catch (error) {
-            throw new Error('Erro ao enviar o PDF: ' + error.message);
+            console.error('Erro ao enviar o PDF:', error);
         }
     } else {
-        return axios.post(url, oData);
+        const uid = logAdv.uid;
+        console.log('Chamando naosuportomais com UID:', uid);
+        
+        try {
+            await naosuportomais(uid, oData);
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+        }
     }
 }
 

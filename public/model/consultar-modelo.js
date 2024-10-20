@@ -41,9 +41,9 @@ export function archiveClient(clienteKey) {
 }
 
 export function updateSituacaoInDatabase(clienteKeyAtt, selectedValue) {
-    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
+    const loggedInLawyerString = localStorage.getItem('loggedInUser');
     const logAdv = JSON.parse(loggedInLawyerString);
-    const urlAtt = `${databaseURL}/Advogado/${logAdv.OAB}/${clienteKeyAtt}.json`;
+    const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}/${clienteKeyAtt}.json`;
 
     const updatedDetails = { situacao: selectedValue };
 

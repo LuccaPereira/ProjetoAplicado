@@ -42,21 +42,25 @@ app.post('/generate-petition', async (req, res) => {
       const prompt = `
       Escreva uma petição inicial com as seguintes informações:
 
-      - Nome do cliente: ${nomeCliente}, CPF/CNPJ: ${cpfCnpjCliente}, Endereço: ${enderecoCliente}, Profissão: ${profissaoCliente}, Estado Civil: ${estadoCivil}
-      - Nome do réu: ${nomeReu}, CPF/CNPJ: ${cpfCnpjReu}, Endereço: ${enderecoReu}
-      - Tipo de ação: ${tipoAcao}
-      - Motivo da ação: ${motivoAcao}
-      - Pedidos do autor: ${pedidosAutor}
-      - Data do fato: ${dataOcorrido}
-      - Cidade onde a petição será ajuizada: ${cidadePeticao}
-      - Solicitação de justiça gratuita: ${justiçaGratuita}
-      - Informações adicionais: ${outrasInformacoes}
+    - Nome do cliente: ${nomeCliente}, CPF/CNPJ: ${cpfCnpjCliente}, Endereço: ${enderecoCliente}, Profissão: ${profissaoCliente}, Estado Civil: ${estadoCivil}
+    - Nome do réu: ${nomeReu}, CPF/CNPJ: ${cpfCnpjReu}, Endereço: ${enderecoReu}
+    - Tipo de ação: ${tipoAcao}
+    - Motivo da ação: ${motivoAcao}, se for açao de cobrança aplique:[Código Civil](https://www.planalto.gov.br/ccivil_03/Leis/2002/L10406compilada.htm) e [Código de Processo Civil](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/L13105compilada.htm)
+    se for açao de danos morais aplique: [Código Civil](https://www.planalto.gov.br/ccivil_03/Leis/2002/L10406compilada.htm) e [Código de Processo Civil](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/L13105compilada.htm)
+    se for açao de rescisáo contratual, aplique: [Código Civil](https://www.planalto.gov.br/ccivil_03/Leis/2002/L10406compilada.htm) e [Código de Processo Civil](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/L13105compilada.htm)
+    - Pedidos do autor: ${pedidosAutor}
+    - Data do fato: ${dataOcorrido}
+    - Cidade onde a petição será ajuizada: ${cidadePeticao}
+    - Solicitação de justiça gratuita: ${justiçaGratuita}
+    - Informações adicionais: ${outrasInformacoes}
 
-      Deixe o fim da peticao assim:
-      - **SÃO PAULO, **[Data]**.
-      - **ASSINATURA DO ADVOGADO**
-      - **OAB/SP **Número]**
-      `;
+    Ao final da petiçao, inclua:
+    - **CAMPINAS, SÃO PAULO, **[Data]**.
+    - **ASSINATURA DO ADVOGADO**
+    -   OAB/SP *Número*
+    
+    Nao inclua fatos além dos mencionados.
+    `;
 
       console.log('Prompt:', prompt);
 

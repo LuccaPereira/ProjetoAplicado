@@ -1,95 +1,190 @@
-import { getLawyerByOAB, validarCPF, getCpfByCliente } from '../model/login.js';
-//import axios from 'axios';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 
-export async function login(event) {
-    event.preventDefault(); // Previne o comportamento padrão do formulário
+// Sua configuração do Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
+    authDomain: "projetoaplicado-1.firebaseapp.com",
+    databaseURL: "https://projetoaplicado-1-default-rtdb.firebaseio.com",
+    projectId: "projetoaplicado-1",
+    storageBucket: "projetoaplicado-1.appspot.com",
+    messagingSenderId: "546978495496",
+    appId: "1:546978495496:web:502e5bab60ead7fcd0a5bd",
+    measurementId: "G-WB0MPN3701"
+};
 
-    var oab = document.getElementById("OAB").value;
-    var senha = document.getElementById("senha").value;
+// Inicialize o Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
 
+async function loginWithEmailAndCheckClient(email, password) {
     try {
-        if (validarCPF(oab)) {
-            const response = await getCpfByCliente(oab);
-            const cliente = response.data;
-            console.log("Dados do cliente:", cliente);
 
-            if (!cliente) {
-                alert("Você não está cadastrado ou seu CPF está incorreto");
-                return;
-            }
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-            var clienteArray = Object.values(cliente);
-            var posicaoCliente = clienteArray.find(clienteGado => {
-                var positionCpf;
-                var senhaClientela;
+        console.log('Usuário autenticado:', user);
 
-                if (clienteGado.NomeAdvogado) {
-                    const adv = clienteGado.NomeAdvogado.toString();
-                    positionCpf = clienteGado[adv].CPFAtivo;
-                    senhaClientela = clienteGado[adv].senhaCliente;
-                } else {
-                    positionCpf = clienteGado.cpf;
-                    senhaClientela = clienteGado.senha;
-                }
+        const cpfOab = document.getElementById('cpfOab').value;
 
-                if (oab === positionCpf) {
-                    if (senha === senhaClientela) {
-                        localStorage.setItem('loggedInCliente', JSON.stringify(clienteGado));
-                        window.location.href = "public/View/menu.html";
-                        return true;
-                    } else {
-                        alert("Senha está incorreta");
-                        return false;
-                    }
-                }
+        let userInfo;
 
-                return false;
-            });
-
-            if (!posicaoCliente) {
-                alert("CPF não encontrado ou senha incorreta");
-            }
-
-            console.log(posicaoCliente);
+        if (validarCPF(cpfOab)) {
+            userInfo = await getClienteInfo(user.uid);
+            localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
+            console.log('Informações do usuário salvas no localStorage:', userInfo);
+            window.location.href = "../View/telaInicialCliente.html";
         } else {
-            console.log("CPF inválido");
+            userInfo = await getAdvogadoInfo(user.uid);
+            localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
+            console.log('Informações do usuário salvas no localStorage:', userInfo);
+            window.location.href = "../View/menu.html";
         }
 
-        const response = await getLawyerByOAB(oab);
-        const lawyerData = response.data;
-
-        const profilesArray = Object.values(lawyerData);
-        const PerfilAdvogado = profilesArray.find(profile => profile.OAB);
-
-        if (!PerfilAdvogado) {
-            alert("Perfil de advogado não encontrado.");
-            return;
+        if (!userInfo) {
+            throw new Error('Usuário não encontrado no banco de dados.');
         }
 
-        if (PerfilAdvogado.OAB == oab) {
-            if (PerfilAdvogado.senha == senha) {
-                localStorage.setItem('loggedInLawyer', JSON.stringify(PerfilAdvogado));
-                window.location.href = "/View/menu.html";
-                return true;
-            } else {
-                alert("Senha está incorreta");
-                return false;
-            }
-        } else {
-            alert("OAB não encontrada");
-        }
     } catch (error) {
-        console.error("Erro ao obter dados:", error);
-        alert("Ocorreu um erro ao processar sua solicitação. Tente novamente mais tarde.");
+        console.error('Erro ao fazer login:', error);
+        showErrorModal('Erro ao fazer login: ' + error.message);
     }
 }
 
-// Adicione o listener de eventos apenas quando o DOM estiver pronto
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('#loginForm');
-    if (form) {
-        form.addEventListener('submit', login);
+
+function validarCPF(cpf) {
+    cpf = cpf.replace(/\D/g, '');
+
+    if (cpf.length !== 11) {
+        return false;
+    }
+
+    let soma = 0;
+    for (let i = 0; i < 9; i++) {
+        soma += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    let digitoVerif1 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+
+    if (parseInt(cpf.charAt(9)) !== digitoVerif1) {
+        return false;
+    }
+
+    soma = 0;
+    for (let i = 0; i < 10; i++) {
+        soma += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    let digitoVerif2 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+
+    if (parseInt(cpf.charAt(10)) !== digitoVerif2) {
+        return false;
+    }
+
+    return true;
+}
+async function getAdvogadoInfo(uid) {
+    const advogadoRef = ref(db, `Advogado/PerfilAdvogado/${uid}`);
+    const snapshot = await get(advogadoRef);
+
+    if (snapshot.exists()) {
+        const dadosAdvogado = snapshot.val();
+        return {
+            uid: uid,
+            email: auth.currentUser.email,
+            nome: dadosAdvogado.nome || '',
+            oab: dadosAdvogado.OAB || '',
+            senha: dadosAdvogado.senha || '',
+            cpf: dadosAdvogado.CPF || ''
+        };
     } else {
-        console.error('Formulário de login não encontrado.');
+        console.log('Perfil do advogado não encontrado no banco de dados.');
+        return { uid: uid, email: auth.currentUser.email };
+    }
+}
+
+// Função para buscar as informações completas do advogado no Realtime Database
+async function getClienteInfo(uid) {
+    const ClienteRef = ref(db, `Cliente/PerfilDoCliente/${uid}`);
+    const snapshot = await get(ClienteRef);
+    console.log(snapshot);
+    if (snapshot.exists()) {
+        const dadoscliente = snapshot.val();
+        return {
+            uid: uid,
+            email: auth.currentUser.email,
+            nome: dadoscliente.cpf || '',
+            senha: dadoscliente.senha || '',
+            uid: dadoscliente.uid || ''
+        };
+    } else {
+        console.log('Perfil do advogado não encontrado no banco de dados.');
+        return { uid: uid, email: auth.currentUser.email };
+    }
+}
+
+// Função para verificar se o e-mail existe na coleção 'Cliente'
+/* async function checkIfEmailIsClient(email) {
+    const advogadoRef = ref(db, 'Advogado');
+    const advogadoSnapshot = await get(advogadoRef);
+
+    if (!advogadoSnapshot.exists()) {
+        console.log('Nenhum advogado encontrado.');
+        return false;
+    }
+
+    const advogados = advogadoSnapshot.val();
+    for (const numeroOAB in advogados) {
+        const perfilClienteRef = ref(db, `Advogado/${numeroOAB}/PerfilDoCliente`);
+        const perfilClienteSnapshot = await get(perfilClienteRef);
+
+        if (perfilClienteSnapshot.exists()) {
+            const clientes = perfilClienteSnapshot.val();
+            for (const cpf in clientes) {
+                const loginData = clientes[cpf];
+                if (loginData && loginData.email === email) {
+                    console.log(`E-mail encontrado para o CPF ${cpf} no advogado ${numeroOAB}`);
+                    return true;
+                }
+            }
+        } else {
+            console.log(`Perfil de cliente não encontrado para o advogado ${numeroOAB}`);
+        }
+    }
+
+    console.log('E-mail não encontrado em nenhum advogado.');
+    return false;
+} */
+
+// Função para mostrar o modal de erro
+function showErrorModal(message) {
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.textContent = message;
+    const modal = document.getElementById('errorModal');
+    modal.style.display = 'block';
+
+    document.getElementById('closeModal').onclick = function() {
+        modal.style.display = 'none';
+    };
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    };
+}
+
+// Adiciona o listener ao evento de submissão do formulário
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('senha').value;
+            loginWithEmailAndCheckClient(email, password);
+        });
+    } else {
+        console.error("Formulário de login não encontrado.");
     }
 });

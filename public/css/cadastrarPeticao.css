@@ -114,6 +114,10 @@ body {
     margin-bottom: 20px;
 }
 
+#pdfFile {
+    display: none;
+}
+
 .nav-list li a, #loginButton, #logoutButton {
     display: flex;
     align-items: center;

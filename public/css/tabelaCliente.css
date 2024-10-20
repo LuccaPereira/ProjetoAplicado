@@ -1,189 +1,364 @@
-body {
-    background-color: #aecade;
-    font-family: "Radio Canada Big", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    height: 100%;
-    text-align: center;
+* {
     margin: 0;
-    display: flex;
-    flex-direction: column; /* Alinha os itens em coluna */
-    justify-content: space-between; /* Garante que o footer fique no fundo */
-}
-
-.inicial-conteiner {
     padding: 0;
-    flex: 1; /* Garante que o conteúdo ocupe o espaço restante */
+    box-sizing: border-box;
 }
 
-nav {
-    background-color: #0e3754;
-    width: 100%; /* Garante que a navbar ocupe toda a largura */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-.navbar-brand {
-    padding-left: 20px;
-    font-size: 28px;
-    font-weight: 400;
-    color: white;
-}
-
-.navbar-toggler {
-    margin-right: 20px;
-    background-color: rgba(255, 255, 255, 0.26);
-}
-
-.nav-item {
-    font-weight: 600;
-    transition: .3s;
-}
-
-.active {
-    color: rgba(26, 201, 207, 0.808) !important;
-}
-
-.nav-item:hover {
-    background-color: rgba(240, 248, 255, 0.438);
-    transition: .3s;
-}
-
-.nav-link {
-    font-size: 18px;
-    padding-left: 20px;
-    color: white;
-}
-
-.center {
-    width: 100%;
-    height: 100%;
-}
-
-#logo {
-    width: 4%;
-}
-
-.pos-nav {
-    width: 100%;
-    background-color: rgba(117, 114, 114, 0.486);
-    padding: 20px;
+.wrapper {
     display: flex;
-    justify-content: end;
 }
 
-.pos-nav-buttons {
-    display: flex;
-    gap: 6px;
-}
-
-.pos-nav-buttons button {
-    background-color: rgba(255, 255, 0, 0.527) !important;
-    max-width: max-content;
-    border: 1px solid rgba(0, 0, 0, 0.418);
-    border-radius: 2px;
-}
-
-.pos-nav-buttons button:hover {
-    background-color: rgba(255, 255, 0, 0.753);
-    border: 1px solid rgba(0, 0, 0, 0.795);
-}
-
-.dropdown-toggle {
-    background-color: rgba(255, 255, 0, 0.527) !important;
-    max-width: max-content;
-    border: 1px solid rgba(0, 0, 0, 0.418);
-    border-radius: 2px;
-}
-
-.dropdown-toggle:hover {
-    background-color: rgba(255, 255, 0, 0.753);
-    border: 1px solid rgba(0, 0, 0, 0.795);
-}
-
-.table {
-    /* Defina suas cores personalizadas aqui */
-    --table-color: #000000; /* Cor do texto na tabela */
-    --table-bg: #ffffff; /* Cor de fundo da tabela */
-    --table-border-color: #dee2e6; /* Cor da borda da tabela */
-    --table-accent-bg: #007bff; /* Cor de destaque da tabela */
-    --table-striped-color: #ffffff; /* Cor do texto nas linhas listradas */
-    --table-striped-bg: #343a40; /* Cor de fundo das linhas listradas */
-    --table-active-color: #ffffff; /* Cor do texto nas células ativas */
-    --table-active-bg: #6c757d; /* Cor de fundo das células ativas */
-    --table-hover-color: #ffffff; /* Cor do texto nas células quando passa o mouse */
-    --table-hover-bg: #495057; /* Cor de fundo das células quando passa o mouse */
-    border-radius: 1px; /* Define o raio da borda */
-    overflow: hidden;
-  
-    /* Restante do CSS para estilizar a tabela */
-    width: 100%;
-    margin-bottom: 1rem;
-    vertical-align: middle;
-    border-color: var(--table-border-color);
-  
-    > :not(caption) > * > * {
-      padding: .75rem .5rem;
-      color: var(--table-color);
-      background-color: var(--table-bg);
-      border-bottom-width: 3px;
-      box-shadow: inset 0 0 0 9999px var(--table-bg);
-    }
-  }
-
-.custom-table th,
-.custom-table td {
-    color: rgb(0, 0, 0);
-}
-
-
-.modelo {
-    border-radius: 8px;
-    background-color: rgba(133, 125, 125, 0.486);
-    padding: 10px 50px;
-    display: flex;
+/* Sidebar */
+.sidebar {
+    width: 150px; /* Largura inicial colapsada */
+    background-color: #2c3e50;
+    height: 100vh;
+    padding: 20px 10px; /* Menos padding para o estado colapsado */
+    position: fixed;
+    top: 0;
+    left: 0;
+    flex-direction: column;
     justify-content: space-between;
-    height: 100px;
+    transition: width 0.3s ease;
+    overflow: hidden;
+}
+
+.sidebar.expanded {
+    width: 250px; /* Largura expandida */
+    padding: 20px;
+}
+
+.sidebar .logo {
+    width: 80px; /* Logo menor no estado colapsado */
+    margin: 1% auto;
+    display: block;
+    transition: width 0.3s ease;
+    margin-bottom: 15%;
+}
+
+.sidebar.expanded .logo {
+    width: 150px; /* Logo maior no estado expandido */
+}
+
+.menu-icon {
+    font-size: 36px;
+    color: #ecf0f1;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-.center1{
-    width: 100%;
+/* Itens da lista no estado colapsado */
+.nav-list .nav-text, .loginButton, .logoutButton {
+    display: none; /* Esconde o texto no estado colapsado */
+}
+
+.sidebar.expanded .nav-text, .loginButton, .logoutButton  {
+    display: inline; /* Mostra o texto quando expandido */
+}
+
+.nav-list li {
+    margin-bottom: 20px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centraliza os ícones no estado colapsado */
+}
+
+.sidebar.expanded .nav-list li {
+    justify-content: flex-start; /* Reposiciona os ícones e texto no estado expandido */
+}
+
+/* Botões de Login e Logout */
+#loginButton, #logoutButton {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: transparent;
+    color: #ecf0f1;
+    border: 2px solid #ecf0f1;
+    display: flex;
+    align-items: center;
+    justify-content:center !important;
     gap: 10px;
-    padding: 30px;
-    background-color:#aecade;
+    padding: 20px;
+    transition: background-color 0.3s ease;
 }
 
-footer {
-    color:white;
+#loginButton:hover, #logoutButton:hover {
+    background-color: #3498db;
+    color: #ecf0f1;
 }
 
-ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
+/* Lista de Navegação */
+.nav-list {
+    list-style: none;
+    padding: 0 !important;
+    margin-top: 20px;
 }
 
-li {
-	display: inline-block;
-	margin: 0 10px;
+.nav-list li {
+    margin-bottom: 20px;
 }
 
-a {
-	color: #fff;
-	text-decoration: none;
+.nav-list li a, #loginButton, #logoutButton {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: #ecf0f1;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
 }
 
-/* Estilo para o botão de logout */
-#logoutButton {
-    margin-left: auto; /* Empurra o botão para a direita */
-    color: white;
-    border: 1px solid white;
-    transition: background-color 0.3s ease, color 0.3s ease;
+.nav-list li a:hover {
+    background-color: #3498db;
+    border-radius: 5px;
 }
 
-#logoutButton:hover {
-    background-color: #dc3545;
-    color: white;
-    border-color: #dc3545;
+/* Estilo para os botões */
+.btn, #baixar-peticao {
+    border-radius: 0.5rem; /* Arredonda os cantos dos botões */
+    font-size: 1rem; /* Tamanho da fonte */
+    padding: 0.5rem 1rem; /* Espaçamento interno */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Animação suave nas mudanças de cor */
+}
+
+.btn-primary, #baixar-peticao {
+    background-color: #007bff; /* Cor de fundo do botão primário */
+    color: #fff; /* Cor do texto do botão primário */
+}
+
+.btn-primary:hover, #baixar-peticao:hover {
+    background-color: #0056b3; /* Cor do fundo ao passar o mouse */
+}
+
+.btn-secondary, #baixar-peticao {
+    background-color: #6c757d; /* Cor de fundo do botão secundário */
+    color: #fff; /* Cor do texto do botão secundário */
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* Cor do fundo ao passar o mouse */
+}
+
+.btn-outline-danger {
+    color: #dc3545; /* Cor do texto do botão de logout */
+    border: 1px solid #dc3545; /* Borda do botão de logout */
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545; /* Cor do fundo ao passar o mouse */
+    color: #fff; /* Cor do texto ao passar o mouse */
+}
+
+.btn-outline-center {
+    color: #007bff; /* Cor do texto do botão de perfil */
+    border: 1px solid #007bff; /* Borda do botão de perfil */
+}
+
+.btn-outline-center:hover {
+    background-color: #007bff; /* Cor do fundo ao passar o mouse */
+    color: #fff; /* Cor do texto ao passar o mouse */
+}
+
+.content {
+    margin-left: 150px;
+    padding: 40px;
+    flex-grow: 1;
+}
+
+
+h3 {
+    margin-bottom: 15px;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.custom-table {
+    background-color: white;
+}
+
+.custom-table th, .custom-table td {
+    text-align: center;
+}
+
+/* Estilização dos botões */
+button {
+    background-color: #007bff; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 10px 15px; /* Espaçamento interno */
+    cursor: pointer; /* Cursor de mão ao passar o mouse */
+    font-size: 16px; /* Tamanho da fonte */
+    transition: background-color 0.3s; /* Animação na mudança de cor */
+}
+
+button:hover {
+    background-color: #0056b3; /* Cor do botão ao passar o mouse */
+}
+
+/* Estilização dos selects */
+select {
+    border: 1px solid #ced4da; /* Borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    background-color: white; /* Cor de fundo */
+    color: #495057; /* Cor do texto */
+    width: 100%; /* Largura completa */
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1); /* Sombra interna */
+    transition: border-color 0.3s; /* Animação na mudança de borda */
+}
+
+select:focus {
+    border-color: #80bdff; /* Cor da borda ao focar */
+    outline: none; /* Remove o contorno padrão */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Sombra externa ao focar */
+}
+
+
+/* Modal */
+.modal-content {
+    padding: 20px;
+}
+
+.modal-header, .modal-footer {
+    border: none;
+}
+
+.card-info {
+    margin-bottom: 20px;
+}
+
+.card-info h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.card-info-name input {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.center1 {
+    display: flex;
+    justify-content: center;
+}
+
+.center-selects {
+    margin: 20px 0;
+}
+
+/* Modal geral */
+.modal-dialog {
+    max-width: 800px; /* Largura máxima do modal */
+    margin: 1.75rem auto; /* Centraliza o modal na tela */
+}
+
+.modal-content {
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra */
+}
+
+.petition-info {
+    padding: 20px; /* Espaçamento interno */
+}
+
+.card-info {
+    margin-bottom: 20px; /* Espaçamento entre seções */
+}
+
+.card-info h1 {
+    font-size: 24px; /* Tamanho do título */
+    color: #007bff; /* Cor do título */
+    margin-bottom: 10px; /* Margem inferior */
+}
+
+.card-info h4 {
+    font-size: 16px; /* Tamanho do subtítulo */
+    margin-bottom: 5px; /* Margem inferior */
+}
+
+.card-info-name {
+    margin-bottom: 15px; /* Espaçamento entre os campos */
+}
+
+/* Estilização dos campos de entrada */
+input[type="text"] {
+    width: calc(100% - 20px); /* Largura do campo */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ced4da; /* Borda do campo */
+    border-radius: 4px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho da fonte */
+    transition: border-color 0.3s; /* Transição na mudança de borda */
+}
+
+input[type="text"]:focus {
+    border-color: #007bff; /* Cor da borda ao focar */
+    outline: none; /* Remove o contorno padrão */
+}
+
+/* Estilização da seção dos dados do processo */
+.dados-para-processo {
+    display: flex; /* Flexbox para disposição */
+    justify-content: space-between; /* Espaço entre os lados */
+}
+
+.left-card-section, .right-card-section {
+    width: 48%; /* Largura de cada seção */
+}
+
+.lastAlteration {
+    display: flex; /* Flexbox para disposição dos campos */
+    justify-content: space-between; /* Espaço entre os campos */
+    margin-top: 20px; /* Margem superior */
+}
+
+/* Estilização dos botões */
+.buttons {
+    display: flex; /* Flexbox para disposição dos botões */
+    justify-content: flex-end; /* Alinha os botões à direita */
+    margin-top: 20px; /* Margem superior */
+}
+
+button {
+    margin-left: 10px; /* Margem entre os botões */
+    padding: 10px 15px; /* Espaçamento interno */
+    border-radius: 4px; /* Bordas arredondadas */
+    transition: background-color 0.3s; /* Transição na mudança de cor */
+}
+
+#saveButton {
+    background-color: #007bff; /* Cor do botão salvar */
+    color: white; /* Cor do texto */
+}
+
+#saveButton:hover {
+    background-color: #0056b3; /* Cor do botão ao passar o mouse */
+}
+
+#editButton {
+    background-color: #6c757d; /* Cor do botão editar */
+    color: white; /* Cor do texto */
+}
+
+#editButton:hover {
+    background-color: #5a6268; /* Cor do botão ao passar o mouse */
 }
