@@ -33,6 +33,7 @@ main {
     text-align: left;
     box-sizing: border-box;
     overflow-y: auto;
+    margin-bottom: 11.5%;
 }
 
 .profile-header {
@@ -200,114 +201,65 @@ button[type="button"]:hover {
     box-shadow: 0 4px 20px rgba(52, 199, 89, 0.3);
 }
 
-/* Sidebar */
-.sidebar {
-    width: 150px; /* Largura inicial colapsada */
-    background-color: #2c3e50;
-    height: 100vh;
-    padding: 20px 10px; /* Menos padding para o estado colapsado */
-    position: fixed;
-    top: 0;
-    left: 0;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: width 0.3s ease;
-    overflow: hidden;
+#ProfileContainer {
+    display: flex;               /* Usando flexbox para disposição em linha */
+    align-items: center;        /* Alinha os itens no centro verticalmente */
+    justify-content: center;     /* Centraliza os itens horizontalmente */
+    padding: 10px;             /* Adiciona algum preenchimento ao contêiner */
+    border-radius: 8px;        /* Cantos arredondados para um visual mais suave */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    background-color: #2c3e50; /* Cor de fundo escura */
 }
 
-.sidebar.expanded {
-    width: 250px; /* Largura expandida */
-    padding: 20px;
+.profile-icon ul {
+    list-style: none;          /* Remove marcadores da lista */
+    margin: 0;                /* Remove margem padrão */
+    padding: 0;               /* Remove preenchimento padrão */
+    display: flex;            /* Usando flexbox para os itens da lista */
+    gap: 20px;                /* Espaço entre os ícones */
 }
 
-.sidebar .logo {
-    width: 80px; /* Logo menor no estado colapsado */
-    margin: 1% auto;
-    display: block;
-    transition: width 0.3s ease;
-    margin-bottom: 15%;
+.profile-icon li {
+    display: flex;            /* Mantém os itens do li em linha */
+    align-items: center;      /* Alinha o conteúdo no centro verticalmente */
 }
 
-.sidebar.expanded .logo {
-    width: 150px; /* Logo maior no estado expandido */
+.material-icons {
+    font-size: 40px;          /* Tamanho do ícone do material design */
+    cursor: pointer;          /* Cursor pointer para indicar clicabilidade */
+    transition: color 0.3s;   /* Animação de transição suave para a cor */
 }
 
-.menu-icon {
-    font-size: 36px;
-    color: #ecf0f1;
-    cursor: pointer;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.material-icons:hover {
+    color: #007BFF;           /* Cor do ícone ao passar o mouse */
 }
 
-/* Itens da lista no estado colapsado */
-.nav-list .nav-text, .loginButton, .logoutButton {
-    display: none; /* Esconde o texto no estado colapsado */
+#Profile{
+    color:white;
 }
 
-.sidebar.expanded .nav-text, .loginButton, .logoutButton  {
-    display: inline; /* Mostra o texto quando expandido */
+#Profile:hover{
+    color:#007BFF;
 }
 
-.nav-list li {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Centraliza os ícones no estado colapsado */
+#tabelaView{
+    color:white;
 }
 
-.sidebar.expanded .nav-list li {
-    justify-content: center; /* Reposiciona os ícones e texto no estado expandido */
+#tabelaView:hover{
+    color:#007BFF;
 }
 
-/* Botões de Login e Logout */
-#loginButton, #logoutButton {
-    width: 100%;
-    margin-bottom: 20px;
-    background-color: transparent;
-    color: #ecf0f1;
-    border: 2px solid #ecf0f1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    transition: background-color 0.3s ease;
+#ChatBot{
+    color:white;
 }
 
-#loginButton:hover, #logoutButton:hover {
-    background-color: #3498db;
-    color: #ecf0f1;
+#ChatBot:hover{
+    color:#007BFF;
 }
 
-/* Lista de Navegação */
-.nav-list {
-    list-style: none;
-    padding: 0 ;
-    margin-top: 20px;
-}
-
-.nav-list li {
-    margin-bottom: 20px;
-}
-
-.nav-list li a, #loginButton, #logoutButton {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.1rem;
-    color: #ecf0f1;
-    padding: 10px;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-}
-
-.nav-list li a:hover {
-    background-color: #3498db;
-    border-radius: 5px;
+#logoutButton{
+    color: red !important;
 }
 
 
