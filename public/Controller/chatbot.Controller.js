@@ -177,24 +177,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify({
                     nomeCliente, cpfCnpjCliente, enderecoCliente, profissaoCliente, estadoCivil,
-        dataOcorrido, cidadePeticao, justiçaGratuita,
-        nomeReu, cpfCnpjReu, enderecoReu, tipoAcao, motivoAcao,
-        pedidosAutor, outrasInformacoes
+                    dataOcorrido, cidadePeticao, justiçaGratuita,
+                    nomeReu, cpfCnpjReu, enderecoReu, tipoAcao, motivoAcao,
+                    pedidosAutor, outrasInformacoes
                 }),
             });
-
+    
             if (!response.ok) {
                 throw new Error('Failed to generate petition');
             }
-
-            const data = await response.json();
-            appendMessage('bot', data.petition);
+    
+            // Redireciona o usuário para o download do arquivo
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'peticao.docx';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            appendMessage('bot', 'A petição foi gerada e o download iniciou.');
         } catch (error) {
             console.error('Error generating petition:', error);
             appendMessage('bot', 'Houve um erro ao gerar a petição. Por favor, tente novamente.');
         }
     }
-
     function appendMessage(sender, message) {
         const messageElement = document.createElement('div');
         messageElement.classList.add(`${sender}-message`);

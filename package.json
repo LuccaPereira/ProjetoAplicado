@@ -20,6 +20,7 @@
     "axios": "^1.7.7",
     "body-parser": "^1.20.3",
     "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
     "docx": "^8.5.0",
     "dotenv": "^16.4.5",
     "emailjs-com": "^3.2.0",

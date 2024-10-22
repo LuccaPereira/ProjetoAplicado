@@ -1,0 +1,319 @@
+/* Reset básico */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-y: auto;
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Permite que o footer fique na parte inferior */
+    justify-content: space-between; /* Distribui o espaço entre o conteúdo e o footer */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f5f5f7;
+    color: #1c1c1e;
+    overflow-y: auto;
+}
+
+main {
+    flex: 1;
+    overflow-y: auto; /* Faz com que o main ocupe o espaço restante */
+}
+
+/* Profile container styling */
+.profile-container {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 80%; /* Ajuste a largura se necessário */
+    max-width: 600px; /* Defina uma largura máxima se necessário */
+    margin: 2% auto; /* Centraliza horizontalmente */
+    padding: 20px;
+    text-align: left;
+    box-sizing: border-box;
+    overflow-y: auto;
+    margin-bottom: 11.5%;
+}
+
+.profile-header {
+    position: relative;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 4px solid #d1d1d6;
+    cursor: pointer;
+}
+
+#profile-image-upload {
+    display: none;
+}
+
+.profile-field-container {
+    margin-bottom: 15px;
+}
+
+.profile-field-container label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.profile-field {
+    padding: 8px;
+    border: 1px solid #d1d1d6;
+    border-radius: 4px;
+    background-color: #f5f5f7;
+}
+
+.profile-field.readonly {
+    background-color: #f5f5f7;
+}
+
+.profile-field.editable {
+    background-color: #ffffff;
+    border: 1px solid #007aff;
+}
+
+.profile-field input {
+    width: 100%;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+/* Botão de edição e salvar */
+.profile-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #0e3754;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    margin: 0 5px;
+}
+
+button:hover {
+    background-color: #0051a8;
+}
+
+#saveProfileBtn {
+    background-color: #007aff;
+    color: white;
+}
+
+#saveProfileBtn:hover {
+    background-color: #0051a8;
+}
+/* Modal styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Subtle backdrop */
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 50%; /* Ajuste a largura conforme necessário */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    max-height: 80vh; /* Limita a altura do modal a 80% da altura da viewport */
+    overflow-y: auto;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #ff3b30;
+}
+
+form label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1c1c1e;
+    margin: 10px 0 5px;
+}
+
+form input {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #d1d1d6;
+    font-size: 16px;
+    background-color: #f5f5f7;
+    transition: border-color 0.3s;
+}
+
+form input:focus {
+    outline: none;
+    border-color: #007aff;
+}
+
+/* Apple-like button for form */
+button[type="button"] {
+    width: 100%;
+    background-color: #34c759;
+    border: none;
+    color: white;
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 2px 10px rgba(52, 199, 89, 0.2);
+}
+
+button[type="button"]:hover {
+    background-color: #28a745;
+    box-shadow: 0 4px 20px rgba(52, 199, 89, 0.3);
+}
+
+#ProfileContainer {
+    display: flex;               /* Usando flexbox para disposição em linha */
+    align-items: center;        /* Alinha os itens no centro verticalmente */
+    justify-content: center;     /* Centraliza os itens horizontalmente */
+    padding: 10px;             /* Adiciona algum preenchimento ao contêiner */
+    border-radius: 8px;        /* Cantos arredondados para um visual mais suave */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    background-color: #2c3e50; /* Cor de fundo escura */
+}
+
+.profile-icon ul {
+    list-style: none;          /* Remove marcadores da lista */
+    margin: 0;                /* Remove margem padrão */
+    padding: 0;               /* Remove preenchimento padrão */
+    display: flex;            /* Usando flexbox para os itens da lista */
+    gap: 20px;                /* Espaço entre os ícones */
+}
+
+.profile-icon li {
+    display: flex;            /* Mantém os itens do li em linha */
+    align-items: center;      /* Alinha o conteúdo no centro verticalmente */
+}
+
+.material-icons {
+    font-size: 40px;          /* Tamanho do ícone do material design */
+    cursor: pointer;          /* Cursor pointer para indicar clicabilidade */
+    transition: color 0.3s;   /* Animação de transição suave para a cor */
+}
+
+.material-icons:hover {
+    color: #007BFF;           /* Cor do ícone ao passar o mouse */
+}
+
+#Profile{
+    color:white;
+}
+
+#Profile:hover{
+    color:#007BFF;
+}
+
+#tabelaView{
+    color:white;
+}
+
+#tabelaView:hover{
+    color:#007BFF;
+}
+
+#ChatBot{
+    color:white;
+}
+
+#ChatBot:hover{
+    color:#007BFF;
+}
+
+#logoutButton{
+    color: red !important;
+}
+
+
+/* Footer */
+footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px;
+    text-align: center;
+    margin-top: auto;
+    width: 100%;
+}
+
+footer nav ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+footer nav ul li a {
+    color: #ecf0f1;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+footer nav ul li a:hover {
+    color: #bdc3c7;
+}
+
+
+/* ================================
+   Foco para Acessibilidade
+   ================================ */
+.sidebar a:focus,
+#logoutButton:focus, #loginBnt:focus {
+    outline: 2px solid #007bff;
+}
+
+::-webkit-scrollbar {
+    width: 10px; /* Largura da barra de rolagem */
+}
+
+::-webkit-scrollbar-track {
+    background: #0e3754; /* Cor de fundo da trilha da barra de rolagem */
+    border-radius: 10px; /* Arredondamento das bordas da trilha */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #007aff; /* Cor da "mão" (a parte que se move) */
+    border-radius: 3px; /* Arredondamento das bordas da "mão" */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0051a8; /* Cor da "mão" ao passar o mouse sobre ela */
+}

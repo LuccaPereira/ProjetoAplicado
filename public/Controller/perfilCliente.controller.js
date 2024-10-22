@@ -2,7 +2,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.9.0/firebas
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js';
 import { getDatabase, ref, get, } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js';
 
-import { updateProfileInDatabase, updateLocalStorage } from '../model/perfilAdvogado.js';
+import { updateProfileInDatabase, updateLocalStorage } from '../model/perfilCliente.js';
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -22,13 +22,13 @@ const auth = getAuth(app); // Inicializa a autenticação
 
 // Função para obter o advogado logado
 // Função para obter o advogado logado
-async function getLoggedInLawyer() {
+async function getLoggedInCliente() {
     return new Promise((resolve, reject) => {
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const uid = user.uid; // Obter o uid do usuário logado
                 const db = getDatabase(app);
-                const advogadoRef = ref(db, `Advogado/PerfilAdvogado/${uid}`); // Acesse diretamente pelo uid
+                const advogadoRef = ref(db, `Cliente/PerfilDoCliente/${uid}`); // Acesse diretamente pelo uid
 
                 try {
                     const snapshot = await get(advogadoRef);
@@ -65,16 +65,15 @@ onAuthStateChanged(auth, (user) => {
 async function bringInfoModal() {
     console.log("Chamando bringInfoModal...");
     try {
-        const advogadoInfo = await getLoggedInLawyer(); // Chama a função para obter os dados do advogado
+        const ClienteInfo = await getLoggedInCliente(); // Chama a função para obter os dados do advogado
 
-        if (advogadoInfo) {
-            console.log("Dados do advogado logado:", advogadoInfo);
+        if (ClienteInfo) {
+            console.log("Dados do advogado logado:", ClienteInfo);
             // Atualizando os elementos do modal ou qualquer parte da UI com os dados do advogado
-            document.getElementById('nome').innerText = advogadoInfo.nome || "Nome não disponível";
-            document.getElementById('email').innerText = advogadoInfo.email || "Email não disponível";
-            document.getElementById('oab').innerText = advogadoInfo.OAB || "OAB não disponível";
-            document.getElementById('senha').innerText = advogadoInfo.senha|| "CPF não disponível";
-            document.getElementById('job').innerText = advogadoInfo.job|| "Advogado";
+            document.getElementById('nomemodal').innerText = ClienteInfo.nome || "Nome não disponível";
+            document.getElementById('senhamodal').innerText = ClienteInfo.senha || "senha não disponível";
+            document.getElementById('cpfmodal').innerText = ClienteInfo.cpf || "CPF não disponível";
+            document.getElementById('emailmodal').innerText = ClienteInfo.email|| "Email não disponível";
 
             // Caso tenha mais campos no modal, você pode adicioná-los aqui
             // Exemplo: 
@@ -111,17 +110,16 @@ export function editProfile() {
 
 export async function saveProfile() {
     const profileData = {
-        nome: document.getElementById('nome').querySelector('input').value,
-        job: document.getElementById('job').querySelector('input').value,
-        senha: document.getElementById('senha').querySelector('input').value,
-        OAB: document.getElementById('oab').querySelector('input').value,
-        email: document.getElementById('email').querySelector('input').value
+        nome: document.getElementById('nomemodal').querySelector('input').value,
+        senha: document.getElementById('senhamodal').querySelector('input').value,
+        cpf:document.getElementById('cpfmodal').querySelector('input').value,
+        email:  document.getElementById('emailmodal').querySelector('input').value
     };
 
-    const loggedInLawyer = await getLoggedInLawyer(); // Obtém os dados do advogado logado
-    if (loggedInLawyer) {
+    const loggedInCliente = await getLoggedInCliente(); // Obtém os dados do advogado logado
+    if (loggedInCliente) {
         // Passando o uid do advogado logado
-        updateProfileInDatabase(loggedInLawyer.uid, profileData) // Passando o uid corretamente
+        updateProfileInDatabase(loggedInCliente.uid, profileData) // Passando o uid corretamente
             .then(() => {
                 alert("Perfil atualizado com sucesso!");
                 updateLocalStorage(profileData);
@@ -172,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginBtn = document.getElementById('loginButton');
     if (loginBtn) {
         loginBtn.addEventListener('click', function() {
-            window.location.href = '../View/perfilAdvogado.html';
+            window.location.href = '../View/perfilCliente.html';
         });
     }
 });
