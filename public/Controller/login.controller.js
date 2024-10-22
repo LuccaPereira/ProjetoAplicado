@@ -14,7 +14,6 @@ const firebaseConfig = {
     measurementId: "G-WB0MPN3701"
 };
 
-// Inicialize o Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
@@ -30,19 +29,35 @@ async function loginWithEmailAndCheckClient(email, password) {
         const cpfOab = document.getElementById('cpfOab').value;
 
         let userInfo;
-
+        
         if (validarCPF(cpfOab)) {
             userInfo = await getClienteInfo(user.uid);
-            localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
-            console.log('Informações do usuário salvas no localStorage:', userInfo);
-            window.location.href = "../View/telaInicialCliente.html";
+            if(userInfo.nome === cpfOab) {
+                localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
+                console.log('Informações do usuário salvas no localStorage:', userInfo);
+                window.location.href = "../View/telaInicialCliente.html";
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro',
+                    text: 'CPF não cadastrado!'
+                });
+            } 
         } else {
             userInfo = await getAdvogadoInfo(user.uid);
-            localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
-            console.log('Informações do usuário salvas no localStorage:', userInfo);
-            window.location.href = "../View/menu.html";
+            if(userInfo.oab === cpfOab){
+                localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
+                console.log('Informações do usuário salvas no localStorage:', userInfo);
+                window.location.href = "../View/menu.html";
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro',
+                    text: 'OAB não cadastrado!'
+                });
+            }
         }
-
+        
         if (!userInfo) {
             throw new Error('Usuário não encontrado no banco de dados.');
         }

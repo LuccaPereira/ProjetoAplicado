@@ -9,10 +9,15 @@
     <link rel="stylesheet" href="../css/perfilCliente.css">
 </head>
 <body>
-    <div class="sidebar" id="sidebar">
+    <div class="container text-center py-5">
         <img src="../img/logo.png" alt="Logo do Sistema" width="150">
         <div class="profile-icon my-3" id="ProfileContainer">
             <ul>
+                <li>
+                    <a href="../View/telaInicialCliente.html">
+                        <span class="material-icons" id="home" aria-label="Início" title="Ir para a tela inicial">home</span>
+                    </a>
+                </li>
                 <li>
                     <a href="../View/perfilCliente.html">
                         <span alt="Ícone de Perfil" class="material-icons" id="Profile" title="Ir para o perfil">account_circle</span>
@@ -35,6 +40,7 @@
                 </li>
             </ul>
         </div>
+    </div>
     
     <div class="profile-container">
         <div class="profile-info">
@@ -53,21 +59,17 @@
                 <label for="senha">Senha:</label>
                 <div id="senha" class="profile-field readonly"></div>
             </div>
-            
+
             <div class="profile-field-container">
-                <label for="oab">OAB:</label>
-                <div id="oab" class="profile-field readonly"></div>
+                <label for="cpf">CPF:</label>
+                <div id="cpf" class="profile-field readonly"></div>
             </div>
-            
-            <div class="profile-field-container">
-                <label for="job">Cargo:</label>
-                <div id="job" class="profile-field readonly"></div>
-            </div>
-            
+
             <div class="profile-field-container">
                 <label for="email">Email:</label>
                 <div id="email" class="profile-field readonly"></div>
             </div>
+                  
             
             <div class="profile-field-container">
                 <label for="location">Localização:</label>
