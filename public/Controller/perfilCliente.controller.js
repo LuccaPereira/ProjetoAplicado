@@ -1,7 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js';
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js';
-import { getDatabase, ref, get, } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js';
-
+import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js'; // Módulo de banco de dados
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js'; // Módulo de armazenamento
 import { updateProfileInDatabase, updateLocalStorage } from '../model/perfilCliente.js';
 
 // Configuração do Firebase
@@ -18,7 +18,8 @@ const firebaseConfig = {
 
 // Inicializa o Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app); // Inicializa a autenticação
+const auth = getAuth(app);
+const storage = getStorage(app);
 
 // Função para obter o advogado logado
 // Função para obter o advogado logado
@@ -62,32 +63,53 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
+async function fetchImage(fileName) {
+    const picUid = await getLoggedInCliente();
+    try {
+        // Cria a referência da imagem
+        const imageRef = storageRef(storage, `profileImages/${picUid.uid}/${fileName}`);
+        
+        // Obtém a URL de download da imagem
+        const url = await getDownloadURL(imageRef);
+        
+        return url; // Retorna a URL da imagem
+    } catch (error) {
+        console.error("Erro ao resgatar a imagem:", error);
+        throw error; // Repassa o erro se necessário
+    }
+}
+
 async function bringInfoModal() {
     console.log("Chamando bringInfoModal...");
     try {
-        const ClienteInfo = await getLoggedInCliente(); // Chama a função para obter os dados do advogado
-
+        const ClienteInfo = await getLoggedInCliente();
+        
         if (ClienteInfo) {
-            console.log("Dados do advogado logado:", ClienteInfo);
-            // Atualizando os elementos do modal ou qualquer parte da UI com os dados do advogado
-            document.getElementById('nomemodal').innerText = ClienteInfo.nome || "Nome não disponível";
-            document.getElementById('senhamodal').innerText = ClienteInfo.senha || "senha não disponível";
-            document.getElementById('cpfmodal').innerText = ClienteInfo.cpf || "CPF não disponível";
-            document.getElementById('emailmodal').innerText = ClienteInfo.email|| "Email não disponível";
+            console.log("Dados do cliente logado:", ClienteInfo);
+            
+            if (ClienteInfo.foto) {
+                const imageUrl = await fetchImage(ClienteInfo.foto);
+                document.getElementById('profile-image').src = imageUrl;
+            } else {
+                console.log("Nome do arquivo da foto não disponível.");
+            }
+
+            document.getElementById('nome').innerText = ClienteInfo.nome || "Nome não disponível";
+            document.getElementById('senha').innerText = ClienteInfo.senha || "Senha não disponível";
+            document.getElementById('cpf').innerText = ClienteInfo.cpf || "CPF não disponível";
+            document.getElementById('email').innerText = ClienteInfo.email || "Email não disponível";
 
             // Caso tenha mais campos no modal, você pode adicioná-los aqui
-            // Exemplo: 
-            // document.getElementById('telefone').innerText = advogadoInfo.telefone || "Telefone não disponível";
-            
         } else {
-            console.log("Nenhum advogado encontrado com esse UID.");
+            console.log("Nenhum cliente encontrado.");
             // Aqui você pode exibir uma mensagem ao usuário ou lidar com a ausência de dados
         }
     } catch (error) {
-        console.error("Erro ao trazer informações do advogado:", error);
+        console.error("Erro ao trazer informações do cliente:", error);
         // Aqui você pode lidar com o erro, como mostrar uma mensagem de erro ao usuário
     }
 }
+
 function toggleEditMode(field) {
     field.classList.toggle('readonly');
     field.classList.toggle('editable');
@@ -108,41 +130,88 @@ export function editProfile() {
     document.getElementById('saveProfileBtn').style.display = 'inline-block';
 }
 
-export async function saveProfile() {
-    const profileData = {
-        nome: document.getElementById('nomemodal').querySelector('input').value,
-        senha: document.getElementById('senhamodal').querySelector('input').value,
-        cpf:document.getElementById('cpfmodal').querySelector('input').value,
-        email:  document.getElementById('emailmodal').querySelector('input').value
-    };
+export async function savePic() {
+    const fileInput = document.getElementById('profile-image-upload');
+    if (!fileInput) {
+        console.error("Elemento de entrada de arquivo não encontrado.");
+        return null;
+    }
 
-    const loggedInCliente = await getLoggedInCliente(); // Obtém os dados do advogado logado
-    if (loggedInCliente) {
-        // Passando o uid do advogado logado
-        updateProfileInDatabase(loggedInCliente.uid, profileData) // Passando o uid corretamente
-            .then(() => {
-                alert("Perfil atualizado com sucesso!");
-                updateLocalStorage(profileData);
-                document.querySelectorAll('.profile-field').forEach(field => {
-                    toggleEditMode(field);
-                    const inputElement = field.querySelector('input');
-                
-                    if (inputElement) { // Verifica se o input existe
-                        field.innerHTML = inputElement.value; // Atualiza o valor final
-                    } else {
-                        console.warn("Nenhum input encontrado para o campo:", field);
-                    }
-                });
-                document.getElementById('saveProfileBtn').style.display = 'none';
-            })
-            .catch(error => {
-                console.error("Erro ao salvar detalhes do perfil:", error);
-                alert('Erro ao salvar detalhes do perfil. Consulte o console para mais informações.');
-            });
+    const file = fileInput.files[0];
+    const picUid = await getLoggedInCliente();
+
+    if (!picUid || !picUid.uid) {
+        console.error("Usuário não está logado ou UID não disponível.");
+        return null;
+    }
+
+    if (file) {
+        const imageRef = storageRef(storage, `profileImages/${picUid.uid}/${file.name}`);
+        
+        try {
+            const snapshot = await uploadBytes(imageRef, file); // Envia o arquivo, não o nome
+            console.log('Imagem enviada com sucesso!');
+            
+            const downloadURL = await getDownloadURL(snapshot.ref);
+            console.log('URL da imagem:', downloadURL);
+            return file.name; // Retorna o nome do arquivo
+        } catch (error) {
+            console.error('Erro ao enviar a imagem:', error);
+            throw error; 
+        }
     } else {
-        console.log("Nenhum advogado está logado.");
+        console.log("Nenhum arquivo selecionado.");
+        return null;
     }
 }
+
+export async function saveProfile() {
+    try {
+        const fotoURL = await savePic();
+        const nomeInput = document.getElementById('nome')?.querySelector('input');
+        const senhaInput = document.getElementById('senha')?.querySelector('input');
+        const cpfInput = document.getElementById('cpf')?.querySelector('input');
+        const emailInput = document.getElementById('email')?.querySelector('input');
+
+        if (!nomeInput || !senhaInput || !cpfInput || !emailInput) {
+            console.error("Um ou mais campos de entrada não foram encontrados.");
+            alert("Erro ao salvar o perfil. Verifique se todos os campos estão preenchidos.");
+            return; // Retorna se algum campo não for encontrado
+        }
+
+        const profileData = {
+            nome: nomeInput.value,
+            senha: senhaInput.value,
+            cpf: cpfInput.value,
+            email: emailInput.value,
+            ...(fotoURL ? { foto: fotoURL } : {}) // Adiciona a foto somente se estiver presente
+        };
+
+        const loggedInCliente = await getLoggedInCliente(); 
+        if (loggedInCliente) {
+            await updateProfileInDatabase(loggedInCliente.uid, profileData);
+            alert("Perfil atualizado com sucesso!");
+            updateLocalStorage(profileData);
+
+            document.querySelectorAll('.profile-field').forEach(field => {
+                toggleEditMode(field);
+                const inputElement = field.querySelector('input');
+
+                if (inputElement) {
+                    field.innerHTML = inputElement.value; // Atualiza o campo com o valor
+                }
+            });
+
+            document.getElementById('saveProfileBtn').style.display = 'none';
+        } else {
+            console.log("Nenhum cliente está logado.");
+        }
+    } catch (error) {
+        console.error("Erro ao salvar o perfil:", error);
+        alert('Erro ao salvar o perfil. Consulte o console para mais informações.');
+    }
+}
+
 
 function clickMenu() {
     const sidebar = document.querySelector('.sidebar');

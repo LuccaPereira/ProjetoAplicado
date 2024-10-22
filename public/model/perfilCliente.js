@@ -28,7 +28,7 @@ export async function updateProfileInDatabase(uid, profileData) {
     const db = getDatabase();
 
     // Agora salvando os dados no caminho desejado: Advogado/PerfilAdvogado/{uid}
-    const profileRef = ref(db, `Advogado/PerfilAdvogado/${uid}`);
+    const profileRef = ref(db, `Cliente/PerfilDoCliente/${uid}`);
     
     return update(profileRef, profileData);
 }

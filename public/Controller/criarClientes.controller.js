@@ -1,7 +1,7 @@
 import { getClientes, updateCliente, addCliente, validarCPF, validarEmail } from '../model/criarClientes.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-import { getDatabase, ref, get, set} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+import { getDatabase, ref, get, set, push} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 
 // Sua configuração do Firebase
 const firebaseConfig = {
@@ -170,14 +170,13 @@ async function submitClientes(event) {
                     const uid = user.uid;
                     
                     const oData = {
-                        [uid]: {
-                            cpf: cpf,
-                            senha: senha,
-                            email: email,
-                            uid: uid
-                        }
+                        cpf: cpf,
+                        senha: senha,
+                        email: email,
+                        uid: uid
                     };
-                    await refFunction(clienteCollectionPath, oData);
+                
+                    await refFunction(clienteCollectionPath, uid, oData);
                     alert("Novo cliente foi adicionado com sucesso!");
                     await enviarEmail(cpf, senha, email);
                     clienteForm.reset();
@@ -191,9 +190,9 @@ async function submitClientes(event) {
         });
 }
 
-async function refFunction(clienteCollectionPath, oData) {
-    const clienteReferencia = ref(db, `${clienteCollectionPath}`);
-    await set(clienteReferencia, oData);
+async function refFunction(clienteCollectionPath, uid, oData) {
+    const clienteReferencia = ref(db, `${clienteCollectionPath}/${uid}`); // Usando uid como chave
+    await set(clienteReferencia, oData); // Usando set para adicionar os dados
 }
 
 async function enviarEmail(cpf, senha, email) {

@@ -157,7 +157,8 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Centraliza o conteúdo verticalmente */
+    justify-content: center;
+    margin-bottom: 35px;
 }
 
 h2 {
