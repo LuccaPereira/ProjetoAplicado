@@ -93,11 +93,37 @@ export function oabAdvogadoLogado() {
 
 async function naosuportomais(uid, oData){
     await database.ref(`Advogado/PerfilAdvogado/${uid}`).update(oData);
+
+    
+}
+async function verificarClienteExistente(cpf, email) {
+    const clienteRef = database.ref('Cliente/PerfilDoCliente');
+    const clienteSnapshot = await clienteRef.once('value');
+
+    let clienteExistente = null;
+
+    clienteSnapshot.forEach(childSnapshot => {
+        const clienteData = childSnapshot.val();
+        if (clienteData.cpf === cpf || clienteData.email === email) {
+            clienteExistente = { uid: childSnapshot.key, ...clienteData };
+        }
+    });
+
+    if (clienteExistente) {
+        return { existe: true, clienteExistente };
+    } else {
+        return { existe: false };
+    }
 }
 
 export async function montarOData() {
     const loggedInLawyer = oabAdvogadoLogado();
-    const logAdv = loggedInLawyer;
+
+    if (!loggedInLawyer) {
+        throw new Error('Nenhum advogado logado encontrado.');
+    }
+
+    const logAdv = loggedInLawyer; // Agora temos certeza que o advogado está logado
 
     const nomePeticionante = document.getElementById('nomePeticionante')?.value || '';
     const nomeAdvogado = document.getElementById('nomeAdvogado')?.value || '';
@@ -112,36 +138,36 @@ export async function montarOData() {
     const cpfAtivo = document.getElementById('cpfAtivo')?.value || '';
     const cnpjPassivo = document.getElementById('cnpjPassivo')?.value || '';
 
-    const limiteCaracteres = (campo, limite) => campo.length <= limite;
+    // Verificar se o cliente já existe
+    const clienteVerificacao = await verificarClienteExistente(cpfAtivo, email);
 
-    if (!limiteCaracteres(nomePeticionante, 200)) throw new Error('Nome do Peticionante muito longo');
-    if (!limiteCaracteres(nomeAdvogado, 200)) throw new Error('Nome do Advogado muito longo');
-    if (!limiteCaracteres(foro, 200)) throw new Error('Foro muito longo');
-    if (!limiteCaracteres(acidente, 200)) throw new Error('Descrição do Acidente muito longa');
-    if (!limiteCaracteres(procedimento, 200)) throw new Error('Procedimento muito longo');
-    if (!limiteCaracteres(descricao, 500)) throw new Error('Descrição muito longa');
-
-    const getFormattedDate = () => {
-        const date = new Date();
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-    };
-
-    const ultimaAlteracao = getFormattedDate();
-
-    if (!nomePeticionante || !nomeAdvogado || !foro || !acidente || !valor ||
-        !telefone || !procedimento || !auxilio || !email || !descricao ||
-        !cpfAtivo || !cnpjPassivo) {
-        throw new Error('Campos vazios');
+    if (clienteVerificacao.existe) {
+        console.log('Cliente já existe:', clienteVerificacao.clienteExistente);
+    } else {
+        console.log('Cliente não existe, criando novo cliente');
     }
 
-    if (!validarCPF(cpfAtivo)) throw new Error('CPF inválido');
-    if (!validarCNPJ(cnpjPassivo)) throw new Error('CNPJ inválido');
-    if (!validarEmail(email)) throw new Error('E-mail inválido');
-    if (!validarValor(valor)) throw new Error('Valor inválido');
-    if (!validarTelefoneOficial(telefone)) throw new Error('Telefone inválido');
+    // Dados para serem salvos no nó 'Cliente'
+    const clienteData = {
+        CNPJ: cnpjPassivo,
+        NomePeticionante: nomePeticionante,
+        NomeAdvogado: nomeAdvogado,
+        Foro: foro,
+        Acidente: acidente,
+        Valor: valor,
+        Procedimento: procedimento,
+        Telefone: telefone,
+        Auxilio: auxilio,
+        Email: email,
+        Descricao: descricao,
+        CPFAtivo: cpfAtivo,
+    };
+
+    const clienteUid = clienteVerificacao.existe
+        ? clienteVerificacao.clienteExistente.uid
+        : database.ref().child('Cliente/PerfilDoCliente').push().key;
+
+    await database.ref(`Cliente/PerfilDoCliente/${clienteUid}`).update(clienteData);
 
     const oData = {
         [nomePeticionante]: {
@@ -157,27 +183,27 @@ export async function montarOData() {
             Email: email,
             Descricao: descricao,
             CPFAtivo: cpfAtivo,
-            UltimaAlt: ultimaAlteracao
+            UltimaAlt: new Date().toLocaleDateString(),
         }
-    };  
+    };
 
     const pdfFileElement = document.getElementById("pdfFile");
     if (pdfFileElement && pdfFileElement.files.length > 0) {
         const timestamp = new Date().getTime();
         const fileName = `${timestamp}_${pdfFileElement.files[0].name}`;
         const pdfFile = pdfFileElement.files[0];
-    
+
         const pdfStorageRef = storageRef(storage, `pdfs/${fileName}`);
-    
+
         try {
             await uploadBytes(pdfStorageRef, pdfFile);
             const downloadURL = await getDownloadURL(pdfStorageRef);
             oData[nomePeticionante].pdfURL = downloadURL;
-    
+
             const uid = logAdv.uid;
             console.log('UID:', uid);
             console.log('oData:', oData);
-            
+
             await naosuportomais(uid, oData);
         } catch (error) {
             console.error('Erro ao enviar o PDF:', error);
@@ -185,7 +211,7 @@ export async function montarOData() {
     } else {
         const uid = logAdv.uid;
         console.log('Chamando naosuportomais com UID:', uid);
-        
+
         try {
             await naosuportomais(uid, oData);
         } catch (error) {
@@ -193,6 +219,7 @@ export async function montarOData() {
         }
     }
 }
+
 
 function aplicarMascaraValor(elemento) {
     elemento.addEventListener('input', (e) => {
