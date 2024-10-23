@@ -1,3 +1,7 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+import { getDatabase, ref, get, set, push} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+
 const firebaseConfig = {
     apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
     authDomain: "projetoaplicado-1.firebaseapp.com",
@@ -96,6 +100,7 @@ async function naosuportomais(uid, oData){
 
     
 }
+
 async function verificarClienteExistente(cpf, email) {
     const clienteRef = database.ref('Cliente/PerfilDoCliente');
     const clienteSnapshot = await clienteRef.once('value');
@@ -105,17 +110,22 @@ async function verificarClienteExistente(cpf, email) {
     clienteSnapshot.forEach(childSnapshot => {
         const clienteData = childSnapshot.val();
         if (clienteData.cpf === cpf || clienteData.email === email) {
-            clienteExistente = { uid: childSnapshot.key, ...clienteData };
+            clienteExistente = {
+                uid: childSnapshot.key, // Captura o uid do cliente
+                ...clienteData // Inclui todos os dados do cliente
+            };
         }
     });
 
     if (clienteExistente) {
+        const collectionPath = "Cliente/PerfilDoCliente";
+        const clienteReferencia = ref(database, `${collectionPath}/${clienteExistente.uid}/${clienteExistente.nome}`);
+        await set(clienteReferencia, clienteExistente);
         return { existe: true, clienteExistente };
     } else {
         return { existe: false };
     }
 }
-
 export async function montarOData() {
     const loggedInLawyer = oabAdvogadoLogado();
 

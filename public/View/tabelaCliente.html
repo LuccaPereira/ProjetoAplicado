@@ -37,84 +37,78 @@
             </ul>
         </div>
     </div>
-        <div class="content">
-            <div class="consultar-modelo">
-                <div class="center1">
-                    <div class="center-selects">
-                        <div class="second-select div-select">
-                            <h3>Filtrar por nome:</h3>
-                            <select aria-label="Escolha uma opção" name="emNomeDe" id="emNomeDe"></select>
-                        </div>
+    <div class="content">
+        <div class="consultar-modelo">
+            <div class="center1">
+                <div class="center-selects">
+                    <div class="second-select div-select">
+                        <h3>Filtrar por nome:</h3>
+                        <select aria-label="Escolha uma opção" name="emNomeDe" id="emNomeDe" disabled></select>
                     </div>
                 </div>
-            </div>    
-            <div class="container-fluid" id="tabela">
-                <table id="clientesTable" class="table custom-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cpf</th>
-                            <th scope="col">Descrição</th>
-                            <th scope="col">Última alteração</th>
-                            <th scope="col">Situação</th>
-                            <th scope="col">Mais informações:</th>
-                            <th scope="col">Arquivar</th>
-                        </tr>
-                    </thead>
-                    <tbody id="clientesBody">
-                        <!-- Linhas da tabela serão inseridas dinamicamente aqui -->
-                    </tbody>
-                </table>
             </div>
+        </div>    
+        <div class="container-fluid" id="tabela">
+            <table id="clientesTable" class="table custom-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Cpf</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Última alteração</th>
+                        <th scope="col">Situação</th>
+                        <th scope="col">Mais informações:</th>
+                        <th scope="col">Arquivar</th>
+                    </tr>
+                </thead>
+                <tbody id="clientesBody">
+                    <!-- Linhas da tabela serão inseridas dinamicamente aqui -->
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="modal fade" id="editPetitionModal" tabindex="-1" aria-labelledby="editPetitionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="editPetitionModalLabel">Protocolar Petição</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form id="editPetitionForm">
-
-                  <div class="mb-3">
-                    <label for="petitionStatus" class="form-label">Status da Petição</label>
-                    <select id="petitionStatus" class="form-select">
-                      <option value="pendente">Pendente</option>
-                      <option value="protocolada">Protocolada</option>
-                      <option value="aceita">Aceita</option>
-                      <option value="rejeitada">Rejeitada</option>
-                      <option value="causa-ganha">Causa Ganha</option>
-                    </select>
-                  </div>
-        
-                  <div class="mb-3">
-                    <label for="protocolNumber" class="form-label">Número do Protocolo</label>
-                    <input type="text" id="protocolNumber" class="form-control" placeholder="Digite o número do protocolo">
-                  </div>
-        
-                  <div class="mb-3">
-                    <label for="protocolDate" class="form-label">Data Protocolo</label>
-                    <input type="date" id="protocolDate" class="form-control">
-                  </div>
-        
-                  <div class="mb-3">
-                    <label for="petitionPortal" class="form-label">Portal de Peticionamento</label>
-                    <input type="text" id="petitionPortal" class="form-control">
-                  </div>
-        
-                  <div class="mb-3">
-                    <label for="petitionObservations" class="form-label">Observações</label>
-                    <textarea id="petitionObservations" class="form-control" rows="3" placeholder="Observações sobre o envio"></textarea>
-                  </div>
-                  <input type="hidden" id="petitionId" />
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" onclick="saveStatus()">Salvar</button>
-              </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPetitionModalLabel">Protocolar Petição</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editPetitionForm">
+                        <div class="mb-3">
+                            <label for="petitionStatus" class="form-label">Status da Petição</label>
+                            <select id="petitionStatus" class="form-select" disabled>
+                                <option value="pendente">Pendente</option>
+                                <option value="protocolada">Protocolada</option>
+                                <option value="aceita">Aceita</option>
+                                <option value="rejeitada">Rejeitada</option>
+                                <option value="causa-ganha">Causa Ganha</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="protocolNumber" class="form-label">Número do Protocolo</label>
+                            <input type="text" id="protocolNumber" class="form-control" placeholder="Digite o número do protocolo" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="protocolDate" class="form-label">Data Protocolo</label>
+                            <input type="date" id="protocolDate" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="petitionPortal" class="form-label">Portal de Peticionamento</label>
+                            <input type="text" id="petitionPortal" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="petitionObservations" class="form-label">Observações</label>
+                            <textarea id="petitionObservations" class="form-control" rows="3" placeholder="Observações sobre o envio" readonly></textarea>
+                        </div>
+                        <input type="hidden" id="petitionId" />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="saveStatus()">Salvar</button>
+                </div>
             </div>
         </div>
     </div>
@@ -129,57 +123,54 @@
                             <h1>INFO PETICIONANTE</h1>
                             <hr>
                             <div class="card-info-name">
-                                <input type="text" id="modalnomePeticionante" placeholder="Nome Peticionante">
+                                <input type="text" id="modalnomePeticionante" placeholder="Nome Peticionante" readonly>
                             </div>
                             <div class="card-info-name">
-                                <input type="text" id="modalnomeAdvogado" placeholder="Nome do Advogado do processo">
+                                <input type="text" id="modalnomeAdvogado" placeholder="Nome do Advogado do processo" readonly>
                             </div>
                         </div>
-            
                         <div class="card-info">
                             <h1>DADOS PARA O PROCESSO</h1>
                             <hr>
                             <div class="card-info-name dados-para-processo">
                                 <div class="left-card-section">
-                                    <input type="text" id="Modalforo" placeholder="FORO DIS....">
-                                    <input type="text" id="Modalacidente" placeholder="Acidente......">
-                                    <input type="text" id="Modalvalor" placeholder="R$00,00">
-                                    <input type="text" id="Modaltelefone" placeholder="Telefone...">
-                                    <input type="text" type="Modalmandatory" id="OAB" placeholder="valide sua OAB...">
+                                    <input type="text" id="Modalforo" placeholder="FORO DIS...." readonly>
+                                    <input type="text" id="Modalacidente" placeholder="Acidente......" readonly>
+                                    <input type="text" id="Modalvalor" placeholder="R$00,00" readonly>
+                                    <input type="text" id="Modaltelefone" placeholder="Telefone..." readonly>
+                                    <input type="text" id="OAB" placeholder="valide sua OAB..." readonly>
                                 </div>
                                 <div class="right-card-section">
-                                    <input type="text" id="Modalprocedimento" placeholder="Procedimento....">
-                                    <input type="text" id="Modalauxilio" placeholder="6107 - Auxilio Acidente...">
-                                    <input type="text" id="Modalemail" placeholder="E-mail...">
-                                    <input type="text" id="Modaldescricao" placeholder="Pequena descrição...">
+                                    <input type="text" id="Modalprocedimento" placeholder="Procedimento...." readonly>
+                                    <input type="text" id="Modalauxilio" placeholder="6107 - Auxilio Acidente..." readonly>
+                                    <input type="text" id="Modalemail" placeholder="E-mail..." readonly>
+                                    <input type="text" id="Modaldescricao" placeholder="Pequena descrição..." readonly>
                                 </div>
                             </div>
                         </div>
-            
                         <div class="card-info">
                             <h1>POLO ATIVO</h1>
                             <hr>
                             <div class="card-info-name">
                                 <h4>Parte ativa: REQUERENTE</h4>
-                                <input type="text" id="ModalcpfAtivo" placeholder="CPF">
+                                <input type="text" id="ModalcpfAtivo" placeholder="CPF" readonly>
                             </div>
                         </div>
-            
                         <div class="card-info">
                             <h1>POLO PASSIVO</h1>
                             <hr>
                             <div class="card-info-name">
                                 <h4>INSS: REQUERIDO</h4>
-                                <input type="text" id="ModalcnpjPassivo" placeholder="CNPJ">
+                                <input type="text" id="ModalcnpjPassivo" placeholder="CNPJ" readonly>
                             </div>
                         </div>
                         <div class="lastAlteration">
-                            <input type="text" id="editUltimaAlteracao">
-                            <input type="text" id="situação">
+                            <input type="text" id="editUltimaAlteracao" readonly>
+                            <input type="text" id="situação" readonly>
                         </div>
                         <div class="buttons">
-                            <button id="saveButton" class="btn btn-primary">Salvar</button>
-                            <button id="editButton" class="btn btn-secondary">Editar</button>
+                            <button id="saveButton" class="btn btn-primary" disabled>Salvar</button>
+                            <button id="editButton" class="btn btn-warning">Editar</button>
                         </div>
                     </div>
                 </div>
@@ -187,10 +178,9 @@
         </div>
     </div>
 
-<!-- Scripts necessários para o funcionamento do modal e outros comportamentos -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.4.0/dist/axios.min.js" defer></script>
-    <script type="module" src="../Controller/consultarModelo.controller.js" defer></script>
+    <script type="module" src="../controller/tabelaCliente.controller.js" defer></script>
 </body>
 </html>
