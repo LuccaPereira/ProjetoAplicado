@@ -89,10 +89,10 @@ export function validarTelefoneOficial(telefone) {
     return false;
 }
 
-export function oabAdvogadoLogado() {
-    const loggedInLawyerString = localStorage.getItem('loggedInUser');
-    console.log("Advogado logado (localStorage):", loggedInLawyerString);
-    return loggedInLawyerString ? JSON.parse(loggedInLawyerString) : null;
+export function clienteLogado() {
+    const loggedInClienteString = localStorage.getItem('loggedInUser');
+    console.log("Advogado logado (localStorage):", loggedInClienteString);
+    return loggedInClienteString ? JSON.parse(loggedInClienteString) : null;
 }
 
 async function naosuportomais(uid, oData){
@@ -111,29 +111,28 @@ async function verificarClienteExistente(cpf, email) {
         const clienteData = childSnapshot.val();
         if (clienteData.cpf === cpf || clienteData.email === email) {
             clienteExistente = {
-                uid: childSnapshot.key, // Captura o uid do cliente
-                ...clienteData // Inclui todos os dados do cliente
+                uid: childSnapshot.key,
+                ...clienteData
             };
         }
     });
 
     if (clienteExistente) {
-        const collectionPath = "Cliente/PerfilDoCliente";
-        const clienteReferencia = ref(database, `${collectionPath}/${clienteExistente.uid}/${clienteExistente.nome}`);
-        await set(clienteReferencia, clienteExistente);
-        return { existe: true, clienteExistente };
+        return clienteExistente;
     } else {
-        return { existe: false };
+        return false;
     }
 }
-export async function montarOData() {
-    const loggedInLawyer = oabAdvogadoLogado();
 
-    if (!loggedInLawyer) {
+
+export async function montarOData() {
+    const loggedInCliente = clienteLogado();
+
+    if (!loggedInCliente) {
         throw new Error('Nenhum advogado logado encontrado.');
     }
 
-    const logAdv = loggedInLawyer; // Agora temos certeza que o advogado está logado
+    const logCliente = loggedInCliente;
 
     const nomePeticionante = document.getElementById('nomePeticionante')?.value || '';
     const nomeAdvogado = document.getElementById('nomeAdvogado')?.value || '';
@@ -147,34 +146,36 @@ export async function montarOData() {
     const descricao = document.getElementById('descricao')?.value || '';
     const cpfAtivo = document.getElementById('cpfAtivo')?.value || '';
     const cnpjPassivo = document.getElementById('cnpjPassivo')?.value || '';
+    const situacao = "Ainda sem Status";
 
-    // Verificar se o cliente já existe
     const clienteVerificacao = await verificarClienteExistente(cpfAtivo, email);
 
-    if (clienteVerificacao.existe) {
-        console.log('Cliente já existe:', clienteVerificacao.clienteExistente);
+    if (clienteVerificacao) {
+        console.log('Cliente já existe:', clienteVerificacao);
     } else {
         console.log('Cliente não existe, criando novo cliente');
     }
 
-    // Dados para serem salvos no nó 'Cliente'
     const clienteData = {
-        CNPJ: cnpjPassivo,
-        NomePeticionante: nomePeticionante,
-        NomeAdvogado: nomeAdvogado,
-        Foro: foro,
-        Acidente: acidente,
-        Valor: valor,
-        Procedimento: procedimento,
-        Telefone: telefone,
-        Auxilio: auxilio,
-        Email: email,
-        Descricao: descricao,
-        CPFAtivo: cpfAtivo,
+        [nomePeticionante]: {
+            CNPJ: cnpjPassivo,
+            NomePeticionante: nomePeticionante,
+            NomeAdvogado: nomeAdvogado,
+            Foro: foro,
+            Acidente: acidente,
+            Valor: valor,
+            Procedimento: procedimento,
+            Telefone: telefone,
+            Auxilio: auxilio,
+            Email: email,
+            Descricao: descricao,
+            CPFAtivo: cpfAtivo,
+            UltimaAlt: new Date().toLocaleDateString(),
+            situacao: situacao
+        }
     };
-
-    const clienteUid = clienteVerificacao.existe
-        ? clienteVerificacao.clienteExistente.uid
+    const clienteUid = clienteVerificacao
+        ? clienteVerificacao.uid
         : database.ref().child('Cliente/PerfilDoCliente').push().key;
 
     await database.ref(`Cliente/PerfilDoCliente/${clienteUid}`).update(clienteData);
@@ -194,6 +195,7 @@ export async function montarOData() {
             Descricao: descricao,
             CPFAtivo: cpfAtivo,
             UltimaAlt: new Date().toLocaleDateString(),
+            situacao: situacao
         }
     };
 
@@ -210,7 +212,7 @@ export async function montarOData() {
             const downloadURL = await getDownloadURL(pdfStorageRef);
             oData[nomePeticionante].pdfURL = downloadURL;
 
-            const uid = logAdv.uid;
+            const uid = logCliente.uid;
             console.log('UID:', uid);
             console.log('oData:', oData);
 
@@ -219,7 +221,7 @@ export async function montarOData() {
             console.error('Erro ao enviar o PDF:', error);
         }
     } else {
-        const uid = logAdv.uid;
+        const uid = logCliente.uid;
         console.log('Chamando naosuportomais com UID:', uid);
 
         try {
@@ -229,6 +231,7 @@ export async function montarOData() {
         }
     }
 }
+
 
 
 function aplicarMascaraValor(elemento) {

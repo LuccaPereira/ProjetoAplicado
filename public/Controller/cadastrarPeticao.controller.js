@@ -23,10 +23,19 @@ form.addEventListener('submit', function (event) {
     event.preventDefault();
     montarOData()
         .then(() => {
-            alert("Novo cliente cadastrado com sucesso!");
+            Swal.fire({
+                title: 'Cliente Cadastrado! ',
+                text: `O cliente foi cadastrado com sucesso, você podera ver ele na aba da tabela`,
+                icon: 'success',
+                showCancelButton: false,
+                confirmButtonColor: '#0a3030',
+                confirmButtonText: 'Legal!'
+            }).then((result) => {
+                if (result.isConfirmed) {
             window.location.reload();
+            }});
         })
-        .catch(error => {
-            alert(`Erro: ${error}`);
+        .catch(e => {
+            Swal.fire('Erro!', 'O Cliente não foi criado. Verifique se os campos estão preenchidos!', 'error');
         });
 });

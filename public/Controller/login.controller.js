@@ -1,8 +1,8 @@
+import {validarCPF, getAdvogadoInfo, getClienteInfo} from "../model/login.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 
-// Sua configuração do Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
     authDomain: "projetoaplicado-1.firebaseapp.com",
@@ -20,7 +20,6 @@ const db = getDatabase(app);
 
 async function loginWithEmailAndCheckClient(email, password) {
     try {
-
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
@@ -29,10 +28,10 @@ async function loginWithEmailAndCheckClient(email, password) {
         const cpfOab = document.getElementById('cpfOab').value;
 
         let userInfo;
-        
+
         if (validarCPF(cpfOab)) {
             userInfo = await getClienteInfo(user.uid);
-            if(userInfo.nome === cpfOab) {
+            if (userInfo.cpf === cpfOab) {
                 localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
                 console.log('Informações do usuário salvas no localStorage:', userInfo);
                 window.location.href = "../View/telaInicialCliente.html";
@@ -42,10 +41,10 @@ async function loginWithEmailAndCheckClient(email, password) {
                     title: 'Erro',
                     text: 'CPF não cadastrado!'
                 });
-            } 
+            }
         } else {
             userInfo = await getAdvogadoInfo(user.uid);
-            if(userInfo.oab === cpfOab){
+            if (userInfo.oab === cpfOab) {
                 localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
                 console.log('Informações do usuário salvas no localStorage:', userInfo);
                 window.location.href = "../View/menu.html";
@@ -57,7 +56,7 @@ async function loginWithEmailAndCheckClient(email, password) {
                 });
             }
         }
-        
+
         if (!userInfo) {
             throw new Error('Usuário não encontrado no banco de dados.');
         }
@@ -68,110 +67,6 @@ async function loginWithEmailAndCheckClient(email, password) {
     }
 }
 
-
-function validarCPF(cpf) {
-    cpf = cpf.replace(/\D/g, '');
-
-    if (cpf.length !== 11) {
-        return false;
-    }
-
-    let soma = 0;
-    for (let i = 0; i < 9; i++) {
-        soma += parseInt(cpf.charAt(i)) * (10 - i);
-    }
-    let digitoVerif1 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-
-    if (parseInt(cpf.charAt(9)) !== digitoVerif1) {
-        return false;
-    }
-
-    soma = 0;
-    for (let i = 0; i < 10; i++) {
-        soma += parseInt(cpf.charAt(i)) * (11 - i);
-    }
-    let digitoVerif2 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-
-    if (parseInt(cpf.charAt(10)) !== digitoVerif2) {
-        return false;
-    }
-
-    return true;
-}
-async function getAdvogadoInfo(uid) {
-    const advogadoRef = ref(db, `Advogado/PerfilAdvogado/${uid}`);
-    const snapshot = await get(advogadoRef);
-
-    if (snapshot.exists()) {
-        const dadosAdvogado = snapshot.val();
-        return {
-            uid: uid,
-            email: auth.currentUser.email,
-            nome: dadosAdvogado.nome || '',
-            oab: dadosAdvogado.OAB || '',
-            senha: dadosAdvogado.senha || '',
-            cpf: dadosAdvogado.CPF || ''
-        };
-    } else {
-        console.log('Perfil do advogado não encontrado no banco de dados.');
-        return { uid: uid, email: auth.currentUser.email };
-    }
-}
-
-// Função para buscar as informações completas do advogado no Realtime Database
-async function getClienteInfo(uid) {
-    const ClienteRef = ref(db, `Cliente/PerfilDoCliente/${uid}`);
-    const snapshot = await get(ClienteRef);
-    console.log(snapshot);
-    if (snapshot.exists()) {
-        const dadoscliente = snapshot.val();
-        return {
-            uid: uid,
-            email: auth.currentUser.email,
-            nome: dadoscliente.cpf || '',
-            senha: dadoscliente.senha || '',
-            uid: dadoscliente.uid || ''
-        };
-    } else {
-        console.log('Perfil do advogado não encontrado no banco de dados.');
-        return { uid: uid, email: auth.currentUser.email };
-    }
-}
-
-// Função para verificar se o e-mail existe na coleção 'Cliente'
-/* async function checkIfEmailIsClient(email) {
-    const advogadoRef = ref(db, 'Advogado');
-    const advogadoSnapshot = await get(advogadoRef);
-
-    if (!advogadoSnapshot.exists()) {
-        console.log('Nenhum advogado encontrado.');
-        return false;
-    }
-
-    const advogados = advogadoSnapshot.val();
-    for (const numeroOAB in advogados) {
-        const perfilClienteRef = ref(db, `Advogado/${numeroOAB}/PerfilDoCliente`);
-        const perfilClienteSnapshot = await get(perfilClienteRef);
-
-        if (perfilClienteSnapshot.exists()) {
-            const clientes = perfilClienteSnapshot.val();
-            for (const cpf in clientes) {
-                const loginData = clientes[cpf];
-                if (loginData && loginData.email === email) {
-                    console.log(`E-mail encontrado para o CPF ${cpf} no advogado ${numeroOAB}`);
-                    return true;
-                }
-            }
-        } else {
-            console.log(`Perfil de cliente não encontrado para o advogado ${numeroOAB}`);
-        }
-    }
-
-    console.log('E-mail não encontrado em nenhum advogado.');
-    return false;
-} */
-
-// Função para mostrar o modal de erro
 function showErrorModal(message) {
     const errorMessage = document.getElementById('errorMessage');
     errorMessage.textContent = message;
