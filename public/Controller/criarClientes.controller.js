@@ -20,6 +20,30 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
+document.addEventListener("DOMContentLoaded", function () {
+    const togglePassword = document.querySelector("#togglePassword");
+    const passwordField = document.querySelector("#senha");
+
+    if (togglePassword && passwordField) {
+        togglePassword.addEventListener("click", function () {
+            const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+            passwordField.setAttribute("type", type);
+            this.classList.toggle("eye-open");
+        });
+    }
+
+    const toggleConfirmPassword = document.querySelector("#toggleConfirmPassword");
+    const confirmPasswordField = document.querySelector("#confirmarSenha");
+
+    if (toggleConfirmPassword && confirmPasswordField) {
+        toggleConfirmPassword.addEventListener("click", function () {
+            const type = confirmPasswordField.getAttribute("type") === "password" ? "text" : "password";
+            confirmPasswordField.setAttribute("type", type);
+            this.classList.toggle("eye-open");
+        });
+    }
+});
+
 const userLogged = localStorage.getItem('loggedInUser');
 const userLoggedJson = JSON.parse(userLogged);
 //const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}.json`;

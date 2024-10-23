@@ -13,6 +13,29 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig); 
 const auth = firebase.auth(); 
 const database = firebase.database();
+document.addEventListener("DOMContentLoaded", function () {
+    const togglePassword = document.querySelector("#togglePassword");
+    const passwordField = document.querySelector("#senha");
+
+    if (togglePassword && passwordField) {
+        togglePassword.addEventListener("click", function () {
+            const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+            passwordField.setAttribute("type", type);
+            this.classList.toggle("eye-open");
+        });
+    }
+
+    const toggleConfirmPassword = document.querySelector("#toggleConfirmPassword");
+    const confirmPasswordField = document.querySelector("#Confirmarsenha");
+
+    if (toggleConfirmPassword && confirmPasswordField) {
+        toggleConfirmPassword.addEventListener("click", function () {
+            const type = confirmPasswordField.getAttribute("type") === "password" ? "text" : "password";
+            confirmPasswordField.setAttribute("type", type);
+            this.classList.toggle("eye-open");
+        });
+    }
+});
 
 async function submitForm(event) {
     event.preventDefault();
@@ -29,32 +52,32 @@ async function submitForm(event) {
 
     // Validações
     if (!nome || !OAB || !cpf || !email || !senha || !confirmarSenha) {
-        alert('Por favor, preencha todos os campos.');
+        mostrarMensagemErro('Por favor, preencha todos os campos.');
         return;
     }
 
     if (!validarCPF(cpf)) {
-        alert('Favor inserir um CPF válido.');
+        mostrarMensagemErro('Favor inserir um CPF válido.');
         return;
     }
 
     if (senha.length < 6) {
-        alert('A senha deve ter no mínimo 6 caracteres.');
+        mostrarMensagemErro('A senha deve ter no mínimo 6 caracteres.');
         return;
     }
 
     if (OAB.length !== 8) {
-        alert('O número da OAB deve conter 8 dígitos.');
+        mostrarMensagemErro('O número da OAB deve conter 8 dígitos.');
         return;
     }
 
     if (!validarEmail(email)) {
-        alert('Favor inserir um e-mail válido.');
+        mostrarMensagemErro('Favor inserir um e-mail válido.');
         return;
     }
 
     if (senha !== confirmarSenha) {
-        alert('As senhas não coincidem.');
+        mostrarMensagemErro('As senhas não coincidem.');
         return;
     }
 
@@ -105,6 +128,23 @@ async function submitForm(event) {
     } else {
         alert('Por favor, preencha todos os campos corretamente.');
     }
+      const togglePassword = document.querySelector("#togglePassword");
+        const passwordField = document.querySelector("#senha");
+
+        togglePassword.addEventListener("click", function () {
+            const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+            passwordField.setAttribute("type", type);
+            this.classList.toggle("eye-open");
+        });
+
+        const toggleConfirmPassword = document.querySelector("#toggleConfirmPassword");
+        const confirmPasswordField = document.querySelector("#Confirmarsenha");
+
+        toggleConfirmPassword.addEventListener("click", function () {
+            const type = confirmPasswordField.getAttribute("type") === "password" ? "text" : "password";
+            confirmPasswordField.setAttribute("type", type);
+            this.classList.toggle("eye-open");
+        });
 }
 
 // Adiciona o listener ao evento de submit do formulário

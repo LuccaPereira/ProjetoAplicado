@@ -52,12 +52,19 @@ async function registrarUsuario(email, senha) {
         throw error; // Propagate the error for handling later
     }
 }
-
 async function verificarOABExistente(OAB) {
-    const url = `https://projetoaplicado-1-default-rtdb.firebaseio.com/Advogado/${OAB}.json`;
+    const url = `https://projetoaplicado-1-default-rtdb.firebaseio.com/Advogado/PerfilAdvogado.json`;
     try {
         const response = await axios.get(url);
-        return response.data !== null;
+        const advogados = response.data;
+
+        // Verifica se existem advogados no banco de dados
+        if (!advogados) return false;
+
+        // Itera pelos perfis de advogados para verificar se a OAB já existe
+        return Object.values(advogados).some(advogado => 
+            advogado.OAB && advogado.OAB === OAB
+        );
     } catch (error) {
         console.error("Erro ao verificar OAB:", error);
         throw error;
@@ -65,20 +72,24 @@ async function verificarOABExistente(OAB) {
 }
 
 async function verificarCPFExistente(cpf) {
-    const url = "https://projetoaplicado-1-default-rtdb.firebaseio.com/Advogado.json";
+    const url = `https://projetoaplicado-1-default-rtdb.firebaseio.com/Advogado/PerfilAdvogado.json`;
     try {
         const response = await axios.get(url);
         const advogados = response.data;
+
+        // Verifica se existem advogados no banco de dados
         if (!advogados) return false;
 
+        // Itera pelos perfis de advogados para verificar se o CPF já existe
         return Object.values(advogados).some(advogado => 
-            advogado.PerfilAdvogado && advogado.PerfilAdvogado.CPF === cpf
+            advogado.CPF && advogado.CPF === cpf
         );
     } catch (error) {
         console.error("Erro ao verificar o CPF:", error);
         throw error;
     }
 }
+
 
 // Error Display Function
 async function mostrarMensagemErro(mensagem, duration = 5000) {

@@ -113,6 +113,27 @@ footer a {
     color: #fff;
     text-decoration: none;
 }
+/* Estilos do ícone de olho nos campos de senha */
+.password-container {
+    position: relative;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888; /* Cor do ícone */
+}
+
+.eye-icon:hover {
+    color: #000; /* Cor do ícone ao passar o mouse */
+}
+
+.eye-icon.active {
+    color: #000; /* Muda a cor do ícone quando ativo */
+}
 
 /* Estilos do modal */
 .modal {

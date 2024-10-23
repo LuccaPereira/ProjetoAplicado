@@ -67,29 +67,49 @@ a {
     color: #1877f2;
     text-decoration: none;
 }
+
+/* Estilos do ícone de olho nos campos de senha */
+.password-container {
+    position: relative;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888; /* Cor do ícone */
+}
+
+.eye-icon:hover {
+    color: #000; /* Cor do ícone ao passar o mouse */
+}
+
 .profile-icon {
     position: absolute;
     right: 100px;
-       cursor: pointer;
-   }
-   
-   .profile-img{
-       width: 40px;
-       height: 40px;
-   }
-   
-   .profile-img:hover{
-       background-color: rgba(126, 143, 156);
-       border-radius: 35px;;
-   }   
+    cursor: pointer;
+}
 
-   .mensagem-erro {
+.profile-img {
+    width: 40px;
+    height: 40px;
+}
+
+.profile-img:hover {
+    background-color: rgba(126, 143, 156);
+    border-radius: 35px;
+}
+
+.mensagem-erro {
     background-color: #f44336; /* Cor de fundo vermelho para erros */
     color: white;
     padding: 10px;
     border-radius: 5px;
     margin-top: 10px;
     text-align: center;
+    justify-content: center;
     font-weight: bold;
     font-size: 14px;
     width: 100%;

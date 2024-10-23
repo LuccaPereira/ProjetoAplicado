@@ -300,6 +300,23 @@ a {
     font-size: 12px;
     color: #f1f1f1;
 }
+/* Estilos do ícone de olho nos campos de senha */
+.password-container {
+    position: relative;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888; /* Cor do ícone */
+}
+
+.eye-icon:hover {
+    color: #000; /* Cor do ícone ao passar o mouse */
+}
 
 /* Estilo para a barra de rolagem */
 ::-webkit-scrollbar {
