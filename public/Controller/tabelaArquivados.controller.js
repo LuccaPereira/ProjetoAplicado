@@ -1,4 +1,4 @@
-import { fetchClientes, archiveClient, updateSituacaoInDatabase, saveClientDetails} from '../model/tabelaCliente.js';
+import { fetchClientes } from '../model/tabelaArquivados.js';
 
 let protocolNumber = "";
 
@@ -35,8 +35,8 @@ export function renderClientes() {
 
             clientesTable.innerHTML = "";
             const clienteLogado = loggedInCliente.uid;
-            const perfil = clientes["PerfilDoCliente"];
-            const clienteData = perfil[clienteLogado];
+            const clienteData = clientes[clienteLogado];
+            //const clienteData = perfil[loggedInCliente.NomePeticionante];
             
             if (!clienteData) {
                 console.error("Advogado não encontrado.");
@@ -124,7 +124,7 @@ export function showClientDetails(clienteKey, formattedClientKey, clienteData) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const loggedInClienteString = localStorage.getItem('loggedInUser');
     const logCliente = JSON.parse(loggedInClienteString);
-    const urlAtt = `${databaseURL}/Cliente/PerfilDoCliente/${logCliente.uid}/${clienteKey}.json`;
+    const urlAtt = `${databaseURL}/Arquivdos/${logCliente.uid}/${clienteKey}.json`;
 
     console.log(`Buscando detalhes do cliente: ${urlAtt}`);
     axios.get(urlAtt)
