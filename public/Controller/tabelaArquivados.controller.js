@@ -76,24 +76,18 @@ export function renderClientes() {
                     document.querySelectorAll('.baixar-peticao').forEach(link => {
                         link.addEventListener('click', function(event) {
                             event.preventDefault();
-                    
-                           
-                            const currentClientKey = decodeURIComponent(link.getAttribute('data-cliente-key'));
-                            const formattedClientKey = currentClientKey.replace(/-/g, ' ');
-                            console.log(`Visualizando detalhes do cliente ${formattedClientKey}`);
-
-                            showClientDetails(clienteKey, formattedClientKey, clienteData);
+                            showClientDetails(clienteKey, clienteData);
                         });
                     });
                 }
             });
 
-            populateSelectOptions(clienteData, 'emSituacao', 'situacao');
+            populateSelectOptions(clienteData, 'emNomeDe', 'NomePeticionante');
 
-            document.getElementById('emSituacao').addEventListener('change', function() {
+            document.getElementById('emNomeDe').addEventListener('change', function() {
                 const selectedOptionText = this.options[this.selectedIndex].textContent.trim();
                 console.log(`Filtrando clientes por nome: ${selectedOptionText}`);
-                const clientesFiltrados = filtrarClientesPorNomePeticionante(clienteData, selectedOptionText);
+                const clientesFiltrados = filtrarClientesPorNomePeticionante(advogadoData, selectedOptionText);
                 renderClientes(clientesFiltrados);
             });
         })
@@ -120,19 +114,21 @@ function populateModalFields(cliente) {
     
 }
 
-export function showClientDetails(clienteKey, formattedClientKey, clienteData) {
-    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+export function showClientDetails(clienteKey, clienteData) {
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com";
     const loggedInClienteString = localStorage.getItem('loggedInUser');
     const logCliente = JSON.parse(loggedInClienteString);
-    const urlAtt = `${databaseURL}/Arquivdos/${logCliente.uid}/${clienteKey}.json`;
+    const urlAtt = `${databaseURL}/Arquivados/${logCliente.uid}/${clienteKey}.json`;
 
     console.log(`Buscando detalhes do cliente: ${urlAtt}`);
     axios.get(urlAtt)
         .then(response => {
             const cliente = response.data;
+            const clienteNome = cliente.NomePeticionante;
+            const Keyfiltrada = clienteNome.replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+            const  formattedClientKey = clienteKey.replace(/\s+/g, '-').replace(/[^\w-]/g, '');
 
-            // Verifique se o cliente existe e tem a propriedade esperada
-            if (cliente && cliente.NomePeticionante === formattedClientKey) {
+            if (Keyfiltrada === formattedClientKey) {
                 const modalElement = document.getElementById('clienteModal');
                 const modal = new bootstrap.Modal(modalElement);
 
@@ -177,31 +173,28 @@ export function populateSelectOptions(clienteData, selectId, optionKey) {
     console.log("Populando opções para o select:", selectId);
     select.innerHTML = ""; // Limpa as opções existentes
 
-    // Adiciona a opção vazia somente se não houver dados para popular
+    // Cria e adiciona a opção vazia
     const emptyOption = document.createElement('option');
     emptyOption.value = "";
     emptyOption.textContent = "Selecione uma opção";
-    select.appendChild(option);
+    select.appendChild(emptyOption);
 
     let hasOptions = false;
 
+    // Popula o select com as opções baseadas em clienteData
     Object.keys(clienteData).forEach(clienteKey => {
         const cliente = clienteData[clienteKey];
         if (cliente[optionKey]) {
             const option = document.createElement('option');
             option.textContent = cliente[optionKey];
-            option.value = cliente[optionKey]; 
+            option.value = cliente[optionKey];
             select.appendChild(option);
             hasOptions = true;
         }
     });
 
-    // Adiciona a opção vazia apenas se não houver opções
-    if (!hasOptions) {
-        select.appendChild(emptyOption);
-    } else {
-        select.selectedIndex = 0; 
-    }
+    // Define o índice selecionado como o primeiro (opção vazia)
+    select.selectedIndex = 0;
 }
 
 

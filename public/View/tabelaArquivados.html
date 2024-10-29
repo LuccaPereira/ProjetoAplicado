@@ -25,7 +25,6 @@
             <li><a href="../View/cadastrarPeticao.html"><span class="material-icons">description</span><span class="nav-text">Cadastrar Petição</span></a></li>
             <li><a href="../View/criarClientes.html"><span class="material-icons">person_add</span><span class="nav-text">Cadastrar Clientes</span></a></li>
             <li><a href="../View/chatbot.html"><span class="material-icons">chat</span><span class="nav-text">Chatbot</span></a></li>
-            <li><a href="../View/tabelaArquivados.html"><span class="material-icons">Arquivados</span><span class="nav-text">table_view</span></a></li>
             <li>
                 <button class="btn btn-outline-danger" id="logoutButton">
                     <span class="material-icons">exit_to_app</span>
@@ -39,8 +38,8 @@
             <div class="center1">
                 <div class="center-selects">
                     <div class="second-select div-select">
-                        <h3>Filtrar pela situação:</h3>
-                        <select aria-label="Escolha uma opção" name="emSituacao" id="emSituacao"></select>
+                        <h3>Filtrar por nome:</h3>
+                        <select aria-label="Escolha uma opção" name="emNomeDe" id="emNomeDe"></select>
                     </div>
                 </div>
             </div>
@@ -61,6 +60,66 @@
                     <!-- Linhas da tabela serão inseridas dinamicamente aqui -->
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="clienteModal" tabindex="-1" aria-labelledby="clienteModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="petition-info">
+                    <div class="info-login">
+                        <div class="card-info">
+                            <h1>INFO PETICIONANTE</h1>
+                            <hr>
+                            <div class="card-info-name">
+                                <input type="text" id="modalnomePeticionante" placeholder="Nome Peticionante" readonly>
+                            </div>
+                            <div class="card-info-name">
+                                <input type="text" id="modalnomeAdvogado" placeholder="Nome do Advogado do processo" readonly>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <h1>DADOS PARA O PROCESSO</h1>
+                            <hr>
+                            <div class="card-info-name dados-para-processo">
+                                <div class="left-card-section">
+                                    <input type="text" id="Modalforo" placeholder="FORO DIS...." readonly>
+                                    <input type="text" id="Modalacidente" placeholder="Acidente......" readonly>
+                                    <input type="text" id="Modalvalor" placeholder="R$00,00" readonly>
+                                    <input type="text" id="Modaltelefone" placeholder="Telefone..." readonly>
+                                    <input type="text" id="OAB" placeholder="valide sua OAB..." readonly>
+                                </div>
+                                <div class="right-card-section">
+                                    <input type="text" id="Modalprocedimento" placeholder="Procedimento...." readonly>
+                                    <input type="text" id="Modalauxilio" placeholder="6107 - Auxilio Acidente..." readonly>
+                                    <input type="text" id="Modalemail" placeholder="E-mail..." readonly>
+                                    <input type="text" id="Modaldescricao" placeholder="Pequena descrição..." readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <h1>POLO ATIVO</h1>
+                            <hr>
+                            <div class="card-info-name">
+                                <h4>Parte ativa: REQUERENTE</h4>
+                                <input type="text" id="ModalcpfAtivo" placeholder="CPF" readonly>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <h1>POLO PASSIVO</h1>
+                            <hr>
+                            <div class="card-info-name">
+                                <h4>INSS: REQUERIDO</h4>
+                                <input type="text" id="ModalcnpjPassivo" placeholder="CNPJ" readonly>
+                            </div>
+                        </div>
+                        <div class="lastAlteration">
+                            <input type="text" id="editUltimaAlteracao" readonly>
+                            <input type="text" id="situação" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
