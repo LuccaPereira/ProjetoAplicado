@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-import { getDatabase, ref, get, set, push} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+import { getDatabase, ref, get, set, push, update } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
@@ -13,9 +14,10 @@ const firebaseConfig = {
     measurementId: "G-WB0MPN3701"
 };
 
-const app = firebase.initializeApp(firebaseConfig); 
-const auth = firebase.auth(); 
-const database = firebase.database();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const database = getDatabase(app);
+const storage = getStorage(app);
 
 export function validarCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
@@ -67,10 +69,8 @@ export function validarEmail(email) {
 
 export function validarValor(valor) {
     valor = valor.replace('R$', '').trim().replace(/\s+/g, '').replace(',', '.');
-
     return /^\d+(\.\d{2})?$/.test(valor);
 }
-
 
 export function validarTelefoneOficial(telefone) {
     telefone = telefone.replace(/\D/g, '');
@@ -95,15 +95,13 @@ export function clienteLogado() {
     return loggedInClienteString ? JSON.parse(loggedInClienteString) : null;
 }
 
-async function naosuportomais(uid, oData){
-    await database.ref(`Advogado/PerfilAdvogado/${uid}`).update(oData);
-
-    
+async function naosuportomais(uid, oData) {
+    await update(ref(database, `Advogado/PerfilAdvogado/${uid}`), oData);
 }
 
 async function verificarClienteExistente(cpf, email) {
-    const clienteRef = database.ref('Cliente/PerfilDoCliente');
-    const clienteSnapshot = await clienteRef.once('value');
+    const clienteRef = ref(database, 'Cliente/PerfilDoCliente');
+    const clienteSnapshot = await get(clienteRef);
 
     let clienteExistente = null;
 
@@ -117,13 +115,8 @@ async function verificarClienteExistente(cpf, email) {
         }
     });
 
-    if (clienteExistente) {
-        return clienteExistente;
-    } else {
-        return false;
-    }
+    return clienteExistente || false;
 }
-
 
 export async function montarOData() {
     const loggedInCliente = clienteLogado();
@@ -174,11 +167,10 @@ export async function montarOData() {
             situacao: situacao
         }
     };
-    const clienteUid = clienteVerificacao
-        ? clienteVerificacao.uid
-        : database.ref().child('Cliente/PerfilDoCliente').push().key;
 
-    await database.ref(`Cliente/PerfilDoCliente/${clienteUid}`).update(clienteData);
+    const clienteUid = clienteVerificacao ? clienteVerificacao.uid : push(ref(database, 'Cliente/PerfilDoCliente')).key;
+
+    await update(ref(database, `Cliente/PerfilDoCliente/${clienteUid}`), clienteData);
 
     const oData = {
         [nomePeticionante]: {
@@ -210,27 +202,25 @@ export async function montarOData() {
         try {
             await uploadBytes(pdfStorageRef, pdfFile);
             const downloadURL = await getDownloadURL(pdfStorageRef);
-            oData[nomePeticionante].pdfURL = downloadURL;
+            oData[nomePeticionante].pdfURL = downloadURL; // Armazena o URL do PDF
 
             const uid = logCliente.uid;
             console.log('UID:', uid);
             console.log('oData:', oData);
+            await naosuportomais(uid, oData); // Atualiza os dados do advogado
 
-            await naosuportomais(uid, oData);
-        } catch (error) {
-            console.error('Erro ao enviar o PDF:', error);
-        }
-    } else {
-        const uid = logCliente.uid;
-        console.log('Chamando naosuportomais com UID:', uid);
+            // Atualiza o link do PDF no banco de dados do cliente
+            await update(ref(database, `Cliente/PerfilDoCliente/${clienteUid}`), {
+                [`${nomePeticionante}/pdfURL`]: downloadURL // Adiciona o link do PDF ao cliente
+            });
 
-        try {
-            await naosuportomais(uid, oData);
+            console.log("PDF enviado com sucesso:", downloadURL);
         } catch (error) {
-            console.error('Erro ao enviar dados:', error);
+            console.error("Erro ao enviar PDF:", error);
         }
     }
 }
+
 
 
 
