@@ -99,17 +99,19 @@ async function submitClientes(event) {
     }
 
     // Captura dos valores dos campos do formulário
+    const nomeElement = document.getElementById("nome");
     const cpfElement = document.getElementById("cpf");
     const senhaElement = document.getElementById("senha");
     const emailElement = document.getElementById("email");
     const confirmarSenhaElement = document.getElementById('confirmarSenha');
     const numeroOABElement = document.getElementById("numeroOAB");
 
-    if (!cpfElement || !senhaElement || !emailElement || !confirmarSenhaElement || !numeroOABElement) {
+    if (!cpfElement || !senhaElement || !emailElement || !confirmarSenhaElement || !numeroOABElement || !nomeElement) {
         console.error("Um ou mais elementos do formulário não foram encontrados.");
         return;
     }
 
+    const nome = nomeElement.value;
     const cpf = cpfElement.value;
     const senha = senhaElement.value;
     const email = emailElement.value;
@@ -194,6 +196,7 @@ async function submitClientes(event) {
                     const uid = user.uid;
                     
                     const oData = {
+                        nome: nome,
                         cpf: cpf,
                         senha: senha,
                         email: email,

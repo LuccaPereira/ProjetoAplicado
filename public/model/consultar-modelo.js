@@ -26,10 +26,10 @@ export function fetchClientes() {
 }
 
 export function archiveClient(clienteKey) {
-    const loggedInLawyerString = localStorage.getItem('loggedInLawyer');
-    const logAdv = JSON.parse(loggedInLawyerString);
-    const collectionPath = `Advogado/${logAdv.OAB}/${clienteKey}.json`;
-    const archivePath = `Arquivados/${clienteKey}.json`;
+    const loggedInClienteString = localStorage.getItem('loggedInUser');
+    const logCliente = JSON.parse(loggedInClienteString);
+    const collectionPath = `Advogado/PerfilAdvogado/${logCliente.uid}/${clienteKey}.json`;
+    const archivePath = `Arquivados/${logCliente.uid}/${clienteKey}.json`;
 
     return axios.get(`${databaseURL}/${collectionPath}`)
         .then(response => {
@@ -41,8 +41,8 @@ export function archiveClient(clienteKey) {
 }
 
 export function updateSituacaoInDatabase(clienteKeyAtt, selectedValue) {
-    const loggedInLawyerString = localStorage.getItem('loggedInUser');
-    const logAdv = JSON.parse(loggedInLawyerString);
+    const loggedInClienteString = localStorage.getItem('loggedInUser');
+    const logAdv = JSON.parse(loggedInClienteString);
     const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}/${clienteKeyAtt}.json`;
 
     const updatedDetails = { situacao: selectedValue };

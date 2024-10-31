@@ -1,3 +1,8 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+import { getDatabase, ref, get, set, push, update } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js";
+
 const firebaseConfig = {
     apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
     authDomain: "projetoaplicado-1.firebaseapp.com",
@@ -9,9 +14,10 @@ const firebaseConfig = {
     measurementId: "G-WB0MPN3701"
 };
 
-const app = firebase.initializeApp(firebaseConfig); 
-const auth = firebase.auth(); 
-const database = firebase.database();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const database = getDatabase(app);
+const storage = getStorage(app);
 
 export function validarCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
@@ -63,10 +69,8 @@ export function validarEmail(email) {
 
 export function validarValor(valor) {
     valor = valor.replace('R$', '').trim().replace(/\s+/g, '').replace(',', '.');
-
     return /^\d+(\.\d{2})?$/.test(valor);
 }
-
 
 export function validarTelefoneOficial(telefone) {
     telefone = telefone.replace(/\D/g, '');
@@ -85,19 +89,43 @@ export function validarTelefoneOficial(telefone) {
     return false;
 }
 
-export function oabAdvogadoLogado() {
-    const loggedInLawyerString = localStorage.getItem('loggedInUser');
-    console.log("Advogado logado (localStorage):", loggedInLawyerString);
-    return loggedInLawyerString ? JSON.parse(loggedInLawyerString) : null;
+export function clienteLogado() {
+    const loggedInClienteString = localStorage.getItem('loggedInUser');
+    console.log("Advogado logado (localStorage):", loggedInClienteString);
+    return loggedInClienteString ? JSON.parse(loggedInClienteString) : null;
 }
 
-async function naosuportomais(uid, oData){
-    await database.ref(`Advogado/PerfilAdvogado/${uid}`).update(oData);
+async function naosuportomais(uid, oData) {
+    await update(ref(database, `Advogado/PerfilAdvogado/${uid}`), oData);
+}
+
+async function verificarClienteExistente(cpf, email) {
+    const clienteRef = ref(database, 'Cliente/PerfilDoCliente');
+    const clienteSnapshot = await get(clienteRef);
+
+    let clienteExistente = null;
+
+    clienteSnapshot.forEach(childSnapshot => {
+        const clienteData = childSnapshot.val();
+        if (clienteData.cpf === cpf || clienteData.email === email) {
+            clienteExistente = {
+                uid: childSnapshot.key,
+                ...clienteData
+            };
+        }
+    });
+
+    return clienteExistente || false;
 }
 
 export async function montarOData() {
-    const loggedInLawyer = oabAdvogadoLogado();
-    const logAdv = loggedInLawyer;
+    const loggedInCliente = clienteLogado();
+
+    if (!loggedInCliente) {
+        throw new Error('Nenhum advogado logado encontrado.');
+    }
+
+    const logCliente = loggedInCliente;
 
     const nomePeticionante = document.getElementById('nomePeticionante')?.value || '';
     const nomeAdvogado = document.getElementById('nomeAdvogado')?.value || '';
@@ -111,37 +139,38 @@ export async function montarOData() {
     const descricao = document.getElementById('descricao')?.value || '';
     const cpfAtivo = document.getElementById('cpfAtivo')?.value || '';
     const cnpjPassivo = document.getElementById('cnpjPassivo')?.value || '';
+    const situacao = "Ainda sem Status";
 
-    const limiteCaracteres = (campo, limite) => campo.length <= limite;
+    const clienteVerificacao = await verificarClienteExistente(cpfAtivo, email);
 
-    if (!limiteCaracteres(nomePeticionante, 200)) throw new Error('Nome do Peticionante muito longo');
-    if (!limiteCaracteres(nomeAdvogado, 200)) throw new Error('Nome do Advogado muito longo');
-    if (!limiteCaracteres(foro, 200)) throw new Error('Foro muito longo');
-    if (!limiteCaracteres(acidente, 200)) throw new Error('Descrição do Acidente muito longa');
-    if (!limiteCaracteres(procedimento, 200)) throw new Error('Procedimento muito longo');
-    if (!limiteCaracteres(descricao, 500)) throw new Error('Descrição muito longa');
-
-    const getFormattedDate = () => {
-        const date = new Date();
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-    };
-
-    const ultimaAlteracao = getFormattedDate();
-
-    if (!nomePeticionante || !nomeAdvogado || !foro || !acidente || !valor ||
-        !telefone || !procedimento || !auxilio || !email || !descricao ||
-        !cpfAtivo || !cnpjPassivo) {
-        throw new Error('Campos vazios');
+    if (clienteVerificacao) {
+        console.log('Cliente já existe:', clienteVerificacao);
+    } else {
+        console.log('Cliente não existe, criando novo cliente');
     }
 
-    if (!validarCPF(cpfAtivo)) throw new Error('CPF inválido');
-    if (!validarCNPJ(cnpjPassivo)) throw new Error('CNPJ inválido');
-    if (!validarEmail(email)) throw new Error('E-mail inválido');
-    if (!validarValor(valor)) throw new Error('Valor inválido');
-    if (!validarTelefoneOficial(telefone)) throw new Error('Telefone inválido');
+    const clienteData = {
+        [nomePeticionante]: {
+            CNPJ: cnpjPassivo,
+            NomePeticionante: nomePeticionante,
+            NomeAdvogado: nomeAdvogado,
+            Foro: foro,
+            Acidente: acidente,
+            Valor: valor,
+            Procedimento: procedimento,
+            Telefone: telefone,
+            Auxilio: auxilio,
+            Email: email,
+            Descricao: descricao,
+            CPFAtivo: cpfAtivo,
+            UltimaAlt: new Date().toLocaleDateString(),
+            situacao: situacao
+        }
+    };
+
+    const clienteUid = clienteVerificacao ? clienteVerificacao.uid : push(ref(database, 'Cliente/PerfilDoCliente')).key;
+
+    await update(ref(database, `Cliente/PerfilDoCliente/${clienteUid}`), clienteData);
 
     const oData = {
         [nomePeticionante]: {
@@ -157,42 +186,43 @@ export async function montarOData() {
             Email: email,
             Descricao: descricao,
             CPFAtivo: cpfAtivo,
-            UltimaAlt: ultimaAlteracao
+            UltimaAlt: new Date().toLocaleDateString(),
+            situacao: situacao
         }
-    };  
+    };
 
     const pdfFileElement = document.getElementById("pdfFile");
     if (pdfFileElement && pdfFileElement.files.length > 0) {
         const timestamp = new Date().getTime();
         const fileName = `${timestamp}_${pdfFileElement.files[0].name}`;
         const pdfFile = pdfFileElement.files[0];
-    
+
         const pdfStorageRef = storageRef(storage, `pdfs/${fileName}`);
-    
+
         try {
             await uploadBytes(pdfStorageRef, pdfFile);
             const downloadURL = await getDownloadURL(pdfStorageRef);
-            oData[nomePeticionante].pdfURL = downloadURL;
-    
-            const uid = logAdv.uid;
+            oData[nomePeticionante].pdfURL = downloadURL; // Armazena o URL do PDF
+
+            const uid = logCliente.uid;
             console.log('UID:', uid);
             console.log('oData:', oData);
-            
-            await naosuportomais(uid, oData);
+            await naosuportomais(uid, oData); // Atualiza os dados do advogado
+
+            // Atualiza o link do PDF no banco de dados do cliente
+            await update(ref(database, `Cliente/PerfilDoCliente/${clienteUid}`), {
+                [`${nomePeticionante}/pdfURL`]: downloadURL // Adiciona o link do PDF ao cliente
+            });
+
+            console.log("PDF enviado com sucesso:", downloadURL);
         } catch (error) {
-            console.error('Erro ao enviar o PDF:', error);
-        }
-    } else {
-        const uid = logAdv.uid;
-        console.log('Chamando naosuportomais com UID:', uid);
-        
-        try {
-            await naosuportomais(uid, oData);
-        } catch (error) {
-            console.error('Erro ao enviar dados:', error);
+            console.error("Erro ao enviar PDF:", error);
         }
     }
 }
+
+
+
 
 function aplicarMascaraValor(elemento) {
     elemento.addEventListener('input', (e) => {
