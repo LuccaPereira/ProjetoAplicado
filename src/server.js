@@ -6,9 +6,13 @@ const dotenv = require('dotenv');
 const { Document, Packer, Paragraph, TextRun } = require('docx');
 const fs = require('fs');
 const cors = require('cors');
+const http = require('http'); // Para o Socket.IO
+const { Server } = require('socket.io'); // Para o Socket.IO
 
 dotenv.config();
 const app = express();
+const server = http.createServer(app); // Criando servidor HTTP
+const io = new Server(server); // Inicializando o Socket.IO com o servidor HTTP
 const port = 3000;
 
 app.use(cors());
@@ -19,10 +23,17 @@ const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 app.use(express.static(path.join(__dirname, '../public')));
 
+// Rota para a página inicial
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/View/PaginaInicial.html'));
 });
 
+// Rota para a página de chat
+app.get('/chat', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/View/chat.html'));
+});
+
+// Rota para geração de petições
 app.post('/generate-petition', async (req, res) => {
     const { 
         nomeCliente, cpfCnpjCliente, enderecoCliente, profissaoCliente, estadoCivil,
@@ -60,15 +71,13 @@ app.post('/generate-petition', async (req, res) => {
         Ao final da petição, inclua:
         - **CAMPINAS, SÃO PAULO, **[Data]**.
         - **ASSINATURA DO ADVOGADO**
-        -   OAB/SP *Número*
+        - OAB/SP *Número*
 
         Não inclua fatos além dos mencionados.
         `;
 
         const result = await model.generateContent(prompt);
         const responseText = await result.response.text();
-
-        
 
         // Criar um novo documento
         const doc = new Document({
@@ -113,7 +122,89 @@ app.post('/generate-petition', async (req, res) => {
     }
 });
 
-app.listen(port, () => {
+// Integração do Socket.IO para chat
+io.on('connection', (socket) => {
+    console.log('Novo cliente conectado');
+
+    socket.on('sendMessage', async (message) => {
+        console.log('Mensagem recebida:', message);
+
+        // Função para verificar se a mensagem é jurídica
+        const isLegalQuestion = (msg) => {
+            const legalKeywords = [
+                'jurídico', 'juridico', 'direito', 'lei', 'processo', 
+                'petição', 'peticao', 'contrato', 'advogado', 'jurisprudência', 
+                'jurisprudencia', 'processual', 'litígio', 'litigio', 'causa', 
+                'dano', 'responsabilidade', 'contratual', 'tutela', 'nulo', 
+                'nulidade', 'recurso', 'apelação', 'apelacao', 'justiça', 
+                'justica', 'ação', 'acao', 'sentença', 'sentenca', 
+                'cível', 'civil', 'penal', 'família', 'familia', 
+                'herança', 'heranca', 'testamento', 'patente', 
+                'propriedade', 'títulos', 'titulos', 'mandato', 
+                'cláusula', 'clausula', 'obrigação', 'obrigacao', 
+                'direitos', 'deveres', 'advocacia', 'disputa', 
+                'transação', 'transacao', 'conciliação', 'conciliacao', 
+                'mediação', 'mediacao', 'jurisdição', 'jurisdicao', 
+                'decisão', 'decisao', 'código', 'codigo', 
+                'fundo', 'convenção', 'convecao', 'inquérito', 
+                'inquerito', 'investigação', 'investigacao', 
+                'contraparte', 'defesa', 'acusação', 'acusacao', 
+                'obrigacional', 'exceção', 'excecao', 'prescrição', 
+                'prescricao', 'dolo', 'validade', 'capacidade', 
+                'incapacidade', 'dever', 'garantia', 'patrimônio', 
+                'patrimonio', 'serviço', 'servico', 'público', 
+                'publico', 'tutela', 'direito civil', 'direito penal', 
+                'direito tributário', 'direito tributario', 
+                'direito ambiental', 'código civil', 'codigo civil', 
+                'código penal', 'codigo penal', 'jurisprudência', 
+                'jurisprudencia', 'cláusulas', 'clausulas', 
+                'princípios', 'principios', 'compromisso', 
+                'execução', 'execucao', 'demandante', 'demanda', 
+                'norma', 'regulamento', 'solicitação', 'solicitacao', 
+                'protocolo', 'transação', 'transacao', 'fórum', 
+                'forum', 'ato', 'jurídica', 'juridica', 
+                'responsável', 'responsavel', 'cláusula', 
+                'clausula', 'obrigatória', 'obrigatoria', 
+                'direitos humanos', 'constituição', 'constitucao', 
+                'decreto', 'lei complementar', 'regimento', 
+                'sentença', 'sentenca', 'contrato social', 
+                'fundo de garantia', 'divida', 'dívida', 
+                'execução fiscal', 'cobranca', 'cobrança', 
+                'ação civil', 'acao civil', 'ação popular', 
+                'acao popular', 'ação direta', 'acao direta', 
+                'execução de sentença', 'execucao de sentenca'
+            ];
+
+            // Normalizar a mensagem para remover acentos e ç
+            const normalizedMsg = msg.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/ç/g, 'c');
+
+            return legalKeywords.some(keyword => normalizedMsg.includes(keyword));
+        };
+
+        if (!isLegalQuestion(message)) {
+            // Se a mensagem não for jurídica, responda com a mensagem padrão
+            socket.emit('receiveMessage', 'Esta mensagem não contém nenhuma pergunta jurídica, portanto não posso respondê-la.');
+            return;
+        }
+
+        try {
+            const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+            const result = await model.generateContent(message);
+            const responseText = await result.response.text();
+
+            // Enviar a resposta de volta ao cliente
+            socket.emit('receiveMessage', responseText);
+        } catch (error) {
+            console.error('Erro ao gerar resposta:', error);
+            socket.emit('receiveMessage', 'Desculpe, houve um erro ao processar sua mensagem.');
+        }
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Cliente desconectado');
+    });
+});
+server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
     console.log('API Key:', process.env.API_KEY);
 });
