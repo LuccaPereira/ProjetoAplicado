@@ -49,39 +49,57 @@ export function renderClientes() {
                 const cliente = clienteData[clienteKey];
                 const nomePeticionante = cliente.NomePeticionante;
                 const Keyfiltrada = clienteKey.replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-
+            
                 console.log(`Processando cliente: ${nomePeticionante}`, cliente);
-
+            
                 if (nomePeticionante) {
                     const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
                     const descricao = cliente.Descricao || "Descrição não disponível";
                     const ultimaAlteracao = cliente.UltimaAlt || "#";
                     const situacao = cliente.situacao || "Ainda sem Status";
-
+                    const pdfURL = cliente.pdfURL || ""; // Acessando pdfURL do cliente
+            
                     const newRow = document.createElement('tr');
                     newRow.setAttribute('data-cliente-key', clienteKey);
                     newRow.innerHTML = `
-                          <td class="nome-peticionante">${nomePeticionante}</td>
+                        <td class="nome-peticionante">${nomePeticionante}</td>
                         <td class="cpf-ativo">${cpfAtivo}</td>
                         <td class="descricao">${descricao}</td>
                         <td class="ultima-alteracao">${ultimaAlteracao}</td>
                         <td>
                             <input type="text" value="${situacao}" class="form-control" readonly />
                         </td>
-                        <td><button href="#" class="baixar-peticao" data-cliente-key="${Keyfiltrada}">Visualizar</button></td>`;
-
-
+                        <td>
+                            <button href="#" class="baixar-peticao" data-cliente-key="${Keyfiltrada}">Visualizar</button>
+                        </td>
+                        <td>
+                            <button class="visualizar-pdf" data-pdf-url="${pdfURL}" data-cliente-key="${Keyfiltrada}">Visualizar PDF</button>
+                        </td>`;
+            
                     clientesTable.appendChild(newRow);
-
+            
+                    // Adicionando event listeners para os botões de visualizar PDF
+                    document.querySelectorAll('.visualizar-pdf').forEach(button => {
+                        button.addEventListener('click', function (event) {
+                            event.preventDefault();
+                            const pdfURL = this.getAttribute('data-pdf-url');
+                            if (pdfURL) {
+                                // Abre o PDF em uma nova aba
+                                window.open(pdfURL, '_blank');
+                            } else {
+                                alert('PDF não disponível.');
+                            }
+                        });
+                    });
+            
                     document.querySelectorAll('.baixar-peticao').forEach(link => {
                         link.addEventListener('click', function(event) {
                             event.preventDefault();
-                    
-                           
+            
                             const currentClientKey = decodeURIComponent(link.getAttribute('data-cliente-key'));
                             const formattedClientKey = currentClientKey.replace(/-/g, ' ');
                             console.log(`Visualizando detalhes do cliente ${formattedClientKey}`);
-
+            
                             showClientDetails(clienteKey, formattedClientKey, clienteData);
                         });
                     });

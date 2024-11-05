@@ -55,6 +55,7 @@
                             <th scope="col">Situação</th>
                             <th scope="col">Mais informações:</th>
                             <th scope="col">Arquivar</th>
+                            <th scope="col">Visualizar PDF</th> <!-- Nova coluna para visualizar PDF -->
                         </tr>
                     </thead>
                     <tbody id="clientesBody">
@@ -64,6 +65,22 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="historicoModal" tabindex="-1" aria-labelledby="historicoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="historicoModalLabel">Histórico de Alterações</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- O conteúdo do histórico será preenchido aqui -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
     <div class="modal fade" id="editPetitionModal" tabindex="-1" aria-labelledby="editPetitionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

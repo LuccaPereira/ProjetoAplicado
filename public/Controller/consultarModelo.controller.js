@@ -81,21 +81,26 @@ export function renderClientes() {
                 const cliente = advogadoData[clienteKey];
                 const nomePeticionante = cliente.NomePeticionante;
                 const Keyfiltrada = clienteKey.replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-
+            
                 console.log(`Processando cliente: ${nomePeticionante}`, cliente);
-
+            
                 if (nomePeticionante) {
                     const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
                     const descricao = cliente.Descricao || "Descrição não disponível";
-                    const ultimaAlteracao = cliente.UltimaAlt || "#";
-
+                    const ultimaAlteracao = cliente.ultimaAlteracao
+ || "#";
+                    
+                    
+                    // Supondo que você tenha uma URL do PDF associada a cada cliente
+                    const pdfURL = cliente.pdfURL || ""; // Acessando pdfURL do cliente
+            
                     const newRow = document.createElement('tr');
                     newRow.setAttribute('data-cliente-key', clienteKey);
                     newRow.innerHTML = `
                         <td class="nome-peticionante">${nomePeticionante}</td>
                         <td class="cpf-ativo">${cpfAtivo}</td>
                         <td class="descricao">${descricao}</td>
-                        <td class="ultima-alteracao">${ultimaAlteracao}</td>
+                        <td class="ultima-alteracao" style="cursor: pointer;" title="Ver histórico de alterações">${ultimaAlteracao}</td>
                         <td>
                             <select id="selectSituation-${Keyfiltrada}" class="situation">
                                 <option value="emcadastramento">Em cadastramento</option>
@@ -106,9 +111,18 @@ export function renderClientes() {
                         <td><button href="#" class="baixar-peticao" data-cliente-key="${Keyfiltrada}">Visualizar</button></td>
                         <td>
                             <button class="arquivar-btn" data-cliente-key="${Keyfiltrada}">Arquivar</button>
-                        </td>`;
-
+                        </td>
+                        <td>
+                <a href="${pdfURL}" target="_blank" class="visualizar-pdf">Visualizar PDF</a>
+            </td>`;
+            
                     clientesTable.appendChild(newRow);
+
+                    const ultimaAlteracaoCell = newRow.querySelector('.ultima-alteracao');
+ultimaAlteracaoCell.addEventListener('click', () => {
+    // Aqui você pode buscar o histórico do cliente
+    showHistorico(clienteKey);
+});
 
                     const select = newRow.querySelector(`#selectSituation-${Keyfiltrada}`);
                     if (select) {
@@ -132,6 +146,16 @@ export function renderClientes() {
                                 .catch(error => console.error("Erro ao salvar detalhes do cliente:", error));
                         });
                     }
+
+                    // Adicionando event listeners para os botões de visualizar PDF
+document.querySelectorAll('.visualizar-pdf').forEach(link => {
+    link.addEventListener('click', function (event) {
+        // Aqui você pode adicionar lógica adicional se necessário
+        console.log('Visualizando PDF:', this.href);
+    });
+});
+
+                    
                     
 
                     document.querySelectorAll('.baixar-peticao').forEach(link => {
@@ -187,9 +211,54 @@ export function renderClientes() {
         .catch(error => console.error("Erro ao buscar clientes:", error));
 }
 
+
+function showHistorico(clienteKey) {
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+    const loggedInLawyerString = localStorage.getItem('loggedInUser');
+    const logAdv = JSON.parse(loggedInLawyerString);
+    
+    // URL para buscar o histórico
+    const urlHistorico = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}/${clienteKey}/HistoricoSituacao.json`;
+
+    axios.get(urlHistorico)
+        .then(response => {
+            const historico = response.data;
+
+            // Supondo que você tenha um modal para exibir o histórico
+            const modalElement = document.getElementById('historicoModal');
+            const modalBody = modalElement.querySelector('.modal-body');
+
+            // Limpa o conteúdo anterior
+            modalBody.innerHTML = '';
+
+            // Preenche o modal com o histórico
+            if (historico && typeof historico === 'object' && Object.keys(historico).length > 0) {
+                Object.keys(historico).forEach(data => {
+                    const entry = historico[data];
+                    const entryDiv = document.createElement('div');
+                    entryDiv.innerHTML = `<strong>${entry.data}</strong>: ${entry.situacao}`;
+                    modalBody.appendChild(entryDiv);
+                });
+            } else {
+                modalBody.innerHTML = '<p>Nenhum histórico encontrado.</p>';
+            }
+
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
+        })
+        .catch(error => {
+            console.error("Erro ao buscar histórico:", error);
+            const modalElement = document.getElementById('historicoModal');
+            const modalBody = modalElement.querySelector('.modal-body');
+            modalBody.innerHTML = '<p>Erro ao carregar o histórico.</p>';
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
+        });
+}
 function saveStatus() {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = "Advogado";
+    const currentDate = getCurrentDateTime();
 
     const peticionante = document.getElementById('petitionId').value;
     const status = document.getElementById('petitionStatus').value;
@@ -209,7 +278,9 @@ function saveStatus() {
         protocoloNum: protocolNumber,
         protocoloData: protocolDate,
         protocoloPortal: petitionPortal,
-        protocoloObservacao: petitionObservations
+        protocoloObservacao: petitionObservations,
+        ultimaAlteracao
+: currentDate // Atualiza a data da última alteração
     })
     .then(response => {
         modal.hide();
