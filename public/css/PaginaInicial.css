@@ -43,21 +43,23 @@ a:hover {
     padding: 20px; /* Adiciona espaçamento interno */
 }
 
-/* Logo e Ícone de Perfil */
 .profile-icon {
-    margin-top: 10px;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    text-align: center;
 }
 
 .profile-icon img.profile-img {
-    width: 50px;
+    width: 65px; /* Aumenta o tamanho da imagem */
     border-radius: 50%;
     transition: transform 0.3s ease, background-color 0.3s ease;
-    background-color: transparent;
 }
 
-.profile-icon img.profile-img:hover {
-    transform: scale(1.1);
-    background-color: rgba(0, 123, 255, 0.2); 
+.profile-icon .login-text {
+    margin-top: 8px; /* Ajusta o espaço entre a imagem e o texto */
+    font-size: 30px; /* Aumenta o tamanho do texto */
+    color: black; /* Ajuste a cor conforme sua preferência */
 }
 
 /* Estilos dos Cards */

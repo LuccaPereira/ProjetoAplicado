@@ -80,15 +80,14 @@ export function renderClientes() {
             Object.keys(advogadoData).forEach(clienteKey => {
                 const cliente = advogadoData[clienteKey];
                 const nomePeticionante = cliente.NomePeticionante;
-                const Keyfiltrada = clienteKey.replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                const Keyfiltrada = clienteKey.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-').replace(/[^\w-]/g, '');         
             
                 console.log(`Processando cliente: ${nomePeticionante}`, cliente);
             
                 if (nomePeticionante) {
                     const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
                     const descricao = cliente.Descricao || "Descrição não disponível";
-                    const ultimaAlteracao = cliente.ultimaAlteracao
- || "#";
+                    const ultimaAlteracao = cliente.ultimaAlteracao || "#";
                     
                     
                     // Supondo que você tenha uma URL do PDF associada a cada cliente
@@ -113,16 +112,15 @@ export function renderClientes() {
                             <button class="arquivar-btn" data-cliente-key="${Keyfiltrada}">Arquivar</button>
                         </td>
                         <td>
-                <a href="${pdfURL}" target="_blank" class="visualizar-pdf">Visualizar PDF</a>
-            </td>`;
+                            <a href="${pdfURL}" target="_blank" class="visualizar-pdf">Visualizar PDF</a>
+                        </td>`;
             
                     clientesTable.appendChild(newRow);
 
                     const ultimaAlteracaoCell = newRow.querySelector('.ultima-alteracao');
-ultimaAlteracaoCell.addEventListener('click', () => {
-    // Aqui você pode buscar o histórico do cliente
-    showHistorico(clienteKey);
-});
+                    ultimaAlteracaoCell.addEventListener('click', () => {
+                        showHistorico(clienteKey);
+                    });
 
                     const select = newRow.querySelector(`#selectSituation-${Keyfiltrada}`);
                     if (select) {
@@ -139,30 +137,30 @@ ultimaAlteracaoCell.addEventListener('click', () => {
                     
                                 const modal = new bootstrap.Modal(document.getElementById('editPetitionModal'));
                                 modal.show();
-                            }
+
+                                const salvarCliente = newRow.querySelector('bnt-primary');
+                                salvarCliente.addEventListener('click', () => {
+                                    saveStatus();
+                                });
+                            };
                             console.log(`Alterando situação do cliente ${clienteKey} para ${selectedValue}`);
                             updateSituacaoInDatabase(clienteKey, selectedValue)
                                 .then(() => alert("Nosso banco de dados foi atualizado!"))
                                 .catch(error => console.error("Erro ao salvar detalhes do cliente:", error));
                         });
                     }
-
-                    // Adicionando event listeners para os botões de visualizar PDF
-document.querySelectorAll('.visualizar-pdf').forEach(link => {
-    link.addEventListener('click', function (event) {
-        // Aqui você pode adicionar lógica adicional se necessário
-        console.log('Visualizando PDF:', this.href);
-    });
-});
-
-                    
-                    
+                    document.querySelectorAll('.visualizar-pdf').forEach(link => {
+                        link.addEventListener('click', function (event) {
+                            console.log('Visualizando PDF:', this.href);
+                        });
+                    });
 
                     document.querySelectorAll('.baixar-peticao').forEach(link => {
                         link.addEventListener('click', function(event) {
                             event.preventDefault();
-                            console.log(`Visualizando detalhes do cliente ${clienteKey}`);
-                            showClientDetails(clienteKey, advogadoData);
+                            const chaveCliente = link.getAttribute('data-cliente-key');
+                            console.log(`Visualizando detalhes do cliente ${chaveCliente}`);
+                            showClientDetails(chaveCliente, advogadoData);
                         });
                     });
 
@@ -311,11 +309,12 @@ function populateModalFields(cliente) {
     
 }
 
-export function showClientDetails(clienteKey, advogadoData) {
+export function showClientDetails(chaveCliente, advogadoData) {
+    const chaveClienteComEspacos = chaveCliente.replace(/-/g, ' ');
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const loggedInLawyerString = localStorage.getItem('loggedInUser');
     const logAdv = JSON.parse(loggedInLawyerString);
-    const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}/${clienteKey}.json`;
+    const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}/${chaveClienteComEspacos}.json`;
 
     console.log(`Buscando detalhes do cliente: ${urlAtt}`);
     axios.get(urlAtt)
@@ -350,13 +349,11 @@ export function showClientDetails(clienteKey, advogadoData) {
                     document.getElementById(field).readOnly = true;
                 });
 
-                // Botão de editar
                 const editButton = document.getElementById('editButton');
                 editButton.onclick = () => {
-                    toggleEditMode(true, fieldsToMakeReadonly); // Ativa o modo de edição
+                    toggleEditMode(true, fieldsToMakeReadonly);
                 };
             
-                // Botão de salvar
                 const saveButton = document.getElementById('saveButton');
                 saveButton.onclick = () => {
                     const updatedClientData = {
@@ -375,7 +372,6 @@ export function showClientDetails(clienteKey, advogadoData) {
                         CNPJ: document.getElementById('ModalcnpjPassivo').value
                     };
 
-                    // Salva os dados atualizados no Firebase
                     saveClientDetails(urlAtt, updatedClientData)
                         .then(() => {
                             Swal.fire({
