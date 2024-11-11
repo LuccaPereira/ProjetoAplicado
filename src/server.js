@@ -33,7 +33,6 @@ app.get('/chat', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/View/chat.html'));
 });
 
-// Rota para geração de petições
 app.post('/generate-petition', async (req, res) => {
     const { 
         nomeCliente, cpfCnpjCliente, enderecoCliente, profissaoCliente, estadoCivil,
@@ -54,64 +53,161 @@ app.post('/generate-petition', async (req, res) => {
     try {
         const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
         const prompt = `
-        Escreva uma petição inicial com as seguintes informações:
+Escreva uma petição inicial com as seguintes seções e informações:
 
-        - Nome do cliente: ${nomeCliente}, CPF/CNPJ: ${cpfCnpjCliente}, Endereço: ${enderecoCliente}, Profissão: ${profissaoCliente}, Estado Civil: ${estadoCivil}
-        - Nome do réu: ${nomeReu}, CPF/CNPJ: ${cpfCnpjReu}, Endereço: ${enderecoReu}
-        - Tipo de ação: ${tipoAcao}
-        - Motivo da ação: ${motivoAcao}, se for ação de cobrança aplique: [Código Civil](https://www.planalto.gov.br/ccivil_03/Leis/2002/L10406compilada.htm) e [Código de Processo Civil](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/L13105compilada.htm)
-        se for ação de danos morais aplique: [Código Civil](https://www.planalto.gov.br/ccivil_03/Leis/2002/L10406compilada.htm) e [Código de Processo Civil](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/L13105compilada.htm)
-        se for ação de rescisão contratual, aplique: [Código Civil](https://www.planalto.gov.br/ccivil_03/Leis/2002/L10406compilada.htm) e [Código de Processo Civil](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/L13105compilada.htm)
-        - Pedidos do autor: ${pedidosAutor}
-        - Data do fato: ${dataOcorrido}
-        - Cidade onde a petição será ajuizada: ${cidadePeticao}
-        - Solicitação de justiça gratuita: ${justiçaGratuita}
-        - Informações adicionais: ${outrasInformacoes}
+**1. Qualificação das Partes**
+- Nome do cliente: ${nomeCliente}, CPF/CNPJ: ${cpfCnpjCliente}, Endereço: ${enderecoCliente}, Profissão: ${profissaoCliente}, Estado Civil: ${estadoCivil}.
+- Nome do réu: ${nomeReu}, CPF/CNPJ: ${cpfCnpjReu}, Endereço: ${enderecoReu}.
+- Cite qual a Açao
 
-        Ao final da petição, inclua:
-        - **CAMPINAS, SÃO PAULO, **[Data]**.
-        - **ASSINATURA DO ADVOGADO**
-        - OAB/SP *Número*
+**2. Dos Fatos**
+Descreva o ocorrido com base nas seguintes informações:
+- Data do fato: ${dataOcorrido}.
+- Motivo da ação: ${motivoAcao}.
+- Deixe claro o motivo da açao
 
-        Não inclua fatos além dos mencionados.
-        `;
+**3. Do Direito**
+Baseie a argumentação legal nos artigos aplicáveis conforme o tipo de ação:
+- Para ação de cobrança: [Código Civil](https://www.planalto.gov.br/ccivil_03/Leis/2002/L10406compilada.htm) e [Código de Processo Civil](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/L13105compilada.htm).
+- Para ação de danos morais: [Código Civil](https://www.planalto.gov.br/ccivil_03/Leis/2002/L10406compilada.htm) e [Código de Processo Civil](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/L13105compilada.htm).
+- Para ação de rescisão contratual: [Código Civil](https://www.planalto.gov.br/ccivil_03/Leis/2002/L10406compilada.htm) e [Código de Processo Civil](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/L13105compilada.htm).
 
+**4. Dos Pedidos**
+Especifique os pedidos do autor:
+- Pedidos: ${pedidosAutor}.
+- Solicitação de justiça gratuita: ${justiçaGratuita}.
+- Outras informações adicionais: ${outrasInformacoes}.
+
+**5. Finalização**
+Termos em que,
+Pede Deferimento.
+
+_____________________.
+- **ASSINATURA DO ADVOGADO**
+ADV. - OAB/SP *Número*.
+- **CAMPINAS, SÃO PAULO, **[Data]**.
+
+
+
+
+Não inclua fatos além dos mencionados e mantenha a estrutura conforme solicitado.
+Não inclua **EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA **[VARA]** **DA COMARCA DE CAMPINAS/SP** na peticao por favor.
+`;
+
+        // Gerar o conteúdo com a API da IA
         const result = await model.generateContent(prompt);
         const responseText = await result.response.text();
 
-        // Criar um novo documento
+        // Dividir o texto nas seções, removendo os títulos
+        const [qualificacaoPartes, dosFatos, doDireito, dosPedidos, finalizacao] = responseText.split(/(?=\*\*[1-5]\.\s)/);
+
+        // Remover os títulos de cada seção, mantendo apenas o conteúdo
+        const cleanQualificacaoPartes = qualificacaoPartes.replace(/\*\*[1-5]\.\s.*/, '').trim();
+        const cleanDosFatos = dosFatos.replace(/\*\*[1-5]\.\s.*/, '').trim();
+        const cleanDoDireito = doDireito.replace(/\*\*[1-5]\.\s.*/, '').trim();
+        const cleanDosPedidos = dosPedidos.replace(/\*\*[1-5]\.\s.*/, '').trim();
+        const cleanFinalizacao = finalizacao.replace(/\*\*[1-5]\.\s.*/, '').trim();
+
+        // Configuração do documento DOCX com formatação para cada parágrafo
         const doc = new Document({
             sections: [
                 {
                     properties: {},
                     children: [
                         new Paragraph({
-                            children: [
-                                new TextRun({
-                                    text: responseText,
-                                    font: 'Arial', // Definindo a fonte como Arial
-                                    size: 28, // 14pt
-                                }),
-                            ],
-                            alignment: 'both', // Justificado
-                            spacing: {
-                                before: 240, // 6 pontos antes (6*12)
-                                after: 0,
-                                line: 360, // 1.5 linhas (1.5*240)
-                            },
-                            indent: {
-                                firstLine: 425, // 4.25 cm (4.25*20)
-                            },
+                            children: [new TextRun({ 
+                                text: `**Excelentíssimo Senhor Doutor Juiz de Direito da __ª Vara Cível da Comarca de ${cidadePeticao}.**`, 
+                                font: 'Arial', 
+                                size: 28, 
+                                bold: true  // Tornar o texto em negrito
+                            })],
+                            alignment: 'both',  // Justificar o texto
+                            spacing: { before: 0, after: 0, line: 276 },  // Espaçamento zero antes e depois, e espaçamento múltiplo de 1,1
+                            indent: { firstLine: 0 },  // Sem avanço na primeira linha
+                        }),
+
+                        // Espaço de 6 linhas antes do próximo parágrafo
+                        new Paragraph({
+                            children: [],  // Parágrafo vazio para criar o espaçamento
+                            spacing: { before: 1500 },  // Aproximadamente 6 linhas de espaçamento (ajuste conforme necessário)
+                        }),
+
+                        // Seção Qualificação das Partes
+                        new Paragraph({
+                            children: [new TextRun({ text: '', font: 'Arial', size: 28, bold: true })],
+                            alignment: 'both',
+                            spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
+                            indent: { firstLine: 2409 }, // Avanço de 4,25 cm
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: cleanQualificacaoPartes, font: 'Arial', size: 28 })],
+                            alignment: 'both',
+                            spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
+                            indent: { firstLine: 2409 },
+                        }),
+
+                        // Seção Dos Fatos
+                        new Paragraph({
+                            children: [new TextRun({ text: '2. Dos Fatos', font: 'Arial', size: 28, bold: true })],
+                            alignment: 'both',
+                            spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
+                            indent: { firstLine: 2409 },
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: cleanDosFatos, font: 'Arial', size: 28 })],
+                            alignment: 'both',
+                            spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
+                            indent: { firstLine: 2409 },
+                        }),
+
+                        // Seção Do Direito
+                        new Paragraph({
+                            children: [new TextRun({ text: '3. Do Direito', font: 'Arial', size: 28, bold: true })],
+                            alignment: 'both',
+                            spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
+                            indent: { firstLine: 2409 },
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: cleanDoDireito, font: 'Arial', size: 28 })],
+                            alignment: 'both',
+                            spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
+                            indent: { firstLine: 2409 },
+                        }),
+
+                        // Seção Dos Pedidos
+                        new Paragraph({
+                            children: [new TextRun({ text: '4. Dos Pedidos', font: 'Arial', size: 28, bold: true })],
+                            alignment: 'both',
+                            spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
+                            indent: { firstLine: 2409 },
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: cleanDosPedidos, font: 'Arial', size: 28 })],
+                            alignment: 'both',
+                            spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
+                            indent: { firstLine: 2409 },
+                        }),
+
+                        // Seção de Finalização (Assinatura do Advogado)
+                        new Paragraph({
+                            children: [new TextRun({ text: '5. Finalização', font: 'Arial', size: 28, bold: true })],
+                            alignment: 'both',
+                            spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
+                            indent: { firstLine: 2409 },
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: cleanFinalizacao, font: 'Arial', size: 28 })],
+                            alignment: 'both',
+                            spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
+                            indent: { firstLine: 2409 },
                         }),
                     ],
                 },
             ],
         });
 
-        // Gerar o arquivo DOCX
+        // Gerar e enviar o arquivo DOCX como resposta
         const buffer = await Packer.toBuffer(doc);
-
-        // Definir cabeçalho e enviar o arquivo para download
         res.setHeader('Content-Disposition', 'attachment; filename=peticao.docx');
         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
         res.send(buffer);
