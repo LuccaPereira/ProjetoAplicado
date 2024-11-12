@@ -54,8 +54,10 @@ app.post('/generate-petition', async (req, res) => {
         const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
         const prompt = `
 Escreva uma petição inicial com as seguintes seções e informações:
+Utilize essa estrutura: https://www.jusbrasil.com.br/modelos-pecas/modelo-acao-de-cobranca-peticao-inicial/2703267256
 
 **1. Qualificação das Partes**
+Por favor faça a qualificação das partes relacionando o Autor e o Réu.
 - Nome do cliente: ${nomeCliente}, CPF/CNPJ: ${cpfCnpjCliente}, Endereço: ${enderecoCliente}, Profissão: ${profissaoCliente}, Estado Civil: ${estadoCivil}.
 - Nome do réu: ${nomeReu}, CPF/CNPJ: ${cpfCnpjReu}, Endereço: ${enderecoReu}.
 - Cite qual a Açao
@@ -116,7 +118,7 @@ Não inclua **EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA **[VARA]** **DA C
                     children: [
                         new Paragraph({
                             children: [new TextRun({ 
-                                text: `**Excelentíssimo Senhor Doutor Juiz de Direito da __ª Vara Cível da Comarca de ${cidadePeticao}.**`, 
+                                text: `Excelentíssimo Senhor Doutor Juiz de Direito da __ª Vara Cível da Comarca de ${cidadePeticao}.`, 
                                 font: 'Arial', 
                                 size: 28, 
                                 bold: true  // Tornar o texto em negrito
