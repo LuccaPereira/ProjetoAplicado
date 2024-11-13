@@ -55,8 +55,9 @@ async function submitForm(event) {
         mostrarMensagemErro('Por favor, preencha todos os campos.');
         return;
     }
+    const validation = await validarCPF(cpf)
 
-    if (!validarCPF(cpf)) {
+    if (!validation) {
         mostrarMensagemErro('Favor inserir um CPF válido.');
         return;
     }

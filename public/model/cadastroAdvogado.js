@@ -13,25 +13,41 @@ const app = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth(); 
 const database = firebase.database();
 
-// Validation Functions
+// Função de Validação de CPF
 async function validarCPF(cpf) {
-    cpf = cpf.replace(/\D/g, '');
-    if (cpf.length !== 11) return false;
+    cpf = cpf.replace(/\D/g, ''); 
+
+    if (cpf.length !== 11) {
+        return false;
+    }
+
+    if (/^(\d)\1+$/.test(cpf)) {
+        return false; 
+    }
 
     let soma = 0;
     for (let i = 0; i < 9; i++) {
         soma += parseInt(cpf.charAt(i)) * (10 - i);
     }
     let digitoVerif1 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-    if (parseInt(cpf.charAt(9)) !== digitoVerif1) return false;
+
+    if (parseInt(cpf.charAt(9)) !== digitoVerif1) {
+        return false;
+    }
 
     soma = 0;
     for (let i = 0; i < 10; i++) {
         soma += parseInt(cpf.charAt(i)) * (11 - i);
     }
     let digitoVerif2 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-    return parseInt(cpf.charAt(10)) === digitoVerif2;
+
+    if (parseInt(cpf.charAt(10)) !== digitoVerif2) {
+        return false; 
+    }
+
+    return true;
 }
+
 
 function validarEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
