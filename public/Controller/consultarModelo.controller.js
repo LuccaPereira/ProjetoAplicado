@@ -87,7 +87,7 @@ export function renderClientes() {
                 if (nomePeticionante) {
                     const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
                     const descricao = cliente.Descricao || "Descrição não disponível";
-                    const ultimaAlteracao = cliente.ultimaAlteracao || "#";
+                    const ultimaAlteracao = cliente.UltimaAlt || "#";
                     
                     
                     // Supondo que você tenha uma URL do PDF associada a cada cliente
@@ -304,7 +304,7 @@ function populateModalFields(cliente) {
     document.getElementById('Modaldescricao').value = cliente.Descrição || "Não disponível";
     document.getElementById('ModalcpfAtivo').value = cliente.CPFAtivo || "Não disponível";
     document.getElementById('ModalcnpjPassivo').value = cliente.CNPJ || "Não disponível";
-    document.getElementById('editUltimaAlteracao').value = cliente.ultimaAlteracao || "";
+    document.getElementById('editUltimaAlteracao').value = cliente.UltimaAlt || "";
     document.getElementById('situação').value = cliente.situacao || "";
     
 }
