@@ -54,6 +54,9 @@ app.post('/generate-petition', async (req, res) => {
         const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
         const prompt = `
 Escreva uma petição inicial com as seguintes seções e informações:
+Siga o exemplo desse site: https://juridico.ai/juridico/modelo-peticao-inicial/
+Por favor no tópico qualificacao das partes relacione o que o autor está propondo de açao contra o Réu.
+Por favor preencha com no minimo 7 linhas cada seçao.
 
 **1. Qualificação das Partes**
 - Nome do cliente: ${nomeCliente}, CPF/CNPJ: ${cpfCnpjCliente}, Endereço: ${enderecoCliente}, Profissão: ${profissaoCliente}, Estado Civil: ${estadoCivil}.
@@ -73,6 +76,7 @@ Baseie a argumentação legal nos artigos aplicáveis conforme o tipo de ação:
 - Para ação de rescisão contratual: [Código Civil](https://www.planalto.gov.br/ccivil_03/Leis/2002/L10406compilada.htm) e [Código de Processo Civil](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/L13105compilada.htm).
 
 **4. Dos Pedidos**
+Por favor aqui elenque em a), b) e assim por diante
 Especifique os pedidos do autor:
 - Pedidos: ${pedidosAutor}.
 - Solicitação de justiça gratuita: ${justiçaGratuita}.
@@ -83,9 +87,8 @@ Termos em que,
 Pede Deferimento.
 
 _____________________.
-- **ASSINATURA DO ADVOGADO**
-ADV. - OAB/SP *Número*.
-- **CAMPINAS, SÃO PAULO, **[Data]**.
+ADV. - OAB/SP Número
+CAMPINAS, SÃO PAULO, [Data].
 
 
 
@@ -116,7 +119,7 @@ Não inclua **EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA **[VARA]** **DA C
                     children: [
                         new Paragraph({
                             children: [new TextRun({ 
-                                text: `**Excelentíssimo Senhor Doutor Juiz de Direito da __ª Vara Cível da Comarca de ${cidadePeticao}.**`, 
+                                text: `Excelentíssimo Senhor Doutor Juiz de Direito da __ª Vara Cível da Comarca de ${cidadePeticao}.`, 
                                 font: 'Arial', 
                                 size: 28, 
                                 bold: true  // Tornar o texto em negrito
@@ -148,7 +151,7 @@ Não inclua **EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA **[VARA]** **DA C
 
                         // Seção Dos Fatos
                         new Paragraph({
-                            children: [new TextRun({ text: '2. Dos Fatos', font: 'Arial', size: 28, bold: true })],
+                            children: [new TextRun({ text: 'Dos Fatos', font: 'Arial', size: 28, bold: true })],
                             alignment: 'both',
                             spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
                             indent: { firstLine: 2409 },
@@ -162,7 +165,7 @@ Não inclua **EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA **[VARA]** **DA C
 
                         // Seção Do Direito
                         new Paragraph({
-                            children: [new TextRun({ text: '3. Do Direito', font: 'Arial', size: 28, bold: true })],
+                            children: [new TextRun({ text: 'Do Direito', font: 'Arial', size: 28, bold: true })],
                             alignment: 'both',
                             spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
                             indent: { firstLine: 2409 },
@@ -176,7 +179,7 @@ Não inclua **EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA **[VARA]** **DA C
 
                         // Seção Dos Pedidos
                         new Paragraph({
-                            children: [new TextRun({ text: '4. Dos Pedidos', font: 'Arial', size: 28, bold: true })],
+                            children: [new TextRun({ text: 'Dos Pedidos', font: 'Arial', size: 28, bold: true })],
                             alignment: 'both',
                             spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
                             indent: { firstLine: 2409 },
@@ -190,13 +193,13 @@ Não inclua **EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA **[VARA]** **DA C
 
                         // Seção de Finalização (Assinatura do Advogado)
                         new Paragraph({
-                            children: [new TextRun({ text: '5. Finalização', font: 'Arial', size: 28, bold: true })],
+                            children: [new TextRun({ text: '', font: 'Arial', size: 28, bold: true })],
                             alignment: 'both',
                             spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
                             indent: { firstLine: 2409 },
                         }),
                         new Paragraph({
-                            children: [new TextRun({ text: cleanFinalizacao, font: 'Arial', size: 28 })],
+                            children: [new TextRun({ text: cleanFinalizacao, font: 'Arial', size: 28, bold: true })],
                             alignment: 'both',
                             spacing: { before: 120, after: 0, line: 276 }, // Ajuste para espaçamento múltiplo 1,1
                             indent: { firstLine: 2409 },
