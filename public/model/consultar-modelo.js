@@ -42,34 +42,31 @@ export function archiveClient(clienteKey) {
 export function updateSituacaoInDatabase(clienteKeyAtt, selectedValue) {
     const loggedInClienteString = localStorage.getItem('loggedInUser');
     const logAdv = JSON.parse(loggedInClienteString);
-
-    // URL para atualizar a situação atual
     const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}/${clienteKeyAtt}.json`;
-    
-    // URL para adicionar o histórico
     const urlHistorico = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}/${clienteKeyAtt}/HistoricoSituacao.json`;
 
-    // Atualiza a situação atual
-    const updatedDetails = { situacao: selectedValue };
+
+    const timestamp = new Date();
+    const formattedTimestamp = timestamp.toLocaleString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    });
+
+    const updatedDetails = { 
+        situacao: selectedValue,
+        UltimaAlt: formattedTimestamp
+    };
 
     return axios.patch(urlAtt, updatedDetails)
         .then(() => {
-            // Formata a data para o formato desejado
-            const timestamp = new Date().toLocaleString('pt-BR', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false // Define para usar o formato de 24 horas
-            });
-
             const historicoData = {
                 situacao: selectedValue,
-                data: timestamp
+                data: formattedTimestamp 
             };
-
-            // Adiciona o novo histórico usando post para criar uma nova chave
             return axios.post(urlHistorico, historicoData);
         })
         .then(() => {
@@ -79,6 +76,7 @@ export function updateSituacaoInDatabase(clienteKeyAtt, selectedValue) {
             console.error("Erro ao atualizar situação ou salvar histórico:", error);
         });
 }
+
 
 export function saveClientDetails(urlAtt, updatedClientData, pdfFile) {
     if (pdfFile) {
