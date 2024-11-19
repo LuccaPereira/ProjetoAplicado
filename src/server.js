@@ -59,6 +59,7 @@ Por favor no tópico qualificacao das partes relacione o que o autor está propo
 Por favor preencha com no minimo 7 linhas cada seçao.
 
 **1. Qualificação das Partes**
+Por favor faça a qualificação das partes relacionando o Autor e o Réu.
 - Nome do cliente: ${nomeCliente}, CPF/CNPJ: ${cpfCnpjCliente}, Endereço: ${enderecoCliente}, Profissão: ${profissaoCliente}, Estado Civil: ${estadoCivil}.
 - Nome do réu: ${nomeReu}, CPF/CNPJ: ${cpfCnpjReu}, Endereço: ${enderecoReu}.
 - Cite qual a Açao
