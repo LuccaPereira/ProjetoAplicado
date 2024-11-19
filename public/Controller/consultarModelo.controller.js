@@ -309,12 +309,11 @@ function populateModalFields(cliente) {
     
 }
 
-export function showClientDetails(chaveCliente, advogadoData) {
-    const chaveClienteComEspacos = chaveCliente.replace(/-/g, ' ');
+function showClientDetails(chaveCliente, advogadoData) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const loggedInLawyerString = localStorage.getItem('loggedInUser');
     const logAdv = JSON.parse(loggedInLawyerString);
-    const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}/${chaveClienteComEspacos}.json`;
+    const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}/${chaveCliente}.json`;
 
     console.log(`Buscando detalhes do cliente: ${urlAtt}`);
     axios.get(urlAtt)
