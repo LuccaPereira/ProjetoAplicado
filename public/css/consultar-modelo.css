@@ -6,12 +6,13 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    background-color: #f7f7f7;
     color: #333;
 }
 
 .wrapper {
     display: flex;
+    min-height: 100vh;
 }
 
 /* Sidebar */
@@ -123,242 +124,307 @@ body {
     background-color: #3498db;
     border-radius: 5px;
 }
-
-/* Estilo para os botões */
-.btn, #baixar-peticao {
-    border-radius: 0.5rem; /* Arredonda os cantos dos botões */
-    font-size: 1rem; /* Tamanho da fonte */
-    padding: 0.5rem 1rem; /* Espaçamento interno */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Animação suave nas mudanças de cor */
-}
-
-.btn-primary, #baixar-peticao {
-    background-color: #007bff; /* Cor de fundo do botão primário */
-    color: #fff; /* Cor do texto do botão primário */
-}
-
-.btn-primary:hover, #baixar-peticao:hover {
-    background-color: #0056b3; /* Cor do fundo ao passar o mouse */
-}
-
-.btn-secondary, #baixar-peticao {
-    background-color: #6c757d; /* Cor de fundo do botão secundário */
-    color: #fff; /* Cor do texto do botão secundário */
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268; /* Cor do fundo ao passar o mouse */
-}
-
-.btn-outline-danger {
-    color: #dc3545; /* Cor do texto do botão de logout */
-    border: 1px solid #dc3545; /* Borda do botão de logout */
-}
-
-.btn-outline-danger:hover {
-    background-color: #dc3545; /* Cor do fundo ao passar o mouse */
-    color: #fff; /* Cor do texto ao passar o mouse */
-}
-
-.btn-outline-center {
-    color: #007bff; /* Cor do texto do botão de perfil */
-    border: 1px solid #007bff; /* Borda do botão de perfil */
-}
-
-.btn-outline-center:hover {
-    background-color: #007bff; /* Cor do fundo ao passar o mouse */
-    color: #fff; /* Cor do texto ao passar o mouse */
-}
-
+/* Conteúdo principal */
 .content {
-    margin-left: 150px;
+    margin-left: 220px;
     padding: 40px;
     flex-grow: 1;
 }
 
-
-h3 {
-    margin-bottom: 15px;
-}
-
-.table {
+.container-fluid {
     margin-top: 20px;
 }
 
-.custom-table {
+.table {
+    width: 100%;
     background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-collapse: collapse;
 }
 
-.custom-table th, .custom-table td {
+.table th, .table td {
+    padding: 12px;
     text-align: center;
 }
 
-/* Estilização dos botões */
-button {
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+td select.situation {
+    font-size: 1rem;
+    text-align: center;
+    background-color: #fff; /* Cor de fundo mais clara */
+    border: 1px solid #ccc; 
+    color: #333;
+    padding: 12px;
+    border-radius: 5px;
+    width: 100%;
+    text-transform: capitalize;
+    appearance: auto; /* Deixe a aparência natural ou remova se não for necessário */
+    -webkit-appearance: auto; /* Para navegadores Webkit */
+    -moz-appearance: auto; /* Para navegadores Firefox */
+    box-sizing: border-box;
+    cursor: pointer; /* Certifique-se de que o campo seja interativo */
+}
+
+/* Para customizar a seta do select */
+td select.situation::-ms-expand {
+    display: none; /* Remove a seta padrão no IE/Edge */
+}
+
+/* Estilo de foco */
+td select.situation:focus {
+    border-color: #007bff; /* Cor da borda ao focar */
+    outline: none; /* Remove o contorno padrão */
+    background-color: #f9f9f9; /* Cor de fundo ao focar */
+}
+
+/* Se ainda quiser adicionar uma seta customizada (sem afetar o comportamento do select) */
+td select.situation::after {
+    content: "▼"; 
+    font-size: 1.2rem;
+    position: absolute;
+    right: 15px; 
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Não interfere na interação com o select */
+}
+
+.arquivar-btn, .baixar-peticao {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.arquivar-btn {
+    background-color: #f39c12;
+    color: white;
+    text-align: center;
+}
+
+.arquivar-btn:hover {
+    background-color: #e67e22;
+}
+
+.baixar-peticao {
+    background-color: #28a745;
+    color: white;
+    text-align: center;
+}
+
+.baixar-peticao {
+    background-color: #218838;
+}
+
+td a.visualizar-pdf {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
     background-color: #007bff; /* Cor de fundo do botão */
     color: white; /* Cor do texto */
-    border: none; /* Sem borda */
-    border-radius: 4px; /* Bordas arredondadas */
-    padding: 10px 15px; /* Espaçamento interno */
-    cursor: pointer; /* Cursor de mão ao passar o mouse */
-    font-size: 16px; /* Tamanho da fonte */
-    transition: background-color 0.3s; /* Animação na mudança de cor */
+    text-decoration: none; /* Remove o sublinhado do link */
+    display: inline-block; /* Para que ele se comporte como um botão */
+    transition: background-color 0.3s ease;
+    width: 100%;
 }
 
-button:hover {
-    background-color: #0056b3; /* Cor do botão ao passar o mouse */
+/* Efeito de hover */
+td a.visualizar-pdf:hover {
+    background-color: #0056b3; /* Cor de fundo ao passar o mouse */
 }
 
-/* Estilização dos selects */
-select {
-    border: 1px solid #ced4da; /* Borda */
-    border-radius: 4px; /* Bordas arredondadas */
-    padding: 10px; /* Espaçamento interno */
-    font-size: 16px; /* Tamanho da fonte */
-    background-color: white; /* Cor de fundo */
-    color: #495057; /* Cor do texto */
-    width: 100%; /* Largura completa */
-    box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1); /* Sombra interna */
-    transition: border-color 0.3s; /* Animação na mudança de borda */
+/* Modal Histórico de Alterações */
+#historicoModal .modal-dialog {
+    max-width: 900px; /* Largura maior para o modal */
+    border-radius: 20px; /* Borda mais arredondada para o modal */
 }
 
-select:focus {
-    border-color: #80bdff; /* Cor da borda ao focar */
-    outline: none; /* Remove o contorno padrão */
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Sombra externa ao focar */
+#historicoModal .modal-content {
+    background-color: #fff; /* Fundo branco para contraste */
+    border-radius: 20px; /* Borda arredondada */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
 }
 
+#historicoModal .modal-header {
+    background-color: #001f3d; /* Azul navy para o cabeçalho */
+    color: #fff; /* Texto branco */
+    border-top-left-radius: 20px; /* Arredondar os cantos superiores */
+    border-top-right-radius: 20px;
+    padding: 1rem 1.5rem; /* Maior espaçamento no cabeçalho */
+}
+
+#historicoModal .modal-title {
+    font-size: 1.5rem; /* Aumentar o título */
+    font-weight: 700; /* Deixar o título mais forte */
+    margin: 0; /* Remover margens extras */
+}
+
+#historicoModal .btn-close {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem; /* Aumentar o tamanho do botão de fechar */
+}
+
+#historicoModal .modal-body {
+    padding: 2rem; /* Mais espaço no corpo do modal */
+    color: #333; /* Texto escuro para melhor contraste */
+    font-size: 1.1rem; /* Aumentar a legibilidade do texto */
+    line-height: 1.6; /* Maior espaçamento entre as linhas */
+}
+
+#historicoModal .modal-footer {
+    background-color: #f0f0f0; /* Fundo suave e neutro para o rodapé */
+    border-bottom-left-radius: 20px; /* Arredondar os cantos inferiores */
+    border-bottom-right-radius: 20px;
+    padding: 1rem 1.5rem; /* Aumentar o espaçamento no rodapé */
+}
+
+#historicoModal .btn-secondary {
+    background-color: #001f3d; /* Azul navy para o botão */
+    color: #fff; /* Texto branco */
+    font-weight: 700; /* Texto em negrito */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 0.75rem 2rem; /* Maior espaçamento no botão */
+    transition: background-color 0.3s ease; /* Transição suave ao passar o mouse */
+}
+
+#historicoModal .btn-secondary:hover {
+    background-color: #004080; /* Cor mais clara de azul navy no hover */
+}
+
+/* Separação entre as entradas de histórico */
+.modal-body .historico-item {
+    background-color: #e9ecef; /* Cor de fundo clara */
+    margin-bottom: 1rem; /* Espaçamento entre os itens */
+    padding: 1rem; /* Padding interno para separar o conteúdo */
+    border-radius: 8px; /* Bordas arredondadas para os itens */
+    position: relative;
+}
+
+.modal-body .historico-item:last-child {
+    margin-bottom: 0; /* Remove margem no último item */
+}
+
+/* Linha de separação entre os itens */
+.modal-body .historico-item::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #ccc; /* Cor da linha de separação */
+}
+
+/* Alinhamento de data e hora */
+.modal-body .historico-item .data-hora {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.modal-body .historico-item .data-hora .data {
+    color: #007bff; /* Azul claro para a data */
+    text-align: left; /* Alinhar a data à esquerda */
+}
+
+.modal-body .historico-item .data-hora .hora {
+    color: #333; /* Cor padrão para a hora */
+    text-align: right; /* Alinhar a hora à direita */
+    font-weight: 700;
+}
+
+/* Melhorando a leitura do histórico com destaque nas datas */
+.modal-body .historico-item .descricao {
+    font-size: 1.1rem; /* Aumentar o tamanho da descrição */
+    color: #333;
+    line-height: 1.5;
+}
 
 /* Modal */
 .modal-content {
     padding: 20px;
 }
 
-.modal-header, .modal-footer {
-    border: none;
-}
-
-.card-info {
+.modal-body form .mb-3 {
     margin-bottom: 20px;
 }
 
-.card-info h1 {
-    font-size: 20px;
-    margin-bottom: 10px;
+.modal-body form .form-label {
+    font-weight: bold;
 }
 
-.card-info-name input {
+.modal-footer .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.modal-footer .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Inputs e Botões */
+.form-control, .form-select {
+    padding: 12px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
     width: 100%;
-    margin-bottom: 10px;
+    margin-top: 8px;
 }
 
-.buttons {
-    display: flex;
-    justify-content: space-between;
+.form-control:focus, .form-select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
 
-.center1 {
-    display: flex;
-    justify-content: center;
+.btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.center-selects {
-    margin: 20px 0;
+.btn-outline-center {
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid #fff;
 }
 
-/* Modal geral */
-.modal-dialog {
-    max-width: 800px; /* Largura máxima do modal */
-    margin: 1.75rem auto; /* Centraliza o modal na tela */
+.btn-outline-center:hover {
+    background-color: #3498db;
 }
 
-.modal-content {
-    border-radius: 8px; /* Bordas arredondadas */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra */
+.btn-primary {
+    background-color: #007bff;
+    color: white;
 }
 
-.petition-info {
-    padding: 20px; /* Espaçamento interno */
+.btn-primary:hover {
+    background-color: #0069d9;
 }
 
-.card-info {
-    margin-bottom: 20px; /* Espaçamento entre seções */
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
 }
 
-.card-info h1 {
-    font-size: 24px; /* Tamanho do título */
-    color: #007bff; /* Cor do título */
-    margin-bottom: 10px; /* Margem inferior */
-}
-
-.card-info h4 {
-    font-size: 16px; /* Tamanho do subtítulo */
-    margin-bottom: 5px; /* Margem inferior */
-}
-
-.card-info-name {
-    margin-bottom: 15px; /* Espaçamento entre os campos */
-}
-
-/* Estilização dos campos de entrada */
-input[type="text"] {
-    width: calc(100% - 20px); /* Largura do campo */
-    padding: 10px; /* Espaçamento interno */
-    border: 1px solid #ced4da; /* Borda do campo */
-    border-radius: 4px; /* Bordas arredondadas */
-    font-size: 16px; /* Tamanho da fonte */
-    transition: border-color 0.3s; /* Transição na mudança de borda */
-}
-
-input[type="text"]:focus {
-    border-color: #007bff; /* Cor da borda ao focar */
-    outline: none; /* Remove o contorno padrão */
-}
-
-/* Estilização da seção dos dados do processo */
-.dados-para-processo {
-    display: flex; /* Flexbox para disposição */
-    justify-content: space-between; /* Espaço entre os lados */
-}
-
-.left-card-section, .right-card-section {
-    width: 48%; /* Largura de cada seção */
-}
-
-.lastAlteration {
-    display: flex; /* Flexbox para disposição dos campos */
-    justify-content: space-between; /* Espaço entre os campos */
-    margin-top: 20px; /* Margem superior */
-}
-
-/* Estilização dos botões */
-.buttons {
-    display: flex; /* Flexbox para disposição dos botões */
-    justify-content: flex-end; /* Alinha os botões à direita */
-    margin-top: 20px; /* Margem superior */
-}
-
-button {
-    margin-left: 10px; /* Margem entre os botões */
-    padding: 10px 15px; /* Espaçamento interno */
-    border-radius: 4px; /* Bordas arredondadas */
-    transition: background-color 0.3s; /* Transição na mudança de cor */
-}
-
-#saveButton {
-    background-color: #007bff; /* Cor do botão salvar */
-    color: white; /* Cor do texto */
-}
-
-#saveButton:hover {
-    background-color: #0056b3; /* Cor do botão ao passar o mouse */
-}
-
-#editButton {
-    background-color: #6c757d; /* Cor do botão editar */
-    color: white; /* Cor do texto */
-}
-
-#editButton:hover {
-    background-color: #5a6268; /* Cor do botão ao passar o mouse */
+.btn-danger:hover {
+    background-color: #c0392b;
 }

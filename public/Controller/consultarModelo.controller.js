@@ -87,7 +87,7 @@ export function renderClientes() {
                 if (nomePeticionante) {
                     const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
                     const descricao = cliente.Descricao || "Descrição não disponível";
-                    const ultimaAlteracao = cliente.ultimaAlteracao || "#";
+                    const ultimaAlteracao = cliente.UltimaAlt || "#";
                     
                     
                     // Supondo que você tenha uma URL do PDF associada a cada cliente
@@ -304,17 +304,16 @@ function populateModalFields(cliente) {
     document.getElementById('Modaldescricao').value = cliente.Descrição || "Não disponível";
     document.getElementById('ModalcpfAtivo').value = cliente.CPFAtivo || "Não disponível";
     document.getElementById('ModalcnpjPassivo').value = cliente.CNPJ || "Não disponível";
-    document.getElementById('editUltimaAlteracao').value = cliente.ultimaAlteracao || "";
+    document.getElementById('editUltimaAlteracao').value = cliente.UltimaAlt || "";
     document.getElementById('situação').value = cliente.situacao || "";
     
 }
 
-export function showClientDetails(chaveCliente, advogadoData) {
-    const chaveClienteComEspacos = chaveCliente.replace(/-/g, ' ');
+function showClientDetails(chaveCliente, advogadoData) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const loggedInLawyerString = localStorage.getItem('loggedInUser');
     const logAdv = JSON.parse(loggedInLawyerString);
-    const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}/${chaveClienteComEspacos}.json`;
+    const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}/${chaveCliente}.json`;
 
     console.log(`Buscando detalhes do cliente: ${urlAtt}`);
     axios.get(urlAtt)

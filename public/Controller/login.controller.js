@@ -51,33 +51,38 @@ async function loginWithEmailAndCheckClient(email, password) {
         console.log('Usuário autenticado:', user);
 
         const cpfOab = document.getElementById('cpfOab').value;
+        const senha = document.getElementById('senha').value;
 
         let userInfo;
 
         if (validarCPF(cpfOab)) {
             userInfo = await getClienteInfo(user.uid);
             if (userInfo.cpf === cpfOab) {
-                localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
-                console.log('Informações do usuário salvas no localStorage:', userInfo);
-                window.location.href = "../View/telaInicialCliente.html";
+                if(userInfo.senha === senha){
+                    localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
+                    console.log('Informações do usuário salvas no localStorage:', userInfo);
+                    window.location.href = "../View/telaInicialCliente.html";
+                }
             } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Erro',
-                    text: 'CPF não cadastrado!'
+                    text: 'CPF ou senha não cadastrado!'
                 });
             }
         } else {
             userInfo = await getAdvogadoInfo(user.uid);
             if (userInfo.oab === cpfOab) {
-                localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
-                console.log('Informações do usuário salvas no localStorage:', userInfo);
-                window.location.href = "../View/menu.html";
+                if(userInfo.senha === senha){
+                    localStorage.setItem('loggedInUser', JSON.stringify(userInfo));
+                    console.log('Informações do usuário salvas no localStorage:', userInfo);
+                    window.location.href = "../View/menu.html";
+                }
             } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Erro',
-                    text: 'OAB não cadastrado!'
+                    text: 'OAB ou senha não cadastrado!'
                 });
             }
         }

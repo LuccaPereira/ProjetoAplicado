@@ -1,130 +1,129 @@
-/* Estilos Globais */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
-    height: 100vh;
+    background-color: #f4f6f9;
     margin: 0;
     display: flex;
-    flex-direction: column; /* Organiza os itens verticalmente */
-    justify-content: center; /* Centraliza o conteúdo verticalmente */
-    align-items: center;     /* Centraliza o conteúdo horizontalmente */
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* Títulos */
-h1 {
-    font-size: 2.5rem;
-    color: #2c3e50;
-    margin: 0; /* Remover margens padrões */
+.btn-container {
+    position: absolute; /* Usa posição absoluta para fixar os botões */
+    top: 20px;  /* Distância do topo da página */
+    right: 20px;  /* Distância da borda direita da página */
+    display: flex; /* Alinha os botões lado a lado */
+    gap: 15px;  /* Espaçamento entre os botões */
 }
 
-p {
-    font-size: 1.1rem;
-    color: #ecf0f1;
-    margin: 0; /* Evitar margens não controladas */
-}
-
-/* Links */
-a {
+/* Estilos dos botões */
+.btn {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 5px;
     text-decoration: none;
-    color: #3498db;
-    transition: color 0.3s ease; /* Transição suave para hover */
+    transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
-a:hover {
-    color: #2980b9;
-}
-
-/* Container principal */
-.container {
-    max-width: 1200px;
-    width: 100%; /* O container deve ocupar 100% da largura disponível */
-    margin: 0 auto; /* Centraliza o container */
-    padding: 20px; /* Adiciona espaçamento interno */
-}
-
-.profile-icon {
-    position: absolute;
-    top: 10px;
-    right: 50px;
-    text-align: center;
-}
-
-.profile-icon img.profile-img {
-    width: 65px; /* Aumenta o tamanho da imagem */
-    border-radius: 50%;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.profile-icon .login-text {
-    margin-top: 8px; /* Ajusta o espaço entre a imagem e o texto */
-    font-size: 30px; /* Aumenta o tamanho do texto */
-    color: black; /* Ajuste a cor conforme sua preferência */
-}
-
-/* Estilos dos Cards */
-.card {
+/* Botão de Login */
+.btn-primary {
+    background-color: #3498db;
+    color: #fff;
     border: none;
-    border-radius: 8px;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+/* Botão de Cadastro */
+.btn-secondary {
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #27ae60;
+    transform: scale(1.05);
+}
+
+.intro-container {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.intro-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.intro-header img {
+    max-width: 150px;
+}
+
+.intro-header h1 {
+    font-size: 2.8rem;
+    color: #2c3e50;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 100px;
+}
+
+.info-card {
+    background-color: white;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 20px; /* Adiciona espaçamento entre os cards */
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-.card-body {
+    transition: transform 0.3s ease;
     padding: 20px;
+    text-align: left;
 }
 
-.card-title {
+.info-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.info-card h5 {
     font-size: 1.5rem;
     color: #34495e;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
-.card-text {
+.info-card p {
     font-size: 1rem;
     color: #7f8c8d;
-    margin: 0; /* Evitar margens não controladas */
-}
-
-.card-info {
-    margin-top: 10px;
 }
 
 footer {
-    background-color: #2c3e50 !important;
-    color: #ecf0f1 !important;
-    padding: 10px 0 !important;
-    text-align: center !important;
-    margin-top: auto !important;
-    width: 100%; /* Garante que o footer ocupe toda a largura */
-}
-
-footer p {
-    margin-bottom: 10px !important;
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+    margin-top: auto;
 }
 
 footer nav ul {
-    padding: 0;
-    margin: 0; /* Remove as margens e o padding padrão */
     list-style: none;
-    display: flex; /* Flexbox para organizar os itens de navegação */
-    justify-content: center; /* Centraliza os links horizontalmente */
-    gap: 10px; /* Adiciona espaçamento entre os itens */
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 
 footer nav ul li a {
-    color: #ecf0f1;
-    font-weight: bold;
-    transition: color 0.3s ease; /* Transição suave para hover */
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
 }
 
 footer nav ul li a:hover {
     color: #bdc3c7;
 }
-

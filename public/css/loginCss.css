@@ -1,6 +1,7 @@
+/* Estilos gerais da página */
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #f2f2f2;
+    background-color: #f7f7f7;
     margin: 0;
     padding: 0;
     display: flex;
@@ -16,86 +17,88 @@ body {
 
 .container {
     width: 100%;
-    max-width: 800px; /* Aumenta a largura máxima do container */
+    max-width: 700px; /* Ajuste da largura máxima */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza horizontalmente */
-    justify-content: center; /* Centraliza verticalmente */
+    align-items: center;
+    justify-content: center;
     flex: 1;
-    margin: 0 auto; /* Centraliza o container */
+    margin: 0 auto;
 }
 
 #logo {
-    max-width: 200px; /* Aumenta o tamanho máximo do logo */
+    max-width: 180px;
     display: block;
-    margin: 0 auto 40px; /* Aumenta a margem inferior do logo */
+    margin: 0 auto 30px;
 }
 
+/* Estilos da caixa de login */
 .login-box, .introBox {
     width: 90%;
     background-color: #fff;
-    padding: 30px; /* Aumenta o padding */
-    border-radius: 10px; /* Aumenta o border-radius */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aumenta a sombra */
-    margin-bottom: 30px; /* Aumenta a margem inferior */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    box-sizing: border-box; /* Garante que o padding não ultrapasse a largura */
 }
 
+/* Inputs */
 #email, #senha, #cpfOab {
     width: 100%;
-    background-color: #fff;
-    padding: 20px; /* Aumenta o padding */
-    margin-bottom: 20px; /* Aumenta a margem inferior */
+    padding: 12px;
+    margin-bottom: 15px;
     border: 1px solid #dddfe2;
-    box-sizing: border-box;
-    font-size: 1.2rem; /* Aumenta o tamanho da fonte */
-    border-radius: 5px; /* Uniformiza o border-radius */
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Garante que a largura total seja respeitada */
 }
 
+/* Título */
 h2 {
-    margin-bottom: 30px; /* Aumenta a margem inferior dos títulos */
+    margin-bottom: 20px;
     color: #1e2a3a;
-    text-align: center; /* Centraliza o texto */
-    font-size: 2.5rem; /* Aumenta o tamanho da fonte dos títulos */
+    text-align: center;
+    font-size: 2rem;
 }
 
+/* Estilos do formulário */
 form {
-    margin-bottom: 30px; /* Aumenta a margem inferior do formulário */
+    margin-bottom: 20px;
 }
 
+/* Botões */
 button[type="submit"], .create-account {
     width: 100%;
-    padding: 20px; /* Aumenta o padding */
+    padding: 12px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: #0d4240;
     color: #fff;
     cursor: pointer;
-    font-size: 1.2rem; /* Aumenta o tamanho da fonte */
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 button[type="submit"]:hover, .create-account:hover {
-    background-color: #085b53; /* Altera a cor no hover */
+    background-color: #085b53;
+    transform: scale(1.03);
 }
 
-a {
+/* Link de esqueci a senha */
+.forgot-password a {
     color: #004aaa;
-    text-decoration: none;
-    font-size: 1.2rem; /* Aumenta o tamanho da fonte */
+    font-size: 1rem;
 }
 
-hr {
-    margin: 30px 0; /* Aumenta a margem do hr */
-    border: none;
-    border-top: 1px solid #dddfe2;
-}
-
+/* Footer */
 footer {
     background-color: #0d4240;
     color: #fff;
-    padding: 30px; /* Aumenta o padding */
+    padding: 20px;
     text-align: center;
     margin-top: auto;
-    font-size: 1.2rem; /* Aumenta o tamanho da fonte */
+    font-size: 1rem;
 }
 
 ul {
@@ -106,38 +109,17 @@ ul {
 
 li {
     display: inline-block;
-    margin: 0 15px; /* Aumenta a margem lateral dos itens da lista */
+    margin: 0 10px;
 }
 
 footer a {
     color: #fff;
     text-decoration: none;
 }
-/* Estilos do ícone de olho nos campos de senha */
-.password-container {
-    position: relative;
-}
 
-.eye-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #888; /* Cor do ícone */
-}
-
-.eye-icon:hover {
-    color: #000; /* Cor do ícone ao passar o mouse */
-}
-
-.eye-icon.active {
-    color: #000; /* Muda a cor do ícone quando ativo */
-}
-
-/* Estilos do modal */
+/* Modal */
 .modal {
-    display: none; /* Oculta o modal por padrão */
+    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -145,43 +127,37 @@ footer a {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro com transparência */
-     /*backdrop-filter: blur(5px); Adiciona um efeito de desfoque ao fundo */
-    animation: fadeIn 0.5s; /* Animação ao abrir */
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.5s;
 }
 
 .modal-content {
     background-color: #fff;
-    margin: 10% auto; /* Centraliza o modal */
+    margin: 10% auto;
     padding: 20px;
-    border-radius: 8px; /* Cantos arredondados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
-    width: 90%; /* Largura do modal */
-    max-width: 400px; /* Largura máxima do modal */
-    animation: slideIn 0.5s; /* Animação de entrada */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    animation: slideIn 0.5s;
 }
 
-
-p {
-    color: #fff; /* Cor do texto da mensagem */
-    font-family: Arial, sans-serif; /* Fonte do texto */
-}
-
+/* Fechar botão do modal */
 .close-button {
-    color: #ff5c5c; /* Cor do botão de fechar */
+    color: #ff5c5c;
     float: right;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: bold;
-    transition: color 0.3s; /* Transição de cor */
+    transition: color 0.3s;
 }
 
 .close-button:hover,
 .close-button:focus {
-    color: #e63946; /* Cor do botão ao passar o mouse */
+    color: #e63946;
     cursor: pointer;
 }
 
-/* Animação do modal */
+/* Animações */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }

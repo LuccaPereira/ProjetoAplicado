@@ -1,5 +1,3 @@
-/* menu.css */
-
 /* Estilos Globais */
 body {
     font-family: 'Arial', sans-serif;
@@ -19,15 +17,6 @@ a {
 
 a:hover {
     color: #2980b9;
-}
-
-/* Layout Principal */
-.main-container {
-    display: flex;
-    flex: 1;
-    margin: 0;
-    padding: 0;
-    height: 100%;
 }
 
 /* Sidebar */
@@ -90,7 +79,7 @@ a:hover {
 }
 
 .sidebar.expanded .nav-list li {
-    justify-content: center; /* Reposiciona os ícones e texto no estado expandido */
+    justify-content: flex-start; /* Reposiciona os ícones e texto no estado expandido */
 }
 
 /* Botões de Login e Logout */
@@ -102,9 +91,9 @@ a:hover {
     border: 2px solid #ecf0f1;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content:center !important;
     gap: 10px;
-    padding: 10px;
+    padding: 20px;
     transition: background-color 0.3s ease;
 }
 
@@ -116,7 +105,7 @@ a:hover {
 /* Lista de Navegação */
 .nav-list {
     list-style: none;
-    padding: 0 ;
+    padding: 0 !important;
     margin-top: 20px;
 }
 
@@ -132,16 +121,16 @@ a:hover {
     color: #ecf0f1;
     padding: 10px;
     transition: background-color 0.3s ease;
+    text-decoration: none;
 }
 
 .nav-list li a:hover {
     background-color: #3498db;
     border-radius: 5px;
 }
-
-/* Conteúdo da Página */
+/* Conteúdo Principal */
 .content {
-    margin-left: 250px;
+    margin-left: 200px;
     padding: 40px;
     flex-grow: 1;
 }
@@ -156,7 +145,7 @@ p.lead {
     color: #7f8c8d;
 }
 
-/* Estilos dos Cards */
+/* Cards */
 .card {
     border: none;
     border-radius: 8px;
@@ -238,10 +227,7 @@ footer {
 .footer-bottom {
     background-color: #1a252f;
     text-align: center;
-    padding: 10px 0;
-    margin-top: 10px;
-    width: 100%;
-    box-sizing: border-box; 
+    margin-top: auto;
 }
 
 .footer-bottom ul{
