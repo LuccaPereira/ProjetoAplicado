@@ -4,8 +4,8 @@ import {
     registrarUsuario, 
     verificarOABExistente, 
     verificarCPFExistente, 
-    mostrarMensagemErro, 
-    enviarOdata 
+    mostrarMensagemErro,
+    enviarOdata
 } from "../model/cadastroAdvogado.js";
 
 const firebaseConfig = {

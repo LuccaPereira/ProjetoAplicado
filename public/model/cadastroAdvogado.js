@@ -1,13 +1,3 @@
-import { 
-    validarCPF, 
-    validarEmail, 
-    registrarUsuario, 
-    verificarOABExistente, 
-    verificarCPFExistente, 
-    mostrarMensagemErro, 
-    enviarOdata 
-} from "../model/cadastroAdvogado.js";
-
 const firebaseConfig = {
     apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
     authDomain: "projetoaplicado-1.firebaseapp.com",
@@ -19,96 +9,75 @@ const firebaseConfig = {
     measurementId: "G-WB0MPN3701"
 };
 
-// Inicializa Firebase
-const app = firebase.initializeApp(firebaseConfig); 
-const databaseURL = firebaseConfig.databaseURL;
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const database = firebase.database();
 
-// Configura alternância de senha
-function configurePasswordToggle() {
-    ["togglePassword", "toggleConfirmPassword"].forEach(id => {
-        const toggle = document.querySelector(`#${id}`);
-        const field = document.querySelector(`#${id === "togglePassword" ? "senha" : "Confirmarsenha"}`);
-        if (toggle && field) {
-            toggle.addEventListener("click", function () {
-                const type = field.getAttribute("type") === "password" ? "text" : "password";
-                field.setAttribute("type", type);
-                this.classList.toggle("eye-open");
-            });
-        }
-    });
+async function validarCPF(cpf) {
+    cpf = cpf.replace(/\D/g, '');
+    if (cpf.length !== 11) return false;
+
+    let soma = 0;
+    for (let i = 0; i < 9; i++) {
+        soma += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    const digitoVerif1 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    if (parseInt(cpf.charAt(9)) !== digitoVerif1) return false;
+
+    soma = 0;
+    for (let i = 0; i < 10; i++) {
+        soma += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    const digitoVerif2 = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    return parseInt(cpf.charAt(10)) === digitoVerif2;
 }
 
-// Valida e submete o formulário
-async function submitForm(event) {
-    event.preventDefault();
+function validarEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
-    // Obtenção de valores
-    const nome = document.getElementById('nome').value.trim();
-    const OAB = document.getElementById('OAB').value.trim();
-    const cpf = document.getElementById('inputCpf').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const senha = document.getElementById('senha').value;
-    const confirmarSenha = document.getElementById('Confirmarsenha').value;
-
-    // Validações de campos
-    if (!nome || !OAB || !cpf || !email || !senha || !confirmarSenha) {
-        mostrarMensagemErro('Por favor, preencha todos os campos.');
-        return;
-    }
-    if (!await validarCPF(cpf)) {
-        mostrarMensagemErro('Favor inserir um CPF válido.');
-        return;
-    }
-    if (senha.length < 6) {
-        mostrarMensagemErro('A senha deve ter no mínimo 6 caracteres.');
-        return;
-    }
-    if (OAB.length !== 8) {
-        mostrarMensagemErro('O número da OAB deve conter 8 dígitos.');
-        return;
-    }
-    if (!validarEmail(email)) {
-        mostrarMensagemErro('Favor inserir um e-mail válido.');
-        return;
-    }
-    if (senha !== confirmarSenha) {
-        mostrarMensagemErro('As senhas não coincidem.');
-        return;
-    }
-
+async function registrarUsuario(email, senha) {
     try {
-        // Verificações no banco de dados
-        if (await verificarOABExistente(OAB)) {
-            mostrarMensagemErro('OAB já cadastrada. Por favor, insira uma OAB diferente.');
-            return;
-        }
-        if (await verificarCPFExistente(cpf)) {
-            mostrarMensagemErro('CPF já cadastrado. Por favor, insira um CPF diferente.');
-            return;
-        }
-
-        // Registro no Firebase Auth
-        const userCredential = await registrarUsuario(email, senha);
-        const uid = userCredential.uid;
-
-        // Dados do advogado
-        const oData = { nome, OAB, CPF: cpf, email, uid };
-
-        // Salva no Realtime Database
-        await enviarOdata(uid, oData);
-
-        alert("Novo advogado registrado com sucesso.");
-        window.location.href = "../View/login.html";
+        const userCredential = await auth.createUserWithEmailAndPassword(email, senha);
+        return userCredential.user;
     } catch (error) {
-        if (error.code === 'auth/email-already-in-use') {
-            mostrarMensagemErro('Este endereço de email já está em uso. Por favor, insira um email diferente.');
-        } else {
-            mostrarMensagemErro(`Erro ao registrar novo advogado: ${error.message}`);
-        }
+        console.error("Erro ao registrar usuário:", error);
+        throw error;
     }
 }
 
-// Error Display Function
+async function verificarOABExistente(OAB) {
+    const url = "https://projetoaplicado-1-default-rtdb.firebaseio.com/Advogado/PerfilAdvogado.json";
+    try {
+        const response = await axios.get(url);
+        const advogados = response.data;
+
+        if (!advogados) return false;
+
+        return Object.values(advogados).some(advogado => advogado.OAB && advogado.OAB === OAB);
+    } catch (error) {
+        console.error("Erro ao verificar OAB:", error);
+        throw error;
+    }
+}
+
+async function verificarCPFExistente(cpf) {
+    const url = "https://projetoaplicado-1-default-rtdb.firebaseio.com/Advogado.json";
+    try {
+        const response = await axios.get(url);
+        const advogados = response.data;
+
+        if (!advogados) return false;
+
+        return Object.values(advogados).some(advogado =>
+            advogado.PerfilAdvogado && advogado.PerfilAdvogado.CPF === cpf
+        );
+    } catch (error) {
+        console.error("Erro ao verificar CPF:", error);
+        throw error;
+    }
+}
+
 async function mostrarMensagemErro(mensagem, duration = 5000) {
     const mensagemErro = document.createElement('div');
     mensagemErro.classList.add('mensagem-erro');
@@ -123,10 +92,14 @@ async function mostrarMensagemErro(mensagem, duration = 5000) {
 }
 
 async function enviarOdata(uid, oData) {
-    await database.ref(`Advogado/PerfilAdvogado/${uid}`).set(oData);
+    try {
+        await database.ref(`Advogado/PerfilAdvogado/${uid}`).set(oData);
+    } catch (error) {
+        console.error("Erro ao enviar dados:", error);
+        throw error;
+    }
 }
 
-// Exporting Functions
 export {
     validarCPF,
     validarEmail,
