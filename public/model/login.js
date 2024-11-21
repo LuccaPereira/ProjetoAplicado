@@ -56,7 +56,8 @@ export async function getAdvogadoInfo(uid) {
         return {
             uid: uid,
             email: auth.currentUser.email,
-            nome: dadosAdvogado.nome || '',
+            nome: dadosAdvogado.nomeOriginal || '',
+            nomeFormatado: dadosAdvogado.nomeFormatado || '',
             oab: dadosAdvogado.OAB || '',
             senha: dadosAdvogado.senha || '',
             cpf: dadosAdvogado.CPF || ''

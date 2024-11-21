@@ -80,7 +80,8 @@ export function renderClientes() {
             Object.keys(advogadoData).forEach(clienteKey => {
                 const cliente = advogadoData[clienteKey];
                 const nomePeticionante = cliente.NomePeticionante;
-                const Keyfiltrada = clienteKey.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-').replace(/[^\w-]/g, '');         
+                const Keyfiltrada = clienteKey.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "");
+         
             
                 console.log(`Processando cliente: ${nomePeticionante}`, cliente);
             
@@ -311,9 +312,7 @@ function populateModalFields(cliente) {
 
 function showClientDetails(chaveCliente, advogadoData) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-    const loggedInLawyerString = localStorage.getItem('loggedInUser');
-    const logAdv = JSON.parse(loggedInLawyerString);
-    const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logAdv.uid}/${chaveCliente}.json`;
+    const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${advogadoData.uid}/${chaveCliente}.json`;
 
     console.log(`Buscando detalhes do cliente: ${urlAtt}`);
     axios.get(urlAtt)

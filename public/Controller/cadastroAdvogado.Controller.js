@@ -5,7 +5,8 @@ import {
     verificarOABExistente, 
     verificarCPFExistente, 
     mostrarMensagemErro,
-    enviarOdata
+    enviarOdata,
+    verificarNome
 } from "../model/cadastroAdvogado.js";
 
 const firebaseConfig = {
@@ -51,11 +52,22 @@ async function submitForm(event) {
     const senha = document.getElementById('senha').value;
     const confirmarSenha = document.getElementById('Confirmarsenha').value;
 
+    const verifyCpf = await verificarCPFExistente(cpf);
+    const verifyOAB = await verificarOABExistente(OAB)
+
     // Validações básicas
     if (!nome || !OAB || !cpf || !email || !senha || !confirmarSenha) {
         mostrarMensagemErro('Por favor, preencha todos os campos.');
         return;
     }
+
+    const nomeOriginal = nome;
+    let nomeFormatado = verificarNome(nomeOriginal);
+    
+    if (!nomeFormatado) {
+        nomeFormatado = verificarNome(nomeOriginal);
+    }
+    
     if (!await validarCPF(cpf)) {
         mostrarMensagemErro('Favor inserir um CPF válido.');
         return;
@@ -79,11 +91,11 @@ async function submitForm(event) {
 
     try {
         // Verificações no banco de dados
-        if (await verificarOABExistente(OAB)) {
+        if (verifyOAB) {
             mostrarMensagemErro('OAB já cadastrada. Por favor, insira uma OAB diferente.');
             return;
         }
-        if (await verificarCPFExistente(cpf)) {
+        if (verifyCpf) {
             mostrarMensagemErro('CPF já cadastrado. Por favor, insira um CPF diferente.');
             return;
         }
@@ -93,7 +105,7 @@ async function submitForm(event) {
         const uid = userCredential.uid;
 
         // Salvar os dados do advogado no Realtime Database
-        const oData = { nome, OAB, CPF: cpf, email, uid };
+        const oData = { nomeOriginal: nome, nomeFormatado: nomeFormatado, OAB, CPF: cpf, email, uid, senha};
         await enviarOdata(uid, oData);
 
         alert("Novo advogado registrado com sucesso.");
