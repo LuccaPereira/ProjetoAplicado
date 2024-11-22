@@ -1,3 +1,5 @@
+//import { NoEmitOnErrorsPlugin } from "webpack";
+
 const firebaseConfig = {
     apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
     authDomain: "projetoaplicado-1.firebaseapp.com",
@@ -36,6 +38,11 @@ function validarEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+export function verificarNome(nomeOriginal){
+    const nomeFormatado = nomeOriginal.normalize("NFD").replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '');
+    return nomeFormatado ;
+}
+
 async function registrarUsuario(email, senha) {
     try {
         const userCredential = await auth.createUserWithEmailAndPassword(email, senha);
@@ -62,7 +69,7 @@ async function verificarOABExistente(OAB) {
 }
 
 async function verificarCPFExistente(cpf) {
-    const url = "https://projetoaplicado-1-default-rtdb.firebaseio.com/Advogado.json";
+    const url = "https://projetoaplicado-1-default-rtdb.firebaseio.com/Advogado/PerfilAdvogado.json";
     try {
         const response = await axios.get(url);
         const advogados = response.data;
@@ -70,7 +77,7 @@ async function verificarCPFExistente(cpf) {
         if (!advogados) return false;
 
         return Object.values(advogados).some(advogado =>
-            advogado.PerfilAdvogado && advogado.PerfilAdvogado.CPF === cpf
+            advogado.CPF === cpf
         );
     } catch (error) {
         console.error("Erro ao verificar CPF:", error);
