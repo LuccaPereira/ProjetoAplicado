@@ -106,92 +106,122 @@ html, body {
     gap: 6px;
 }
 
-.chatbot-container {
-    width: 50%;
-    margin: auto;
-    margin-top: 50px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
+.chatBotContainer {
+    margin-left: 2px;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1; /* Ajuste para ocupar espaço disponível */
 }
 
-.chat-window {
-    max-height: 300px;
-    overflow-y: auto;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 20px;
-    background-color: #f9f9f9; /* Cor de fundo clara para o chat */
-    width: 90%; /* Ajuste a largura para 90% */
-    margin-left: auto; /* Centraliza a janela do chat */
-    margin-right: auto; /* Centraliza a janela do chat */
+.chatbot-card {
+    border-radius: 15px;
+    background-color: #ffffff;
+    width: 700px;
+    max-width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
+
+.chatbot-card .card-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.75);
+}
+
+/* Janela de mensagens */
+.chat-window {
+    border: 1px solid #d1d1d6;
+    border-radius: 8px;
+    padding: 10px;
+    height: 300px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+}
+
 
 .messages {
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-#sendButton {
-    flex: 1;
-    border: 2px solid #ccc; /* Borda ao redor do campo de entrada */
-    border-radius: 20px; /* Bordas arredondadas */
-    padding: 10px; /* Espaçamento interno */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
-    width: 20%; /* Ajuste a largura para 90% */
-    margin-right: auto; /* Centraliza o campo de entrada */
-}
-
-#sendButton:hover {
-    background-color: #0056b3; /* Cor ao passar o mouse */
-    cursor: pointer; /* Indica que é clicável */
-}
-
-.user-message, .bot-message, #chatInput {
+.user-message, .bot-message {
     padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    max-width: 80%;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para as mensagens */
+    border-radius: 8px;
+    word-wrap: break-word;
 }
 
-.user-message, #chatInput {
-    background-color: #e6f2ff; /* Cor de fundo para a mensagem do usuário */
-    text-align: left;
-    align-self: flex-start;
+.user-message {
+    align-self: flex-end;
+    background-color: #007aff;
+    color: white;
 }
 
 .bot-message {
-    background-color: #f0f0f0; /* Cor de fundo para a mensagem do bot */
-    text-align: left;
-    align-self: flex-end;
+    align-self: flex-start;
+    background-color: #e5e5ea;
+    color: #1c1c1e;
 }
 
 .input-group {
-    margin-top: 20px;
     display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
 }
 
+.input-group .form-control {
+    flex: 1;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #d1d1d6;
+    font-size: 14px;
+    width: 70%; /* Ajuste para centralizar visualmente */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.input-group .btn {
+    background-color: #007aff;
+    color: white;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.input-group .btn:hover {
+    background-color: #0056b3;
+}
 .form-control {
     flex: 1;
     border: 2px solid #ccc; /* Borda ao redor do campo de entrada */
     border-radius: 20px; /* Bordas arredondadas */
     padding: 10px; /* Espaçamento interno */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
-    width: 90%; /* Ajuste a largura para 90% */
+    width: 95%; /* Ajuste a largura para 90% */
+    margin-top: 10px;
     margin-left: auto; /* Centraliza o campo de entrada */
     margin-right: auto; /* Centraliza o campo de entrada */
 }
 
 .btn {
-    border-top-left-radius: 20px; /* Bordas arredondadas do botão */
-    border-bottom-left-radius: 20px;
+    border-radius: 10px; /* Bordas arredondadas do botão */
     background-color: #007bff; /* Cor do botão */
     color: #fff; /* Cor do texto do botão */
     transition: background-color 0.3s ease;
+    margin-top: 10px; /* Espaço abaixo do botão */
 }
-
 .btn:hover {
     background-color: #0056b3; /* Cor do botão ao passar o mouse */
 }
