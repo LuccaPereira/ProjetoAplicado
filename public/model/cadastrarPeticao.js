@@ -95,8 +95,11 @@ export function clienteLogado() {
     return loggedInClienteString ? JSON.parse(loggedInClienteString) : null;
 }
 
-async function naosuportomais(uid, oData) {
+async function attAdv(uid, oData) {
     await update(ref(database, `Advogado/PerfilAdvogado/${uid}`), oData);
+}
+async function attCliente(uid, oData) {
+    await update(ref(database, `Cliente/PerfilDoCliente/${uid}`), oData);
 }
 
 async function verificarClienteExistente(cpf, email) {
@@ -156,6 +159,7 @@ export async function montarOData() {
         console.log('Cliente não existe, criando novo cliente');
     }
 
+    const uid = logCliente.uid;
     const oData = {
         [nomeFormatado]: {
             CNPJ: cnpjPassivo,
@@ -172,12 +176,13 @@ export async function montarOData() {
             Descricao: descricao,
             CPFAtivo: cpfAtivo,
             UltimaAlt: new Date().toLocaleDateString(),
-            situacao: situacao
+            situacao: situacao,
+            uid: uid
         }
     };
 
-    const uid = logCliente.uid;
-    await naosuportomais(uid, oData);
+    await attAdv(uid, oData);
+    await attCliente(uid, oData)
 
     const pdfFileElement = document.getElementById("pdfFile");
     if (pdfFileElement && pdfFileElement.files.length > 0) {

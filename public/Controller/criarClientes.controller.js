@@ -89,6 +89,13 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
+export function oabAdvogadoLogado() {
+    const loggedInLawyerString = localStorage.getItem('loggedInUser');
+    console.log("Advogado logado (localStorage):", loggedInLawyerString);
+    return loggedInLawyerString ? JSON.parse(loggedInLawyerString) : null;
+}
+
+
 async function submitClientes(event) {
     event.preventDefault();
 
@@ -175,7 +182,6 @@ async function submitClientes(event) {
                 }
             }
 
-            // Se o cliente já existe e a senha é diferente, atualiza a senha
             if (clienteKeyExistente) {
                 const clientRef = ref(db, `${clienteCollectionPath}/${clienteKeyExistente}`);
 
@@ -189,18 +195,20 @@ async function submitClientes(event) {
                         alert("Erro ao atualizar senha do cliente: " + error.message);
                     });
             } else {
-                // Se o cliente não existe, cria um novo cliente
                 try {
                     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
                     const user = userCredential.user;
                     const uid = user.uid;
+                    const loggedInLawyer = await oabAdvogadoLogado();
+                    const uidAdv = loggedInLawyer.uid;
                     
                     const oData = {
                         nome: nome,
                         cpf: cpf,
                         senha: senha,
                         email: email,
-                        uid: uid
+                        uid: uid,
+                        uidAdvogado: uidAdv
                     };
                 
                     await refFunction(clienteCollectionPath, uid, oData);
