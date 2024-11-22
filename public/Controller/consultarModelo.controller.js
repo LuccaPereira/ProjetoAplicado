@@ -266,7 +266,6 @@ function saveStatus() {
     const petitionPortal = document.getElementById('petitionPortal').value;
     const petitionObservations = document.getElementById('petitionObservations').value;
 
-    // Atualiza o campo de número do protocolo com o valor gerado
     document.getElementById('protocolNumber').value = protocolNumber;
     console.log('Número do Protocolo gerado:', protocolNumber);
     const loggedInLawyer = oabAdvogadoLogado();
@@ -278,8 +277,7 @@ function saveStatus() {
         protocoloData: protocolDate,
         protocoloPortal: petitionPortal,
         protocoloObservacao: petitionObservations,
-        ultimaAlteracao
-: currentDate // Atualiza a data da última alteração
+        ultimaAlteracao: currentDate
     })
     .then(response => {
         modal.hide();
@@ -305,9 +303,7 @@ function populateModalFields(cliente) {
     document.getElementById('Modaldescricao').value = cliente.Descrição || "Não disponível";
     document.getElementById('ModalcpfAtivo').value = cliente.CPFAtivo || "Não disponível";
     document.getElementById('ModalcnpjPassivo').value = cliente.CNPJ || "Não disponível";
-    document.getElementById('editUltimaAlteracao').value = cliente.UltimaAlt || "";
-    document.getElementById('situação').value = cliente.situacao || "";
-    
+    document.getElementById('editUltimaAlteracao').value = cliente.UltimaAlt || ""; 
 }
 
 function showClientDetails(chaveCliente, advogadoData) {
@@ -324,8 +320,6 @@ function showClientDetails(chaveCliente, advogadoData) {
                 const modal = new bootstrap.Modal(modalElement);
 
                 modal.show();
-            
-                populateModalFields(cliente);
             
                 const fieldsToMakeReadonly = [
                     'modalnomePeticionante',
@@ -347,15 +341,19 @@ function showClientDetails(chaveCliente, advogadoData) {
                     document.getElementById(field).readOnly = true;
                 });
 
+                populateModalFields(cliente);
+
                 const editButton = document.getElementById('editButton');
                 editButton.onclick = () => {
                     toggleEditMode(true, fieldsToMakeReadonly);
                 };
+                const NomePeticionante = document.getElementById('modalnomePeticionante').value;
+                const nomeFormatado = NomePeticionante.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "");
             
                 const saveButton = document.getElementById('saveButton');
                 saveButton.onclick = () => {
                     const updatedClientData = {
-                        NomePeticionante: document.getElementById('modalnomePeticionante').value,
+                        NomePeticionante: NomePeticionante,
                         CPFAtivo: document.getElementById('ModalcpfAtivo').value,
                         Descrição: document.getElementById('Modaldescricao').value,
                         ultimaAlteracao: getCurrentDateTime(),
@@ -367,10 +365,11 @@ function showClientDetails(chaveCliente, advogadoData) {
                         Procedimento: document.getElementById('Modalprocedimento').value,
                         Auxilio: document.getElementById('Modalauxilio').value,
                         Email: document.getElementById('Modalemail').value,
-                        CNPJ: document.getElementById('ModalcnpjPassivo').value
+                        CNPJ: document.getElementById('ModalcnpjPassivo').value,
+                        nomeFormatado: nomeFormatado
                     };
 
-                    saveClientDetails(urlAtt, updatedClientData)
+                    saveClientDetails(urlAtt, updatedClientData, chaveCliente, advogadoData)
                         .then(() => {
                             Swal.fire({
                                 title: 'Sucesso!',

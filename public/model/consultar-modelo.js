@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js';
-import { getStorage } from 'https://www.gstatic.com/firebasejs/9.6.6/firebase-storage.js';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.6.6/firebase-storage.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAu1cx1J9ihabcJuaIu0clTXtU7JpyOwCM",
@@ -56,10 +56,20 @@ export function updateSituacaoInDatabase(clienteKeyAtt, selectedValue) {
         hour12: false
     });
 
-    const updatedDetails = { 
-        situacao: selectedValue,
-        UltimaAlt: formattedTimestamp
-    };
+    let updatedDetails = {}; 
+
+    if (!selectedValue) {
+        selectedValue = "atualização nas informações no visualizar"
+        updatedDetails = { 
+            descricao: selectedValue,
+            UltimaAlt: formattedTimestamp
+        };
+    } else {
+        updatedDetails = { 
+            situacao: selectedValue,
+            UltimaAlt: formattedTimestamp
+        };
+    }
 
     return axios.patch(urlAtt, updatedDetails)
         .then(() => {
@@ -76,21 +86,26 @@ export function updateSituacaoInDatabase(clienteKeyAtt, selectedValue) {
             console.error("Erro ao atualizar situação ou salvar histórico:", error);
         });
 }
-
-
 export function saveClientDetails(urlAtt, updatedClientData, pdfFile) {
+    const chave = updatedClientData.nomeFormatado;
     if (pdfFile) {
         const timestamp = new Date().getTime();
         const fileName = `${timestamp}_${pdfFile.name}`;
-        const storageRef = storage.ref(`pdfs/${fileName}`);
+        const storageRef = ref(storage, `pdfs/${fileName}`);
 
-        return storageRef.put(pdfFile)
-            .then(snapshot => snapshot.ref.getDownloadURL())
+        return uploadBytes(storageRef, pdfFile)
+            .then(snapshot => {
+                return getDownloadURL(snapshot.ref);
+            })
             .then(downloadURL => {
                 updatedClientData.pdfURL = downloadURL;
-                return axios.patch(urlAtt, updatedClientData); 
+                updateSituacaoInDatabase(chave);
+                return axios.patch(urlAtt, updatedClientData);
             });
     } else {
-        return axios.patch(urlAtt, updatedClientData); 
+
+        updateSituacaoInDatabase(chave);
+        return axios.patch(urlAtt, updatedClientData);
     }
 }
+
