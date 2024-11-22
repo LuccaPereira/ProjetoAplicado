@@ -70,7 +70,7 @@ async function bringInfoModal() {
         if (advogadoInfo) {
             console.log("Dados do advogado logado:", advogadoInfo);
             // Atualizando os elementos do modal ou qualquer parte da UI com os dados do advogado
-            document.getElementById('nome').innerText = advogadoInfo.nome || "Nome não disponível";
+            document.getElementById('nome').innerText = advogadoInfo.nomeOriginal || "Nome não disponível";
             document.getElementById('email').innerText = advogadoInfo.email || "Email não disponível";
             document.getElementById('oab').innerText = advogadoInfo.OAB || "OAB não disponível";
             document.getElementById('senha').innerText = advogadoInfo.senha|| "CPF não disponível";

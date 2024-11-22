@@ -118,6 +118,10 @@ async function verificarClienteExistente(cpf, email) {
     return clienteExistente || false;
 }
 
+function verificarNome(nomeOriginal) {
+    return nomeOriginal.normalize("NFD").replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '');
+}
+
 export async function montarOData() {
     const loggedInCliente = clienteLogado();
 
@@ -140,6 +144,9 @@ export async function montarOData() {
     const cpfAtivo = document.getElementById('cpfAtivo')?.value || '';
     const cnpjPassivo = document.getElementById('cnpjPassivo')?.value || '';
     const situacao = "Ainda sem Status";
+    const nomeOriginal = nomePeticionante;
+
+    const nomeFormatado = verificarNome(nomeOriginal);
 
     const clienteVerificacao = await verificarClienteExistente(cpfAtivo, email);
 
@@ -149,33 +156,11 @@ export async function montarOData() {
         console.log('Cliente não existe, criando novo cliente');
     }
 
-    const clienteData = {
-        [nomePeticionante]: {
-            CNPJ: cnpjPassivo,
-            NomePeticionante: nomePeticionante,
-            NomeAdvogado: nomeAdvogado,
-            Foro: foro,
-            Acidente: acidente,
-            Valor: valor,
-            Procedimento: procedimento,
-            Telefone: telefone,
-            Auxilio: auxilio,
-            Email: email,
-            Descricao: descricao,
-            CPFAtivo: cpfAtivo,
-            UltimaAlt: new Date().toLocaleDateString(),
-            situacao: situacao
-        }
-    };
-
-    const clienteUid = clienteVerificacao ? clienteVerificacao.uid : push(ref(database, 'Cliente/PerfilDoCliente')).key;
-
-    await update(ref(database, `Cliente/PerfilDoCliente/${clienteUid}`), clienteData);
-
     const oData = {
-        [nomePeticionante]: {
+        [nomeFormatado]: {
             CNPJ: cnpjPassivo,
-            NomePeticionante: nomePeticionante,
+            NomePeticionante: nomeOriginal,
+            nomeFormatado: nomeFormatado,
             NomeAdvogado: nomeAdvogado,
             Foro: foro,
             Acidente: acidente,
@@ -190,61 +175,24 @@ export async function montarOData() {
             situacao: situacao
         }
     };
+
+    const uid = logCliente.uid;
+    await naosuportomais(uid, oData);
 
     const pdfFileElement = document.getElementById("pdfFile");
     if (pdfFileElement && pdfFileElement.files.length > 0) {
         const timestamp = new Date().getTime();
-        const fileName = `${timestamp}_${pdfFileElement.files[0].name}`;
-        const pdfFile = pdfFileElement.files[0];
+        const file = pdfFileElement.files[0];
+        const fileRef = storageRef(storage, `pdf/${timestamp}_${file.name}`);
 
-        const pdfStorageRef = storageRef(storage, `pdfs/${fileName}`);
+        await uploadBytes(fileRef, file);
+        const downloadURL = await getDownloadURL(fileRef);
 
-        try {
-            await uploadBytes(pdfStorageRef, pdfFile);
-            const downloadURL = await getDownloadURL(pdfStorageRef);
-            oData[nomePeticionante].pdfURL = downloadURL; // Armazena o URL do PDF
+        await update(ref(database, `Advogado/PerfilAdvogado/${uid}`), {
+            ...oData,
+            pdfFileURL: downloadURL
+        });
 
-            const uid = logCliente.uid;
-            console.log('UID:', uid);
-            console.log('oData:', oData);
-            await naosuportomais(uid, oData); // Atualiza os dados do advogado
-
-            // Atualiza o link do PDF no banco de dados do cliente
-            await update(ref(database, `Cliente/PerfilDoCliente/${clienteUid}`), {
-                [`${nomePeticionante}/pdfURL`]: downloadURL // Adiciona o link do PDF ao cliente
-            });
-
-            console.log("PDF enviado com sucesso:", downloadURL);
-        } catch (error) {
-            console.error("Erro ao enviar PDF:", error);
-        }
+        console.log("Arquivo PDF carregado com sucesso.");
     }
 }
-
-
-
-
-function aplicarMascaraValor(elemento) {
-    elemento.addEventListener('input', (e) => {
-        let valor = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
-        valor = (valor / 100).toFixed(2) + ''; // Divide por 100 para ajustar casas decimais
-        valor = valor.replace('.', ','); // Troca o ponto decimal por vírgula
-        valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Adiciona pontos a cada milhar
-        e.target.value = 'R$ ' + valor; // Adiciona o 'R$' no início
-    });
-
-    // Coloca o cursor sempre no final
-    elemento.addEventListener('focus', (e) => {
-        setTimeout(() => {
-            e.target.selectionStart = e.target.selectionEnd = e.target.value.length;
-        }, 0);
-    });
-}
-
-// Chamando a função ao carregar a página, aplicando a máscara no campo de valor
-window.onload = function() {
-    const valorCampo = document.getElementById('valor');
-    if (valorCampo) {
-        aplicarMascaraValor(valorCampo);
-    }
-};

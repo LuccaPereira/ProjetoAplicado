@@ -354,77 +354,150 @@ td a.visualizar-pdf:hover {
     line-height: 1.5;
 }
 
-/* Modal */
-.modal-content {
+/* Estilos gerais do modal */
+.modal-dialog {
+    max-width: 800px;
+    margin: 30px auto;
     padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
 }
 
-.modal-body form .mb-3 {
+.modal-content {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.petition-info {
+    padding: 15px;
+}
+
+.card-info {
     margin-bottom: 20px;
 }
 
-.modal-body form .form-label {
+.card-info h1 {
+    font-size: 20px;
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
-.modal-footer .btn-secondary {
-    background-color: #6c757d;
-    color: #fff;
-}
-
-.modal-footer .btn-primary {
-    background-color: #007bff;
-    color: #fff;
-}
-
-/* Inputs e Botões */
-.form-control, .form-select {
-    padding: 12px 15px;
-    font-size: 1rem;
-    border-radius: 8px;
+.card-info hr {
     border: 1px solid #ddd;
+}
+
+.card-info-name {
+    margin-bottom: 10px;
+}
+
+.card-info-name input,
+.card-info-name select {
     width: 100%;
-    margin-top: 8px;
-}
-
-.form-control:focus, .form-select:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
-}
-
-.btn {
-    padding: 10px 20px;
-    font-size: 1rem;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    border: none;
+    box-sizing: border-box;
+}
+
+.card-info-name input:focus,
+.card-info-name select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Estilos para seções de dados */
+.dados-para-processo {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.left-card-section, .right-card-section {
+    width: 48%;
+}
+
+.left-card-section input, .right-card-section input {
+    width: 100%;
+}
+
+/* Estilos para Polo Ativo e Passivo */
+.card-info h4 {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+/* Estilos para a última alteração */
+.lastAlteration {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.lastAlteration input {
+    width: 48%;
+}
+
+.lastAlteration label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Estilo para o dropdown (Situação) */
+#editUltimaAlteracao {
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+}
+
+/* Estilos para os botões */
+.buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.buttons .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.btn-outline-center {
-    background-color: transparent;
-    color: #fff;
-    border: 2px solid #fff;
-}
-
-.btn-outline-center:hover {
-    background-color: #3498db;
-}
-
-.btn-primary {
+.buttons .btn-primary {
     background-color: #007bff;
+    border: none;
     color: white;
 }
 
-.btn-primary:hover {
-    background-color: #0069d9;
-}
-
-.btn-danger {
-    background-color: #e74c3c;
+.buttons .btn-secondary {
+    background-color: #6c757d;
+    border: none;
     color: white;
 }
 
-.btn-danger:hover {
-    background-color: #c0392b;
+.buttons .btn:hover {
+    opacity: 0.8;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .dados-para-processo {
+        flex-direction: column;
+    }
+
+    .left-card-section, .right-card-section {
+        width: 100%;
+    }
+
+    .lastAlteration {
+        flex-direction: column;
+    }
 }
