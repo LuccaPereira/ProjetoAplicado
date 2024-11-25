@@ -19,7 +19,7 @@ const storage = getStorage(app);
 const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
 
 export function fetchClientes() {
-    const collectionPath = "Cliente";
+    const collectionPath = "Advogado";
     const url = `${databaseURL}/${collectionPath}.json`;
 
     return axios.get(url);

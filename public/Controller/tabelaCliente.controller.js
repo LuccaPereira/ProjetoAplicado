@@ -34,8 +34,8 @@ export function renderClientes() {
             }
 
             clientesTable.innerHTML = "";
-            const clienteLogado = loggedInCliente.uid;
-            const perfil = clientes["PerfilDoCliente"];
+            const clienteLogado = loggedInCliente.uidAdv;
+            const perfil = clientes["PerfilAdvogado"];
             const clienteData = perfil[clienteLogado];
             
             if (!clienteData) {
@@ -45,20 +45,22 @@ export function renderClientes() {
 
             console.log("Dados do advogado:", clienteData);
 
+            // Lógica para filtrar ocorrências do cliente logado
             Object.keys(clienteData).forEach(clienteKey => {
                 const cliente = clienteData[clienteKey];
                 const nomePeticionante = cliente.NomePeticionante;
-                const Keyfiltrada = clienteKey.replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-            
-                console.log(`Processando cliente: ${nomePeticionante}`, cliente);
-            
-                if (nomePeticionante) {
+
+                // Verifica se o cliente é o mesmo do nome formatado do advogado logado
+                if (nomePeticionante === loggedInCliente.nome) {
+                    console.log(`Exibindo todas as ocorrências para: ${nomePeticionante}`);
+
+                    const Keyfiltrada = clienteKey.replace(/\s+/g, '-').replace(/[^\w-]/g, '');
                     const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
                     const descricao = cliente.Descricao || "Descrição não disponível";
                     const ultimaAlteracao = cliente.UltimaAlt || "#";
                     const situacao = cliente.situacao || "Ainda sem Status";
                     const pdfURL = cliente.pdfURL || ""; // Acessando pdfURL do cliente
-            
+
                     const newRow = document.createElement('tr');
                     newRow.setAttribute('data-cliente-key', clienteKey);
                     newRow.innerHTML = `
@@ -75,9 +77,9 @@ export function renderClientes() {
                         <td>
                             <button class="visualizar-pdf" data-pdf-url="${pdfURL}" data-cliente-key="${Keyfiltrada}">Visualizar PDF</button>
                         </td>`;
-            
+
                     clientesTable.appendChild(newRow);
-            
+
                     // Adicionando event listeners para os botões de visualizar PDF
                     document.querySelectorAll('.visualizar-pdf').forEach(button => {
                         button.addEventListener('click', function (event) {
@@ -91,15 +93,15 @@ export function renderClientes() {
                             }
                         });
                     });
-            
+
                     document.querySelectorAll('.baixar-peticao').forEach(link => {
                         link.addEventListener('click', function(event) {
                             event.preventDefault();
-            
+
                             const currentClientKey = decodeURIComponent(link.getAttribute('data-cliente-key'));
                             const formattedClientKey = currentClientKey.replace(/-/g, ' ');
                             console.log(`Visualizando detalhes do cliente ${formattedClientKey}`);
-            
+
                             showClientDetails(clienteKey, formattedClientKey, clienteData);
                         });
                     });
@@ -117,6 +119,7 @@ export function renderClientes() {
         })
         .catch(error => console.error("Erro ao buscar clientes:", error));
 }
+
 
 function populateModalFields(cliente) {
     if (!cliente) return;

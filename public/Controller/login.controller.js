@@ -22,6 +22,7 @@ async function loginWithEmailAndCheckClient(email, password) {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
+        console.log(user.nome);
 
         console.log('Usuário autenticado:', user);
 

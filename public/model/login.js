@@ -81,7 +81,9 @@ export async function getClienteInfo(uid) {
             nome: dadoscliente.nome || '',
             cpf: dadoscliente.cpf || '',
             senha: dadoscliente.senha || '',
-            uid: dadoscliente.uid || ''
+            uid: dadoscliente.uid || '',
+            uidAdv: dadoscliente.uidAdvogado || '',
+            nomeFormatado: dadoscliente.nomeFormatado || ''
         };
     } else {
         console.log('Perfil do advogado não encontrado no banco de dados.');
