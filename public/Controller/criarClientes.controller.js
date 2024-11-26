@@ -201,14 +201,16 @@ async function submitClientes(event) {
                     const uid = user.uid;
                     const loggedInLawyer = await oabAdvogadoLogado();
                     const uidAdv = loggedInLawyer.uid;
+                    const nomeFormatado = nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "");
                     
                     const oData = {
-                        nome: nome,
-                        cpf: cpf,
-                        senha: senha,
-                        email: email,
-                        uid: uid,
-                        uidAdvogado: uidAdv
+                            nome: nome,
+                            cpf: cpf,
+                            senha: senha,
+                            email: email,
+                            uid: uid,
+                            nomeFormatado: nomeFormatado,
+                            uidAdvogado: uidAdv
                     };
                 
                     await refFunction(clienteCollectionPath, uid, oData);
