@@ -15,112 +15,103 @@ document.getElementById('logoutButton').addEventListener('click', function() {
     window.location.href = '../View/login.html';
 })
 
-export function renderClientes() {
+function renderClientes(clientesFiltrados = null) {
     const loggedInCliente = clienteLogado();
     if (!loggedInCliente) {
         console.log("Nenhum advogado está logado.");
         return;
     }
 
-    fetchClientes()
-        .then(response => {
-            console.log("Resposta da busca de clientes:", response);
-            const clientes = response.data;
-            const clientesTable = document.getElementById("clientesBody");
-
-            if (!clientesTable) {
-                console.error("Tabela não encontrada.");
-                return;
-            }
-
-            clientesTable.innerHTML = "";
-            const clienteLogado = loggedInCliente.uidAdv;
-            const perfil = clientes["PerfilAdvogado"];
-            const clienteData = perfil[clienteLogado];
-            
-            if (!clienteData) {
-                console.error("Advogado não encontrado.");
-                return;
-            }
-
-            console.log("Dados do advogado:", clienteData);
-
-            // Lógica para filtrar ocorrências do cliente logado
-            Object.keys(clienteData).forEach(clienteKey => {
-                const cliente = clienteData[clienteKey];
-                const nomePeticionante = cliente.NomePeticionante;
-
-                // Verifica se o cliente é o mesmo do nome formatado do advogado logado
-                if (nomePeticionante === loggedInCliente.nome) {
-                    console.log(`Exibindo todas as ocorrências para: ${nomePeticionante}`);
-
-                    const Keyfiltrada = clienteKey.replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-                    const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
-                    const descricao = cliente.Descricao || "Descrição não disponível";
-                    const ultimaAlteracao = cliente.UltimaAlt || "#";
-                    const situacao = cliente.situacao || "Ainda sem Status";
-                    const pdfURL = cliente.pdfURL || ""; // Acessando pdfURL do cliente
-
-                    const newRow = document.createElement('tr');
-                    newRow.setAttribute('data-cliente-key', clienteKey);
-                    newRow.innerHTML = `
-                        <td class="nome-peticionante">${nomePeticionante}</td>
-                        <td class="cpf-ativo">${cpfAtivo}</td>
-                        <td class="descricao">${descricao}</td>
-                        <td class="ultima-alteracao">${ultimaAlteracao}</td>
-                        <td>
-                            <input type="text" value="${situacao}" class="form-control" readonly />
-                        </td>
-                        <td>
-                            <button href="#" class="baixar-peticao" data-cliente-key="${Keyfiltrada}">Visualizar</button>
-                        </td>
-                        <td>
-                            <button class="visualizar-pdf" data-pdf-url="${pdfURL}" data-cliente-key="${Keyfiltrada}">Visualizar PDF</button>
-                        </td>`;
-
-                    clientesTable.appendChild(newRow);
-
-                    // Adicionando event listeners para os botões de visualizar PDF
-                    document.querySelectorAll('.visualizar-pdf').forEach(button => {
-                        button.addEventListener('click', function (event) {
-                            event.preventDefault();
-                            const pdfURL = this.getAttribute('data-pdf-url');
-                            if (pdfURL) {
-                                // Abre o PDF em uma nova aba
-                                window.open(pdfURL, '_blank');
-                            } else {
-                                alert('PDF não disponível.');
-                            }
-                        });
-                    });
-
-                    document.querySelectorAll('.baixar-peticao').forEach(link => {
-                        link.addEventListener('click', function(event) {
-                            event.preventDefault();
-
-                            const currentClientKey = decodeURIComponent(link.getAttribute('data-cliente-key'));
-                            const formattedClientKey = currentClientKey.replace(/-/g, ' ');
-                            console.log(`Visualizando detalhes do cliente ${formattedClientKey}`);
-
-                            showClientDetails(clienteKey, formattedClientKey, clienteData);
-                        });
-                    });
-                }
-            });
-
-            populateSelectOptions(clienteData, 'emSituacao', 'situacao');
-
-            document.getElementById('emSituacao').addEventListener('change', function() {
-                const selectedOptionText = this.options[this.selectedIndex].textContent.trim();
-                console.log(`Filtrando clientes por nome: ${selectedOptionText}`);
-                const clientesFiltrados = filtrarClientesPorNomePeticionante(clienteData, selectedOptionText);
-                renderClientes(clientesFiltrados);
-            });
-        })
-        .catch(error => console.error("Erro ao buscar clientes:", error));
+    if (!clientesFiltrados) {
+        fetchClientes()
+            .then(response => {
+                console.log("Resposta da busca de clientes:", response);
+                const clientes = response.data;
+                const filtro = clientes["PerfilAdvogado"];
+                const filtroUi = filtro[loggedInCliente.uidAdv];
+                processarClientes(filtroUi, loggedInCliente);
+            })
+            .catch(error => console.error("Erro ao buscar clientes:", error));
+    } else {
+        processarClientes(clientesFiltrados, loggedInCliente);
+    }
 }
 
+function processarClientes(clienteData, loggedInCliente) {
+    const clientesTable = document.getElementById("clientesBody");
 
+    if (!clientesTable) {
+        console.error("Tabela não encontrada.");
+        return;
+    }
+
+    clientesTable.innerHTML = "";
+
+    Object.keys(clienteData).forEach(clienteKey => {
+        const cliente = clienteData[clienteKey];
+        const nomePeticionante = cliente.NomePeticionante;
+
+        if (nomePeticionante === loggedInCliente.nome) {
+            console.log(`Exibindo todas as ocorrências para: ${nomePeticionante}`);
+
+            const Keyfiltrada = clienteKey.replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+            const cpfAtivo = cliente.CPFAtivo || "CPF não disponível";
+            const descricao = cliente.Descricao || "Descrição não disponível";
+            const ultimaAlteracao = cliente.UltimaAlt || "#";
+            const situacao = cliente.situacao || "Ainda sem Status";
+            const pdfURL = cliente.pdfURL || "";
+
+            const newRow = document.createElement('tr');
+            newRow.setAttribute('data-cliente-key', clienteKey);
+            newRow.innerHTML = `
+                <td class="nome-peticionante">${nomePeticionante}</td>
+                <td class="cpf-ativo">${cpfAtivo}</td>
+                <td class="descricao">${descricao}</td>
+                <td class="ultima-alteracao">${ultimaAlteracao}</td>
+                <td>
+                    <input type="text" value="${situacao}" class="form-control" readonly />
+                </td>
+                <td>
+                    <button class="baixar-peticao" data-cliente-key="${Keyfiltrada}">Visualizar</button>
+                </td>
+                <td>
+                    <button class="visualizar-pdf" data-pdf-url="${pdfURL}" data-cliente-key="${Keyfiltrada}">Visualizar PDF</button>
+                </td>`;
+            clientesTable.appendChild(newRow);
+        }
+    });
+
+    clientesTable.querySelectorAll('.visualizar-pdf').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            const pdfURL = this.getAttribute('data-pdf-url');
+            if (pdfURL) {
+                window.open(pdfURL, '_blank');
+            } else {
+                alert('PDF não disponível.');
+            }
+        });
+    });
+
+    clientesTable.querySelectorAll('.baixar-peticao').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const currentClientKey = decodeURIComponent(this.getAttribute('data-cliente-key')).replace(/-/g, ' ');
+            console.log(`Visualizando detalhes do cliente ${currentClientKey}`);
+            showClientDetails(clienteKey, currentClientKey, clienteData);
+        });
+    });
+
+    populateSelectOptions(clienteData, 'emSituacao', 'situacao');
+
+    document.getElementById('emSituacao').addEventListener('change', function() {
+        const selectedOptionText = this.options[this.selectedIndex].textContent.trim();
+        console.log(`Filtrando clientes por nome: ${selectedOptionText}`);
+        const clientesFiltrados = filtrarClientesPorNomePeticionante(clienteData, selectedOptionText);
+        renderClientes(clientesFiltrados);
+    });
+}
+            
 function populateModalFields(cliente) {
     if (!cliente) return;
     
@@ -196,13 +187,11 @@ export function populateSelectOptions(clienteData, selectId, optionKey) {
     }
 
     console.log("Populando opções para o select:", selectId);
-    select.innerHTML = ""; // Limpa as opções existentes
-
-    // Adiciona a opção vazia somente se não houver dados para popular
+    select.innerHTML = ""; 
     const emptyOption = document.createElement('option');
     emptyOption.value = "";
     emptyOption.textContent = "Selecione uma opção";
-    select.appendChild(option);
+    select.appendChild(emptyOption);
 
     let hasOptions = false;
 
@@ -217,7 +206,6 @@ export function populateSelectOptions(clienteData, selectId, optionKey) {
         }
     });
 
-    // Adiciona a opção vazia apenas se não houver opções
     if (!hasOptions) {
         select.appendChild(emptyOption);
     } else {
