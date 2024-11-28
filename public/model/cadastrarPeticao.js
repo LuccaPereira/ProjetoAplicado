@@ -149,6 +149,22 @@ export async function montarOData() {
     const situacao = "Ainda sem Status";
     const nomeOriginal = nomePeticionante;
 
+    // Validações
+
+    if (!validarCPF(cpfAtivo)) throw new Error('CPF inválido');
+    if (!validarCNPJ(cnpjPassivo)) throw new Error('CNPJ inválido');
+    if (!validarEmail(email)) throw new Error('E-mail inválido');
+    if (!validarValor(valor)) throw new Error('Valor inválido');
+    if (!validarTelefoneOficial(telefone)) throw new Error('Telefone inválido');
+
+    const limiteCaracteres = (campo, limite) => campo.length <= limite;
+    if (!limiteCaracteres(nomePeticionante, 200)) throw new Error('Nome do Peticionante muito longo');
+    if (!limiteCaracteres(nomeAdvogado, 200)) throw new Error('Nome do Advogado muito longo');
+    if (!limiteCaracteres(foro, 200)) throw new Error('Foro muito longo');
+    if (!limiteCaracteres(acidente, 200)) throw new Error('Descrição do Acidente muito longa');
+    if (!limiteCaracteres(procedimento, 200)) throw new Error('Procedimento muito longo');
+    if (!limiteCaracteres(descricao, 500)) throw new Error('Descrição muito longa');
+
     const nomeFormatado = verificarNome(nomeOriginal);
 
     const clienteVerificacao = await verificarClienteExistente(cpfAtivo, email);
