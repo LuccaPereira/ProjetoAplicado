@@ -190,11 +190,11 @@ async function submitClientes(event) {
                     };
                 
                     await refFunction(clienteCollectionPath, uid, oData);
-                    alert("Novo cliente foi adicionado com sucesso!");
+                    swal.fire("Adicionado!", "Novo cliente foi adicionado com sucesso!", "success");
                     await enviarEmail(cpf, senha, email);
                     clienteForm.reset();
                 } catch (error) {
-                    alert("Erro ao registrar o e-mail: " + error.message);
+                    swal.fire("Erro ao adicionar!", "Não foi possivel adicionar um cliente", "error" + error.message);
                 }
             }
         })

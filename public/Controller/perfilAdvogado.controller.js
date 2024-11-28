@@ -118,19 +118,18 @@ export async function saveProfile() {
         email: document.getElementById('email').querySelector('input').value
     };
 
-    const loggedInLawyer = await getLoggedInLawyer(); // Obtém os dados do advogado logado
+    const loggedInLawyer = await getLoggedInLawyer();
     if (loggedInLawyer) {
-        // Passando o uid do advogado logado
-        updateProfileInDatabase(loggedInLawyer.uid, profileData) // Passando o uid corretamente
+        updateProfileInDatabase(loggedInLawyer.uid, profileData)
             .then(() => {
-                alert("Perfil atualizado com sucesso!");
+                swal.fire("Atualizado!", "Perfil atualizado com sucesso!", "success");
                 updateLocalStorage(profileData);
                 document.querySelectorAll('.profile-field').forEach(field => {
                     toggleEditMode(field);
                     const inputElement = field.querySelector('input');
                 
-                    if (inputElement) { // Verifica se o input existe
-                        field.innerHTML = inputElement.value; // Atualiza o valor final
+                    if (inputElement) {
+                        field.innerHTML = inputElement.value;
                     } else {
                         console.warn("Nenhum input encontrado para o campo:", field);
                     }
