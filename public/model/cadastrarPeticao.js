@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-import { getDatabase, ref, get, set, push, update } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js";
 
 const firebaseConfig = {
@@ -18,6 +18,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
 const storage = getStorage(app);
+
 
 export function validarCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
@@ -68,8 +69,11 @@ export function validarEmail(email) {
 }
 
 export function validarValor(valor) {
-    valor = valor.replace('R$', '').trim().replace(/\s+/g, '').replace(',', '.');
-    return /^\d+(\.\d{2})?$/.test(valor);
+    // Remove o símbolo R$ e espaços extras, também trata os pontos como separadores de milhares
+    valor = valor.replace('R$', '').trim().replace(/\s+/g, '').replace(/\./g, '').replace(',', '.');
+
+    // Valida o valor com 2 casas decimais ou nenhum
+    return /^\d+(\.\d{1,2})?$/.test(valor);
 }
 
 export function validarTelefoneOficial(telefone) {
@@ -98,12 +102,13 @@ export function clienteLogado() {
 async function attAdv(uid, oData) {
     await update(ref(database, `Advogado/PerfilAdvogado/${uid}`), oData);
 }
+
 async function attCliente(uid, oData) {
     await update(ref(database, `Cliente/PerfilDoCliente/${uid}`), oData);
 }
 
 async function verificarClienteExistente(cpf, email) {
-    const clienteRef = ref(database, 'Cliente/PerfilDoCliente');
+    const clienteRef = ref(database, `Advogado/PerfilAdvogado/`);
     const clienteSnapshot = await get(clienteRef);
 
     let clienteExistente = null;
@@ -124,6 +129,45 @@ async function verificarClienteExistente(cpf, email) {
 function verificarNome(nomeOriginal) {
     return nomeOriginal.normalize("NFD").replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '');
 }
+
+async function uploadPdf(oData, nomeFormatado, uid) {
+    const pdfFileElement = document.getElementById("pdfFile");
+    
+    if (pdfFileElement && pdfFileElement.files.length > 0) {
+        const pdfFile = pdfFileElement.files[0];
+        const timestamp = new Date().getTime();
+        const fileName = `${timestamp}_${pdfFile.name}`;
+        const pdfStorageRef = storageRef(storage, `pdfs/${fileName}`);
+        
+        try {
+            // Envia o arquivo para o Firebase Storage
+            await uploadBytes(pdfStorageRef, pdfFile);
+            // Obtém a URL de download
+            const downloadURL = await getDownloadURL(pdfStorageRef);
+            
+            // Atualiza o objeto de dados com a URL do PDF
+            oData[nomeFormatado] = oData[nomeFormatado] || {}; // Garante que o campo existe
+            oData[nomeFormatado].pdfURL = downloadURL;
+            
+            // Atualiza os dados no Realtime Database
+            const dataPath = `Advogado/PerfilAdvogado/${uid}/${nomeFormatado}`;
+            const dataRef = ref(database, dataPath);
+            await update(dataRef, oData[nomeFormatado]); // Atualiza os dados sem criar uma chave aleatória
+
+            console.log('PDF enviado e URL salvo com sucesso.');
+        } catch (error) {
+            console.error('Erro ao enviar o PDF:', error);
+            throw new Error('Erro ao enviar o PDF: ' + error.message);
+        }
+    } else {
+        // Atualiza os dados sem PDF
+        const dataPath = `Advogado/PerfilAdvogado/${uid}/${nomeFormatado}`;
+        const dataRef = ref(database, dataPath);
+        await update(dataRef, oData[nomeFormatado]);
+        console.log('Dados enviados sem PDF.');
+    }
+}
+
 
 export async function montarOData() {
     const loggedInCliente = clienteLogado();
@@ -149,7 +193,26 @@ export async function montarOData() {
     const situacao = "Ainda sem Status";
     const nomeOriginal = nomePeticionante;
 
+    const limiteCaracteres = (campo, limite) => campo.length <= limite;
+    if (!limiteCaracteres(nomePeticionante, 200)) throw new Error('Nome do Peticionante muito longo');
+    if (!limiteCaracteres(nomeAdvogado, 200)) throw new Error('Nome do Advogado muito longo');
+    if (!limiteCaracteres(foro, 200)) throw new Error('Foro muito longo');
+    if (!limiteCaracteres(acidente, 200)) throw new Error('Descrição do Acidente muito longa');
+    if (!limiteCaracteres(procedimento, 200)) throw new Error('Procedimento muito longo');
+    if (!limiteCaracteres(descricao, 500)) throw new Error('Descrição muito longa');
     const nomeFormatado = verificarNome(nomeOriginal);
+
+    if (!nomePeticionante || !nomeAdvogado || !foro || !acidente || !valor || 
+        !telefone || !procedimento || !auxilio || !email || !descricao || 
+        !cpfAtivo || !cnpjPassivo) {
+        throw new Error('Campos vazios');
+    }
+
+    if (!validarCPF(cpfAtivo)) throw new Error('CPF inválido');
+    if (!validarCNPJ(cnpjPassivo)) throw new Error('CNPJ inválido');
+    if (!validarEmail(email)) throw new Error('E-mail inválido');
+    if (!validarValor(valor)) throw new Error('Valor inválido');
+    if (!validarTelefoneOficial(telefone)) throw new Error('Telefone inválido');
 
     const clienteVerificacao = await verificarClienteExistente(cpfAtivo, email);
 
@@ -160,11 +223,11 @@ export async function montarOData() {
     }
 
     const uid = logCliente.uid;
+
     const oData = {
         [nomeFormatado]: {
             CNPJ: cnpjPassivo,
             NomePeticionante: nomeOriginal,
-            nomeFormatado: nomeFormatado,
             NomeAdvogado: nomeAdvogado,
             Foro: foro,
             Acidente: acidente,
@@ -175,29 +238,35 @@ export async function montarOData() {
             Email: email,
             Descricao: descricao,
             CPFAtivo: cpfAtivo,
-            UltimaAlt: new Date().toLocaleDateString(),
-            situacao: situacao,
-            uid: uid
+            situacao,
+            ultimaAlteracao: new Date().toISOString(),
         }
     };
+    
+
+    console.log('Dados prontos para inserção:', oData);
 
     await attAdv(uid, oData);
-    await attCliente(uid, oData)
+    //await attCliente(uid, oData);
+    // Chama a função de upload de PDF
 
-    const pdfFileElement = document.getElementById("pdfFile");
-    if (pdfFileElement && pdfFileElement.files.length > 0) {
-        const timestamp = new Date().getTime();
-        const file = pdfFileElement.files[0];
-        const fileRef = storageRef(storage, `pdf/${timestamp}_${file.name}`);
+    await uploadPdf(oData, nomeFormatado, uid);
 
-        await uploadBytes(fileRef, file);
-        const downloadURL = await getDownloadURL(fileRef);
-
-        await update(ref(database, `Advogado/PerfilAdvogado/${uid}`), {
-            ...oData,
-            pdfFileURL: downloadURL
-        });
-
-        console.log("Arquivo PDF carregado com sucesso.");
-    }
+    return oData;
 }
+
+// Função para aplicar a máscara de valor (R$ e separador de milhares)
+function aplicarMascaraValor(valor) {
+    valor = valor.replace(/\D/g, ''); // Remove caracteres não numéricos
+    valor = (valor / 100).toFixed(2) + ''; // Divide por 100 para converter centavos e mantém duas casas decimais
+    valor = valor.replace('.', ','); // Substitui o ponto decimal por vírgula
+    valor = valor.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'); // Adiciona separadores de milhares
+    return `R$ ${valor}`;
+}
+
+
+// Evento para aplicar a máscara ao campo de valor
+document.getElementById('valor').addEventListener('input', function () {
+    const campoValor = document.getElementById('valor');
+    campoValor.value = aplicarMascaraValor(campoValor.value);
+});
