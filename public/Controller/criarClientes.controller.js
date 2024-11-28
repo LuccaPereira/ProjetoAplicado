@@ -204,13 +204,13 @@ async function submitClientes(event) {
 }
 
 async function refFunction(clienteCollectionPath, uid, oData) {
-    const clienteReferencia = ref(db, `${clienteCollectionPath}/${uid}`); // Usando uid como chave
-    await set(clienteReferencia, oData); // Usando set para adicionar os dados
+    const clienteReferencia = ref(db, `${clienteCollectionPath}/${uid}`); 
+    await set(clienteReferencia, oData); 
 }
 
 async function enviarEmail(cpf, senha, email) {
-    const toEmail = email; // E-mail do cliente
-    const fromEmail = "smartlegalentrerprise@gmail.com"; // E-mail do remetente fixo
+    const toEmail = email; 
+    const fromEmail = "smartlegalentrerprise@gmail.com"; 
 
     console.log('E-mail do destinatário:', toEmail);
     console.log('E-mail do remetente:', fromEmail);
