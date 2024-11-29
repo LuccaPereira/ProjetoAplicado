@@ -2,6 +2,11 @@ import { fetchClientes } from '../model/tabelaArquivados.js';
 
 let protocolNumber = "";
 
+document.getElementById('menuToggle').addEventListener('click', function() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('expanded');
+});
+
 export function clienteLogado() {
     const loggedInClienteString = localStorage.getItem('loggedInUser');
     console.log("Advogado logado (localStorage):", loggedInClienteString);

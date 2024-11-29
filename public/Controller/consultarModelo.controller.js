@@ -44,7 +44,6 @@ document.getElementById('loginButton').addEventListener('click', function() {
 
 document.addEventListener('DOMContentLoaded', () => {
     clickMenu();
-    //paginaPerfil();
 });
 
 export function renderClientes() {
@@ -90,9 +89,7 @@ export function renderClientes() {
                     const descricao = cliente.Descricao || "Descrição não disponível";
                     const ultimaAlteracao = cliente.UltimaAlt || "#";
                     
-                    
-                    // Supondo que você tenha uma URL do PDF associada a cada cliente
-                    const pdfURL = cliente.pdfURL || ""; // Acessando pdfURL do cliente
+                    const pdfURL = cliente.pdfURL || "";
             
                     const newRow = document.createElement('tr');
                     newRow.setAttribute('data-cliente-key', clienteKey);
@@ -146,8 +143,8 @@ export function renderClientes() {
                             };
                             console.log(`Alterando situação do cliente ${clienteKey} para ${selectedValue}`);
                             updateSituacaoInDatabase(clienteKey, selectedValue)
-                                .then(() => alert("Nosso banco de dados foi atualizado!"))
-                                .catch(error => console.error("Erro ao salvar detalhes do cliente:", error));
+                                .then(() =>  Swal.fire('Atualizado!', 'O processo foi atualizado com sucesso.', 'success'))
+                                .catch(error => Swal.fire('Não Atualizado!', 'O processo foi não conseguiu ser atualizado! Tente novamente!.', 'Error' + error));
                         });
                     }
                     document.querySelectorAll('.visualizar-pdf').forEach(link => {
