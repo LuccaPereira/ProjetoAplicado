@@ -10,6 +10,7 @@
 </head>
 <body>
     <div class="container text-center py-5">
+        <!-- Logo -->
         <img src="../img/logo.png" alt="Logo do Sistema" width="150">
         <div class="profile-icon my-3" id="ProfileContainer">
             <ul>
@@ -25,12 +26,12 @@
                 </li>
                 <li>
                     <a href="../View/tabelaCliente.html">
-                        <span class="material-icons" id="tabelaView" alt="Tabela" title="ir para Tabela">table_view</span>
+                        <span class="material-icons" id="tabelaView" alt="Tabela" title="Ir para Tabela">table_view</span>
                     </a>
                 </li>
                 <li>
                     <a href="../View/chat.html">
-                        <span class="material-icons" id="ChatBot" alt="chatBot" title="ir para chatBot">smart_toy</span>
+                        <span class="material-icons" id="ChatBot" alt="chatBot" title="Ir para chatBot">smart_toy</span>
                     </a>
                 </li>
                 <li>
@@ -47,64 +48,31 @@
             <div class="profile-header">
                 <label for="profile-image-upload">
                     <img src="https://via.placeholder.com/150" alt="Perfil" class="profile-image" id="profile-image">
-                    <input type="file" id="profile-image-upload" accept="image/*">
                 </label>
+                <input type="file" id="profile-image-upload" accept="image/*">
             </div>
             <div class="profile-field-container">
                 <label for="nome">Nome:</label>
                 <div id="nome" class="profile-field readonly"></div>
             </div>
-            
             <div class="profile-field-container">
                 <label for="senha">Senha:</label>
                 <div id="senha" class="profile-field readonly"></div>
             </div>
-
             <div class="profile-field-container">
                 <label for="cpf">CPF:</label>
                 <div id="cpf" class="profile-field readonly"></div>
             </div>
-
             <div class="profile-field-container">
                 <label for="email">Email:</label>
                 <div id="email" class="profile-field readonly"></div>
             </div>
-                  
-            
             <div class="profile-field-container">
                 <label for="location">Localização:</label>
                 <div id="location" class="profile-field readonly">São Paulo, Brasil</div>
             </div>
         </div>
-        <div class="profile-buttons">
-            <button id="editProfileButton">Editar Perfil</button>
-            <button id="saveProfileBtn">Salvar</button>
-        </div>
     </div>
-
-    <div id="editProfileModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Editar Perfil</h2>
-            <form id="editProfileForm">
-                <label for="nome">Nome:</label>
-                <input type="text" id="nomemodal" name="nome"><br><br>
-                
-                <label for="senha">Senha:</label>
-                <input type="password" id="senhamodal" name="senha"><br><br>
-        
-                <label for="cpf">CPF:</label>
-                <input type="text" id="cpfmodal" name="cpf"><br><br>
-                
-                <label for="email">Email:</label>
-                <input type="email" id="emailmodal" name="email"><br><br>
-                
-                <label for="location">Localização:</label>
-                <input type="text" id="locationmodal" name="location" value="São Paulo, Brasil"><br><br>
-            </form>
-        </div>
-    </div>
-
     <footer class="text-center py-3">
         <p>&copy; 2024 - Todos os direitos reservados</p>
         <nav>
@@ -125,5 +93,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-storage-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js" defer></script>
+
 </body>
 </html>

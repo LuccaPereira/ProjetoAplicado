@@ -20,185 +20,115 @@ main {
     overflow-y: auto; /* Faz com que o main ocupe o espaço restante */
 }
 
-/* Profile container styling */
+
+/* Header */
+header img {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+
+/* Seção de Perfil */
 .profile-container {
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: 30%; /* Ajuste a largura se necessário */
-    height: 100%;
-    max-width: 900px; /* Defina uma largura máxima maior para caber mais informações */
-    margin: 2% auto; /* Centraliza horizontalmente */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 500px;
+    margin: auto;
     padding: 20px;
-    text-align: left;
-    box-sizing: border-box;
-    height: 100000;
-    margin-top: -40px;
-    margin-bottom: 25px;
-    overflow-y: auto;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-top: -30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
 }
 
 .profile-header {
-    position: relative;
-    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
-.profile-image {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border: 4px solid #d1d1d6;
-    cursor: pointer;
-}
-
+/* Esconde o input de upload */
 #profile-image-upload {
     display: none;
 }
 
-.profile-field-container label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 5px;
+/* Imagem do Perfil */
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    object-fit: cover;
+    border: 3px solid #007bff; /* Borda azul para destaque */
+}
+
+.profile-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+.profile-field-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    font-weight: bold;
 }
 
 .profile-field {
-    padding: 5px;
-    border: 1px solid #d1d1d6;
-    border-radius: 4px;
-    background-color: #f5f5f7;
+    padding: 10px;
+    background-color: #f1f1f3;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    word-wrap: break-word;
 }
 
-.profile-field.readonly {
-    background-color: #f5f5f7;
-}
-
-.profile-field.editable {
-    background-color: #ffffff;
-    border: 1px solid #007aff;
-}
-
-.profile-field input {
-    width: 100%;
-    border: none;
-    background: none;
-    outline: none;
-}
-
-/* Botão de edição e salvar */
+/* Botões do Perfil */
 .profile-buttons {
-    text-align: center;
-    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
 
 button {
-    background-color: #0e3754;
-    color: white;
+    padding: 10px 20px;
     border: none;
-    padding: 12px 24px;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-    margin: 0 5px;
+    transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #0051a8;
+    background-color: #0056b3;
 }
 
-#saveProfileBtn {
-    background-color: #007aff;
-    color: white;
+.modal-content form input {
+    padding: 10px;           /* Espaçamento interno */
+    border: 1px solid #ddd;  /* Borda suave */
+    border-radius: 5px;      /* Bordas arredondadas */
+    background-color: #fff;  /* Fundo branco */
+    width: 100%;             /* Ocupa a largura disponível */
+    box-sizing: border-box;  /* Inclui borda e preenchimento no cálculo do tamanho */
+    outline: none;           /* Remove o contorno azul padrão ao focar */
 }
 
-#saveProfileBtn:hover {
-    background-color: #0051a8;
+.modal-content form input:focus {
+    border-color: #007bff; /* Realce com borda azul ao focar */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efeito de brilho */
 }
 
-/* Modal styling */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5); /* Subtle backdrop */
-}
 
-.modal-content {
-    background-color: #ffffff;
-    margin: 5% auto;
-    padding: 30px;
-    border-radius: 12px;
-    width: 50%; /* Ajuste a largura conforme necessário */
-    height: 100%;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-    overflow-y: auto;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-    color: #ff3b30;
-}
-
-form label {
-    display: block;
-    font-size: 14px;
-    font-weight: 500;
-    color: #1c1c1e;
-    margin: 10px 0 5px;
-}
-
-form input {
-    width: calc(100% - 20px);
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    border: 1px solid #d1d1d6;
-    font-size: 16px;
-    background-color: #f5f5f7;
-    transition: border-color 0.3s;
-}
-
-form input:focus {
-    outline: none;
-    border-color: #007aff;
-}
-
-/* Apple-like button for form */
-button[type="button"] {
-    width: 100%;
-    background-color: #34c759;
-    border: none;
-    color: white;
-    font-size: 16px;
-    padding: 12px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    box-shadow: 0 2px 10px rgba(52, 199, 89, 0.2);
-}
-
-button[type="button"]:hover {
-    background-color: #28a745;
-    box-shadow: 0 4px 20px rgba(52, 199, 89, 0.3);
-}
 
 #ProfileContainer {
     display: flex;               

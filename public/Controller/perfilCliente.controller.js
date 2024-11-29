@@ -190,7 +190,7 @@ export async function saveProfile() {
         const loggedInCliente = await getLoggedInCliente(); 
         if (loggedInCliente) {
             await updateProfileInDatabase(loggedInCliente.uid, profileData);
-            alert("Perfil atualizado com sucesso!");
+            Swal.fire('Sucesso!', 'As informações foram atualizadas', 'success');
             updateLocalStorage(profileData);
 
             document.querySelectorAll('.profile-field').forEach(field => {
