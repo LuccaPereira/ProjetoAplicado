@@ -67,7 +67,7 @@ function processarClientes(clienteData, loggedInCliente) {
                 <td class="nome-peticionante">${nomePeticionante}</td>
                 <td class="cpf-ativo">${cpfAtivo}</td>
                 <td class="descricao">${descricao}</td>
-                <td class="ultima-alteracao">${ultimaAlteracao}</td>
+                 <td class="ultima-alteracao" style="cursor: pointer;" title="Ver histórico de alterações">${ultimaAlteracao}</td>
                 <td>
                     <input type="text" value="${situacao}" class="form-control" readonly />
                 </td>
@@ -78,6 +78,11 @@ function processarClientes(clienteData, loggedInCliente) {
                     <button class="visualizar-pdf" data-pdf-url="${pdfURL}" data-cliente-key="${Keyfiltrada}">Visualizar PDF</button>
                 </td>`;
             clientesTable.appendChild(newRow);
+            const ultimaAlteracaoCell = newRow.querySelector('.ultima-alteracao');
+                    ultimaAlteracaoCell.addEventListener('click', () => {
+                        showHistorico(clienteKey);
+                    });
+
         }
     });
 
@@ -179,6 +184,76 @@ export function showClientDetails(clienteKey, formattedClientKey, clienteData) {
         });
 }
 
+function showHistorico(clienteKey) {
+    const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
+
+    // Recupera o advogado logado ou cliente logado
+    const loggedInLawyerString = localStorage.getItem('loggedInUser');
+    const loggedInClienteString = localStorage.getItem('loggedInCliente');
+
+    let uidAdvogado = null;
+    if (loggedInLawyerString) {
+        const loggedInLawyer = JSON.parse(loggedInLawyerString);
+        uidAdvogado = loggedInLawyer.uidAdv; // UID do advogado logado
+    } else if (loggedInClienteString) {
+        const loggedInCliente = JSON.parse(loggedInClienteString);
+        uidAdvogado = loggedInCliente.uidAdv; // UID do advogado vinculado ao cliente
+    }
+
+    // Se não houver advogado vinculado, exibe uma mensagem de erro
+    if (!uidAdvogado) {
+        console.error("UID do advogado não encontrado.");
+        alert("Não foi possível encontrar o histórico. Tente novamente mais tarde.");
+        return;
+    }
+
+    // URL para buscar o histórico de situações do cliente na tabela de advogado
+    const urlHistorico = `${databaseURL}/Advogado/PerfilAdvogado/${uidAdvogado}/${clienteKey}/HistoricoSituacao.json`;
+
+    // Faz a requisição ao Firebase
+    axios.get(urlHistorico)
+        .then(response => {
+            const historico = response.data;
+
+            // Configura o modal de histórico
+            const modalElement = document.getElementById('historicoModal');
+            const modalBody = modalElement.querySelector('.modal-body');
+
+            // Limpa o conteúdo anterior
+            modalBody.innerHTML = '';
+
+            // Verifica se há dados no histórico
+            if (historico && typeof historico === 'object' && Object.keys(historico).length > 0) {
+                Object.keys(historico).forEach(chaveAleatoria => {
+                    const entry = historico[chaveAleatoria];
+
+                    // Verifica se existe uma data no registro
+                    const data = entry.data || "Data não informada"; // Altere "data" para o nome correto no Firebase
+                    const situacao = entry.situacao || "Situação não informada";
+
+                    // Formata o conteúdo para exibir
+                    const entryDiv = document.createElement('div');
+                    entryDiv.innerHTML = `<strong>${data}:</strong> ${situacao}`;
+                    modalBody.appendChild(entryDiv);
+                });
+            } else {
+                modalBody.innerHTML = '<p>Nenhum histórico encontrado.</p>';
+            }
+
+            // Exibe o modal
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
+        })
+        .catch(error => {
+            console.error("Erro ao buscar histórico:", error);
+            const modalElement = document.getElementById('historicoModal');
+            const modalBody = modalElement.querySelector('.modal-body');
+            modalBody.innerHTML = '<p>Erro ao carregar o histórico.</p>';
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
+        });
+}
+
 export function populateSelectOptions(clienteData, selectId, optionKey) {
     const select = document.getElementById(selectId);
     if (!select) {
@@ -212,7 +287,6 @@ export function populateSelectOptions(clienteData, selectId, optionKey) {
         select.selectedIndex = 0; 
     }
 }
-
 
 export function filtrarClientesPorNomePeticionante(clienteData, situacao) {
     const clientesFiltrados = {};
