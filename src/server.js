@@ -55,8 +55,6 @@ app.post('/generate-petition', async (req, res) => {
         const prompt = `
 Escreva uma petição inicial com as seguintes seções e informações:
 Siga o exemplo desse site: https://juridico.ai/juridico/modelo-peticao-inicial/
-Por favor no tópico qualificacao das partes relacione o que o autor está propondo de açao contra o Réu.
-Por favor preencha com no minimo 7 linhas cada seçao.
 
 **1. Qualificação das Partes**
 Por favor faça a qualificação das partes relacionando o Autor e o Réu.
@@ -226,6 +224,9 @@ Não inclua **EXCELENTÍSSIMO SENHOR DOUTOR JUIZ DE DIREITO DA **[VARA]** **DA C
 io.on('connection', (socket) => {
     console.log('Novo cliente conectado');
 
+    // Envia a mensagem inicial assim que o cliente se conecta
+    socket.emit('receiveMessage', 'Bem-vindo ao chat de dúvidas jurídicas! Faça sua pergunta relacionada ao direito e nossa IA ajudará você.');
+
     socket.on('sendMessage', async (message) => {
         console.log('Mensagem recebida:', message);
 
@@ -283,7 +284,7 @@ io.on('connection', (socket) => {
 
         if (!isLegalQuestion(message)) {
             // Se a mensagem não for jurídica, responda com a mensagem padrão
-            socket.emit('receiveMessage', 'Esta mensagem não contém nenhuma pergunta jurídica, portanto não posso respondê-la.');
+            socket.emit('receiveMessage', 'Este chat é dedicado a perguntas jurídicas. Por favor, envie sua dúvida relacionada ao direito para que eu possa ajudar.');
             return;
         }
 

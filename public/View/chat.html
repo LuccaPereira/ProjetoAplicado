@@ -32,7 +32,7 @@
             const chat = document.getElementById('messages');
             const messageElement = document.createElement('div');
             messageElement.className = 'bot-message'; // Classe para mensagens do bot
-            messageElement.textContent = `Resposta: ${message}`; // Exibe a resposta do chatbot
+            messageElement.textContent = `${message}`; // Exibe a resposta do chatbot
             chat.appendChild(messageElement);
             chat.scrollTop = chat.scrollHeight; // Rolagem para baixo
         });
