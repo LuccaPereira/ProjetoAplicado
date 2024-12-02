@@ -100,8 +100,8 @@ export function renderClientes() {
                         <td class="ultima-alteracao" style="cursor: pointer;" title="Ver histórico de alterações">${ultimaAlteracao}</td>
                         <td>
                             <select id="selectSituation-${Keyfiltrada}" class="situation">
-                                <option value="emcadastramento">Em cadastramento</option>
-                                <option value="aguardandoenvio">Aguardando envio</option>
+                                <option value="Em cadastramento">Em cadastramento</option>
+                                <option value="Aguardando envio">Aguardando envio</option>
                                 <option value="protocolada">Protocolada</option>
                             </select>
                         </td>
@@ -251,6 +251,7 @@ function showHistorico(clienteKey) {
             modal.show();
         });
 }
+
 function saveStatus() {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const collectionPath = "Advogado";
@@ -265,6 +266,7 @@ function saveStatus() {
 
     document.getElementById('protocolNumber').value = protocolNumber;
     console.log('Número do Protocolo gerado:', protocolNumber);
+
     const loggedInLawyer = oabAdvogadoLogado();
     const url = `${databaseURL}/${collectionPath}/${loggedInLawyer.OAB}/${peticionante}.json`;
 
@@ -284,7 +286,6 @@ function saveStatus() {
         console.error('Erro ao atualizar o status da petição:', error); 
     });
 }
-
 function populateModalFields(cliente) {
     if (!cliente) return;
     

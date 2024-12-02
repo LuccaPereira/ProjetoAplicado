@@ -24,8 +24,8 @@ form.addEventListener('submit', function (event) {
     montarOData()
         .then(() => {
             Swal.fire({
-                title: 'Cliente Cadastrado! ',
-                text: `O cliente foi cadastrado com sucesso, você podera ver ele na aba da tabela`,
+                title: 'Petição cadastrada com sucesso! ',
+                text: `Você pode visulizar os dados na página de consulta.`,
                 icon: 'success',
                 showCancelButton: false,
                 confirmButtonColor: '#0a3030',
@@ -36,6 +36,6 @@ form.addEventListener('submit', function (event) {
             }});
         })
         .catch(e => {
-            Swal.fire('Erro!', 'O Cliente não foi criado. Verifique se os campos estão preenchidos!', 'error');
+            Swal.fire('Erro!', 'A petição não foi cadastrada. Verifique se os campos estão preenchidos!', 'error');
         });
 });

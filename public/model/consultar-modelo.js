@@ -59,7 +59,7 @@ export function updateSituacaoInDatabase(clienteKeyAtt, selectedValue) {
     let updatedDetails = {}; 
 
     if (!selectedValue) {
-        selectedValue = "atualização nas informações no visualizar"
+        selectedValue = "Informações da petição atualizadas"
         updatedDetails = { 
             descricao: selectedValue,
             UltimaAlt: formattedTimestamp
