@@ -25,15 +25,16 @@ function renderClientes(clientesFiltrados = null) {
     if (!clientesFiltrados) {
         fetchClientes()
             .then(response => {
-                console.log("Resposta da busca de clientes:", response);
                 const clientes = response.data;
                 const filtro = clientes["PerfilAdvogado"];
-                const filtroUi = filtro[loggedInCliente.uidAdv];
-                processarClientes(filtroUi, loggedInCliente);
+                let filtroUi = filtro[loggedInCliente.uidAdv];
+                console.log(filtroUi);
+                return processarClientes(filtroUi, loggedInCliente);
             })
             .catch(error => console.error("Erro ao buscar clientes:", error));
     } else {
-        processarClientes(clientesFiltrados, loggedInCliente);
+        const nomeFiltrado = clientesFiltrados[loggedInCliente.nome] 
+        processarClientes(nomeFiltrado, loggedInCliente);
     }
 }
 
@@ -46,11 +47,16 @@ function processarClientes(clienteData, loggedInCliente) {
     }
 
     clientesTable.innerHTML = "";
-
-    Object.keys(clienteData).forEach(clienteKey => {
-        const cliente = clienteData[clienteKey];
-        const nomePeticionante = cliente.NomePeticionante;
-
+    const clienteKey = clienteLogado().nome;
+    var cliente = clienteData[clienteKey];
+    if(!cliente){
+        cliente = clienteData;
+    }
+    
+    if (cliente) {
+        console.log(`Exibindo todas as ocorrências para: ${cliente.NomePeticionante || "Nome não disponível"}`);
+        const nomePeticionante = cliente.NomePeticionante
+    
         if (nomePeticionante === loggedInCliente.nome) {
             console.log(`Exibindo todas as ocorrências para: ${nomePeticionante}`);
 
@@ -79,12 +85,12 @@ function processarClientes(clienteData, loggedInCliente) {
                 </td>`;
             clientesTable.appendChild(newRow);
             const ultimaAlteracaoCell = newRow.querySelector('.ultima-alteracao');
-                    ultimaAlteracaoCell.addEventListener('click', () => {
-                        showHistorico(clienteKey);
-                    });
+            ultimaAlteracaoCell.addEventListener('click', () => {
+                showHistorico(clienteKey);
+            });
 
         }
-    });
+    };
 
     clientesTable.querySelectorAll('.visualizar-pdf').forEach(button => {
         button.addEventListener('click', function (event) {
@@ -103,7 +109,7 @@ function processarClientes(clienteData, loggedInCliente) {
             event.preventDefault();
             const currentClientKey = decodeURIComponent(this.getAttribute('data-cliente-key')).replace(/-/g, ' ');
             console.log(`Visualizando detalhes do cliente ${currentClientKey}`);
-            showClientDetails(clienteKey, currentClientKey, clienteData);
+            showClientDetails(currentClientKey, clienteData);
         });
     });
 
@@ -137,18 +143,18 @@ function populateModalFields(cliente) {
     
 }
 
-export function showClientDetails(clienteKey, formattedClientKey, clienteData) {
+export function showClientDetails(formattedClientKey, clienteData) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
     const loggedInClienteString = localStorage.getItem('loggedInUser');
     const logCliente = JSON.parse(loggedInClienteString);
-    const urlAtt = `${databaseURL}/Cliente/PerfilDoCliente/${logCliente.uid}/${clienteKey}.json`;
+    const urlAtt = `${databaseURL}/Advogado/PerfilAdvogado/${logCliente.uidAdv}/${formattedClientKey}.json`;
+    console.log(urlAtt);
 
     console.log(`Buscando detalhes do cliente: ${urlAtt}`);
     axios.get(urlAtt)
         .then(response => {
             const cliente = response.data;
 
-            // Verifique se o cliente existe e tem a propriedade esperada
             if (cliente && cliente.NomePeticionante === formattedClientKey) {
                 const modalElement = document.getElementById('clienteModal');
                 const modal = new bootstrap.Modal(modalElement);
@@ -186,61 +192,47 @@ export function showClientDetails(clienteKey, formattedClientKey, clienteData) {
 
 function showHistorico(clienteKey) {
     const databaseURL = "https://projetoaplicado-1-default-rtdb.firebaseio.com/";
-
-    // Recupera o advogado logado ou cliente logado
     const loggedInLawyerString = localStorage.getItem('loggedInUser');
     const loggedInClienteString = localStorage.getItem('loggedInCliente');
 
     let uidAdvogado = null;
     if (loggedInLawyerString) {
         const loggedInLawyer = JSON.parse(loggedInLawyerString);
-        uidAdvogado = loggedInLawyer.uidAdv; // UID do advogado logado
+        uidAdvogado = loggedInLawyer.uidAdv;
     } else if (loggedInClienteString) {
         const loggedInCliente = JSON.parse(loggedInClienteString);
-        uidAdvogado = loggedInCliente.uidAdv; // UID do advogado vinculado ao cliente
+        uidAdvogado = loggedInCliente.uidAdv;
     }
 
-    // Se não houver advogado vinculado, exibe uma mensagem de erro
     if (!uidAdvogado) {
         console.error("UID do advogado não encontrado.");
         alert("Não foi possível encontrar o histórico. Tente novamente mais tarde.");
         return;
     }
 
-    // URL para buscar o histórico de situações do cliente na tabela de advogado
     const urlHistorico = `${databaseURL}/Advogado/PerfilAdvogado/${uidAdvogado}/${clienteKey}/HistoricoSituacao.json`;
-
-    // Faz a requisição ao Firebase
     axios.get(urlHistorico)
         .then(response => {
             const historico = response.data;
-
-            // Configura o modal de histórico
             const modalElement = document.getElementById('historicoModal');
             const modalBody = modalElement.querySelector('.modal-body');
 
-            // Limpa o conteúdo anterior
             modalBody.innerHTML = '';
 
-            // Verifica se há dados no histórico
             if (historico && typeof historico === 'object' && Object.keys(historico).length > 0) {
                 Object.keys(historico).forEach(chaveAleatoria => {
                     const entry = historico[chaveAleatoria];
 
-                    // Verifica se existe uma data no registro
-                    const data = entry.data || "Data não informada"; // Altere "data" para o nome correto no Firebase
+                    const data = entry.data || "Data não informada";
                     const situacao = entry.situacao || "Situação não informada";
-
-                    // Formata o conteúdo para exibir
                     const entryDiv = document.createElement('div');
+
                     entryDiv.innerHTML = `<strong>${data}:</strong> ${situacao}`;
                     modalBody.appendChild(entryDiv);
                 });
             } else {
                 modalBody.innerHTML = '<p>Nenhum histórico encontrado.</p>';
             }
-
-            // Exibe o modal
             const modal = new bootstrap.Modal(modalElement);
             modal.show();
         })
@@ -255,38 +247,53 @@ function showHistorico(clienteKey) {
 }
 
 export function populateSelectOptions(clienteData, selectId, optionKey) {
+    const loggedInClienteString = localStorage.getItem('loggedInUser');
+    if (!loggedInClienteString) {
+        console.error("Usuário logado não encontrado no localStorage.");
+        return;
+    }
+
+    const logCliente = JSON.parse(loggedInClienteString);
+
     const select = document.getElementById(selectId);
     if (!select) {
-        console.error("Select não encontrado.");
+        console.error(`Elemento select com ID "${selectId}" não encontrado.`);
         return;
     }
 
     console.log("Populando opções para o select:", selectId);
-    select.innerHTML = ""; 
+
+    select.innerHTML = "";
+
     const emptyOption = document.createElement('option');
     emptyOption.value = "";
     emptyOption.textContent = "Selecione uma opção";
     select.appendChild(emptyOption);
 
     let hasOptions = false;
+    const clienteKey = logCliente.nome
+    var cliente = clienteData[clienteKey];
 
-    Object.keys(clienteData).forEach(clienteKey => {
-        const cliente = clienteData[clienteKey];
-        if (cliente[optionKey]) {
-            const option = document.createElement('option');
-            option.textContent = cliente[optionKey];
-            option.value = cliente[optionKey]; 
-            select.appendChild(option);
-            hasOptions = true;
-        }
-    });
+    if(!cliente){
+        cliente = clienteData;
+    }
+
+    if (cliente.NomePeticionante === logCliente.nome) {
+        const option = document.createElement('option');
+        option.textContent = cliente[optionKey];
+        option.value = cliente[optionKey];
+        select.appendChild(option);
+        hasOptions = true;
+    }
+
 
     if (!hasOptions) {
-        select.appendChild(emptyOption);
-    } else {
-        select.selectedIndex = 0; 
+        console.warn("Nenhuma opção encontrada para o select:", selectId);
     }
+
+    select.selectedIndex = 0;
 }
+
 
 export function filtrarClientesPorNomePeticionante(clienteData, situacao) {
     const clientesFiltrados = {};

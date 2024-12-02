@@ -24,20 +24,40 @@ export function fetchClientes() {
     return axios.get(url);
 }
 
-export function archiveClient(clienteKey) {
+export async function archiveClient(clienteKey) {
     const loggedInClienteString = localStorage.getItem('loggedInUser');
     const logCliente = JSON.parse(loggedInClienteString);
+
+    if (!logCliente || !logCliente.uid) {
+        throw new Error('Usuário não está autenticado.');
+    }
+
     const collectionPath = `Advogado/PerfilAdvogado/${logCliente.uid}/${clienteKey}.json`;
     const archivePath = `Arquivados/${logCliente.uid}/${clienteKey}.json`;
 
-    return axios.get(`${databaseURL}/${collectionPath}`)
-        .then(response => {
-            const clienteData = response.data;
+    try {
 
-            return axios.put(`${databaseURL}/${archivePath}`, clienteData)
-                .then(() => axios.delete(`${databaseURL}/${collectionPath}`));
-        });
+        const response = await axios.get(`${databaseURL}/${collectionPath}`);
+        const clienteData = response.data;
+
+        if (!clienteData) {
+            throw new Error('Dados do cliente não encontrados.');
+        }
+
+        console.log('Dados do cliente obtidos:', clienteData);
+        clienteData.situacao = "Arquivado";
+
+        await axios.put(`${databaseURL}/${archivePath}`, clienteData);
+        console.log(`Dados arquivados com sucesso em: ${archivePath}`);
+
+        await axios.delete(`${databaseURL}/${collectionPath}`);
+        console.log(`Dados excluídos do caminho original: ${collectionPath}`);
+    } catch (error) {
+        console.error('Erro ao arquivar cliente:', error.message);
+        throw error; 
+    }
 }
+
 
 export function updateSituacaoInDatabase(clienteKeyAtt, selectedValue) {
     const loggedInClienteString = localStorage.getItem('loggedInUser');
