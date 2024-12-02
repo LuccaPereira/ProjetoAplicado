@@ -1,8 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js';
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js';
-import { getDatabase, ref, get, } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js';
-
-import { updateProfileInDatabase, updateLocalStorage } from '../model/perfilAdvogado.js';
+import { getDatabase, ref, get, update } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js';
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js';
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -19,8 +18,8 @@ const firebaseConfig = {
 // Inicializa o Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app); // Inicializa a autenticação
+const storage = getStorage(app); // Inicializa o Storage
 
-// Função para obter o advogado logado
 // Função para obter o advogado logado
 async function getLoggedInLawyer() {
     return new Promise((resolve, reject) => {
@@ -50,45 +49,44 @@ async function getLoggedInLawyer() {
         });
     });
 }
+
 // Monitorar o estado de autenticação
 onAuthStateChanged(auth, (user) => {
     if (user) {
         console.log("Usuário logado:", user.uid);
-        // Chamando a função para carregar as informações do advogado logado
-        bringInfoModal(); // Isso já está correto!
+        bringInfoModal(); // Chama a função para carregar as informações do advogado logado
     } else {
         console.log("Nenhum usuário logado.");
-        // Aqui você pode redirecionar para a página de login, se necessário
     }
 });
 
+// Função para carregar as informações do advogado no modal
 async function bringInfoModal() {
     console.log("Chamando bringInfoModal...");
     try {
-        const advogadoInfo = await getLoggedInLawyer(); // Chama a função para obter os dados do advogado
+        const advogadoInfo = await getLoggedInLawyer();
 
         if (advogadoInfo) {
             console.log("Dados do advogado logado:", advogadoInfo);
-            // Atualizando os elementos do modal ou qualquer parte da UI com os dados do advogado
+
             document.getElementById('nome').innerText = advogadoInfo.nomeOriginal || "Nome não disponível";
             document.getElementById('email').innerText = advogadoInfo.email || "Email não disponível";
             document.getElementById('oab').innerText = advogadoInfo.OAB || "OAB não disponível";
-            document.getElementById('senha').innerText = advogadoInfo.senha|| "CPF não disponível";
-            document.getElementById('job').innerText = advogadoInfo.job|| "Advogado";
+            document.getElementById('senha').innerText = advogadoInfo.senha || "Senha não disponível";
+            document.getElementById('job').innerText = advogadoInfo.job || "Advogado";
 
-            // Caso tenha mais campos no modal, você pode adicioná-los aqui
-            // Exemplo: 
-            // document.getElementById('telefone').innerText = advogadoInfo.telefone || "Telefone não disponível";
-            
+            // Atualiza a imagem de perfil, se disponível
+            const profileImage = advogadoInfo.profileImage || 'default-profile-image-url.png';
+            document.getElementById('profile-image').src = profileImage;
         } else {
             console.log("Nenhum advogado encontrado com esse UID.");
-            // Aqui você pode exibir uma mensagem ao usuário ou lidar com a ausência de dados
         }
     } catch (error) {
         console.error("Erro ao trazer informações do advogado:", error);
-        // Aqui você pode lidar com o erro, como mostrar uma mensagem de erro ao usuário
     }
 }
+
+// Função para alternar entre editar e visualizar
 function toggleEditMode(field) {
     field.classList.toggle('readonly');
     field.classList.toggle('editable');
@@ -102,6 +100,7 @@ function toggleEditMode(field) {
     }
 }
 
+// Função para editar o perfil
 export function editProfile() {
     document.querySelectorAll('.profile-field').forEach(field => {
         toggleEditMode(field);
@@ -109,6 +108,7 @@ export function editProfile() {
     document.getElementById('saveProfileBtn').style.display = 'inline-block';
 }
 
+// Função para salvar o perfil
 export async function saveProfile() {
     const profileData = {
         nome: document.getElementById('nome').querySelector('input').value,
@@ -120,31 +120,70 @@ export async function saveProfile() {
 
     const loggedInLawyer = await getLoggedInLawyer();
     if (loggedInLawyer) {
-        updateProfileInDatabase(loggedInLawyer.uid, profileData)
-            .then(() => {
-                swal.fire("Atualizado!", "Perfil atualizado com sucesso!", "success");
-                updateLocalStorage(profileData);
-                document.querySelectorAll('.profile-field').forEach(field => {
-                    toggleEditMode(field);
-                    const inputElement = field.querySelector('input');
-                
-                    if (inputElement) {
-                        field.innerHTML = inputElement.value;
-                    } else {
-                        console.warn("Nenhum input encontrado para o campo:", field);
-                    }
-                });
-                document.getElementById('saveProfileBtn').style.display = 'none';
-            })
-            .catch(error => {
-                console.error("Erro ao salvar detalhes do perfil:", error);
-                alert('Erro ao salvar detalhes do perfil. Consulte o console para mais informações.');
-            });
+        const db = getDatabase(app);
+        const userRef = ref(db, `Advogado/PerfilAdvogado/${loggedInLawyer.uid}`);
+        await update(userRef, profileData);
+        swal.fire("Atualizado!", "Perfil atualizado com sucesso!", "success");
+        bringInfoModal(); // Atualiza as informações do advogado
+
+        document.querySelectorAll('.profile-field').forEach(field => {
+            toggleEditMode(field);
+            const inputElement = field.querySelector('input');
+        
+            if (inputElement) {
+                field.innerHTML = inputElement.value;
+            } else {
+                console.warn("Nenhum input encontrado para o campo:", field);
+            }
+        });
+        document.getElementById('saveProfileBtn').style.display = 'none';
     } else {
         console.log("Nenhum advogado está logado.");
     }
 }
 
+// Função para upload de imagem de perfil
+export function uploadProfileImage() {
+    document.getElementById('profile-image-upload').addEventListener('change', async function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            try {
+                const loggedInLawyer = await getLoggedInLawyer();
+                if (!loggedInLawyer) {
+                    console.error("Nenhum advogado logado para associar a imagem.");
+                    return;
+                }
+
+                const lawyerUid = loggedInLawyer.uid;
+                const storagePath = `profile-images/${lawyerUid}/${file.name}`;
+                const fileRef = storageRef(storage, storagePath);
+
+                // Upload do arquivo para o Firebase Storage
+                const snapshot = await uploadBytes(fileRef, file);
+                console.log('Upload concluído:', snapshot);
+
+                // Obter a URL de download
+                const downloadURL = await getDownloadURL(fileRef);
+                console.log('URL da imagem:', downloadURL);
+
+                // Salvar a URL no Realtime Database
+                const db = getDatabase(app);
+                const userRef = ref(db, `Advogado/PerfilAdvogado/${lawyerUid}`);
+                await update(userRef, { profileImage: downloadURL });
+
+                // Atualizar a imagem no DOM
+                document.getElementById('profile-image').src = downloadURL;
+
+                alert('Imagem de perfil atualizada com sucesso!');
+            } catch (error) {
+                console.error('Erro ao fazer upload da imagem:', error);
+                alert('Erro ao carregar a imagem. Verifique o console para mais detalhes.');
+            }
+        }
+    });
+}
+
+// Função para configurar o menu lateral
 function clickMenu() {
     const sidebar = document.querySelector('.sidebar');
     const menuToggle = document.getElementById('menuToggle');
@@ -156,53 +195,17 @@ function clickMenu() {
     }
 }
 
+// Inicialização
 document.addEventListener('DOMContentLoaded', () => {
     clickMenu();
-
-    const logoutButton = document.getElementById('logoutButton');
-    if (logoutButton) {
-        logoutButton.addEventListener('click', function() {
-            localStorage.removeItem('loggedInLawyer');
-            localStorage.removeItem('loggedInCliente');
-            window.location.href = '../View/login.html';
-        });
-    }
-
-    const loginBtn = document.getElementById('loginButton');
-    if (loginBtn) {
-        loginBtn.addEventListener('click', function() {
-            window.location.href = '../View/perfilAdvogado.html';
-        });
-    }
+    uploadProfileImage();
 });
 
-export function uploadProfileImage() {
-    document.getElementById('profile-image-upload').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('profile-image').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-}
+document.getElementById('logoutButton').addEventListener('click', () => {
+    localStorage.removeItem('loggedInLawyer');
+    localStorage.removeItem('loggedInCliente');
+    window.location.href = '../View/login.html';
+});
 
-export function initialize() {
-    document.addEventListener('DOMContentLoaded', () => {
-        clickMenu();
-        uploadProfileImage();
-    });
-
-    document.getElementById('logoutButton').addEventListener('click', () => {
-        localStorage.removeItem('loggedInLawyer');
-        localStorage.removeItem('loggedInCliente');
-        window.location.href = '../View/login.html';
-    });
-
-    document.getElementById('saveProfileBtn').addEventListener('click', saveProfile);
-    document.getElementById('editProfileButton').addEventListener('click', editProfile);
-}
-
-initialize();
+document.getElementById('saveProfileBtn').addEventListener('click', saveProfile);
+document.getElementById('editProfileButton').addEventListener('click', editProfile);

@@ -245,14 +245,42 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 export function uploadProfileImage() {
-    document.getElementById('profile-image-upload').addEventListener('change', function(event) {
+    document.getElementById('profile-image-upload').addEventListener('change', async function(event) {
         const file = event.target.files[0];
         if (file) {
+            // Pré-visualizar a imagem
             const reader = new FileReader();
             reader.onload = function(e) {
                 document.getElementById('profile-image').src = e.target.result;
             };
             reader.readAsDataURL(file);
+
+            // Obter UID do cliente logado
+            const picUid = await getLoggedInCliente();
+            if (!picUid || !picUid.uid) {
+                console.error("Usuário não está logado ou UID não disponível.");
+                return;
+            }
+
+            // Criar referência no Storage
+            const imageRef = storageRef(storage, `profileImages/${picUid.uid}/${file.name}`);
+            
+            try {
+                // Fazer upload do arquivo
+                const snapshot = await uploadBytes(imageRef, file);
+                console.log('Imagem enviada com sucesso!');
+
+                // Obter URL da imagem
+                const downloadURL = await getDownloadURL(snapshot.ref);
+                console.log('URL da imagem:', downloadURL);
+
+                // Atualizar a referência da imagem no banco de dados
+                const profileData = { foto: file.name };
+                await updateProfileInDatabase(picUid.uid, profileData);
+                console.log('Informação da imagem atualizada no banco de dados!');
+            } catch (error) {
+                console.error('Erro ao enviar a imagem:', error);
+            }
         }
     });
 }
