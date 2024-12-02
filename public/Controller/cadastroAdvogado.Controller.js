@@ -26,19 +26,23 @@ const databaseURL = firebaseConfig.databaseURL;
 
 // Exibir/ocultar senha
 document.addEventListener("DOMContentLoaded", function () {
-    ["togglePassword", "toggleConfirmPassword"].forEach(id => {
+    const toggles = [
+        { id: "togglePassword", target: "senha" },
+        { id: "toggleConfirmPassword", target: "Confirmarsenha" }
+    ];
+
+    toggles.forEach(({ id, target }) => {
         const toggle = document.querySelector(`#${id}`);
-        const field = document.querySelector(`#${id === "togglePassword" ? "senha" : "Confirmarsenha"}`);
+        const field = document.querySelector(`#${target}`);
         if (toggle && field) {
             toggle.addEventListener("click", function () {
                 const type = field.getAttribute("type") === "password" ? "text" : "password";
                 field.setAttribute("type", type);
-                this.classList.toggle("eye-open");
+                this.classList.toggle("eye-open"); // Alterna classe para estilo do ícone
             });
         }
     });
 });
-
 // Registrar novo advogado
 async function submitForm(event) {
     event.preventDefault();
@@ -99,15 +103,15 @@ async function submitForm(event) {
             mostrarMensagemErro('CPF já cadastrado. Por favor, insira um CPF diferente.');
             return;
         }
-
+    
         // Registro no Firebase Auth
         const userCredential = await registrarUsuario(email, senha);
         const uid = userCredential.uid;
-
+    
         // Salvar os dados do advogado no Realtime Database
-        const oData = { nomeOriginal: nome, nomeFormatado: nomeFormatado, OAB, CPF: cpf, email, uid, senha};
+        const oData = { nomeOriginal: nome, nomeFormatado: nomeFormatado, OAB, CPF: cpf, email, uid, senha };
         await enviarOdata(uid, oData);
-
+    
         alert("Novo advogado registrado com sucesso.");
         window.location.href = "../View/login.html";
     } catch (error) {

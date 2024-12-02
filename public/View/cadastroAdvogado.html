@@ -6,6 +6,25 @@
     <title>Cadastro</title>
     <link rel="stylesheet" href="../css/cadastroAdvogado.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <style>
+        .password-field {
+            position: relative;
+        }
+
+        .eye-icon {
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 40%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #888; /* Cor inicial do ícone */
+        }
+
+        .eye-icon.eye-open {
+            color: #007bff; /* Cor quando o olho está aberto */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -16,14 +35,26 @@
                 <input type="text" id="nome" placeholder="Nome">
                 <input type="text" id="OAB" placeholder="OAB">
                 <input type="text" id="inputCpf" placeholder="Digite CPF">
-                <input type="password" id="senha" placeholder="Crie sua senha">
-                <input type="password" id="Confirmarsenha" placeholder="Confirme sua senha">
+
+                <!-- Campo de senha com olho -->
+                <div class="password-field">
+                    <input type="password" id="senha" placeholder="Crie sua senha">
+                    <span id="togglePassword" class="eye-icon">&#x1F441;</span> <!-- Ícone de olho -->
+                </div>
+
+                <!-- Campo de confirmação de senha com olho -->
+                <div class="password-field">
+                    <input type="password" id="Confirmarsenha" placeholder="Confirme sua senha">
+                    <span id="toggleConfirmPassword" class="eye-icon">&#x1F441;</span> <!-- Ícone de olho -->
+                </div>
+
                 <input type="email" id="email" placeholder="Digite seu Email">
                 <button type="submit" name="addAdv">Cadastrar</button>
             </form>
             <p>Já possui uma conta? <a href="../View/login.html">Faça login</a></p>
         </div>
     </div>
+
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
