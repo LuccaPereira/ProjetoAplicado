@@ -193,6 +193,13 @@ export async function montarOData() {
     const situacao = "Ainda sem Status";
     const nomeOriginal = nomePeticionante;
 
+    const limiteCaracteres = (campo, limite) => campo.length <= limite;
+    if (!limiteCaracteres(nomePeticionante, 1)) throw new Error('Nome do Peticionante muito longo');
+    if (!limiteCaracteres(nomeAdvogado, 200)) throw new Error('Nome do Advogado muito longo');
+    if (!limiteCaracteres(foro, 200)) throw new Error('Foro muito longo');
+    if (!limiteCaracteres(acidente, 200)) throw new Error('Descrição do Acidente muito longa');
+    if (!limiteCaracteres(procedimento, 200)) throw new Error('Procedimento muito longo');
+    if (!limiteCaracteres(descricao, 500)) throw new Error('Descrição muito longa');
     const nomeFormatado = verificarNome(nomeOriginal);
 
     if (!nomePeticionante || !nomeAdvogado || !foro || !acidente || !valor || 
