@@ -1,0 +1,377 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.wrapper {
+    display: flex;
+}
+
+#ProfileContainer {
+    display: flex;               /* Usando flexbox para disposição em linha */
+    align-items: center;        /* Alinha os itens no centro verticalmente */
+    justify-content: center;     /* Centraliza os itens horizontalmente */
+    padding: 10px;             /* Adiciona algum preenchimento ao contêiner */
+    border-radius: 8px;        /* Cantos arredondados para um visual mais suave */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    background-color: #2c3e50; /* Cor de fundo escura */
+}
+
+.profile-icon ul {
+    list-style: none;          /* Remove marcadores da lista */
+    margin: 0;                /* Remove margem padrão */
+    padding: 0;               /* Remove preenchimento padrão */
+    display: flex;            /* Usando flexbox para os itens da lista */
+    gap: 20px;                /* Espaço entre os ícones */
+}
+
+.profile-icon li {
+    display: flex;            /* Mantém os itens do li em linha */
+    align-items: center;      /* Alinha o conteúdo no centro verticalmente */
+}
+
+.material-icons {
+    font-size: 40px;          /* Tamanho do ícone do material design */
+    cursor: pointer;          /* Cursor pointer para indicar clicabilidade */
+    transition: color 0.3s;   /* Animação de transição suave para a cor */
+}
+
+.material-icons:hover {
+    color: #007BFF;           /* Cor do ícone ao passar o mouse */
+}
+
+#Profile{
+    color:white;
+}
+
+#Profile:hover{
+    color:#007BFF;
+}
+
+#tabelaView{
+    color:white;
+}
+
+#tabelaView:hover{
+    color:#007BFF;
+}
+
+#ChatBot{
+    color:white;
+}
+
+#ChatBot:hover{
+    color:#007BFF;
+}
+
+#logoutButton{
+    color: red !important;
+}
+
+
+h3 {
+    margin-bottom: 15px;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.custom-table {
+    background-color: white;
+}
+
+.custom-table th, .custom-table td {
+    text-align: center;
+}
+
+/* Estilização dos botões */
+button {
+    background-color: #007bff; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 10px 15px; /* Espaçamento interno */
+    cursor: pointer; /* Cursor de mão ao passar o mouse */
+    font-size: 16px; /* Tamanho da fonte */
+    transition: background-color 0.3s; /* Animação na mudança de cor */
+}
+
+button:hover {
+    background-color: #0056b3; /* Cor do botão ao passar o mouse */
+}
+
+/* Estilização dos selects */
+select {
+    border: 1px solid #ced4da; /* Borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    background-color: white; /* Cor de fundo */
+    color: #495057; /* Cor do texto */
+    width: 100%; /* Largura completa */
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1); /* Sombra interna */
+    transition: border-color 0.3s; /* Animação na mudança de borda */
+}
+
+select:focus {
+    border-color: #80bdff; /* Cor da borda ao focar */
+    outline: none; /* Remove o contorno padrão */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Sombra externa ao focar */
+}
+
+
+/* Modal */
+.modal-content {
+    padding: 20px;
+}
+
+.modal-header, .modal-footer {
+    border: none;
+}
+
+.card-info {
+    margin-bottom: 20px;
+}
+
+.card-info h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.card-info-name input {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.center1 {
+    display: flex;
+    justify-content: center;
+}
+
+.center-selects {
+    margin: 20px 0;
+}
+
+/* Modal geral */
+.modal-dialog {
+    max-width: 800px; /* Largura máxima do modal */
+    margin: 1.75rem auto; /* Centraliza o modal na tela */
+}
+
+.modal-content {
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra */
+}
+
+.petition-info {
+    padding: 20px; /* Espaçamento interno */
+}
+
+.card-info {
+    margin-bottom: 20px; /* Espaçamento entre seções */
+}
+
+.card-info h1 {
+    font-size: 24px; /* Tamanho do título */
+    color: #007bff; /* Cor do título */
+    margin-bottom: 10px; /* Margem inferior */
+}
+
+.card-info h4 {
+    font-size: 16px; /* Tamanho do subtítulo */
+    margin-bottom: 5px; /* Margem inferior */
+}
+
+.card-info-name {
+    margin-bottom: 15px; /* Espaçamento entre os campos */
+}
+
+/* Estilização dos campos de entrada */
+input[type="text"] {
+    width: calc(100% - 20px); /* Largura do campo */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ced4da; /* Borda do campo */
+    border-radius: 4px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho da fonte */
+    transition: border-color 0.3s; /* Transição na mudança de borda */
+}
+
+input[type="text"]:focus {
+    border-color: #007bff; /* Cor da borda ao focar */
+    outline: none; /* Remove o contorno padrão */
+}
+
+/* Estilização da seção dos dados do processo */
+.dados-para-processo {
+    display: flex; /* Flexbox para disposição */
+    justify-content: space-between; /* Espaço entre os lados */
+}
+
+.left-card-section, .right-card-section {
+    width: 48%; /* Largura de cada seção */
+}
+
+.lastAlteration {
+    display: flex; /* Flexbox para disposição dos campos */
+    justify-content: space-between; /* Espaço entre os campos */
+    margin-top: 20px; /* Margem superior */
+}
+
+/* Estilização dos botões */
+.buttons {
+    display: flex; /* Flexbox para disposição dos botões */
+    justify-content: flex-end; /* Alinha os botões à direita */
+    margin-top: 20px; /* Margem superior */
+}
+
+button {
+    margin-left: 10px; /* Margem entre os botões */
+    padding: 10px 15px; /* Espaçamento interno */
+    border-radius: 4px; /* Bordas arredondadas */
+    transition: background-color 0.3s; /* Transição na mudança de cor */
+}
+
+#saveButton {
+    background-color: #007bff; /* Cor do botão salvar */
+    color: white; /* Cor do texto */
+}
+
+#saveButton:hover {
+    background-color: #0056b3; /* Cor do botão ao passar o mouse */
+}
+
+#editButton {
+    background-color: #6c757d; /* Cor do botão editar */
+    color: white; /* Cor do texto */
+}
+
+#editButton:hover {
+    background-color: #5a6268; /* Cor do botão ao passar o mouse */
+}
+
+
+/* Modal Histórico de Alterações */
+#historicoModal .modal-dialog {
+    max-width: 900px; /* Largura maior para o modal */
+    border-radius: 20px; /* Borda mais arredondada para o modal */
+}
+
+#historicoModal .modal-content {
+    background-color: #fff; /* Fundo branco para contraste */
+    border-radius: 20px; /* Borda arredondada */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
+}
+
+#historicoModal .modal-header {
+    background-color: #001f3d; /* Azul navy para o cabeçalho */
+    color: #fff; /* Texto branco */
+    border-top-left-radius: 20px; /* Arredondar os cantos superiores */
+    border-top-right-radius: 20px;
+    padding: 1rem 1.5rem; /* Maior espaçamento no cabeçalho */
+}
+
+#historicoModal .modal-title {
+    font-size: 1.5rem; /* Aumentar o título */
+    font-weight: 700; /* Deixar o título mais forte */
+    margin: 0; /* Remover margens extras */
+}
+
+#historicoModal .btn-close {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem; /* Aumentar o tamanho do botão de fechar */
+}
+
+#historicoModal .modal-body {
+    padding: 2rem; /* Mais espaço no corpo do modal */
+    color: #333; /* Texto escuro para melhor contraste */
+    font-size: 1.1rem; /* Aumentar a legibilidade do texto */
+    line-height: 1.6; /* Maior espaçamento entre as linhas */
+}
+
+#historicoModal .modal-footer {
+    background-color: #f0f0f0; /* Fundo suave e neutro para o rodapé */
+    border-bottom-left-radius: 20px; /* Arredondar os cantos inferiores */
+    border-bottom-right-radius: 20px;
+    padding: 1rem 1.5rem; /* Aumentar o espaçamento no rodapé */
+}
+
+#historicoModal .btn-secondary {
+    background-color: #001f3d; /* Azul navy para o botão */
+    color: #fff; /* Texto branco */
+    font-weight: 700; /* Texto em negrito */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 0.75rem 2rem; /* Maior espaçamento no botão */
+    transition: background-color 0.3s ease; /* Transição suave ao passar o mouse */
+}
+
+#historicoModal .btn-secondary:hover {
+    background-color: #004080; /* Cor mais clara de azul navy no hover */
+}
+
+/* Separação entre as entradas de histórico */
+.modal-body .historico-item {
+    background-color: #e9ecef; /* Cor de fundo clara */
+    margin-bottom: 1rem; /* Espaçamento entre os itens */
+    padding: 1rem; /* Padding interno para separar o conteúdo */
+    border-radius: 8px; /* Bordas arredondadas para os itens */
+    position: relative;
+}
+
+.modal-body .historico-item:last-child {
+    margin-bottom: 0; /* Remove margem no último item */
+}
+
+/* Linha de separação entre os itens */
+.modal-body .historico-item::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #ccc; /* Cor da linha de separação */
+}
+
+/* Alinhamento de data e hora */
+.modal-body .historico-item .data-hora {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.modal-body .historico-item .data-hora .data {
+    color: #007bff; /* Azul claro para a data */
+    text-align: left; /* Alinhar a data à esquerda */
+}
+
+.modal-body .historico-item .data-hora .hora {
+    color: #333; /* Cor padrão para a hora */
+    text-align: right; /* Alinhar a hora à direita */
+    font-weight: 700;
+}
+
+/* Melhorando a leitura do histórico com destaque nas datas */
+.modal-body .historico-item .descricao {
+    font-size: 1.1rem; /* Aumentar o tamanho da descrição */
+    color: #333;
+    line-height: 1.5;
+}

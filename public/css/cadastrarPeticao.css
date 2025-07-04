@@ -1,0 +1,285 @@
+/* Reset geral de margens e bordas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo global do body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    overflow-x: hidden; /* Evita o scroll horizontal */
+    height: 100%; /* Garante que a altura do body ocupe toda a tela */
+}
+
+/* Layout do grid */
+.layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 1fr auto;
+    height: 100vh;
+    grid-template-areas:
+        "sidebar content"
+        "footer footer";
+}
+
+/* Sidebar */
+.sidebar {
+    width: 150px; /* Largura inicial colapsada */
+    background-color: #2c3e50;
+    height: 100vh;
+    padding: 20px 10px; /* Menos padding para o estado colapsado */
+    position: fixed;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: width 0.3s ease;
+    overflow: hidden;
+}
+
+.sidebar.expanded {
+    width: 250px; /* Largura expandida */
+    padding: 20px;
+}
+
+.sidebar .logo {
+    width: 80px; /* Logo menor no estado colapsado */
+    margin: 1% auto;
+    display: block;
+    transition: width 0.3s ease;
+    margin-bottom: 15%;
+}
+
+.sidebar.expanded .logo {
+    width: 150px; /* Logo maior no estado expandido */
+}
+
+.menu-icon {
+    font-size: 36px;
+    color: #ecf0f1;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Itens da lista no estado colapsado */
+.nav-list .nav-text, .loginButton, .logoutButton {
+    display: none; /* Esconde o texto no estado colapsado */
+}
+
+.sidebar.expanded .nav-text, .loginButton, .logoutButton  {
+    display: inline; /* Mostra o texto quando expandido */
+}
+
+.nav-list li {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza os ícones no estado colapsado */
+}
+
+.sidebar.expanded .nav-list li {
+    justify-content: center; 
+}
+
+/* Botões de Login e Logout */
+#loginButton, #logoutButton {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: transparent;
+    color: #ecf0f1;
+    border: 2px solid #ecf0f1;
+    display: flex;
+    align-items: center;
+    justify-content:center !important;
+    gap: 10px;
+    padding: 20px;
+    transition: background-color 0.3s ease;
+}
+
+#loginButton:hover, #logoutButton:hover {
+    background-color: #3498db;
+    color: #ecf0f1;
+}
+
+/* Lista de Navegação */
+.nav-list {
+    list-style: none;
+    padding: 0 !important;
+    margin-top: 20px;
+}
+
+.nav-list li {
+    margin-bottom: 20px;
+}
+
+.nav-list li a, #loginButton, #logoutButton {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: #ecf0f1;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.nav-list li a:hover {
+    background-color: #3498db;
+    border-radius: 5px;
+}
+/* Conteúdo Principal */
+.content {
+    background-color: white;
+    padding: 40px;
+    grid-area: content;
+    overflow-y: auto; /* Permite rolagem vertical apenas */
+    max-height: 100vh; /* Garante que o conteúdo principal não ultrapasse a altura da tela */
+}
+
+/* Box do formulário de cadastro */
+.petition-box {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Permite rolagem dentro da box, se necessário */
+    max-height: calc(100vh - 120px); /* Ajusta a altura da box para não ultrapassar a tela */
+}
+
+.petition-box h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Estilo dos cards de informações */
+.card-info {
+    margin-bottom: 30px;
+}
+
+/* Títulos dentro de cada seção */
+.card-info h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Estilo para os inputs, textareas e campos */
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+}
+
+/* Textarea específico */
+textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+/* Botões */
+button.more-files {
+    background-color: #2c3e50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+}
+
+button.more-files:hover {
+    background-color: #2c3e50;
+}
+
+/* Estilo do formulário quando submit */
+#envio {
+    background-color: #2c3e50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+#envio:hover {
+    background-color: #2c3e50;
+}
+
+/* Estilo para a área de upload */
+.petition-upload-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.petition-upload-area input[type="file"] {
+    display: none;
+}
+
+/* Rodapé */
+footer {
+    grid-row: 3;
+    background: #2c3e50;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 8px 0;
+}
+
+footer p {
+    font-size: 0.8rem;
+}
+
+footer nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 0;
+}
+
+footer nav ul li {
+    list-style: none;
+}
+
+footer nav ul li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.3s;
+}
+
+footer nav ul li a:hover {
+    color: #bdc3c7;
+}
+
+/* Animação de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+

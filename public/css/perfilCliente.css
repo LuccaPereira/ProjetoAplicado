@@ -1,0 +1,219 @@
+/* Reset básico */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-y: auto;
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Permite que o footer fique na parte inferior */
+    justify-content: space-between; /* Distribui o espaço entre o conteúdo e o footer */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f5f5f7;
+    color: #1c1c1e;
+    overflow-y: auto;
+}
+
+main {
+    flex: 1;
+    overflow-y: auto; /* Faz com que o main ocupe o espaço restante */
+}
+
+
+/* Header */
+header img {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+
+/* Seção de Perfil */
+.profile-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 500px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-top: -30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: center;
+}
+
+/* Esconde o input de upload */
+#profile-image-upload {
+    display: none;
+}
+
+/* Imagem do Perfil */
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    object-fit: cover;
+    border: 3px solid #007bff; /* Borda azul para destaque */
+}
+
+.profile-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+.profile-field-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.profile-field {
+    padding: 10px;
+    background-color: #f1f1f3;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    word-wrap: break-word;
+}
+
+/* Botões do Perfil */
+.profile-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.modal-content form input {
+    padding: 10px;           /* Espaçamento interno */
+    border: 1px solid #ddd;  /* Borda suave */
+    border-radius: 5px;      /* Bordas arredondadas */
+    background-color: #fff;  /* Fundo branco */
+    width: 100%;             /* Ocupa a largura disponível */
+    box-sizing: border-box;  /* Inclui borda e preenchimento no cálculo do tamanho */
+    outline: none;           /* Remove o contorno azul padrão ao focar */
+}
+
+.modal-content form input:focus {
+    border-color: #007bff; /* Realce com borda azul ao focar */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efeito de brilho */
+}
+
+
+
+#ProfileContainer {
+    display: flex;               
+    justify-content: center;    /* Centraliza os ícones horizontalmente */
+    padding: 10px;              
+    border-radius: 8px;         
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    background-color: #2c3e50;  
+    width: 100%;               /* Garante que o contêiner ocupe toda a largura */
+}
+
+.profile-icon ul {
+    list-style: none;          
+    margin: 0;                
+    padding: 0;               
+    display: flex;            /* Exibe os ícones lado a lado */
+    gap: 20px;                /* Espaço entre os ícones */
+    justify-content: center;  /* Centraliza os ícones dentro do ul */
+}
+
+.profile-icon li {
+    display: flex;            
+    align-items: center;      
+}
+
+.material-icons {
+    font-size: 40px;          
+    cursor: pointer;          
+    transition: color 0.3s;   
+    color: white;             
+}
+
+.material-icons:hover {
+    color: #007BFF;           
+}
+
+#logoutButton {
+    color: red !important;
+}
+
+/* Footer */
+footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px;
+    text-align: center;
+    margin-top: 0%;
+    width: 100%;
+}
+
+footer nav ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+footer nav ul li a {
+    color: #ecf0f1;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+footer nav ul li a:hover {
+    color: #bdc3c7;
+}
+
+/* ================================
+   Foco para Acessibilidade
+   ================================ */
+::-webkit-scrollbar {
+    width: 10px; /* Largura da barra de rolagem */
+}
+
+::-webkit-scrollbar-track {
+    background: #0e3754; /* Cor de fundo da trilha da barra de rolagem */
+    border-radius: 10px; /* Arredondamento das bordas da trilha */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #007aff; /* Cor da "mão" (a parte que se move) */
+    border-radius: 3px; /* Arredondamento das bordas da "mão" */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0051a8; /* Cor da "mão" ao passar o mouse sobre ela */
+}

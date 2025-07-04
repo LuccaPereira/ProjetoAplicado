@@ -1,0 +1,379 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap');
+
+body {
+    background-color: rgb(220, 225, 230);
+    font-family: "Radio Canada Big", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    text-align: center;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.inicial-conteiner {
+    flex: 1; /* Isso permite que o conteúdo principal ocupe o espaço restante */
+}
+
+.card-info {
+    background-color: white;
+    border-radius: 8px;
+    padding-bottom: 20px;
+}
+
+.card-info h1 {
+    padding-top: 20px;
+    padding-left: 20px;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.658);
+}
+
+.card-info hr {
+    width: 100%;
+}
+
+.card-info-name {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.card-info input {
+    padding-left: 20px;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.521);
+    background-color: transparent;
+}
+
+.card-info-name h4 {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.582);
+}
+
+.dados-para-processo {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.dados-para-processo input {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.103);
+}
+
+.left-card-section,
+.right-card-section {
+    width: 50%;
+}
+
+.more-files {
+    display: inline-block;
+    width: 30%;
+    border: 2px solid rgba(0, 0, 0, 0.507);
+    background-color: #473030;
+    border-radius: 2px;
+    margin: 5% auto;
+    color: white;
+    transition: .3s;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+.more-files:hover {
+    border: 2px solid black;
+    color: black;
+    background-color: rgb(106, 139, 201);
+}
+
+.vertical-line {
+    border-left: 1px solid black;
+    height: 100%;
+    margin: 0 20px;
+}
+
+#adicionais {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+
+.chatBotContainer {
+    margin-left: 2px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1; /* Ajuste para ocupar espaço disponível */
+}
+
+.chatbot-card {
+    border-radius: 15px;
+    background-color: #ffffff;
+    width: 700px;
+    max-width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.chatbot-card .card-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.75);
+}
+
+/* Janela de mensagens */
+.chat-window {
+    border: 1px solid #d1d1d6;
+    border-radius: 8px;
+    padding: 10px;
+    height: 300px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+}
+
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-message, .bot-message {
+    padding: 12px;
+    border-radius: 8px;
+    word-wrap: break-word;
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: #007aff;
+    color: white;
+}
+
+.bot-message {
+    align-self: flex-start;
+    background-color: #e5e5ea;
+    color: #1c1c1e;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.input-group .form-control {
+    flex: 1;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #d1d1d6;
+    font-size: 14px;
+    width: 70%; /* Ajuste para centralizar visualmente */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.input-group .btn {
+    background-color: #007aff;
+    color: white;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.input-group .btn:hover {
+    background-color: #0056b3;
+}
+.form-control {
+    flex: 1;
+    border: 2px solid #ccc; /* Borda ao redor do campo de entrada */
+    border-radius: 20px; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    width: 95%; /* Ajuste a largura para 90% */
+    margin-top: 10px;
+    margin-left: auto; /* Centraliza o campo de entrada */
+    margin-right: auto; /* Centraliza o campo de entrada */
+}
+
+.btn {
+    border-radius: 10px; /* Bordas arredondadas do botão */
+    background-color: #007bff; /* Cor do botão */
+    color: #fff; /* Cor do texto do botão */
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Espaço abaixo do botão */
+}
+.btn:hover {
+    background-color: #0056b3; /* Cor do botão ao passar o mouse */
+}
+
+footer {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 20px 0; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Preenche toda a largura da tela */
+    position: relative; /* Pode ser 'relative' ou 'fixed', dependendo da sua necessidade */
+    margin-top: auto; /* Faz o footer ficar na parte inferior se houver espaço */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0; /* Margem superior para separar do texto do footer */
+}
+
+li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 150px; /* Largura inicial colapsada */
+    background-color: #2c3e50;
+    height: 100vh;
+    padding: 20px 10px; /* Menos padding para o estado colapsado */
+    position: fixed;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: width 0.3s ease;
+    overflow: hidden;
+}
+
+.sidebar.expanded {
+    width: 250px; /* Largura expandida */
+    padding: 20px;
+}
+
+.sidebar .logo {
+    width: 80px; /* Logo menor no estado colapsado */
+    margin: 1% auto;
+    display: block;
+    transition: width 0.3s ease;
+    margin-bottom: 15%;
+}
+
+.sidebar.expanded .logo {
+    width: 150px; /* Logo maior no estado expandido */
+}
+
+.menu-icon {
+    font-size: 36px;
+    color: #ecf0f1;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Itens da lista no estado colapsado */
+.nav-list .nav-text, .loginButton, .logoutButton {
+    display: none; /* Esconde o texto no estado colapsado */
+}
+
+.sidebar.expanded .nav-text, .loginButton, .logoutButton  {
+    display: inline; /* Mostra o texto quando expandido */
+    
+}
+
+.nav-text{
+    text-align: left;
+    left: 4px;
+}
+
+.nav-list li {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza os ícones no estado colapsado */
+}
+
+.nav-list btn .btn-outline-center{
+    background-color: red;
+}
+
+.sidebar.expanded .nav-list li {
+    justify-content: flex-center; /* Reposiciona os ícones e texto no estado expandido */
+}
+
+
+/* Botões de Login e Logout */
+#loginButton, #logoutButton {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: transparent;
+    color: #ecf0f1;
+    border: 2px solid #ecf0f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 7px;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#loginButton:hover, #logoutButton:hover {
+    background-color: #3498db;
+    color: #ecf0f1;
+}
+
+/* Lista de Navegação */
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.nav-list li {
+    margin-bottom: 20px;
+}
+
+.nav-list li a, #loginButton, #logoutButton {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: #ecf0f1;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.nav-list li a:hover {
+    background-color: #3498db;
+    border-radius: 5px;
+}
